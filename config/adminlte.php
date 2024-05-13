@@ -298,14 +298,14 @@ return [
         [
             'type' => 'navbar-search',
             'text' => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
+            'id' => 'fullscreen',
             'type' => 'fullscreen-widget',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
-        // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
@@ -313,80 +313,193 @@ return [
         [
             'text' => 'blog',
             'url' => 'admin/blog',
-            'can' => 'manage-blog',
+            //'can' => 'manage-blog',
         ],
+
+        ['header' => 'ADMINISTRADOR'],
+              
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
+            'text' => 'Adm. Lista roles',
+            'route' => 'admin.roles.index',
+            'icon' => 'fas fa-bullhorn',
+            'can' => 'admin.roles.index'
+        ],
+
+        [
+            'text' => 'Dev. Solicitud tipo',
+            'route' => 'admin.solicitud_tipos.index',
+            'icon' => 'fas fa-bullhorn',
+            'can' => 'admin.solicitud_tipos.index'
+        ],
+        /*
+
+        [
+            'text' => 'Adm. Lista roles',
+            'route' => 'admin.roles.index',
+            'icon' => 'fas fa-bullhorn',
+            //'can' => 'admin.solicitudes.index'
+        ],
+
+        [
+            'text' => 'Adm. Solicitudes',
+            'route' => 'admin.solicitudes.index',
+            'icon' => 'fas fa-bullhorn',
+            //'can' => 'admin.solicitudes.index'
+        ],
+
+        [
+            'text' => ' Solicitudes',
+            'route' => 'admin.solicitudes.create',
             'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            //'can' => 'admin.solicitudes.create',
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => ' Adm. Eventos',
+            'route' => 'admin.eventos.create',
+            'icon' => 'fas fa-calendar-alt',
+            //'can' => 'admin.eventos.create'
         ],
         [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'text' => ' Eventos',
+            'route' => 'admin.eventos.index',
+            'icon' => 'fas fa-calendar-alt',
+            //'can' => 'admin.eventos.index'
+        ],
+        [
+            'text' => ' Adm. Cronograma distrital',
+            'route' => 'admin.cronogramas.create',
+            'icon' => 'fas fa-calendar-day',
+            //'can' => 'admin.cronogramas.create'
+        ],
+        [
+            'text' => 'Cronograma Distrital',
+            'route' => 'admin.cronogramas.index',
+            'icon' => 'fas fa-calendar-day',
+            //'can' => 'admin.cronogramas.index'
+        ],
+
+
+        [
+            'text' => 'Descargables',
+            'icon' => 'fas fa-cloud-download-alt',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Descargable admin',
+                    //'route' => 'admin.descargables.index',
+                    //'route' => 'admin.descargables.index'
                 ],
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
+                    'text' => 'Descargable privado',
+                    'route' => 'admin.carpetas.privado',
+                    //'can' => 'admin.descargables.privado',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Descargable general',
+                    //'route' => 'admin.descargables.general',
+                    //'can' => 'admin.galerias.listlideres'
                 ],
+
             ],
         ],
-        ['header' => 'labels'],
+
+
         [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text' => 'Galeria tipos - Dev',
+            'route' => 'admin.galeria_types.index',
+            'icon' => 'fas fa-file-image',
+            'active' => ['admin/galeria_types*'],
+            //'can' => 'admin.galeria_types.index'
         ],
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
+            'text' => 'Categorías',
+            'route' => 'admin.categorias.index',
+            'icon' => 'fas fa-server',
+            'active' => ['admin/categorias*'],
+            //'can' => 'admin.categorias.index'
         ],
         [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Congregaciones',
+            'route' => 'admin.congregacion.index',
+            'icon' => 'fas fa-place-of-worship',
+            'active' => ['admin/congregacion*'],
+            //'can' => 'admin.congregacion.index'
         ],
+        [
+            'text' => 'Etiquetas',
+            'route' => 'admin.etiquetas.index',
+            'icon' => 'fas fa-tags',
+            'active' => ['admin/etiquetas*'],
+            //'can' => 'admin.etiquetas.index'
+
+        ],
+        [
+            'text' => 'Comités',
+            'route' => 'admin.comites.index',
+            'icon' => 'fab fa-slack-hash',
+            'active' => ['admin/comites*'],
+            //'can' => 'admin.comites.index'
+        ],
+        [
+            'text' => 'Podcasts',
+            'route' => 'admin.podcasts.index',
+            'icon' => 'fas fa-microphone-alt',
+            'active' => ['admin/podcasts*'],
+            //'can' => 'admin.podcasts.index'
+        ],
+        [
+            'text' => 'Series',
+            'route' => 'admin.series.list',
+            'icon' => 'fas fa-video',
+            'active' => ['admin/series*'],
+            //'can' => 'admin.series.index'
+        ],
+        [
+            'text' => 'Galería',
+            'icon' => 'fas fa-file-image',
+            'submenu' => [
+                [
+                    'text' => 'Todos admin',
+                    'route' => 'admin.galerias.index',
+                    //'can' => 'admin.galerias.index'
+                ],
+                [
+                    'text' => 'Pastores',
+                    'route' => 'admin.galerias.listpastores',
+                    //'can' => 'admin.galerias.listpastores',
+                ],
+                [
+                    'text' => 'Lideres',
+                    'route' => 'admin.galerias.listlideres',
+                    //'can' => 'admin.galerias.listlideres'
+                ],
+
+            ],
+        ],
+
+        [
+            'text' => 'Usuarios',
+            'route' => 'admin.usuarios.index',
+            'icon' => 'fas fa-user',
+            'active' => ['admin/usuarios*'],
+            //'can' => 'admin.usuarios.index'
+        ],
+        [
+            'text' => 'Publicaciones',
+            'route' => 'admin.posts.index',
+            'icon' => 'fas fa-clipboard',
+            'active' => ['admin/posts*'],
+            //'can' => 'admin.posts.index',
+        ],
+        [
+            'text' => 'profile',
+            'route' => 'admin.usuario.perfil',
+            'icon' => 'fas fa-fw fa-user',
+            //'can' => 'admin.usuarios.perfil'
+        ],
+
+        */
+
+       
     ],
 
     /*
