@@ -1,11 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear tipo solicitud')
+@section('title', 'Editar categoría')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear tipo solicitud</h1>
-
+        <h1 style="margin: 0;">Editar categoría: {{ $categoria->nombre }}</h1>
+        <div>
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.categorias.index') }}">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
     </div>
 @stop
 
@@ -33,22 +37,23 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos tipo solicitud
+                Datos categoría
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.solicitud_tipos.store') }}" autocomplete="off"
+            <form method="POST" action="{{ route('admin.categorias.update', $categoria) }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
-
                 @csrf
+                @method('PUT') <!-- Establece el método PUT -->
 
-                @include('admin.solicitudtipos.form')
+                @include('admin.categorias.form', $categoria)
+
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.solicitud_tipos.index') }}">Volver</a>
-                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
+                    <a class="btn btn-secondary" href="{{ route('admin.categorias.index') }}">Volver</a>
+                    <button type="submit" class="btn btn-success float-right">Actualizar</button>
                 </div>
             </form>
 
@@ -62,6 +67,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
+
     <style>
         .image-wrapper {
             position: relative;
@@ -75,6 +81,7 @@
             height: 100%;
         }
     </style>
+
 @stop
 
 @section('js')
@@ -92,17 +99,6 @@
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
     <script>
-        showErrores();
-
-        function showErrores() {
-            @if ($errors->any())
-
-                @foreach ($errors->all() as $error)
-                    console.error('{{ $error }}');
-                @endforeach
-            @endif
-        }
-
         // Generate slug
         function generateSlug(inputText) {
             var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -130,6 +126,32 @@
         });
         // End generate slug
 
-    </script>
+        // Mostrar imagen
+        function redirectUpdate(url) {
+            window.location.href = url;
+        }
 
+        document.getElementById("imagen").addEventListener("change", cambiarImagen);
+
+        function cambiarImagen(evento) {
+            var file = evento.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evento) {
+                document.getElementById("imagen").src = evento.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        //Mostrar imagen banner
+        function cambiarImagenBanner(evento) {
+            var file = evento.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evento) {
+                document.getElementById("imagen_banner").src = evento.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+        //end mostrar imagen banner
+        //end mostrar imagen
+    </script>
 @stop

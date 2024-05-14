@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_tipos', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('slug');
-            $table->enum('isbloqued', ['Si', 'No'])->nullable();
-            $table->string('descripcion')->nullable();
+            $table->string('url');
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_type');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_tipos');
+        Schema::dropIfExists('images');
     }
 };

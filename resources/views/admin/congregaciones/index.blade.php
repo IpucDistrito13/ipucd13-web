@@ -4,9 +4,9 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Tipos solicitud</h1>
-        @can('admin.solicitud_tipos.create')
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.solicitud_tipos.create') }}">
+        <h1 style="margin: 0;">Lista congregación</h1>
+        @can('admin.congregaciones.create')
+            <a id="create" class="btn btn-primary btn-sm" href="{{ route('admin.congregaciones.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista tipos de solicitud
+                Lista de congregraciones
             </span>
         </div>
         <!-- /.card-header -->
@@ -47,9 +47,9 @@
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
-                        <th>Nombre</th>
-                        <th>Slug</th>
-                        <th>Descripción</th>
+                        <th>Departamento</th>
+                        <th>Municipio</th>
+                        <th>Dirección</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -57,32 +57,32 @@
                     @php
                         $contador = 0;
                     @endphp
-                    @foreach ($solicitud_tipo as $item)
+                    @foreach ($congregaciones as $item)
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
-
-                            <td>{{ $item->nombre }}</td>
-                            <td>{{ $item->slug }}</td>
-                            <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->municipio->departamento->nombre }}</td>
+                            <td>{{ $item->municipio->nombre }}</td>
+                            <td>{{ $item->direccion }}</td>
                             <td>
-                                <!-- Botones de acciones -->
+                                <!-- Grupo de botones -->
                                 <div class="btn-group" role="group" aria-label="Acciones">
-                        
-                                    @can('admin.solicitud_tipos.edit')
-                                        <!-- Update Button -->
-                                        <a class="btn btn-success btn-sm"
-                                            href="{{ route('admin.solicitud_tipos.edit', $item) }}">Actualizar</a>
+                                    @can('admin.congregaciones.edit')
+                                        <!-- Botón de Actualizar -->
+                                        <button class="btn btn-success btn-sm"
+                                            data-url="{{ route('admin.congregaciones.edit', $item) }}"
+                                            onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
                                     @endcan
 
-                                    @can('admin.solicitud_tipos.destroy')
+                                    @can('admin.congregaciones.destroy')
                                         <!-- Botón de Eliminar -->
                                         <form id="deleteForm{{ $item->id }}"
-                                            action="{{ route('admin.solicitud_tipos.destroy', $item) }}" method="POST">
+                                            action="{{ route('admin.congregaciones.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-danger btn-sm"
                                                 onclick="confirmDelete({{ $item->id }})">Eliminar</button>
                                         </form>
+                                    @endcan
 
                                     <script>
                                         function confirmDelete(itemId) {
@@ -112,8 +112,8 @@
                                         }
                                     </script>
 
-                                    @endcan
                                 </div>
+
 
                             </td>
 
@@ -134,6 +134,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
+
     <style>
         .acciones-column {
             width: 100px;
@@ -162,7 +163,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-
         $(function() {
             $("#datatable").DataTable({
                 "responsive": true,
@@ -186,6 +186,8 @@
         })
     });
 
-
+        function redirectUpdate(url) {
+            window.location.href = url;
+        }
     </script>
 @stop

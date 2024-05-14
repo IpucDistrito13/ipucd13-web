@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_tipos', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('slug');
-            $table->enum('isbloqued', ['Si', 'No'])->nullable();
-            $table->string('descripcion')->nullable();
+            $table->text('descripcion')->nullable();
+            $table->enum('estado', ['Activo', 'Inactivo'])->default('Activo'); 
+            $table->string('imagen_banner')->comment('imagen para mostrar appbar y banner pagina 1920x500')->nullable();
+
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_tipos');
+        Schema::dropIfExists('categorias');
     }
 };

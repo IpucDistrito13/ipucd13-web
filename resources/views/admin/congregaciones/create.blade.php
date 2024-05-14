@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear tipo solicitud')
+@section('title', 'Crear congregación')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear tipo solicitud</h1>
+        <h1 style="margin: 0;">Crear congregación</h1>
 
     </div>
 @stop
@@ -33,21 +33,21 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos tipo solicitud
+                Datos congregación
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.solicitud_tipos.store') }}" autocomplete="off"
+            <form method="POST" action="{{ route('admin.congregaciones.store') }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
 
                 @csrf
-
-                @include('admin.solicitudtipos.form')
+                
+                @include('admin.congregaciones.form')
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.solicitud_tipos.index') }}">Volver</a>
+                    <a class="btn btn-secondary" href="{{ route('admin.congregaciones.index') }}">Volver</a>
                     <button type="submit" class="btn btn-primary float-right">Guardar</button>
                 </div>
             </form>
@@ -92,25 +92,9 @@
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
     <script>
-        showErrores();
-
-        function showErrores() {
-            @if ($errors->any())
-
-                @foreach ($errors->all() as $error)
-                    console.error('{{ $error }}');
-                @endforeach
-            @endif
-        }
-
-        // Generate slug
+        // generate slug
         function generateSlug(inputText) {
-            var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            var slug = withoutAccents.toLowerCase()
-                .replace(/[^a-zA-Z0-9 -]/g, '') // Remueve caracteres no alfanuméricos ni espacios
-                .replace(/\s+/g, '-') // Reemplaza espacios con guiones
-                .replace(/-+/g, '-') // Reemplaza múltiples guiones con uno solo
-                .trim(); // Elimina espacios en blanco al inicio y al final
+            var slug = inputText.toLowerCase().replace(/[^a-zA-Z0-9 -]/g, '').replace(/\s+/g, '-');
             return slug;
         }
 
@@ -128,8 +112,48 @@
         document.addEventListener("DOMContentLoaded", function() {
             updateSlug();
         });
-        // End generate slug
 
+        // end generate slug
+
+        //Mostrar imagen
+        function redirectUpdate(url) {
+            window.location.href = url;
+        }
+
+        document.getElementById("imagen").addEventListener("change", cambiarImagen);
+
+        function cambiarImagen(evento) {
+            var file = evento.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evento) {
+                document.getElementById("imagen").src = evento.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+        //end mostrar imagen
     </script>
 
+    <script>
+        // datatable
+        $("#datatable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+
+            language: {
+                processing: "Procesando...",
+                lengthMenu: "Mostrar _MENU_ registros por página",
+                zeroRecords: "No se encontraron registros en el sistema...",
+                info: "Mostrando página _PAGE_ de _PAGES_",
+                infoEmpty: "No hay registros disponibles",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                search: "Buscar",
+                paginate: {
+                    next: "Siguiente",
+                    previous: "Anterior"
+                }
+            },
+        });
+        //end datatable
+    </script>
 @stop

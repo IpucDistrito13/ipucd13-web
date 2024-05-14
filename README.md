@@ -64,3 +64,39 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## DESARROLLADOR HAROLD GRANADOS - IPUC LAS AMERICAS, NORTE DE SANTANDER
+# Roles
+Para los roles las acciones son actualizar y eliminar.
+El sistema tendra por defecto 3 tipos de roles los cuales eliminarlos afectara todo el sistema. El sistema realiza validación sobre el boton de eliminar.
+
+# Solicitud tipo
+Para los tipos de solicitud por defecto son 3: Certificado bautismo, Diploma bautismo, Certificado membresia.
+Al momento de eliminar algun tipo y esta asociado con un usuario se impedira la eliminacion
+
+
+
+
+# APLICAR SERVER-SIDE 
+Congregaciones
+
+# sweetalert2
+solicitud tipo
+congregaciones
+
+
+# LA PLATAFORMA REALIZA USO DE LA CACHE
+
+Comite
+Congregacion
+Categoria
+
+//CACHE
+        if (Cache::has('comites')) {
+            $comites = Cache::get('comites');
+        } else {
+            $comites = Comite::ListarComites()->get();
+            Cache::put('comites', $comites);
+        }
+        //CACHE
+        

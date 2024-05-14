@@ -317,7 +317,7 @@ return [
         ],
 
         ['header' => 'ADMINISTRADOR'],
-              
+
         [
             'text' => 'Adm. Lista roles',
             'route' => 'admin.roles.index',
@@ -330,6 +330,28 @@ return [
             'route' => 'admin.solicitud_tipos.index',
             'icon' => 'fas fa-bullhorn',
             'can' => 'admin.solicitud_tipos.index'
+        ],
+        [
+            'text' => 'Congregaciones',
+            'route' => 'admin.congregaciones.index',
+            'icon' => 'fas fa-place-of-worship',
+            'active' => ['admin/congregacion*'],
+            'can' => 'admin.congregaciones.index'
+        ],
+
+        [
+            'text' => 'Comités',
+            'route' => 'admin.comites.index',
+            'icon' => 'fab fa-slack-hash',
+            'active' => ['admin/comites*'],
+            'can' => 'admin.comites.index'
+        ],
+        [
+            'text' => 'Categorías',
+            'route' => 'admin.categorias.index',
+            'icon' => 'fas fa-server',
+            'active' => ['admin/categorias*'],
+            'can' => 'admin.categorias.index'
         ],
         /*
 
@@ -418,13 +440,6 @@ return [
             //'can' => 'admin.categorias.index'
         ],
         [
-            'text' => 'Congregaciones',
-            'route' => 'admin.congregacion.index',
-            'icon' => 'fas fa-place-of-worship',
-            'active' => ['admin/congregacion*'],
-            //'can' => 'admin.congregacion.index'
-        ],
-        [
             'text' => 'Etiquetas',
             'route' => 'admin.etiquetas.index',
             'icon' => 'fas fa-tags',
@@ -499,7 +514,7 @@ return [
 
         */
 
-       
+
     ],
 
     /*

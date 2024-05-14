@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comite extends Model
+class Categoria extends Model
 {
     use HasFactory;
     protected $fillable = ['nombre', 'slug', 'descripcion', 'imagen_banner'];
 
-    public function scopeListarComites($query)
+    public function scopeListarCategorias($query)
     {
         return $query->select('id', 'nombre', 'slug', 'descripcion', 'imagen_banner');
     }

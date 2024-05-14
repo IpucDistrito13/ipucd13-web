@@ -17,18 +17,21 @@ class SolicitudTipoSeeder extends Seeder
         SolicitudTipo::create([
             'nombre' => 'Certificado bautismo',
             'slug' => 'certificado-bautismo',
+            'isbloqued' => 'Si',
             'descripcion' => 'Certificado bautismo',
         ]);
 
         SolicitudTipo::create([
             'nombre' => 'Diploma bautismo',
             'slug' => 'diploma-bautismo',
+            'isbloqued' => 'Si',
             'descripcion' => 'Diploma bautismo',
         ]);
 
         SolicitudTipo::create([
             'nombre' => 'Certificado membresía',
             'slug' => 'certificado-membresia',
+            'isbloqued' => 'Si',
             'descripcion' => 'Certificado membresía',
         ]);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -14,7 +15,16 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        //CACHE
+        if (Cache::has('roles')) {
+            $roles = Cache::get('roles');
+        } else {
+            $roles = Role::all();
+            Cache::put('roles', $roles);
+        }
+        //CACHE
+
+        //$roles = Role::all();
         return view('admin.roles.index', compact('roles'));
     }
 
@@ -33,7 +43,8 @@ class RolController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'isbloqued' => 'No',
         ]);
 
         $data = [
@@ -45,6 +56,11 @@ class RolController extends Controller
 
         // Sincronizar los permisos asociados al rol
         $role->permissions()->sync($request->permissions);
+
+        //Elimina datos cache
+        Cache::flush();
+        //Cache
+
         return redirect()->route('admin.roles.edit', $role)->with('success', 'Rol creado exitosamente.');
     }
 
@@ -86,6 +102,10 @@ class RolController extends Controller
         // Sincronizar los permisos asociados al rol
         $role->permissions()->sync($request->permissions);
 
+        //Elimina datos cache
+        Cache::flush();
+        //Cache
+
         return redirect()->route('admin.roles.edit', $role)->with('success', 'Rol actualizado exitosamente.');
     }
 
@@ -96,6 +116,14 @@ class RolController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-        return redirect()->route('admin.roles.index')->with('success', 'Rol eliminado exitosamente.');
+        $data = [
+            'message' => 'Rol eliminado exitosamente.',
+        ];
+
+        //Elimina datos cache
+        Cache::flush();
+        //Cache
+
+        return redirect()->route('admin.roles.index')->with('success', $data['message']);
     }
 }

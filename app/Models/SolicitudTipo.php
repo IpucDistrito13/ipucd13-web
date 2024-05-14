@@ -12,6 +12,11 @@ class SolicitudTipo extends Model
     protected $table ='solicitud_tipos';
     protected $fillable = ['nombre', 'slug', 'descripcion'];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function scopeListarCampos($query)
     {
         return $query->select('id','nombre', 'slug', 'descripcion');

@@ -1,11 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear tipo solicitud')
+@section('title', 'Editar congregación')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear tipo solicitud</h1>
-
+        <h1 style="margin: 0;">Editar congregacion: {{ $congregacion->direccion }}</h1>
+        <div>
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.congregaciones.index')}}">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
     </div>
 @stop
 
@@ -33,22 +37,23 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos tipo solicitud
+                Datos congregación
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.solicitud_tipos.store') }}" autocomplete="off"
+            <form method="POST" action="{{ route('admin.congregaciones.update', $congregacion) }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
-
                 @csrf
+                @method('PUT') <!-- Establece el método PUT -->
 
-                @include('admin.solicitudtipos.form')
+                @include('admin.congregaciones.form', $congregacion)
+
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.solicitud_tipos.index') }}">Volver</a>
-                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
+                    <a class="btn btn-secondary" href="{{ route('admin.congregaciones.index') }}">Volver</a>
+                    <button type="submit" class="btn btn-success float-right">Actualizar</button>
                 </div>
             </form>
 
@@ -62,6 +67,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
+
     <style>
         .image-wrapper {
             position: relative;
@@ -75,6 +81,7 @@
             height: 100%;
         }
     </style>
+
 @stop
 
 @section('js')
@@ -90,46 +97,5 @@
     <!-- DataTables Responsive JS -->
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
-
-    <script>
-        showErrores();
-
-        function showErrores() {
-            @if ($errors->any())
-
-                @foreach ($errors->all() as $error)
-                    console.error('{{ $error }}');
-                @endforeach
-            @endif
-        }
-
-        // Generate slug
-        function generateSlug(inputText) {
-            var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            var slug = withoutAccents.toLowerCase()
-                .replace(/[^a-zA-Z0-9 -]/g, '') // Remueve caracteres no alfanuméricos ni espacios
-                .replace(/\s+/g, '-') // Reemplaza espacios con guiones
-                .replace(/-+/g, '-') // Reemplaza múltiples guiones con uno solo
-                .trim(); // Elimina espacios en blanco al inicio y al final
-            return slug;
-        }
-
-        function updateSlug() {
-            var nombreInput = document.getElementById("nombre");
-            var slugInput = document.getElementById("slug");
-
-            if (nombreInput && slugInput) {
-                var nombre = nombreInput.value;
-                var slug = generateSlug(nombre);
-                slugInput.value = slug;
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            updateSlug();
-        });
-        // End generate slug
-
-    </script>
 
 @stop

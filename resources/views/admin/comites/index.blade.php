@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Comités')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Lista de roles</h1>
-        @can('admin.roles.create')
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.roles.create') }}">
+        <h1 style="margin: 0;">Lista categoría</h1>
+        @can('admin.comites.create')
+            <a class="btn btn-primary btn-sm" href="{{ route('admin.comites.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista tipos de roles
+                Lista de comités
             </span>
         </div>
         <!-- /.card-header -->
@@ -46,41 +46,41 @@
             <table id="datatable" class="table table-striped table-bordered data-table">
                 <thead>
                     <tr>
-                        <th class="counter-column">#</th>
+                        <th>#</th>
                         <th>Nombre</th>
-                        <th>Bloqueo</th>
-
-
+                        <th>Slug</th>
+                        <th>Descripción</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                        $contador = 0;
-                    @endphp
-                    @foreach ($roles as $rol)
+                    <!-- Aquí puedes iterar sobre tus categorías y mostrarlas en la tabla -->
+                    <!-- Ejemplo de una fila de la tabla -->
+                    @foreach ($comites as $item)
                         <tr>
-                            <td>{{ $rol->id }}</td>
-                            <td>{{ $rol->name }}</td>
-                            <td>{{ $rol->isbloqued }}</td>
-
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->nombre }}</td>
+                            <td>{{ $item->slug }}</td>
+                            <td>{{ $item->descripcion }}</td>
                             <td>
-                                <a href="{{ route('admin.roles.edit', $rol) }}" class="btn btn-sm btn-primary">Ver</a>
 
-                                @can('admin.roles.destroy')
+                                <div class="btn-group" role="group" aria-label="Group of buttons">
+                                    @can('admin.comites.edit')
+                                        <!-- Update Button -->
+                                        <a class="btn btn-success btn-sm"
+                                            href="{{ route('admin.comites.edit', $item) }}">Actualizar</a>
+                                    @endcan
 
-                                    @if ($rol->isbloqued != 'Si')
-                                        <form action="{{ route('admin.roles.destroy', $rol) }}" method="POST"
-                                            style="display: inline;">
+                                    @can('admin.comites.destroy')
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('admin.comites.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-
-                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este rol?')">Eliminar</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>
-                                    @endif
-                                    
-                                @endcan
+                                    @endcan
+                                </div>
+
 
                             </td>
 
@@ -101,13 +101,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
+
     <style>
         .acciones-column {
-            width: 150px;
-        }
-
-        .counter-column {
-            width: 2%;
+            width: 100px;
         }
     </style>
 @stop
@@ -117,7 +114,7 @@
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
@@ -134,21 +131,21 @@
                 "autoWidth": false,
 
                 language: {
-                processing: "Procesando...",
-                lengthMenu: "Mostrar _MENU_ registros por página",
-                zeroRecords: "No se encontraron registros en el sistema...",
-                info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
-                infoEmpty: "No hay registros disponibles",
-                infoFiltered: "(filtrado de _MAX_ registros totales)",
-                search: "Buscar",
-                paginate: {
-                    next: "Siguiente",
-                    previous: "Anterior"
+                    processing: "Procesando...",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron registros en el sistema...",
+                    info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar",
+                    paginate: {
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    },
+                    emptyTable: "No hay datos disponibles en la tabla"
                 },
-                emptyTable: "No hay datos disponibles en la tabla"
-            },
-        })
-    });
+            })
+        });
 
         function redirectUpdate(url) {
             window.location.href = url;

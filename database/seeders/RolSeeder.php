@@ -13,22 +13,39 @@ class RolSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {        
-        $rol1 = Role::create(['name' => 'Administrador']);
-        $rol2 = Role::create(['name' => 'Pastor']);
-        $rol3 = Role::create(['name' => 'Lider']);
+    {   
+        $rol1 = Role::create(['name' => 'Administrador', 'isbloqued' => 'Si']);
+        $rol2 = Role::create(['name' => 'Pastor', 'isbloqued' => 'Si']);
+        $rol3 = Role::create(['name' => 'Lider', 'isbloqued' => 'Si']);
 
         $permission = Permission::create(['name' => 'admin.roles.index', 'descripcion' => 'Ver listado de roles'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.roles.create'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.roles.store'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.roles.edit'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.roles.destroy'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.roles.create', 'descripcion' => 'Crear rol' ])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.roles.store', 'descripcion' => 'Guardar rol'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.roles.edit', 'descripcion' => 'Editar rol'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.roles.destroy', 'descripcion' => 'Eliminar rol'])->syncRoles([$rol1]);
 
         $permission = Permission::create(['name' => 'admin.solicitud_tipos.index'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.solicitud_tipos.create'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.solicitud_tipos.edit'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.solicitud_tipos.destroy'])->syncRoles([$rol1]);
 
+        $permission = Permission::create(['name' => 'admin.congregaciones.index'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.congregaciones.create'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.congregaciones.store'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.congregaciones.edit'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.congregaciones.destroy'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'admin.comites.index'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.comites.create'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.comites.edit'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.comites.destroy'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'admin.categorias.index'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.categorias.create'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.categorias.edit'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.categorias.destroy'])->syncRoles([$rol1]);
+
+        /*
         $permission = Permission::create(['name' => 'admin.solicitudes.index'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.solicitudes.create'])->syncRoles([$rol2]);
         $permission = Permission::create(['name' => 'admin.solicitudes.store'])->syncRoles([$rol2]);
@@ -64,20 +81,12 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.categorias.edit'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.categorias.destroy'])->syncRoles([$rol1]);
 
-        $permission = Permission::create(['name' => 'admin.congregacion.index'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.congregacion.create'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.congregacion.edit'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.congregacion.destroy'])->syncRoles([$rol1]);
+
 
         $permission = Permission::create(['name' => 'admin.etiquetas.index'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.etiquetas.create'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.etiquetas.edit'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.etiquetas.destroy'])->syncRoles([$rol1]);
-
-        $permission = Permission::create(['name' => 'admin.comites.index'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.comites.create'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.comites.edit'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.comites.destroy'])->syncRoles([$rol1]);
 
         $permission = Permission::create(['name' => 'admin.podcasts.index'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.podcasts.create'])->syncRoles([$rol1]);
@@ -121,7 +130,8 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.posts.index'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.posts.create'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.posts.edit'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.posts.destroy'])->syncRoles([$rol1]);       
+        $permission = Permission::create(['name' => 'admin.posts.destroy'])->syncRoles([$rol1]);
+        */     
 
     }
 }

@@ -39,5 +39,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Cronograma::factory(1)->create();
 
         $this->call([SolicitudTipoSeeder::class]);
+        $this->call([ComiteSeeder::class]);
+        $this->call([CategoriaSeeder::class]);
+
     }
 }
