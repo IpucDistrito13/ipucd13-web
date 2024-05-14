@@ -74,6 +74,7 @@ El sistema tendra por defecto 3 tipos de roles los cuales eliminarlos afectara t
 Para los tipos de solicitud por defecto son 3: Certificado bautismo, Diploma bautismo, Certificado membresia.
 Al momento de eliminar algun tipo y esta asociado con un usuario se impedira la eliminacion
 
+# Desde Listar podcast  la descripcion solo muestra 80 caracteres
 
 
 

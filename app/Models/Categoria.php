@@ -20,6 +20,12 @@ class Categoria extends Model
         return 'slug';
     }
 
+    //Combobox
+    public static function selectList()
+    {
+        return Categoria::select('id','nombre');
+    }
+
     //RELACION UNO A UNO POLIMORFICA
     public function imagen()
     {

@@ -1,3 +1,11 @@
+//LIMPIAR CACHE
+php artisan cache:clear
+
+php artisan config:clear
+
+php artisan route:clear
+
+
 // LISTAR RUTAS
 
 php artisan r:l

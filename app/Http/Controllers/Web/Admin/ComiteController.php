@@ -181,7 +181,6 @@ class ComiteController extends Controller
             'message' => 'Comité actualizada exitosamente.'
         ];
 
-        //return redirect()->route('admin.etiquetas.edit', $etiqueta)->with('success', $data['message']);
 
         return back()->with('success', $data['message']);
     }

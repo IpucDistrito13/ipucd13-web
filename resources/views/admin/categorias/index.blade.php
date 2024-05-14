@@ -137,7 +137,18 @@
                 "lengthChange": false,
                 "autoWidth": false,
                 language: {
-                    url: 'https://cdn.datatables.net/plug-ins/2.0.5/i18n/es-ES.json',
+                    processing: "Procesando...",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron registros en el sistema...",
+                    info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar",
+                    paginate: {
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    },
+                    emptyTable: "No hay datos disponibles en la tabla"
                 },
             })
         });

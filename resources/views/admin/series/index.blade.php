@@ -4,9 +4,9 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Lista congregación</h1>
-        @can('admin.congregaciones.create')
-            <a id="create" class="btn btn-primary btn-sm" href="{{ route('admin.congregaciones.create') }}">
+        <h1 style="margin: 0;">Listar serie</h1>
+        @can('admin.series.create')
+            <a class="btn btn-primary btn-sm" href="{{ route('admin.series.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -14,7 +14,6 @@
 @stop
 
 @section('content')
-
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
             {{ session('success') }}
@@ -37,7 +36,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de congregraciones
+                Lista de series
             </span>
         </div>
         <!-- /.card-header -->
@@ -47,70 +46,48 @@
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
-                        <th>Departamento</th>
-                        <th>Municipio</th>
-                        <th>Dirección</th>
-                        <th class="acciones-column">Acciones</th>
+                        <th>Fecha</th>
+                        <th>Título</th>
+                        <th>Slug</th>
+                        <th>Descripción</th>
+                        <th>Cant. Videos</th>
+                        <th class="acciones">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php
                         $contador = 0;
                     @endphp
-                    @foreach ($congregaciones as $item)
+                    @foreach ($series as $item)
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
-                            <td>{{ $item->municipio->departamento->nombre }}</td>
-                            <td>{{ $item->municipio->nombre }}</td>
-                            <td>{{ $item->direccion }}</td>
+                            <td>{{ $item->created_at }}</td>
+
+                            <td>{{ $item->titulo }}</td>
+                            <td>{{ $item->slug }}</td>
+                            <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->cantidad_videos }}</td>
+
                             <td>
-                                <!-- Grupo de botones -->
-                                <div class="btn-group" role="group" aria-label="Acciones">
-                                    @can('admin.congregaciones.edit')
-                                        <!-- Botón de Actualizar -->
-                                        <button class="btn btn-success btn-sm"
-                                            data-url="{{ route('admin.congregaciones.edit', $item) }}"
-                                            onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
+                                <div class="btn-group" role="group" aria-label="Group of buttons">
+
+                                    @can('admin.series.listVideos')
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.series.listVideos', $item) }}">Videos</a>
                                     @endcan
 
-                                    @can('admin.congregaciones.destroy')
-                                        <!-- Botón de Eliminar -->
-                                        <form id="deleteForm{{ $item->id }}"
-                                            action="{{ route('admin.congregaciones.destroy', $item) }}" method="POST">
+                                    @can('admin.series.edit')
+                                        <a class="btn btn-success btn-sm"
+                                            href="{{ route('admin.series.edit', $item) }}">Actualizar</a>
+                                    @endcan
+
+                                    @can('admin.series.destroy')
+                                        <form action=" {{ route('admin.series.destroy', $item) }} " method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger btn-sm"
-                                                onclick="confirmDelete({{ $item->id }})">Eliminar</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>
                                     @endcan
-
-                                    <script>
-                                        function confirmDelete(itemId) {
-                                            const swalWithBootstrapButtons = Swal.mixin({
-                                                customClass: {
-                                                    confirmButton: 'btn btn-success',
-                                                    cancelButton: 'btn btn-danger'
-                                                },
-                                                buttonsStyling: false
-                                            });
-
-                                            swalWithBootstrapButtons.fire({
-                                                title: '¿Estás seguro?',
-                                                text: '¡No podrás revertir esto!',
-                                                icon: 'warning',
-                                                showCancelButton: true,
-                                                confirmButtonText: 'Eliminar',
-                                                confirmButtonColor: '#a5161d',
-                                                denyButtonColor: '#270a0a',
-                                                cancelButtonText: 'Cancelar',
-                                                reverseButtons: true
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    document.getElementById('deleteForm' + itemId).submit();
-                                                }
-                                            });
-                                        }
-                                    </script>
 
                                 </div>
 
@@ -127,7 +104,10 @@
         </div>
 
     </div>
+
+
 @stop
+
 
 @section('css')
     {{-- Add here extra stylesheets --}}
@@ -136,31 +116,35 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
 
     <style>
-        .acciones-column {
-            width: 100px;
+        .acciones {
+            width: 200px;
         }
 
         .counter-column {
             width: 2%;
         }
+
+        /* Estilo para centrar los botones dentro de la columna de acciones */
+        .acciones .btn-group {
+            display: flex;
+            justify-content: center;
+        }
     </style>
+
 @stop
 
 @section('js')
 
-    <!-- Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <!-- Bootstrap JS -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
+
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
     <!-- DataTables Responsive JS -->
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
-
-    <!-- sweetalert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(function() {

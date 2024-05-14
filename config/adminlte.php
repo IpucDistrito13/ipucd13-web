@@ -353,167 +353,21 @@ return [
             'active' => ['admin/categorias*'],
             'can' => 'admin.categorias.index'
         ],
-        /*
-
-        [
-            'text' => 'Adm. Lista roles',
-            'route' => 'admin.roles.index',
-            'icon' => 'fas fa-bullhorn',
-            //'can' => 'admin.solicitudes.index'
-        ],
-
-        [
-            'text' => 'Adm. Solicitudes',
-            'route' => 'admin.solicitudes.index',
-            'icon' => 'fas fa-bullhorn',
-            //'can' => 'admin.solicitudes.index'
-        ],
-
-        [
-            'text' => ' Solicitudes',
-            'route' => 'admin.solicitudes.create',
-            'icon' => 'far fa-fw fa-file',
-            //'can' => 'admin.solicitudes.create',
-        ],
-        [
-            'text' => ' Adm. Eventos',
-            'route' => 'admin.eventos.create',
-            'icon' => 'fas fa-calendar-alt',
-            //'can' => 'admin.eventos.create'
-        ],
-        [
-            'text' => ' Eventos',
-            'route' => 'admin.eventos.index',
-            'icon' => 'fas fa-calendar-alt',
-            //'can' => 'admin.eventos.index'
-        ],
-        [
-            'text' => ' Adm. Cronograma distrital',
-            'route' => 'admin.cronogramas.create',
-            'icon' => 'fas fa-calendar-day',
-            //'can' => 'admin.cronogramas.create'
-        ],
-        [
-            'text' => 'Cronograma Distrital',
-            'route' => 'admin.cronogramas.index',
-            'icon' => 'fas fa-calendar-day',
-            //'can' => 'admin.cronogramas.index'
-        ],
-
-
-        [
-            'text' => 'Descargables',
-            'icon' => 'fas fa-cloud-download-alt',
-            'submenu' => [
-                [
-                    'text' => 'Descargable admin',
-                    //'route' => 'admin.descargables.index',
-                    //'route' => 'admin.descargables.index'
-                ],
-                [
-                    'text' => 'Descargable privado',
-                    'route' => 'admin.carpetas.privado',
-                    //'can' => 'admin.descargables.privado',
-                ],
-                [
-                    'text' => 'Descargable general',
-                    //'route' => 'admin.descargables.general',
-                    //'can' => 'admin.galerias.listlideres'
-                ],
-
-            ],
-        ],
-
-
-        [
-            'text' => 'Galeria tipos - Dev',
-            'route' => 'admin.galeria_types.index',
-            'icon' => 'fas fa-file-image',
-            'active' => ['admin/galeria_types*'],
-            //'can' => 'admin.galeria_types.index'
-        ],
-        [
-            'text' => 'Categorías',
-            'route' => 'admin.categorias.index',
-            'icon' => 'fas fa-server',
-            'active' => ['admin/categorias*'],
-            //'can' => 'admin.categorias.index'
-        ],
-        [
-            'text' => 'Etiquetas',
-            'route' => 'admin.etiquetas.index',
-            'icon' => 'fas fa-tags',
-            'active' => ['admin/etiquetas*'],
-            //'can' => 'admin.etiquetas.index'
-
-        ],
-        [
-            'text' => 'Comités',
-            'route' => 'admin.comites.index',
-            'icon' => 'fab fa-slack-hash',
-            'active' => ['admin/comites*'],
-            //'can' => 'admin.comites.index'
-        ],
         [
             'text' => 'Podcasts',
             'route' => 'admin.podcasts.index',
             'icon' => 'fas fa-microphone-alt',
             'active' => ['admin/podcasts*'],
-            //'can' => 'admin.podcasts.index'
+            'can' => 'admin.podcasts.index'
         ],
+
         [
             'text' => 'Series',
-            'route' => 'admin.series.list',
+            'route' => 'admin.series.index',
             'icon' => 'fas fa-video',
             'active' => ['admin/series*'],
-            //'can' => 'admin.series.index'
+            'can' => 'admin.series.index'
         ],
-        [
-            'text' => 'Galería',
-            'icon' => 'fas fa-file-image',
-            'submenu' => [
-                [
-                    'text' => 'Todos admin',
-                    'route' => 'admin.galerias.index',
-                    //'can' => 'admin.galerias.index'
-                ],
-                [
-                    'text' => 'Pastores',
-                    'route' => 'admin.galerias.listpastores',
-                    //'can' => 'admin.galerias.listpastores',
-                ],
-                [
-                    'text' => 'Lideres',
-                    'route' => 'admin.galerias.listlideres',
-                    //'can' => 'admin.galerias.listlideres'
-                ],
-
-            ],
-        ],
-
-        [
-            'text' => 'Usuarios',
-            'route' => 'admin.usuarios.index',
-            'icon' => 'fas fa-user',
-            'active' => ['admin/usuarios*'],
-            //'can' => 'admin.usuarios.index'
-        ],
-        [
-            'text' => 'Publicaciones',
-            'route' => 'admin.posts.index',
-            'icon' => 'fas fa-clipboard',
-            'active' => ['admin/posts*'],
-            //'can' => 'admin.posts.index',
-        ],
-        [
-            'text' => 'profile',
-            'route' => 'admin.usuario.perfil',
-            'icon' => 'fas fa-fw fa-user',
-            //'can' => 'admin.usuarios.perfil'
-        ],
-
-        */
-
 
     ],
 

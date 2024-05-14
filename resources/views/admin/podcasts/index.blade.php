@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Podcasts')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Lista congregación</h1>
-        @can('admin.congregaciones.create')
-            <a id="create" class="btn btn-primary btn-sm" href="{{ route('admin.congregaciones.create') }}">
+        <h1 style="margin: 0;">Listar podcasts</h1>
+        @can('admin.podcasts.create')
+            <a class="btn btn-primary btn-sm" href="{{ route('admin.podcasts.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de congregraciones
+                Lista de podcats
             </span>
         </div>
         <!-- /.card-header -->
@@ -47,9 +47,11 @@
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
-                        <th>Departamento</th>
-                        <th>Municipio</th>
-                        <th>Dirección</th>
+                        <th>Feccha</th>
+                        <th>Título</th>
+                        <th>Slug</th>
+                        <th>Descripción</th>
+                        <th>Cant. Episodios</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -57,63 +59,40 @@
                     @php
                         $contador = 0;
                     @endphp
-                    @foreach ($congregaciones as $item)
+                    @foreach ($podcasts as $item)
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
-                            <td>{{ $item->municipio->departamento->nombre }}</td>
-                            <td>{{ $item->municipio->nombre }}</td>
-                            <td>{{ $item->direccion }}</td>
+                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->titulo }}</td>
+                            <td>{{ $item->slug }}</td>
+                            <td>{{ \Illuminate\Support\Str::limit($item->descripcion, 80) }}</td>
+                            <td>{{ $item->cantidad_episodios }}</td>
                             <td>
-                                <!-- Grupo de botones -->
-                                <div class="btn-group" role="group" aria-label="Acciones">
-                                    @can('admin.congregaciones.edit')
-                                        <!-- Botón de Actualizar -->
+
+                                <div class="btn-group" role="group" aria-label="Group of buttons">
+
+                                    @can('admin.podcasts.listEpisodio')
+                                        <button class="btn btn-primary btn-sm"
+                                            data-url="{{ route('admin.podcasts.listEpisodio', $item) }}"
+                                            onclick="redirectUpdate(this.getAttribute('data-url'))">Episodios</button>
+                                    @endcan
+
+                                    @can('admin.podcasts.edit')
+                                        <!-- Update Button -->
                                         <button class="btn btn-success btn-sm"
-                                            data-url="{{ route('admin.congregaciones.edit', $item) }}"
+                                            data-url="{{ route('admin.podcasts.edit', $item) }}"
                                             onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
                                     @endcan
 
-                                    @can('admin.congregaciones.destroy')
-                                        <!-- Botón de Eliminar -->
-                                        <form id="deleteForm{{ $item->id }}"
-                                            action="{{ route('admin.congregaciones.destroy', $item) }}" method="POST">
+                                    @can('admin.podcasts.destroy')
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('admin.podcasts.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger btn-sm"
-                                                onclick="confirmDelete({{ $item->id }})">Eliminar</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>
                                     @endcan
-
-                                    <script>
-                                        function confirmDelete(itemId) {
-                                            const swalWithBootstrapButtons = Swal.mixin({
-                                                customClass: {
-                                                    confirmButton: 'btn btn-success',
-                                                    cancelButton: 'btn btn-danger'
-                                                },
-                                                buttonsStyling: false
-                                            });
-
-                                            swalWithBootstrapButtons.fire({
-                                                title: '¿Estás seguro?',
-                                                text: '¡No podrás revertir esto!',
-                                                icon: 'warning',
-                                                showCancelButton: true,
-                                                confirmButtonText: 'Eliminar',
-                                                confirmButtonColor: '#a5161d',
-                                                denyButtonColor: '#270a0a',
-                                                cancelButtonText: 'Cancelar',
-                                                reverseButtons: true
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    document.getElementById('deleteForm' + itemId).submit();
-                                                }
-                                            });
-                                        }
-                                    </script>
-
                                 </div>
-
 
                             </td>
 
@@ -151,7 +130,7 @@
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
@@ -159,8 +138,6 @@
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
-    <!-- sweetalert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(function() {
@@ -185,7 +162,7 @@
                 },
             })
         });
-
+        
         function redirectUpdate(url) {
             window.location.href = url;
         }

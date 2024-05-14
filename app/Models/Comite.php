@@ -20,9 +20,16 @@ class Comite extends Model
         return 'slug';
     }
 
+    //Combobox
+    public static function selectList()
+    {
+        return Comite::select('id','nombre');
+    }
+
     //RELACION UNO A UNO POLIMORFICA
     public function imagen()
     {
         return $this->morphOne(Image::class, 'imageable');
     }
 }
+

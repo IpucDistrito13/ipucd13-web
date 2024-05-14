@@ -42,5 +42,11 @@ class DatabaseSeeder extends Seeder
         $this->call([ComiteSeeder::class]);
         $this->call([CategoriaSeeder::class]);
 
+        \App\Models\Podcast::factory(10)->create();
+        \App\Models\Episodio::factory(10)->create();
+        \App\Models\Serie::factory(10)->create();
+        \App\Models\Video::factory(10)->create();
+
+
     }
 }
