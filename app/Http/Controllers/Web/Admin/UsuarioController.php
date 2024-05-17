@@ -27,10 +27,26 @@ class UsuarioController extends Controller
 
     public function index()
     {
-        // $usuarios = User::with('congregacion:id,direccion')
-        // ->paginate();
-        // $usuarios = User::ListarConRoles()->paginate(10);
+
         return view('admin.usuarios.index');
+    }
+
+    public function list()
+    {
+        //$usuarios = User::select('nombre', 'apellidos', 'celular', 'visible_celular')->paginate(30);
+        $usuarios = User::select('id', 'nombre', 'apellidos', 'celular', 'visible_celular', 'congregacion_id')
+            ->with(['roles:id,name', 'congregacion:id,municipio_id,direccion'])
+            ->orderBy('nombre')
+            ->paginate(39);
+
+        // Transformar la colección para incluir los nombres de los roles
+        $usuarios->getCollection()->transform(function ($user) {
+            $user->role_names = $user->roles->pluck('name'); // Agrega los nombres de los roles al usuario
+            return $user;
+        });
+
+        //return $usuarios;
+        return view('admin.usuarios.list', compact('usuarios'));
     }
 
     /**
@@ -51,7 +67,7 @@ class UsuarioController extends Controller
         //  return $request;
         $url = '';
         if ($request->file('file')) {
-            $url = Storage::put('public/users', $request->file('file'));
+            $url = Storage::put('public/usuarios', $request->file('file'));
         }
 
         $codigo = in_array(2, $request->roles) ? $request->codigo : '';
@@ -129,7 +145,13 @@ class UsuarioController extends Controller
 
         ]);
 
-        $data = [];
+        /////
+        // return $request;
+
+        $data = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
 
         // Validar y actualizar el correo electrónico si se proporciona
         if ($request->has('email')) {
@@ -139,6 +161,25 @@ class UsuarioController extends Controller
         // Validar y actualizar la contraseña si se proporciona
         if ($request->has('password')) {
             $data['password'] = bcrypt($request->input('password'));
+        }
+
+        if ($request->file('file')) {
+            $url = Storage::put('public/usuarios/perfil', $request->file('file'));
+
+            // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
+            if ($usuario->imagen) {
+                Storage::delete($usuario->imagen->url);
+                $usuario->imagen()->update([
+                    'url' => $url,
+                    'imageable_type' => User::class,
+                ]);
+            } else {
+                // Si el usuario no tiene una imagen, agregar una nueva imagen
+                $usuario->imagen()->create([
+                    'url' => $url,
+                    'imageable_type' => User::class,
+                ]);
+            }
         }
 
         // Actualizar los datos del usuario
@@ -240,5 +281,29 @@ class UsuarioController extends Controller
     {
         $usuario = auth()->user();
         return view('admin.usuarios.perfil', compact('usuario'));
+    }
+
+    public function api()
+    {
+        //return 'Test';
+        $users = User::with(['roles', 'congregacion'])->get();
+
+        return DataTables::of($users)
+            ->addColumn('action', function ($user) {
+                $editUrl = route('admin.usuarios.edit', $user);
+
+                $buttons = '<a href="' . $editUrl . '" class="edit btn btn-primary btn-sm">Editar</a>';
+
+                // Agregar botón de eliminación con alerta de confirmación        
+                return $buttons;
+            })
+            ->addColumn('role', function ($user) {
+                return $user->roles->pluck('name')->implode(', ');
+            })
+            ->addColumn('direccion_congregacion', function ($user) {
+                return $user->congregacion->direccion;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

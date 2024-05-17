@@ -8,12 +8,12 @@
                 <option value="" selected disabled>Selecciona</option>
                 @foreach ($congregaciones as $congregacion)
                     <option value="{{ $congregacion->id }}"
-                        {{ (old('congregacion') == $congregacion->id || (isset($usuario) && $usuario->congregacion_id == $congregacion->id)) ? 'selected' : '' }}>
+                        {{ old('congregacion') == $congregacion->id || (isset($usuario) && $usuario->congregacion_id == $congregacion->id) ? 'selected' : '' }}>
                         {{ $congregacion->direccion }}
                     </option>
                 @endforeach
             </select>
-    
+
             @error('congregacion')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -72,7 +72,7 @@
 
     </div>
 
-    <div class="col-sm-3"  >
+    <div class="col-sm-3">
         <div class="form-group">
             <label for="codigo">Código *</label>
             <input type="text" name="codigo" id="codigo" class="form-control"
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div class="col-sm-12">
+    <div class="col-sm-2">
         <div class="form-group">
             <label for="roles">Roles *</label><br>
             @foreach ($roles as $role)
@@ -96,7 +96,9 @@
             @endif
         </div>
     </div>
-    
+
+
+
 
     <div class="col-sm-12">
         <div class="form-group">
@@ -112,12 +114,15 @@
     <div class="col-sm-6">
         <div class="form-group">
             @php
-                $imageUrl = isset($usuario) && $usuario->imagen ? Storage::url($usuario->imagen->url) : 'https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png';
+                $imageUrl =
+                    isset($usuario) && $usuario->imagen
+                        ? Storage::url($usuario->imagen->url)
+                        : 'https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png';
             @endphp
             <img id="imagen" src="{{ $imageUrl }}" alt="Imagen del usuario" class="img-thumbnail">
         </div>
     </div>
-    
+
 
 
 </div>

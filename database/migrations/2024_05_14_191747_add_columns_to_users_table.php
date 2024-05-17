@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('nombre')->nullable();
             $table->string('apellidos')->nullable();
             $table->string('celular')->nullable();
+            $table->boolean('visible_celular');
+
             $table->string('telefono')->nullable();
 
             $table->foreignId('congregacion_id')->nullable()->constrained('congregaciones')->onDelete('set null');

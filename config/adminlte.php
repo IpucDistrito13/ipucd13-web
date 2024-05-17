@@ -423,6 +423,13 @@ return [
         ],
 
         [
+            'text' => 'Directorio D13',
+            'route' => 'admin.usuarios.list',
+            'icon' => 'fas fa-user',
+            'can' => 'admin.usuarios.list'
+        ],
+
+        [
             'text' => 'profile',
             'route' => 'admin.usuario.perfil',
             'icon' => 'fas fa-fw fa-user',

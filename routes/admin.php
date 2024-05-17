@@ -62,7 +62,8 @@ Route::delete('series/{serie}/delete', [SerieController::class, 'destroy'])->nam
 Route::resource('videos', VideoController::class)->names('admin.videos');
 
 Route::resource('usuarios', UsuarioController::class)->names('admin.usuarios');
-//Route::post('usuarios/{serie}/delete', [UsuarioController::class, 'destroy'])->name('admin.usuarios.destroy');
+Route::get('user', [UsuarioController::class, 'list'])->name('admin.usuarios.list');
+
 
 Route::get('datatable/usuarios', [DatatableController::class, 'usuarios'])->name('datatable.usuarios'); //LISTAR TODOS
 

@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'nombre' => fake()->name(),
             'apellidos' => fake()->name(),
             'celular' => $this->faker->numberBetween(1000000000, 9999999999),
+            'visible_celular' => true,
             'telefono' => $this->faker->numberBetween(1000000, 9999999),
             'congregacion_id' => Congregacion::all()->random()->id,
             'estado' => $this->faker->randomElement(['Activo', 'Inactivo']),

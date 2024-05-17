@@ -32,6 +32,7 @@ class User extends Authenticatable
         'celular',
         'congregacion_id',
         'estado',
+        'file'
     ];
 
     /**
@@ -133,4 +134,6 @@ class User extends Authenticatable
             $query->where('id', $roleId);
         });
     }
+
+    
 }

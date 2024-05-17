@@ -86,7 +86,7 @@
 
                         </div>
 
-                        <form action="{{ route('admin.usuarios.updatePerfil', $usuario) }}" method="POST">
+                        <form action="{{ route('admin.usuarios.updatePerfil', $usuario) }}" method="POST" enctype="multipart/form-data" >
                             @csrf
 
                             <div class="row">
@@ -100,7 +100,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Nueva contraseña</label>
@@ -110,20 +110,34 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Confirmar contraseña</label>
-                                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                                        <input type="password" class="form-control" id="password_confirmation"
+                                            name="password_confirmation">
                                         @error('password_confirmation')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                
-                            
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Imagen portada (480x640) *</label>
+                                        <input class="form-control-file" type="file" class="custom-file-input"
+                                            name="file" id="file" accept="image/*" onchange="cambiarImagen(event)">
+                                        @error('file')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+
+
                             </div>
-                            
+
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success float-right">Actualizar</button>
                             </div>
@@ -145,6 +159,8 @@
 @section('css')
     {{-- Add here extra stylesheets --}}
     {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
     <style>
         .img-thumbnail {
             width: auto;
@@ -156,6 +172,7 @@
 @stop
 
 @section('js')
+
     <script>
         //Mostrar imagen
         /*
@@ -175,5 +192,26 @@
                 }
                */
         //end mostrar imagen
+
+        function cambiarImagen(evento) {
+            var file = evento.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evento) {
+                document.getElementById("imagen").src = evento.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+        //end mostrar imagen
+
+        // Mostrar imagen banner
+        function cambiarImagenBanner(evento) {
+            var file = evento.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evento) {
+                document.getElementById("imagen_banner").src = evento.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+        //end mostrar imagen banner
     </script>
 @stop

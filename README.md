@@ -93,6 +93,11 @@ Al momento de eliminar algun tipo y esta asociado con un usuario se impedira la 
 
 # Desde Listar podcast  la descripcion solo muestra 80 caracteres
 
+## Directorio D13
+1. Realiza validacion para ocultar el numer de celular
+2. Existe boton de celular cuando es precionado realiza la llamada
+3. Realiza paginacion, siguiente y anterior
+
 
 
 # APLICAR SERVER-SIDE 
