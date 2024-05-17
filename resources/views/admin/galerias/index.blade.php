@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Usuarios')
+@section('title', 'Galeria | Listar usuarios ')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Lista usuarios</h1>
+        <h1 style="margin: 0;">Listar todos</h1>
         @can('admin.usuarios.create')
             <a class="btn btn-primary btn-sm" href="{{ route('admin.usuarios.create') }}">
                 Crear Nuevo
@@ -87,7 +87,7 @@
 
     <style>
         .acciones {
-            width: 200px;
+            width: 250px;
         }
 
         .counter-column {
@@ -107,7 +107,7 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "ajax": "{{ route('datatable.usuarios') }}",
+                "ajax": "{{ route('datatable.galeriaTodos') }}",
                 "columns": [{
                         data: 'codigo'
                     },

@@ -47,7 +47,43 @@ class DatatableController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
-            
+    }
+
+    public function galeriaTodos()
+    {
+        $cacheKey = 'galeria_admin';
+
+        // Verificar si los datos están en cache
+        if (Cache::has($cacheKey)) {
+            $users = Cache::get($cacheKey);
+            //return 'Guardado';
+        } else {
+            $users = User::with(['roles', 'congregacion'])->get();
+            Cache::put($cacheKey, $users);
+            //return 'No Guardado';
+
+        }
+
+        return datatables()::of($users)
+            ->addColumn('action', function ($user) {
+                $privado = route('admin.galerias.privadoadmin', $user);
+                $general = route('admin.galerias.generaladmin', $user);
+
+                $buttons = '<div class="btn-group" role="group">';
+                $buttons .= '<a href="' . $privado . '" class="edit btn btn-danger btn-sm">Galeria privada</a>';
+                $buttons .= ' <a href="' . $general . '" class="edit btn btn-success btn-sm">Galeria general</a>';
+                $buttons .= '</div>';
+
+                return $buttons;
+            })
+            ->addColumn('role', function ($user) {
+                return $user->roles->pluck('name')->implode(', ');
+            })
+            ->addColumn('direccion_congregacion', function ($user) {
+                return $user->congregacion->direccion;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
 

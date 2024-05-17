@@ -404,6 +404,20 @@ return [
             'can' => 'admin.usuarios.index'
         ],
 
+        [
+            'text' => 'Galería',
+            'icon' => 'fas fa-file-image',
+            'submenu' => [
+                [
+                    'text' => 'Todos admin',
+                    'route' => 'admin.galerias.index',
+                    'can' => 'admin.galerias.index'
+                ],
+                
+
+            ],
+        ],
+
         
 
         ['header' => 'UUSUARIOS'],

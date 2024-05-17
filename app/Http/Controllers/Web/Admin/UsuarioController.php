@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequest;
 use App\Models\Congregacion;
+use App\Models\Galeria;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -241,8 +242,6 @@ class UsuarioController extends Controller
         $message = 'Usuario actualizada exitosamente.';
         return redirect()->route('admin.usuarios.edit', $usuario)->with('success', $message);
     }
-
-
 
     /**
      * Remove the specified resource from storage.

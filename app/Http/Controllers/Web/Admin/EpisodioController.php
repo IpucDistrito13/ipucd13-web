@@ -37,6 +37,8 @@ class EpisodioController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
+        
         $request->validate([
             //'file.*' => 'required|mimes:mp3,ogg,wav', // Asegúrate de validar el tipo de archivo correcto
             'titulo' => 'required|string|max:255',

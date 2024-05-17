@@ -3,8 +3,7 @@
 php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
-
-
+php artisan migrate:fresh --seed
 
 // LISTAR RUTAS
 
@@ -45,7 +44,7 @@ return $query->select('id','nombre', 'slug', 'descripcion');
 }
 
 
-
+php artisan storage:link
 
 //Elimina la variables almacenada en cache
 Cache::flush();

@@ -142,7 +142,8 @@
                     </button>
                 </div>
 
-                <form action="{{ route('admin.episodios.store') }}" method="POST" class="dropzone" id="myDropzone" autocomplete="off">
+                <form action="{{ route('admin.episodios.store') }}" method="POST" class="dropzone" enctype="multipart/form-data"
+                file="true" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -200,6 +201,18 @@
                                     <input type="text" class="form-control" id="url" name="url"
                                         value="{{ old('url', $episodio->url ?? '') }}">
                                     @error('url')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Imagen portada (480x640) *</label>
+                                    <input class="form-control-file" type="file" class="custom-file-input" name="file" id="file"
+                                        accept="audio/*" onchange="cambiarImagen(event)">
+                                    @error('file')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
