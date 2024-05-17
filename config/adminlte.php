@@ -318,6 +318,26 @@ return [
 
         ['header' => 'ADMINISTRADOR'],
 
+
+        [
+            'text' => ' Adm. Eventos',
+            'route' => 'admin.eventos.create',
+            'icon' => 'fas fa-calendar-alt',
+            'can' => 'admin.eventos.create'
+        ],
+
+
+
+        [
+            'text' => ' Adm. Cronograma distrital',
+            'route' => 'admin.cronogramas.create',
+            'icon' => 'fas fa-calendar-day',
+            'can' => 'admin.cronogramas.create'
+        ],
+
+
+
+        
         [
             'text' => 'Adm. Lista roles',
             'route' => 'admin.roles.index',
@@ -360,7 +380,6 @@ return [
             'active' => ['admin/podcasts*'],
             'can' => 'admin.podcasts.index'
         ],
-
         [
             'text' => 'Series',
             'route' => 'admin.series.index',
@@ -368,6 +387,48 @@ return [
             'active' => ['admin/series*'],
             'can' => 'admin.series.index'
         ],
+
+        [
+            'text' => 'Publicaciones',
+            'route' => 'admin.publicaciones.index',
+            'icon' => 'fas fa-clipboard',
+            'active' => ['admin/publicaciones*'],
+            'can' => 'admin.publicaciones.index',
+        ],
+
+        [
+            'text' => 'Admin. Usuarios',
+            'route' => 'admin.usuarios.index',
+            'icon' => 'fas fa-user',
+            'active' => ['admin/usuarios*'],
+            'can' => 'admin.usuarios.index'
+        ],
+
+        
+
+        ['header' => 'UUSUARIOS'],
+
+        [
+            'text' => ' Eventos',
+            'route' => 'admin.eventos.index',
+            'icon' => 'fas fa-calendar-alt',
+            'can' => 'admin.eventos.index'
+        ],
+
+        [
+            'text' => 'Cronograma Distrital',
+            'route' => 'admin.cronogramas.index',
+            'icon' => 'fas fa-calendar-day',
+            'can' => 'admin.cronogramas.index'
+        ],
+
+        [
+            'text' => 'profile',
+            'route' => 'admin.usuario.perfil',
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'admin.usuarios.perfil'
+        ],
+
 
     ],
 
@@ -406,6 +467,22 @@ return [
     */
 
     'plugins' => [
+        /*
+        'summernote' => [
+        
+            //Set to false if you want to disable this extension
+            'enable' => true,
+            'active' => true,
+
+            
+            // Editor configuration
+            'config' => [
+                'lang'   => 'es-ES',
+
+            ]
+        ],
+        */
+            
         'Datatables' => [
             'active' => false,
             'files' => [

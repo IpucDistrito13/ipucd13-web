@@ -12,6 +12,11 @@ class Congregacion extends Model
     protected $table = 'congregaciones';
     protected $fillable = ['municipio_id', 'longitud', 'latitud', 'direccion', 'estado'];
 
+    public function scopeSelectList($query)
+    {
+        return $query->select('id', 'direccion', 'municipio_id');
+    }
+
     public function municipio()
     {
         return $this->belongsTo(Municipio::class);

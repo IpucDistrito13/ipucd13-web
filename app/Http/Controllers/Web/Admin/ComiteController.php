@@ -27,7 +27,6 @@ class ComiteController extends Controller
         }
         //CACHE
 
-        //$comites = Comite::select('id', 'nombre', 'descripcion', 'slug')->get();
         return view('admin.comites.index', compact('comites'));
     }
 
@@ -36,6 +35,7 @@ class ComiteController extends Controller
      */
     public function create()
     {
+        
         return view('admin.comites.create');
     }
 

@@ -65,9 +65,37 @@ class RolSeeder extends Seeder
         //$permission = Permission::create(['name' => 'admin.series.list'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.series.listVideos'])->syncRoles([$rol1]);
 
-        $permission = Permission::create(['name' => 'admin.videos.store'])->syncRoles([$rol1]); //Modal admin/series/video/{#}
-        $permission = Permission::create(['name' => 'admin.videos.destroy'])->syncRoles([$rol1]); //Modal admin/series/video/{#}
+        $permission = Permission::create(['name' => 'admin.videos.store'])->syncRoles([$rol1]); 
+        $permission = Permission::create(['name' => 'admin.videos.destroy'])->syncRoles([$rol1]);
 
+        $permission = Permission::create(['name' => 'admin.usuarios.index'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.usuarios.create'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.usuarios.edit'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.usuarios.destroy'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.usuarios.perfil'])->syncRoles([$rol1, $rol2, $rol3]);
+
+        $permission = Permission::create(['name' => 'admin.eventos.index'])->syncRoles([$rol1, $rol2, $rol3]);
+        $permission = Permission::create(['name' => 'admin.eventos.create'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.eventos.store'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.eventos.edit'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.eventos.destroy'])->syncRoles([$rol1]);
+
+        
+        $permission = Permission::create(['name' => 'admin.cronogramas.index'])->syncRoles([$rol1, $rol2, $rol3]);
+        $permission = Permission::create(['name' => 'admin.cronogramas.store'])->syncRoles([$rol1]);     
+        $permission = Permission::create(['name' => 'admin.cronogramas.create'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.cronogramas.edit'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.cronogramas.destroy'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'admin.publicaciones.index'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.publicaciones.create'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.publicaciones.edit'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.publicaciones.destroy'])->syncRoles([$rol1]);
+        
+        $permission = Permission::create(['name' => 'admin.galeria_tipos.index'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.galeria_tipos.create'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.galeria_tipos.edit'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.galeria_tipos.destroy'])->syncRoles([$rol1]);
 
 
 

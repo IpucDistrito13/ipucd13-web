@@ -56,7 +56,7 @@
         <!-- text input -->
         <div class="form-group">
             <label>Slug *</label>
-            <input type="text" class="form-control" id="slug" name="slug"
+            <input type="text" class="form-control" id="slug" name="slug" readonly
                 value="{{ old('slug', $serie->slug ?? '') }}">
             @error('slug')
                 <div class="text-danger">{{ $message }}</div>

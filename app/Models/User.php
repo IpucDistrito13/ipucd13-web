@@ -24,6 +24,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+
+        'codigo',
+        'uuid',
+        'nombre',
+        'apellidos',
+        'celular',
+        'congregacion_id',
+        'estado',
     ];
 
     /**
@@ -44,4 +52,85 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //RELACION UNO A MUCHOS
+    public function publicaciones()
+    {
+        //return $this->hasMany(Publicacion::class);
+    }
+
+    public function podcasts()
+    {
+        return $this->hasMany(Podcast::class);
+    }
+
+    public function galerias()
+    {
+        //return $this->hasMany(Galeria::class, 'user_id');
+    }
+
+    public function createdGalerias()
+    {
+        //return $this->hasMany(Galeria::class, 'createdby_id');
+    }
+
+    public function congregacion()
+    {
+        return $this->belongsTo(Congregacion::class);
+    }
+
+    public function series()
+    {
+        return $this->hasMany(Serie::class);
+    }
+
+    public function solicitudes()
+    {
+        //return $this->hasMany(Solicitud::class, 'user_solicitud');
+    }
+
+    public function respondedSolicitudes()
+    {
+        //return $this->hasMany(Solicitud::class, 'user_response');
+    }
+
+    //RELACION UNO A UNO POLIMORFICA
+    public function imagen()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+    //MOSTRAR ICONO EN EL MENU
+    public function adminlte_image()
+    {
+        $usuario = User::where('id', auth()->user()->id)->first();
+        return  $usuario->profile_photo_url;
+    }
+    
+    public function adminlte_desc()
+    {
+        $usuario = User::select('id')->where('id', auth()->user()->id)->first();
+        return $usuario->name;
+    }
+
+    //Lista con los respectivos roles
+    public function scopeListarConRoles($query)
+    {
+        $usuarios = User::with(['roles' => function ($query) {
+            $query->select('name');
+        }])->paginate(10);
+    }
+
+    //Lista segun el rol
+    public function scopeListarPorRol($query, $roleId)
+    {
+        return $query->whereHas('roles', function($query) use ($roleId) {
+            $query->where('id', $roleId);
+        });
+    }
 }

@@ -65,10 +65,27 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+
+
+
 ## DESARROLLADOR HAROLD GRANADOS - IPUC LAS AMERICAS, NORTE DE SANTANDER
+
+## VALIDACIONES
+USUARIOS
+1. Para agregar un usuario existe la validacion cuando el rol tipo pastor esta seleccionado el codigo sera requerido, de los contrario el codigo sera sera nullable.
+
+2. El campo email valida que sea unico
+
+## AUMENTAR SEGURIDAD EN ADMIN USUARIOS
 # Roles
-Para los roles las acciones son actualizar y eliminar.
+1. Para los roles las acciones son actualizar y eliminar.
 El sistema tendra por defecto 3 tipos de roles los cuales eliminarlos afectara todo el sistema. El sistema realiza validación sobre el boton de eliminar.
+
+2. No se podra acualizar el nombre cuando esta bloqueado ya que en el index de usuarios realiza validacion al seleccionar el rol tipo pastor, se activa como requerido el campo codigo.
+
+3. El sistema valida que el codigo sea unico aun cuando se edita o se actualiza 
+
+4. Imagen o foto de perfil es nullo
 
 # Solicitud tipo
 Para los tipos de solicitud por defecto son 3: Certificado bautismo, Diploma bautismo, Certificado membresia.

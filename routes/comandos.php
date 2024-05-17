@@ -1,8 +1,6 @@
 //LIMPIAR CACHE
 php artisan cache:clear
-
 php artisan config:clear
-
 php artisan route:clear
 
 
@@ -11,6 +9,7 @@ php artisan route:clear
 php artisan r:l
 
 // MIGRACIONES
+
 php artisan migrate:refresh --seed
 php artisan migrate:fresh --seed
 
@@ -18,9 +17,11 @@ php artisan migrate:fresh --seed
 php artisan make:controller Web/Admin/RolController -r
 
 // CREA RECURSO
+
 php artisan make:resource UserResource
 
 // CREA MIGRACION Y FACTORY
+
 php artisan make:model SolicitudTipo -mf
 
 // CREA SEEDER
@@ -30,7 +31,6 @@ php artisan make:seeder SolicitudTipoSeeder
 php artisan make:request VideoRequest
 
 php artisan serve
-
 
 ///////////
 Listar

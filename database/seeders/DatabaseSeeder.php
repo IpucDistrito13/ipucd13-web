@@ -17,6 +17,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([RolSeeder::class]);
 
+        $this->call([DepartamentoSeeder::class]);
+        $this->call([MunicipioSeeder::class]);
+        \App\Models\Congregacion::factory(100)->create();
+
         User::factory()->create([
             'name' => 'Admin Test',
             'email' => 'haresje@gmail.com',
@@ -27,13 +31,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin Ipuc',
             'email' => 'admin@ipuc.com',
         ])->assignRole('Administrador');
+        
+        User::factory(2000)->create();
 
-        User::factory(1000)->create();
+        
 
-
-        $this->call([DepartamentoSeeder::class]);
-        $this->call([MunicipioSeeder::class]);
-        \App\Models\Congregacion::factory(10)->create();
 
         \App\Models\Evento::factory(1)->create();
         \App\Models\Cronograma::factory(1)->create();
@@ -46,6 +48,11 @@ class DatabaseSeeder extends Seeder
         \App\Models\Episodio::factory(10)->create();
         \App\Models\Serie::factory(10)->create();
         \App\Models\Video::factory(10)->create();
+
+        \App\Models\Publicacion::factory(10)->create();
+        $this->call([GaleriaTipoSeeder::class]);
+
+
 
 
     }

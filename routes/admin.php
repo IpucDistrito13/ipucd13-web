@@ -4,14 +4,20 @@ use App\Http\Controllers\HomeController as ControllersHomeController;
 use App\Http\Controllers\Web\Admin\CategoriaController;
 use App\Http\Controllers\Web\Admin\ComiteController;
 use App\Http\Controllers\Web\Admin\CongregacionController;
+use App\Http\Controllers\Web\Admin\CronogramaController;
+use App\Http\Controllers\Web\Admin\DatatableController;
 use App\Http\Controllers\Web\Admin\EpisodioController;
+use App\Http\Controllers\Web\Admin\EventoController;
 use App\Http\Controllers\Web\Admin\HomeController;
 use App\Http\Controllers\Web\Admin\PodcastController;
+use App\Http\Controllers\Web\Admin\PublicacionController;
 use App\Http\Controllers\Web\Admin\RolController;
 use App\Http\Controllers\Web\Admin\SerieController;
 use App\Http\Controllers\Web\Admin\SolicitudTipoController;
+use App\Http\Controllers\Web\Admin\UsuarioController;
 use App\Http\Controllers\Web\Admin\VideoController;
 use App\Models\Episodio;
+use App\Models\GaleriaTipo;
 use App\Models\SolicitudTipo;
 use Illuminate\Support\Facades\Route;
 
@@ -54,40 +60,26 @@ Route::get('series/video/{serie}/edit', [SerieController::class, 'edit'])->name(
 Route::delete('series/{serie}/delete', [SerieController::class, 'destroy'])->name('admin.series.destroy');
 
 Route::resource('videos', VideoController::class)->names('admin.videos');
-//Route::delete('videos/{video}/delete', [VideoController::class, 'destroy'])->name('admin.videos.destroy');
+
+Route::resource('usuarios', UsuarioController::class)->names('admin.usuarios');
+//Route::post('usuarios/{serie}/delete', [UsuarioController::class, 'destroy'])->name('admin.usuarios.destroy');
+
+Route::get('datatable/usuarios', [DatatableController::class, 'usuarios'])->name('datatable.usuarios'); //LISTAR TODOS
 
 
+Route::get('perfil', [UsuarioController::class, 'perfil'])->name('admin.usuario.perfil'); //LISTAR TODOS
+Route::post('usuarios/update/{usuario}', [UsuarioController::class, 'updatePerfil'])->name('admin.usuarios.updatePerfil'); //LISTAR TODOS
 
-// Aquí se incluyen las rutas generadas por Route::resource()
+Route::resource('eventos', EventoController::class)->names('admin.eventos');
+Route::get('apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('public.eventos.apiGetEventos');
 
+Route::resource('cronogramas', CronogramaController::class)->names('admin.cronogramas');
+Route::get('apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
 
-////////////////////
-//Route::delete('videos/{videos}', [VideoController::class, 'destroy'])->name('admin.videos.destroy');//EDITAR LA SERIE
-
-
-/*
-
-Route::get('series', [SerieController::class, 'index'])->name('admin.series.index');//LISTAR TODOS
-Route::get('series/video/{serie}', [SerieController::class, 'listVideos'])->name('admin.series.listVideos');//LISTAR TODOS VIDEOS SEGUN LA SERIE
-
-
-Route::get('series/create', [SerieController::class, 'create'])->name('admin.series.create');//LISTAR TODOS
-Route::post('series/store', [SerieController::class, 'store'])->name('admin.series.store');//LISTAR TODOS
-Route::post('series/update/{serie}', [SerieController::class, 'update'])->name('admin.series.update');//ACTUALIZAR LA SERIE
-Route::get('series/video/{serie}/edit', [SerieController::class, 'edit'])->name('admin.series.edit');//EDITAR LA SERIE
-Route::delete('series/{serie}/edit', [SerieController::class, 'destroy'])->name('admin.series.destroy');//EDITAR LA SERIE
-
-*/
+//CAMBIAMOS PARAMETRO A PUBLICACION
+Route::resource('publicaciones', PublicacionController::class)
+    ->names('admin.publicaciones')
+    ->parameter('publicaciones', 'publicacion');
 
 
-
-/*
-Route::get('series', [SerieController::class, 'list'])->name('admin.series.list');//LISTAR TODOS
-Route::get('series/create', [SerieController::class, 'create'])->name('admin.series.create');//LISTAR TODOS
-Route::post('series/store', [SerieController::class, 'store'])->name('admin.series.store');//LISTAR TODOS
-Route::get('series/video/{serie}', [SerieController::class, 'listVideos'])->name('admin.series.listVideos');//LISTAR TODOS VIDEOS SEGUN LA SERIE
-Route::post('series/update/{serie}', [SerieController::class, 'update'])->name('admin.series.update');//ACTUALIZAR LA SERIE
-Route::get('series/video/{serie}/edit', [SerieController::class, 'edit'])->name('admin.series.edit');//EDITAR LA SERIE
-Route::delete('series/{serie}/edit', [SerieController::class, 'destroy'])->name('admin.series.destroy');//EDITAR LA SERIE
-
-Route::resource('videos', VideoController::class)->names('admin.videos');*/
+Route::resource('galeria_tipos', GaleriaTipo::class)->names('admin.galeria_tipos');
