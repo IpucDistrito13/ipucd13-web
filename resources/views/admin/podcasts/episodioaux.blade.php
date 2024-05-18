@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Podcast | Episodio')
+@section('title', 'Dashboard')
 
 @section('content_header')
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            <i class="fas fa-volume-up"></i> Podcast: {{ $podcast->titulo }}
+            <i class="fas fa-volume-up"></i> Podcast Ax: {{ $podcast->titulo }}
         </h1>
         <div>
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.podcasts.index')}}">
@@ -103,6 +103,10 @@
                             <td>{{ $item->url }}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
+
+                                    <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal_upload"><i class="fas fa-upload"></i> Añadir audio</a>
+
+                                    <button class="btn btn-primary btn-sm" data-id="{{ $item->id }}">Añadir audio</button>
 
                                     @if($item->url)
                                         <button class="btn btn-info btn-sm reproducir" data-id="{{ $item->id }}">Reproducir</button>
@@ -207,21 +211,9 @@
                                 </div>
                             </div>
 
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Imagen portada (480x640) *</label>
-                                    <input class="form-control-file" type="file" class="custom-file-input" name="file" id="file"
-                                        accept="audio/*" onchange="cambiarImagen(event)">
-                                    @error('file')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
 

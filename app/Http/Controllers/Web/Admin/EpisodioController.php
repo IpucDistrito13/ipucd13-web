@@ -37,8 +37,8 @@ class EpisodioController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
         
+
         $request->validate([
             //'file.*' => 'required|mimes:mp3,ogg,wav', // Asegúrate de validar el tipo de archivo correcto
             'titulo' => 'required|string|max:255',
@@ -80,7 +80,7 @@ class EpisodioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EpisodioRequest $request, Episodio $episodio)
+    public function update(Request $request, Episodio $episodio)
     {
         $episodio->update([
             'titulo' => $request->titulo,
@@ -156,7 +156,29 @@ class EpisodioController extends Controller
         return $audio;
     }
 
-    
+    public function upload(Request $request)
+{
+    if ($request->hasFile('file')) {
+        $url = Storage::put('public/comites', $request->file('file'));
 
-    
+        $episodio = Episodio::create([
+            'titulo' => $request->titulo,
+            'slug' => $request->slug,
+            'descripcion' => $request->descripcion,
+            'podcast_id' => $request->podcast,
+        ]);
+
+        $episodio->imagen()->create([
+            'url' => $url,
+            'imageable_type' => Episodio::class,
+        ]);
+
+        // Aquí puedes procesar y guardar el archivo
+
+        // Por ahora, solo imprimimos los datos, pero puedes guardarlos en la base de datos, por ejemplo
+        return "Guardado exitosamente.";
+    } else {
+        return "No se ha enviado ningún archivo.";
+    }
+}
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController as ControllersHomeController;
+use App\Http\Controllers\Web\Admin\ArchivoController;
+use App\Http\Controllers\Web\Admin\CarpetaController;
 use App\Http\Controllers\Web\Admin\CategoriaController;
 use App\Http\Controllers\Web\Admin\ComiteController;
 use App\Http\Controllers\Web\Admin\CongregacionController;
@@ -98,31 +100,33 @@ Route::delete('admin/galeria/{galeria}', [GaleriaController::class, 'destroy'])-
 //LISTAR TODOS LOS USUARIOS CON ROL PASTOR
 Route::get('galerias/pastores', [GaleriaController::class, 'list'])->name('admin.galerias.list');
 
-
-
-/*
-
-//LISTAR TODOS LOS PASTORES
-Route::get('galerias/pastores', [GaleriaController::class, 'pastores'])->name('admin.galerias.listpastores');
-Route::get('galeria/general', [GaleriaController::class, 'lideres'])->name('admin.galerias.listlideres');
-
-
-//GALERIA GENERAL SE MUESTRA PARA PASTORES Y LIDERES
-Route::get('galeria/general/{uuid}', [GaleriaController::class, 'galeriaGeneral'])->name('admin.galerias.galeriaGeneral');
-
-//GALERIA PASTORES SE MUESTRA SOLO PARA LOS ROLES QUE SON PASTORES
-Route::get('galeria/pastores/{uuid}', [GaleriaController::class, 'galeriaPastores'])->name('admin.galerias.galeriaPastores'); //OK
-
-
-
-
-//GALERIA GENERAL ADMIN
-Route::get('galeria/general/{usuario}', [GaleriaController::class, 'generalAdmin'])->name('admin.galerias.generaladmin');
-
-
-Route::delete('admin/galeria/{galeria}', [GaleriaController::class, 'destroy'])->name('admin.galeria.destroy');//ELIMINA UNA IMAGEN EN ESPECIFICA
-*/
-
+// Elimina archivo individual desde Drozone
 Route::post('/file/delete', [GaleriaController::class, 'delete'])->name('file.delete');
 
 Route::post('/users/listJson', [DatatableController::class, 'listJson'])->name('users.listJson');
+
+
+Route::post('audio/upload', [EpisodioController::class, 'upload'])->name('audio.upload');
+
+
+Route::get('carpetas/privado', [CarpetaController::class, 'listComitePrivado'])->name('admin.carpetas.listComitePrivado');
+Route::get('carpetas/privado/{comite}', [CarpetaController::class, 'listCarpetasPrivadoComite'])->name('admin.carpetas.listCarpetasPrivadoComite');
+
+// CREAR CARPETA PRIVADA FORMULARIO
+Route::get('carpetas/privado/create/{comite}', [CarpetaController::class, 'crearCarpetaPrivada'])->name('admin.carpetas.privado.crearCarpetaPrivada');
+
+// GUARDAR DATOS DE CARPETAS PRIVADA
+Route::post('carpetas/storeCarpetaPrivada', [CarpetaController::class, 'storeCarpetaPrivada'])->name('admin.carpetas.storeCarpetaPrivada');
+
+// LISTA LOS ARCHIVOS SEGUN LA CARPETA
+Route::get('archivos/{carpeta}', [ArchivoController::class, 'index'])->name('admin.archivos.index');
+Route::post('archivos/carpetas', [ArchivoController::class, 'upload'])->name('admin.archivos.upload');//GUARDAR IMAGENES MASIVO
+
+
+
+
+//Route::get('carpetas/privado/{comite}', [CarpetaController::class, 'listCarpetasPrivado'])->name('admin.carpetas.listCarpetasPrivado');
+
+//Route::get('carpetas/privado/archivo/{uuid}', [CarpetaController::class, 'archivosPrivado'])->name('admin.archivos.archivosPrivado');
+
+

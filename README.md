@@ -70,6 +70,10 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## DESARROLLADOR HAROLD GRANADOS - IPUC LAS AMERICAS, NORTE DE SANTANDER
 
+Tener en cuenta que en la seccion de carpetas para descargables en la base de datos hay una columna donde se relaciona con la tabla galeria_tipos
+
+Para crear carpeta esta por defaul los valores de galeria tipos 1 = general y 2 = privado
+
 ## VALIDACIONES
 USUARIOS
 1. Para agregar un usuario existe la validacion cuando el rol tipo pastor esta seleccionado el codigo sera requerido, de los contrario el codigo sera sera nullable.

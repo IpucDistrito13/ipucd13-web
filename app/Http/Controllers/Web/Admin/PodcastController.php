@@ -203,10 +203,16 @@ class PodcastController extends Controller
     public function listEpisodio(Podcast $podcast)
     {
         $episodios = Episodio::where('podcast_id', $podcast->id)->get();
+        return view('admin.podcasts.episodioaux', [
+            'podcast' => $podcast,
+            'episodios' => $episodios,
+        ]);
+        /*
         return view('admin.podcasts.episodio', [
             'podcast' => $podcast,
             'episodios' => $episodios,
         ]);
+        */
     }
     
 

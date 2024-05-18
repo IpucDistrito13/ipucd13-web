@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Episodio extends Model
 {
     use HasFactory;
-    protected $fillable = ['titulo', 'slug', 'descripcion', 'podcast_id', 'url'];
+    protected $fillable = ['titulo', 'slug', 'descripcion', 'podcast_id', 'url', 'file'];
 
 
     public function scopeListarEpisodio($query)

@@ -401,6 +401,29 @@ return [
             'can' => 'admin.galerias.index'
         ],
 
+        [
+            'text' => 'Descargables',
+            'icon' => 'fas fa-cloud-download-alt',
+            'submenu' => [
+                [
+                    'text' => 'Descargable admin',
+                    //'route' => 'admin.descargables.index',
+                    //'route' => 'admin.descargables.index'
+                ],
+                [
+                    'text' => 'Descargable privado',
+                    'route' => 'admin.carpetas.listComitePrivado',
+                    //'can' => 'admin.descargables.privado',
+                ],
+                [
+                    'text' => 'Descargable general',
+                    //'route' => 'admin.descargables.general',
+                    //'can' => 'admin.galerias.listlideres'
+                ],
+
+            ],
+        ],
+
         ['header' => 'USUARIO'],
 
         [
