@@ -26,4 +26,12 @@ class Galeria extends Model
         return $this->belongsTo(User::class, 'createdby_id');
     }
 
+    // GALERIA GENERAL TIPO USUARIO
+    public function scopeGaleriaTipoUsuario($query, $tipoId, $userId)
+    {
+        return $query->select('id', 'url', 'galeriatipo_id', 'created_at')
+            ->where('galeriatipo_id', $tipoId)
+            ->where('user_id', $userId)
+            ->latest();
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UsuariosResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -49,7 +50,56 @@ class DatatableController extends Controller
             ->make(true);
     }
 
+    public function galeriaTodos3()
+    {
+        $users = User::with(['roles:name', 'congregacion:id,direccion'])->get();
+
+        $data = UsuariosResource::collection($users);
+
+        return response()->json([
+            'draw' => 1, // Número de solicitud de dibujo
+            'recordsTotal' => $users->count(), // Total de registros antes de filtrado
+            'recordsFiltered' => $users->count(), // Total de registros después del filtrado
+            'data' => $data, // Datos a mostrar
+        ]);
+    }
+
     public function galeriaTodos()
+    {
+
+
+        $users = User::with(['roles:name', 'congregacion:id,direccion'])->get();
+
+        $data = $users->map(function ($user) {
+            $privado = route('admin.galerias.privadoadmin', $user);
+            $general = route('admin.galerias.generaladmin', $user);
+
+            return [
+                'id' => $user->id,
+                'codigo' => $user->codigo,
+                'nombre' => $user->nombre,
+                'apellidos' => $user->apellidos,
+                'celular' => $user->celular,
+                'email' => $user->email,
+                'role' => $user->roles->pluck('name')->implode(', '),
+                'direccion_congregacion' => $user->congregacion->direccion,
+                'action' => '<div class="btn-group" role="group">' .
+                    '<a href="' . $privado . '" class="edit btn btn-danger btn-sm">Galeria privada</a>' .
+                    ' <a href="' . $general . '" class="edit btn btn-success btn-sm">Galeria general</a>' .
+                    '</div>',
+            ];
+        });
+
+        return response()->json([
+            'draw' => 1, // Número de solicitud de dibujo
+            'recordsTotal' => $users->count(), // Total de registros antes de filtrado
+            'recordsFiltered' => $users->count(), // Total de registros después del filtrado
+            'data' => $data, // Datos a mostrar
+        ]);
+    }
+
+
+    public function galeriaTodos2()
     {
         $cacheKey = 'galeria_admin';
 
@@ -115,5 +165,61 @@ class DatatableController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function listJson(Request $request)
+    {
+
+        // Page Length
+        $pageNumber = ($request->start / $request->length) + 1;
+        $pageLength = $request->length;
+        $skip       = ($pageNumber - 1) * $pageLength;
+
+        // Page Order
+        $orderColumnIndex = $request->order[0]['column'] ?? '0';
+        $orderBy = $request->order[0]['dir'] ?? 'desc';
+
+        $orderByName = "name";
+
+        switch ($orderColumnIndex) {
+            case "0":
+                $orderByName = "nombre";
+                break;
+            case "1":
+                $orderByName = "apellidos";
+                break;
+            case "2":
+                $orderByName = "celular";
+                break;
+
+            case "3":
+                $orderByName = "uuid";
+                break;
+        }
+        $query = \DB::table("users")
+            ->select('id', 'nombre', 'apellidos', 'celular', 'uuid'); // Select specific columns
+
+        // Search
+        // $search = $request->search["value"];
+        $search = $request->cSearch;
+        if (!empty($search)) {
+            $query = $query->where(function ($query) use ($search) {
+                $query->orWhere('nombre', 'like', "%" . $search . "%");
+                $query->orWhere('apellidos', 'like', "%" . $search . "%");
+                $query->orWhere('celular', 'like', "%" . $search . "%");
+            });
+        }
+
+        $query = $query->orderBy($orderByName, $orderBy);
+        $recordsTotal = $recordsFiltered = $query->count();
+
+        $users = $query->take($pageLength)->skip($skip)->get();
+
+        return response()->json([
+            'draw' => $request->draw,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $users
+        ], 200);
     }
 }

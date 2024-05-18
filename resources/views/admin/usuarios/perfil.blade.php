@@ -124,7 +124,7 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Imagen portada (480x640) *</label>
+                                        <label>Imagen perfil *</label>
                                         <input class="form-control-file" type="file" class="custom-file-input"
                                             name="file" id="file" accept="image/*" onchange="cambiarImagen(event)">
                                         @error('file')

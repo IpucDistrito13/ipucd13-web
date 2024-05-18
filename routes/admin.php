@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('datatable/usuarios', [DatatableController::class, 'usuarios'])->name('datatable.usuarios');
-Route::get('datatable/galerias', [DatatableController::class, 'galeriaTodos'])->name('datatable.galeriaTodos');
+Route::post('datatable/galerias', [DatatableController::class, 'galeriaTodos'])->name('datatable.galeriaTodos');
 
 
 Route::resource('roles', RolController::class)->names('admin.roles');
@@ -81,18 +81,48 @@ Route::resource('publicaciones', PublicacionController::class)
 
 
 Route::resource('galeria_tipos', GaleriaTipo::class)->names('admin.galeria_tipos');
+
+//LISTAR TODOS LOS USUARIOS CON ROL PASTOR
 Route::get('galerias', [GaleriaController::class, 'index'])->name('admin.galerias.index');
 
 //GALERIA PRIVADA ADMIN
-Route::get('galeria/priv/{usuario}', [GaleriaController::class, 'privadoAdmin'])->name('admin.galerias.privadoadmin');
-
-//GALERIA GENERAL ADMIN
-Route::get('galeria/gen/{usuario}', [GaleriaController::class, 'generalAdmin'])->name('admin.galerias.generaladmin');
+Route::get('galeria/privado/{usuario}', [GaleriaController::class, 'privadoAdmin'])->name('admin.galerias.privadoadmin');
+Route::get('galeria/general/{usuario}', [GaleriaController::class, 'generalAdmin'])->name('admin.galerias.generalAdmin');
 
 //GUARDAR IMAGENES MASIVO
-Route::post('galerias/pastores/privado', [GaleriaController::class, 'upload'])->name('admin.galerias.upload');
+Route::post('galerias/upload', [GaleriaController::class, 'upload'])->name('admin.galerias.upload');
+
+//ELIMINA UNA IMAGEN EN ESPECIFICA
+Route::delete('admin/galeria/{galeria}', [GaleriaController::class, 'destroy'])->name('admin.galeria.destroy');
+
+//LISTAR TODOS LOS USUARIOS CON ROL PASTOR
+Route::get('galerias/pastores', [GaleriaController::class, 'list'])->name('admin.galerias.list');
+
+
+
+/*
+
+//LISTAR TODOS LOS PASTORES
+Route::get('galerias/pastores', [GaleriaController::class, 'pastores'])->name('admin.galerias.listpastores');
+Route::get('galeria/general', [GaleriaController::class, 'lideres'])->name('admin.galerias.listlideres');
+
+
+//GALERIA GENERAL SE MUESTRA PARA PASTORES Y LIDERES
+Route::get('galeria/general/{uuid}', [GaleriaController::class, 'galeriaGeneral'])->name('admin.galerias.galeriaGeneral');
+
+//GALERIA PASTORES SE MUESTRA SOLO PARA LOS ROLES QUE SON PASTORES
+Route::get('galeria/pastores/{uuid}', [GaleriaController::class, 'galeriaPastores'])->name('admin.galerias.galeriaPastores'); //OK
+
+
+
+
+//GALERIA GENERAL ADMIN
+Route::get('galeria/general/{usuario}', [GaleriaController::class, 'generalAdmin'])->name('admin.galerias.generaladmin');
+
 
 Route::delete('admin/galeria/{galeria}', [GaleriaController::class, 'destroy'])->name('admin.galeria.destroy');//ELIMINA UNA IMAGEN EN ESPECIFICA
-Route::delete('admin/galeria/{galeria}', [GaleriaController::class, 'destroy'])->name('admin.galeria.destroy');//ELIMINA UNA IMAGEN EN ESPECIFICA
+*/
 
 Route::post('/file/delete', [GaleriaController::class, 'delete'])->name('file.delete');
+
+Route::post('/users/listJson', [DatatableController::class, 'listJson'])->name('users.listJson');

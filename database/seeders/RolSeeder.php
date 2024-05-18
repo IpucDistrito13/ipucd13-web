@@ -99,7 +99,7 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.galeria_tipos.edit'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galeria_tipos.destroy'])->syncRoles([$rol1]);
 
-        $permission = Permission::create(['name' => 'admin.galerias.index'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.galerias.index'])->syncRoles([$rol1, $rol2]);
         $permission = Permission::create(['name' => 'admin.galerias.create'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galerias.edit'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galerias.destroy'])->syncRoles([$rol1]);
@@ -107,9 +107,11 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.galerias.privadoadmin'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galerias.generaladmin'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.galerias.upload'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.galeria.destroy'])->syncRoles([$rol1]);
 
-        $permission = Permission::create(['name' => 'admin.galerias.listpastores'])->syncRoles([$rol1, $rol2, $rol3]);
-        $permission = Permission::create(['name' => 'admin.galerias.listlideres'])->syncRoles([$rol1, $rol2, $rol3]);
+        $permission = Permission::create(['name' => 'admin.galerias.list'])->syncRoles([$rol3]);
+
+        
 
 
         //admin.videos.store

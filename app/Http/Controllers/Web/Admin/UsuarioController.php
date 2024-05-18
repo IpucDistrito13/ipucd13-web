@@ -305,4 +305,6 @@ class UsuarioController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+
+    
 }

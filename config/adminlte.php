@@ -316,17 +316,12 @@ return [
             //'can' => 'manage-blog',
         ],
 
-        ['header' => 'ADMINISTRADOR'],
-
-
         [
             'text' => ' Adm. Eventos',
             'route' => 'admin.eventos.create',
             'icon' => 'fas fa-calendar-alt',
             'can' => 'admin.eventos.create'
         ],
-
-
 
         [
             'text' => ' Adm. Cronograma distrital',
@@ -405,22 +400,13 @@ return [
         ],
 
         [
-            'text' => 'Galería',
+            'text' => 'Galeria',
+            'route' => 'admin.galerias.index',
             'icon' => 'fas fa-file-image',
-            'submenu' => [
-                [
-                    'text' => 'Todos admin',
-                    'route' => 'admin.galerias.index',
-                    'can' => 'admin.galerias.index'
-                ],
-                
-
-            ],
+            'can' => 'admin.galerias.index'
         ],
 
-        
-
-        ['header' => 'UUSUARIOS'],
+        ['header' => 'USUARIO'],
 
         [
             'text' => ' Eventos',
@@ -441,6 +427,13 @@ return [
             'route' => 'admin.usuarios.list',
             'icon' => 'fas fa-user',
             'can' => 'admin.usuarios.list'
+        ],
+
+        [
+            'text' => 'Galeria',
+            'route' => 'admin.galerias.list',
+            'icon' => 'fas fa-file-image',
+            'can' => 'admin.galerias.list'
         ],
 
         [

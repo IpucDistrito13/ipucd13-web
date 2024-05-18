@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Admin\DatatableController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+
+Route::get('datatable/galerias', [DatatableController::class, 'galeriaTodos'])->name('datatable.galeriaTodos');
 

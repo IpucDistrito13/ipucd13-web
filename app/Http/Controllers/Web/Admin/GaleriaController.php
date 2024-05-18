@@ -9,17 +9,54 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
+use Yajra\DataTables\Facades\DataTables;
 
 class GaleriaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $rolId = 2;
+            $data = User::ListarPorRol($rolId);
+
+            return datatables()::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $buttons = '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
+                    $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería General</a>';
+                    return $buttons;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
         return view('admin.galerias.index');
     }
+
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            $rolId = 2;
+            $data = User::ListarPorRol($rolId);
+
+            return datatables()::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $buttons = ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
+                    return $buttons;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.galerias.list');
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -85,27 +122,27 @@ class GaleriaController extends Controller
     public function upload(Request $request)
     {
         // Validar la solicitud
-    
+
         $usuario = $request->input('usuario');
         $tipo = $request->input('type');
-    
+
         // Verificar si el archivo existe en la solicitud
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-    
+
             // Generar un nombre de archivo único
             $fileName = time() . '-' . $file->getClientOriginalName();
-    
+
             // Validar el tipo de galería y definir la ruta de almacenamiento
             $url = $file->storeAs('public/galeria/' . $usuario, $fileName);
-    
+
             if (!$url) {
                 return response()->json(['error' => 'Error al almacenar el archivo.'], 500);
             }
-    
+
             // Generar UUID
             $uuid = (string) Str::uuid();
-    
+
             // Crear el array de datos para guardar en la base de datos
             $data = [
                 'uuid' => $uuid,
@@ -114,7 +151,7 @@ class GaleriaController extends Controller
                 'galeriatipo_id' => $tipo,
                 'createdby_id' => Auth::id(),
             ];
-    
+
             // Crear el registro en la base de datos
             try {
                 $galeria = Galeria::create($data);
@@ -128,38 +165,72 @@ class GaleriaController extends Controller
     }
 
 
-    public function privadoAdmin(User $usuario)
+    public function privadoAdmin($uuid)
+    {
+        // 2 = GALERIA PRIVADO
+        $tipoGeneral = 2;
+        $usuario = User::where('uuid', $uuid)->first();
+        $galerias = Galeria::galeriaTipoUsuario($tipoGeneral, $usuario->id)->paginate(8);
+
+        // Formatear created_at a un formato de 12 horas
+        foreach ($galerias as $galeria) {
+            $galeria->formatted_created_at = $galeria->created_at->format('Y-m-d h:i:s A');
+        }
+
+        return view('admin.galerias.upload_privado', compact('usuario', 'galerias'));
+    }
+
+    //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES
+    public function generalAdmin($uuid)
+    {
+        // 1 = GALERIA GENERAL
+        $tipoGeneral = 1;
+        $usuario = User::where('uuid', $uuid)->first();
+        $galerias = Galeria::galeriaTipoUsuario($tipoGeneral, $usuario->id)->paginate(8);
+
+        // Formatear created_at a un formato de 12 horas
+        foreach ($galerias as $galeria) {
+            $galeria->formatted_created_at = $galeria->created_at->format('Y-m-d h:i:s A');
+        }
+
+        return view('admin.galerias.upload_general', compact('usuario', 'galerias'));
+    }
+
+    /*
+
+        public function privadoAdmin(User $usuario)
     {
         $galerias = Galeria::select('id', 'url', 'galeriatipo_id', 'created_at')
             ->where('galeriatipo_id', 2)
             ->where('user_id', $usuario->id)
             ->latest() // Ordenar las fotos por fecha de creación en orden descendente
             ->paginate(8);
-    
+
         // Formatear created_at a un formato de 12 horas
         foreach ($galerias as $galeria) {
             $galeria->formatted_created_at = $galeria->created_at->format('Y-m-d h:i:s A');
         }
-    
+
         return view('admin.galerias.privado', compact('usuario', 'galerias'));
     }
-    
+    */
+
 
 
     public function delete(Request $request)
     {
         try {
             $uuid = $request->input('uuid');
-    
+
             // Buscar el archivo con el UUID proporcionado
             $file = Galeria::where('uuid', $uuid)->first();
-    
+
             if ($file) {
                 // Eliminar el archivo del almacenamiento
                 Storage::delete($file->url);
                 // Eliminar el registro de la base de datos
                 $file->delete();
-    
+
                 return response()->json(['success' => true]);
             } else {
                 return response()->json(['success' => false, 'message' => 'Archivo no encontrado.']);
@@ -169,5 +240,85 @@ class GaleriaController extends Controller
             return response()->json(['success' => false, 'message' => 'Error al eliminar el archivo.']);
         }
     }
-    
+
+    /*
+    public function pastores()
+    {
+        //$rol = 2; // 2 = Pastor
+        $usuarios = User::with(['roles:id,name', 'congregacion'])->get();
+        //return $usuarios;
+        return view('admin.galerias.pastores', compact('usuarios'));
+    }
+    */
+
+
+    public function lideres(Request $request)
+    {
+
+        if ($request->ajax()) {
+            $rolId = 2;
+            $data =  $usersWithRole = User::whereHas('roles', function ($query) use ($rolId) {
+                $query->where('id', $rolId);
+            })->with('roles')->get();
+            //$data = User::select('id', 'nombre', 'apellidos', 'celular');
+
+            return datatables()::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $galeriaGeneralUrl = route('admin.galerias.galeriaGeneral', ['uuid' => $row->uuid]);
+                    $btn = '<a href="' . $galeriaGeneralUrl . '" class="edit btn btn-danger btn-sm">Galeria privado</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.galerias.lideres');
+
+
+        //return view('admin.galerias.lideres');
+
+    }
+
+
+    public function galeriaPastores($uuid)
+    {
+
+        // Obtener todos los datos de la galería basados en el UUID
+        $usuario = User::where('uuid', $uuid)->first();
+        $galerias = Galeria::where('user_id', $usuario->id)->paginate(10); // Paginar los resultados, 10 registros por página
+
+        return view('admin.galerias.test', compact('galerias', 'usuario'));
+
+
+        // Verificar si se encontró la galería
+        if (!$usuario) {
+            // Manejar el caso donde no se encuentra la galería con el UUID proporcionado
+            return response()->json(['error' => 'Galería no encontrada'], 404);
+        }
+
+        // Ahora puedes usar $galeria para acceder a todos los datos de la galería
+        return response()->json($usuario);
+    }
+
+
+    public function galeriaGeneral($uuid)
+    {
+
+        // Obtener todos los datos de la galería basados en el UUID
+        $usuario = User::where('uuid', $uuid)->first();
+        $galerias = Galeria::where('user_id', $usuario->id)->paginate(10); // Paginar los resultados, 10 registros por página
+
+        return view('admin.galerias.test', compact('galerias', 'usuario'));
+
+
+        // Verificar si se encontró la galería
+        if (!$usuario) {
+            // Manejar el caso donde no se encuentra la galería con el UUID proporcionado
+            return response()->json(['error' => 'Galería no encontrada'], 404);
+        }
+
+        // Ahora puedes usar $galeria para acceder a todos los datos de la galería
+        return response()->json($usuario);
+    }
 }

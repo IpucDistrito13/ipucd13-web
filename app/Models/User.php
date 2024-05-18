@@ -135,5 +135,6 @@ class User extends Authenticatable
         });
     }
 
+
     
 }

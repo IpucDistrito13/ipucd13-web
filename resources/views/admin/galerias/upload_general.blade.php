@@ -9,13 +9,15 @@
             <i class="fas fa-images"></i> Galería general: {{ $usuario->nombre . ' ' . $usuario->apellidos }}
         </h1>
         <div>
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.galerias.index') }}">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
 
             @can('admin.galerias.upload')
                 <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_upload">
                     <i class="fas fa-upload"></i> Añadir a galería
                 </a>
             @endcan
-
         </div>
 
     </div>
@@ -104,39 +106,42 @@
 
     <!-- /.card -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="modal_upload">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Subir fotos</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="{{ route('admin.galerias.upload') }}" method="POST" enctype="multipart/form-data"
-                    class="dropzone" id="myDropzone">
-                    @csrf
-                    <div class="modal-body">
-
-                        <input type="hidden" value="{{ $usuario->id }}" id="usuario" name="usuario">
-                        <input type="hidden" value="1" id="type" name="type">
-
-                        <div class="fallback">
-                            <input type="file" name="file" multiple>
-                        </div>
-
+    @can('admin.galerias.upload')
+        <!-- Modal -->
+        <div class="modal fade" id="modal_upload">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Subir fotos</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
+                    <form action="{{ route('admin.galerias.upload') }}" method="POST" enctype="multipart/form-data"
+                        class="dropzone" id="myDropzone">
+                        @csrf
+                        <div class="modal-body">
 
-                </form>
+                            <input type="hidden" value="{{ $usuario->id }}" id="usuario" name="usuario">
+                            <input type="hidden" value="1" id="type" name="type">
+
+                            <div class="fallback">
+                                <input type="file" name="file" multiple>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
+        <!-- /.modal -->
+    @endcan
+
 
 @stop
 
