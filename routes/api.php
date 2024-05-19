@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Web\Admin\ComiteController;
 use Encore\Admin\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,12 +31,12 @@ Route::middleware('auth:sanctum')->group(function () {
 */
 
 
+
 Route::post('login', [LoginController::class, 'login']);
 
-
-Route::middleware(['auth:sanctum'])->group(function() {
-    //Route::get('logout',[LoginController::class, 'logout']);
-    //Importamos la version 1 (V1)
+Route::prefix('v1')->group(function () {
 
     require __DIR__ . '/api_v1.php';
+
 });
+
