@@ -116,8 +116,8 @@
             //autoProcessQueue: false,
             //addRemoveLinks: true,
             dictRemoveFile: 'Eliminar',
-            dictDefaultMessage: "Arrastra y suelta las fotos aquí o haz clic para seleccionar las fotos de forma masiva. Maximo 20 archivos.",
-            //maxFilesize: 2000, // Tamaño máximo del archivo en MB
+            dictDefaultMessage: "Arrastra y suelta las fotos aquí o haz clic para seleccionar las fotos de forma masiva. Maximo 20 archivos masivo, y tamaño 200 Mb",
+            maxFilesize: 200, // Tamaño máximo de archivo 100 Mb
             maxFiles: 20,
             init: function() {
                 var myDropzone = this;
