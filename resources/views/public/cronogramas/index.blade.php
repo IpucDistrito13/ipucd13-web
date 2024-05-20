@@ -156,8 +156,10 @@
 
                     Swal.fire({
                         title: info.event.title,
+                        icon: "warning",
                         html: eventDetailsHTML,
-                        cancelButtonColor: "#3085d6",
+                    }).then((result) => {
+
                     });
                 },
 
@@ -165,11 +167,10 @@
                 // events will be populated dynamically
                 events: function(info, successCallback, failureCallback) {
                     $.ajax({
-                        url: "{{ route('public.cronogramas.apiGetCronogramas') }}",
+                        url: "{{ route('public.eventos.apiGetEventos') }}",
                         method: 'GET',
                         success: function(response) {
-                            //console.log(response);
-                            // Parse the response and format it appropriately for FullCalendar
+
                             var events = response.map(function(eventData) {
                                 return {
                                     id: eventData.id,
