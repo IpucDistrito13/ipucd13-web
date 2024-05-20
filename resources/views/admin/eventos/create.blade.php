@@ -1,91 +1,69 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Eventos | IPUC D13')
 
 @section('content_header')
     <h1>Eventos</h1>
 @stop
 
 @section('content')
-
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true" class="text-white">&times;</span>
-            </button>
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
-            {{ session('error') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true" class="text-white">&times;</span>
-            </button>
-        </div>
-    @endif
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-
-                <!-- left column -->
-                <div class="col-md-5">
-                    <!-- general form elements -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Datos eventos</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-
-                        <form method="POST" action="{{ route('admin.eventos.store') }}" autocomplete="off">
-                            @csrf
-                            <div class="card-body">
-
-                                @include('admin.eventos.form')
-
-                            </div>
-                            <!-- /.card-body -->
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.card -->
-
+    <div class="row">
+        <!-- registro -->
+        <div class="col-md-5">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Datos eventos</h3>
                 </div>
-                <!--/.col (left) -->
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="POST" action="{{ route('admin.eventos.store') }}" autocomplete="off">
+                    @csrf
+                    <div class="card-body">
 
+                        @include('admin.eventos.form')
 
-                <!-- /.col -->
-                <div class="col-md-7">
-                    <div class="card card-primary">
-                        <div class="card-body p-0">
-                            <!-- THE CALENDAR -->
-                            <div id="calendar"></div>
-                        </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col -->
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+
             </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+            <!-- /.card -->
+
+
+        </div>
+        <!--/. registro) -->
+
+
+        <!-- calendario -->
+        <div class="col-md-7">
+            <div class="card card-primary">
+                <div class="card-body p-0">
+                    <!-- THE CALENDAR -->
+                    <div id="calendar"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+
+        </div>
+        <!--/.calendario -->
+
+    </div>
+    <!-- /.row -->
+
 @stop
 
 @section('css')
     {{-- Add here extra stylesheets --}}
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
 @stop
 

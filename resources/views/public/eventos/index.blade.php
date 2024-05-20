@@ -159,7 +159,7 @@
                 // events will be populated dynamically
                 events: function(info, successCallback, failureCallback) {
                     $.ajax({
-                        url: 'api/apiGetEventos',
+                        url: "{{ route('admin.eventos.apiGetEventos') }}",
                         method: 'GET',
                         success: function(response) {
                             //console.log(response);

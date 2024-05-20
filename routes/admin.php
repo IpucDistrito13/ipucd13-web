@@ -76,7 +76,7 @@ Route::resource('eventos', EventoController::class)->names('admin.eventos');
 
 Route::resource('cronogramas', CronogramaController::class)->names('admin.cronogramas');
 Route::get('apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('admin.cronogramas.apiGetCronogramas');
-Route::get('public/apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
+//Route::get('public/apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
 
 Route::get('apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('admin.eventos.apiGetEventos');
 Route::get('public/apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('public.eventos.apiGetEventos');
