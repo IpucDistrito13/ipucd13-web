@@ -21,11 +21,11 @@ class CronogramaController extends Controller
 
         return view('public.cronogramas.index', compact('metaData', 'comites'));
     }
-    /*
+    
     public function apiGetCronogramas()
     {
         $cronogramas = Cronograma::select('id','title', 'start', 'end', 'backgroundColor', 'borderColor','lugar' )->get();
         return response()->json($cronogramas);
     }
-    */
+    
 }

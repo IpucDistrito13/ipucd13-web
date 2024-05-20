@@ -33,6 +33,8 @@ Route::get('/', [InicioController::class, 'index'])->name('inicio.index');
 
 Route::get('eventos', [EventoController::class, 'index'])->name('public.eventos.index');
 Route::get('cronogramas', [CronogramaController::class, 'index'])->name('public.cronogramas.index');
+Route::get('public/apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
+
 //Route::get('apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
 
 Route::get('comites/{comite}', [ComiteController::class, 'show'])->name('comite.show');

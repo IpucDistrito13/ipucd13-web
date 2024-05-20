@@ -1,69 +1,66 @@
 <!doctype html>
 <html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    
+        <title>{{ $metaData['titulo'] }}</title>
+        <meta name="author" content="{{ $metaData['autor'] }}">
+        <meta name="description" content="{{ $metaData['description'] }}">
+        <!-- favicon icon -->
+        @include('public.layouts.iconos')
+        <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css')}}" />
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <title>{{ $metaData['titulo'] }}</title>
-    <meta name="author" content="{{ $metaData['autor'] }}">
-    <meta name="description" content="{{ $metaData['description'] }}">
-    <!-- favicon icon -->
-    @include('public.layouts.iconos')
-    <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" />
+        </head>
+    <body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">  
 
-    <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @include('public.layouts.menu')
+        
+        <!-- start section -->
+        <section class="position-relative overflow-hidden">
+            <div class="container position-relative">
+ 
+                <div class="row">
+                    <div id="calendar"></div>
 
-</head>
-
-<body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">
-
-    @include('public.layouts.menu')
-
-    <!-- start section -->
-    <section class="position-relative overflow-hidden">
-        <div class="container position-relative">
-
-            <div class="row">
-                <div id="calendar"></div>
-
-            </div>
-            <div class="position-absolute bottom-130px z-index-minus-1 w-100 left-0px d-none d-lg-block">
-                <div class="row position-relative mt-50px">
-                    <div class="col-12">
-                        <!-- start marquees -->
-                        <div class="marquees-text fs-200 ls-minus-2px alt-font fw-600 text-nowrap opacity-3">Próximos
-                            eventos</div>
-                        <!-- end marquees -->
+                </div>
+                <div class="position-absolute bottom-130px z-index-minus-1 w-100 left-0px d-none d-lg-block">
+                    <div class="row position-relative mt-50px">
+                        <div class="col-12">
+                            <!-- start marquees -->
+                            <div class="marquees-text fs-200 ls-minus-2px alt-font fw-600 text-nowrap opacity-3">Próximos eventos</div>
+                            <!-- end marquees -->
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
+        <!-- end page title -->
+
+
+         <!-- start footer -->
+         @include('public.layouts.footer')
+         <!-- end footer -->
+
+        <!-- end footer -->
+        <!-- start scroll progress -->
+        <div class="scroll-progress d-none d-xxl-block">
+            <a href="#" class="scroll-top" aria-label="scroll">
+                <span class="scroll-text">Scroll</span><span class="scroll-line"><span class="scroll-point"></span></span>
+            </a>
         </div>
-    </section>
-    <!-- end page title -->
+        <!-- end scroll progress -->
+        <!-- javascript libraries -->
+        <script type="text/javascript" src="{{ asset('js/jquery.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('js/vendors.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 
-
-    <!-- start footer -->
-    @include('public.layouts.footer')
-    <!-- end footer -->
-
-    <!-- end footer -->
-    <!-- start scroll progress -->
-    <div class="scroll-progress d-none d-xxl-block">
-        <a href="#" class="scroll-top" aria-label="scroll">
-            <span class="scroll-text">Scroll</span><span class="scroll-line"><span class="scroll-point"></span></span>
-        </a>
-    </div>
-    <!-- end scroll progress -->
-    <!-- javascript libraries -->
-    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/vendors.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
-
-    <!-- AdminLTE App -->
+        <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <!-- fullCalendar 2.2.5 -->
     <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
@@ -135,6 +132,7 @@
                     var end = info.event.end;
 
                     // Obtener el ID del evento
+                    console.log('Identificador: ' + info.event)
                     var eventId = info.event.id;
 
                     // Crear la cadena HTML para mostrar el lugar, la fecha de inicio y la fecha final
@@ -152,10 +150,8 @@
 
                     Swal.fire({
                         title: info.event.title,
-                        icon: "warning",
                         html: eventDetailsHTML,
-                    }).then((result) => {
-
+                        cancelButtonColor: "#3085d6",
                     });
                 },
 
@@ -163,13 +159,14 @@
                 // events will be populated dynamically
                 events: function(info, successCallback, failureCallback) {
                     $.ajax({
-                        url: "{{ route('admin.eventos.apiGetEventos') }}",
+                        url: "{{ route('public.eventos.apiGetEventos') }}",
                         method: 'GET',
                         success: function(response) {
-
+                            //console.log(response);
+                            // Parse the response and format it appropriately for FullCalendar
                             var events = response.map(function(eventData) {
                                 return {
-                                    id: eventData.id,
+                                  id: eventData.id,
                                     title: eventData.title,
                                     start: new Date(eventData.start),
                                     end: new Date(eventData.end),
@@ -177,7 +174,7 @@
                                     borderColor: eventData.borderColor,
                                     allDay: eventData.allDay,
                                     lugar: eventData
-                                        .lugar, 
+                                        .lugar, // Agregar la propiedad 'lugar'
 
                                 };
                             });
@@ -208,6 +205,5 @@
 
 
 
-</body>
-
+    </body>
 </html>
