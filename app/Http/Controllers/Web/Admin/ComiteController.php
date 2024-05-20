@@ -178,7 +178,7 @@ class ComiteController extends Controller
 
         // Redireccionar con un mensaje de éxito
         $data = [
-            'message' => 'Comité actualizada exitosamente.'
+            'message' => 'Comité actualizado exitosamente.'
         ];
 
 
@@ -200,13 +200,13 @@ class ComiteController extends Controller
             //Cache
 
             $data = [
-                'message' => 'Comité eliminada exitosamente.',
+                'message' => 'Comité eliminado exitosamente.',
             ];
 
             return redirect()->route('admin.comites.index')->with('success', $data['message']);
         } catch (\Exception $e) {
             $data = [
-                'message' => 'No se pudo eliminar la Comité, debido a restricción de integridad.',
+                'message' => 'No se pudo eliminar el comité, debido a restricción de integridad.',
             ];
 
             return redirect()->route('admin.comites.index')->with('error', $data['message']);
