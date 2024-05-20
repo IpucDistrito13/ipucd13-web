@@ -35,8 +35,6 @@ Route::get('eventos', [EventoController::class, 'index'])->name('public.eventos.
 Route::get('cronogramas', [CronogramaController::class, 'index'])->name('public.cronogramas.index');
 //Route::get('apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
 
-Route::get('apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('public.eventos.apiGetEventos');
-
 Route::get('comites/{comite}', [ComiteController::class, 'show'])->name('comite.show');
 Route::get('descargables', [DescargableController::class, 'index'])->name('public.descargables.index');
 Route::get('publicaciones', [PublicacionController::class, 'index'])->name('public.publicaciones.index');
