@@ -20,7 +20,7 @@ class InicioController extends Controller
         $municipios = Municipio::select('id')->get();
         $departamentos = Departamento::select('id')->get();
 
-        $redes_sociales = Redes::where('estado', 'Activo')->get();
+        $redes_sociales = Redes::Activo()->get();
         $facebookLink = '';
         $youtubeLink = '';
         $instagramLink = '';
@@ -39,6 +39,8 @@ class InicioController extends Controller
             }
         }
 
+        //return $instagramLink;
+
         $metaData = [
             'titulo' => 'Distrito 13 | Iglesia Pentecostal Unida de Colombia',
             'autor' => 'IPUC D13',
@@ -50,6 +52,7 @@ class InicioController extends Controller
             'comites' => $comites,
 
             'publicaciones' => $publicaciones,
+            
             'facebook' => $facebookLink,
             'youtube' => $youtubeLink,
             'instagram' => $instagramLink,

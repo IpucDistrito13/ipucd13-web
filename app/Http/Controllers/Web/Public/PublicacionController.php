@@ -16,6 +16,27 @@ class PublicacionController extends Controller
     {
         $comites = Comite::all();
 
+        //REDES
+        $redes_sociales = Redes::Activo()->get();
+        $facebookLink = '';
+        $youtubeLink = '';
+        $instagramLink = '';
+        // Itera sobre la lista para encontrar Facebook
+        foreach ($redes_sociales as $redSocial) {
+            switch ($redSocial["nombre"]) {
+                case "Facebook":
+                    $facebookLink = $redSocial["url"];
+                    break;
+                case "YouTube":
+                    $youtubeLink = $redSocial["url"];
+                    break;
+                case "Instagram":
+                    $instagramLink = $redSocial["url"];
+                    break;
+            }
+        }
+        // REDES
+
         //PAGINACION POR CACHE
         if (request()->page) {
             $key = 'publicaciones' . request()->page;
@@ -48,6 +69,10 @@ class PublicacionController extends Controller
             'comites' => $comites,
             'publicaciones' => $publicaciones,
             'metaData' => $metaData,
+
+            'facebook' => $facebookLink,
+            'youtube' => $youtubeLink,
+            'instagram' => $instagramLink,
         ]);
     }
 
@@ -63,11 +88,11 @@ class PublicacionController extends Controller
             ->take(3)
             ->get();
 
-            $metaData = [
-                'title' => 'Publicaciones | IPUC D13',
-                'author' => 'IPUC D13',
-                'description' => '',
-            ];
+        $metaData = [
+            'title' => 'Publicaciones | IPUC D13',
+            'author' => 'IPUC D13',
+            'description' => '',
+        ];
 
         return view('public.publicaciones.show', [
             'publicacion' => $publicacion,

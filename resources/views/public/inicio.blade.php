@@ -412,6 +412,9 @@
                 </div>
 
             </div>
+
+            
+            <!-- seecin redes -->
             <div class="row justify-content-center mt-5">
 
                 <!-- start features box item -->
@@ -422,9 +425,11 @@
                             <i class="feather icon-feather-mail fs-20 text-dark-gray"></i>
                         </div>
                         <div class="feature-box-content">
-                            <span class="text-dark-gray fw-500 fs-20 xs-fs-18 ls-minus-05px">Suscríbete, mira videos y
-                                transmisiones en <a href=""
-                                    class="text-decoration-line-bottom-medium text-dark-gray fw-600">Youtube</a></span>
+                            <span class="text-dark-gray fw-500 fs-20 xs-fs-18 ls-minus-05px">
+                                Suscríbete, mira videos y transmisiones en 
+                                <a href="{{ $youtube }}" target="_blank" class="text-decoration-line-bottom-medium text-dark-gray fw-600">Youtube</a>
+                            </span>
+                            
                         </div>
                     </div>
                 </div>
@@ -438,7 +443,7 @@
                         </div>
                         <div class="feature-box-content">
                             <span class="text-dark-gray fw-500 fs-20 xs-fs-18 ls-minus-05px">Síguenos y ve nuestro
-                                contenido. <a href="{{ $instagram }}"
+                                contenido. <a href="{{ $instagram }}" target="_blank"
                                     class="text-decoration-line-bottom-medium text-dark-gray fw-600">Instagram</a></span>
                         </div>
                     </div>
@@ -453,7 +458,7 @@
                         </div>
                         <div class="feature-box-content">
                             <span class="text-dark-gray fw-500 fs-20 xs-fs-18 ls-minus-05px">Manténgase en contacto. <a
-                                    href="{{ $facebook }}"
+                                    href="{{ $facebook }}" target="_blank"
                                     class="text-decoration-line-bottom-medium text-dark-gray fw-600">Danos like en
                                     facebook</a></span>
                         </div>
@@ -461,6 +466,9 @@
                 </div>
                 <!-- end features box item -->
             </div>
+            <!-- end seccion redes -->
+
+
         </div>
     </section>
     <!-- end section publicaciones -->

@@ -16,16 +16,8 @@ class ComiteController extends Controller
         //MOSTRAR LAS ULTIMAS 10 SERIES SEGUN EL COMITE
         $comites = Comite::all();
 
-        $series = Serie::ComitesUltimos10($comite);
-
-        //return   $series = Serie::all();
-        $publicaciones = Publicacion::where('estado', 'Publicado')
-            ->where('comite_id', $comite->id)
-            ->latest() // Ordenar por la columna 'created_at' de forma descendente
-            ->limit(4)  // Limitar a 4 resultados
-            ->get();    // Obtener los resultados
-
-        $redes_sociales = Redes::where('estado', 'Activo')->get();
+        //REDES
+        $redes_sociales = Redes::Activo()->get();
         $facebookLink = '';
         $youtubeLink = '';
         $instagramLink = '';
@@ -43,6 +35,18 @@ class ComiteController extends Controller
                     break;
             }
         }
+        // REDES
+
+        $series = Serie::ComitesUltimos10($comite);
+
+        //return   $series = Serie::all();
+        $publicaciones = Publicacion::where('estado', 'Publicado')
+            ->where('comite_id', $comite->id)
+            ->latest() // Ordenar por la columna 'created_at' de forma descendente
+            ->limit(4)  // Limitar a 4 resultados
+            ->get();    // Obtener los resultados
+
+        
 
         $metaData = [
             'title' => 'Comité | IPUC D13',
@@ -55,6 +59,7 @@ class ComiteController extends Controller
             'comite' => $comite,
             'publicaciones' => $publicaciones,
             'series' => $series,
+
             'facebook' => $facebookLink,
             'youtube' => $youtubeLink,
             'instagram' => $instagramLink,

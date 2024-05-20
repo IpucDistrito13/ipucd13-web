@@ -34,7 +34,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6 last-paragraph-no-margin xs-mb-30px"> 
                     <span class="fw-500 fs-18 d-block text-white mb-10px">Need help?</span>
                     <span class="lh-26 d-block">Call us directly?</span>
-                    <span class="text-white d-block mb-10px"><a href="tel:12345678910">+1 234 567 8910 </a><span class="bg-base-color fw-700 text-dark-gray lh-22 text-uppercase border-radius-30px ps-10px pe-10px fs-11 ms-5px d-inline-block align-middle">Free</span></span>
+                    <span class="text-white d-block mb-10px"><a href="tel:12345678910">+1 234 567 8910 </a></span>
                     <span class="lh-26 d-block">Need support?</span>
                     <a href="mailto:help@domain.com" class="text-white text-decoration-line-bottom">help@domain.com</a>
                 </div>
