@@ -62,4 +62,12 @@ class Publicacion extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    //MUESTRAS LAS ULTIMAS PUBLICACIONES EN PUBLICO
+    public function scopeGetPublicoShowPublicaciones($query){
+        return $query->where('estado', 'Publicado')
+            ->latest() // Ordenar por la columna 'created_at' de forma descendente
+            ->limit(4) // Limitar a 4 resultados
+            ->get(); // Obtener los resultados
+    }
 }

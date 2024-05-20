@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         //Storage::deleteDirectory('public');
 
-
         $this->call([RolSeeder::class]);
+        $this->call([RedesSeeder::class]);
 
         $this->call([DepartamentoSeeder::class]);
         $this->call([MunicipioSeeder::class]);
@@ -38,8 +38,6 @@ class DatabaseSeeder extends Seeder
         User::factory(2000)->create();
 
         
-
-
         \App\Models\Evento::factory(1)->create();
         \App\Models\Cronograma::factory(1)->create();
 

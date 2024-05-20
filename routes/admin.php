@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
+
 Route::get('datatable/usuarios', [DatatableController::class, 'usuarios'])->name('datatable.usuarios');
 Route::post('datatable/galerias', [DatatableController::class, 'galeriaTodos'])->name('datatable.galeriaTodos');
 
