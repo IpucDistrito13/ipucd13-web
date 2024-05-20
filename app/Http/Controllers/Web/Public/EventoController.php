@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comite;
+use App\Models\Evento;
 use Illuminate\Http\Request;
 
 class EventoController extends Controller
@@ -18,5 +19,11 @@ class EventoController extends Controller
         ];
 
         return view('public.eventos.index', compact('metaData', 'comites'));
+    }
+
+    public function apiGetEventos()
+    {
+        $eventos = Evento::select('id','title', 'start', 'end', 'backgroundColor', 'borderColor','lugar' )->get();
+        return response()->json($eventos);
     }
 }

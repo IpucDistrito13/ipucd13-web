@@ -11,17 +11,6 @@ use App\Http\Controllers\Web\Public\PublicacionController;
 use App\Http\Controllers\Web\Public\SerieController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -34,6 +23,7 @@ Route::get('/', [InicioController::class, 'index'])->name('inicio.index');
 Route::get('eventos', [EventoController::class, 'index'])->name('public.eventos.index');
 Route::get('cronogramas', [CronogramaController::class, 'index'])->name('public.cronogramas.index');
 Route::get('public/apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
+Route::get('public/apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('public.eventos.apiGetEventos');
 
 //Route::get('apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
 

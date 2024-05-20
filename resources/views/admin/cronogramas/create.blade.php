@@ -1,12 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Galería')
+@section('title', 'Cronograma distrital | IPUC D13')
 
 @section('content_header')
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Cronograma distrital</h1>
-
-    </div>
+    <h1>Cronograma distrital</h1>
 @stop
 
 @section('content')
@@ -29,73 +26,75 @@
         </div>
     @endif
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-
-                @can('admin.cronogramas.store')
-                    <!-- left column -->
-                    <div class="col-md-5">
-                        <!-- general form elements -->
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Datos cronograma</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <!-- form start -->
-                            <form method="POST" action="{{ route('admin.cronogramas.store') }}" autocomplete="off">
-                                @csrf
-                                <div class="card-body">
-
-                                    @include('admin.eventos.form')
-
-                                </div>
-                                <!-- /.card-body -->
-
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /.card -->
-
-                    </div>
-                    <!--/.col (left) -->
-                @endcan
-
-                <!-- /.col -->
-                <div class="col-md-7">
-                    <div class="card card-primary">
-                        <div class="card-body p-0">
-                            <!-- THE CALENDAR -->
-                            <div id="calendar"></div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
+    <div class="row">
+        <!-- registro -->
+        
+        <div class="col-md-5">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Datos cronograma</h3>
                 </div>
-                <!-- /.col -->
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="POST" action="{{ route('admin.cronogramas.store') }}" autocomplete="off">
+
+                @csrf
+                    <div class="card-body">
+
+                        @include('admin.eventos.form')
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+
             </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
+            <!-- /.card -->
+
+
+        </div>
+        <!--/. registro) -->
+
+
+        <!-- calendario -->
+        <div class="col-md-7">
+            <div class="card card-primary">
+                <div class="card-body p-0">
+                    <!-- THE CALENDAR -->
+                    <div id="calendar"></div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+
+
+        </div>
+        <!--/.calendario -->
+
+    </div>
+    <!-- /.row -->
 
 @stop
 
 @section('css')
     {{-- Add here extra stylesheets --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @stop
 
 @section('js')
+
+    <!-- Bootstrap -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <!-- jQuery UI -->
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- fullCalendar 2.2.5 -->
     <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('plugins/fullcalendar/main.js') }}"></script>
 
@@ -200,7 +199,7 @@
                             // Realizar la solicitud AJAX para eliminar el evento
                             $.ajax({
 
-                                url: "{{ url('admin/cronogramas') }}/" + eventId,
+                                url: "{{ url('admin/eventos') }}/" + eventId,
                                 type: 'DELETE',
                                 data: {
                                     "_token": csrfToken
@@ -221,10 +220,11 @@
                     });
                 },
 
+
                 // events will be populated dynamically
                 events: function(info, successCallback, failureCallback) {
                     $.ajax({
-                        url: "{{ route('admin.cronogramas.apiGetCronogramas') }}",
+                        url: "{{ route('public.cronogramas.apiGetCronogramas') }}",
                         method: 'GET',
                         success: function(response) {
 
