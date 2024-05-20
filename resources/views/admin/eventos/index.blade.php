@@ -184,9 +184,7 @@
                 }
             });
 
-
             calendar.render();
-            // $('#calendar').fullCalendar()
 
         })
     </script>
