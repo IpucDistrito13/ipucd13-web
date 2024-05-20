@@ -72,10 +72,16 @@ Route::get('perfil', [UsuarioController::class, 'perfil'])->name('admin.usuario.
 Route::post('usuarios/update/{usuario}', [UsuarioController::class, 'updatePerfil'])->name('admin.usuarios.updatePerfil'); //LISTAR TODOS
 
 Route::resource('eventos', EventoController::class)->names('admin.eventos');
-Route::get('apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('public.eventos.apiGetEventos');
+//Route::get('apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('public.eventos.apiGetEventos');
 
 Route::resource('cronogramas', CronogramaController::class)->names('admin.cronogramas');
-Route::get('apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
+Route::get('apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('admin.cronogramas.apiGetCronogramas');
+Route::get('public/apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas'])->name('public.cronogramas.apiGetCronogramas');
+
+Route::get('apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('admin.eventos.apiGetEventos');
+Route::get('public/apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('public.eventos.apiGetEventos');
+
+
 
 //CAMBIAMOS PARAMETRO A PUBLICACION
 Route::resource('publicaciones', PublicacionController::class)

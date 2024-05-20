@@ -224,7 +224,7 @@
                 // events will be populated dynamically
                 events: function(info, successCallback, failureCallback) {
                     $.ajax({
-                        url: "{{ route('public.cronogramas.apiGetCronogramas') }}",
+                        url: "{{ route('admin.cronogramas.apiGetCronogramas') }}",
                         method: 'GET',
                         success: function(response) {
 
