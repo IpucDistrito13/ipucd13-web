@@ -43,7 +43,7 @@ class VideoController extends Controller
             'message' => 'Video creado exitosamente.',
         ];
 
-        return redirect()->route('admin.series.listVideos', $request->serie)->with('success', $data['message']);
+        return redirect()->back()->with('success', $data['message']);
     }
 
     /**

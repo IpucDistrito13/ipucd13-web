@@ -31,12 +31,16 @@ class DatabaseSeeder extends Seeder
         ])->assignRole('Administrador');
 
         User::factory()->create([
-            'name' => 'Admin Ipuc',
+            'name' => 'Decom Ipuc',
             'email' => 'admin@ipuc.com',
         ])->assignRole('Administrador');
-        
-        User::factory(2000)->create();
 
+        User::factory()->create([
+            'name' => 'Decom Ipuc',
+            'email' => 'decom@ipucdistrito13.org',
+        ])->assignRole('Administrador');
+
+        User::factory(2000)->create();
         
         \App\Models\Evento::factory(1)->create();
         \App\Models\Cronograma::factory(1)->create();
@@ -52,9 +56,6 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Publicacion::factory(10)->create();
         $this->call([GaleriaTipoSeeder::class]);
-
-
-
 
     }
 }

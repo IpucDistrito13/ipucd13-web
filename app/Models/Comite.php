@@ -20,6 +20,12 @@ class Comite extends Model
         return $query->select('id', 'nombre', 'slug', 'descripcion', 'imagen_banner');
     }
 
+    public function series()
+    {
+        return $this->hasMany(Serie::class, 'comite_id');
+    }
+
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -28,7 +34,7 @@ class Comite extends Model
     //Combobox
     public static function selectList()
     {
-        return Comite::select('id','nombre');
+        return Comite::select('id', 'nombre');
     }
 
     //RELACION UNO A UNO POLIMORFICA
@@ -37,4 +43,3 @@ class Comite extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 }
-

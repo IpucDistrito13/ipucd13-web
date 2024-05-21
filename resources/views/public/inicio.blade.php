@@ -169,8 +169,7 @@
             <div class="row align-items-center justify-content-center h-100">
                 <div class="col-xl-5 col-lg-6 col-md-12 text-white text-center text-lg-start position-relative z-index-1 d-flex flex-column justify-content-center h-100 md-mt-50px md-mb-20px xs-mb-10px"
                     data-anime='{ "el": "childs", "opacity": [0, 1], "rotateY": [90, 0], "rotateZ": [-10, 0], "translateY": [80, 0], "translateZ": [50, 0], "staggervalue": 200, "duration": 600, "delay": 100, "easing": "easeOutCirc" }'>
-                    <span id="text_secccion1" name="text_secccion1" class="alt-font fs-75 lh-65 sm-fs-60 fw-500 mb-25px ls-minus-2px">Iglesia Pentecostal Unida de
-                        Colombia</span>
+                    <span id="text_secccion1" name="text_secccion1" class="alt-font fs-75 lh-65 sm-fs-60 fw-500 mb-25px ls-minus-2px">Iglesia Pentecostal Unida de Colombia</span>
                     <div class="mb-30px w-80 md-w-60 sm-w-100 d-block mx-auto mx-lg-0 overflow-hidden">
                         <span class="fs-75 lh-65 fw-500 opacity-5 d-inline-block">DISTRITO 13</span>
                     </div>

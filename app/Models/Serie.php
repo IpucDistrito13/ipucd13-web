@@ -35,6 +35,11 @@ class Serie extends Model
         return 'slug';
     }
 
+    public function scopePublicShowSerie($query,  $comiteId)
+    {
+        return $query->where('comite_id', $comiteId);
+    }
+
     // LISTA SEGUN LA SERIE, MUESTRA LA CANTIDAD DE LOS VIDEOS QUE HAY EN CADA SERIE
     public static function listSeriexVideos()
     {

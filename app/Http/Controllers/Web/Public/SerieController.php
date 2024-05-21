@@ -12,10 +12,18 @@ class SerieController extends Controller
 {
     public function show(Serie $serie)
     {
+
         //return $serie;
-        //return Serie::all();
+
         $comites = Comite::all();
         $videos = Video::where('serie_id', $serie->id)->get();
-        return view('public.videos.show', compact('serie', 'videos', 'comites'));
+
+        $metaData = [
+            'title' => 'Serie | IPUC D13',
+            'author' => 'IPUC D13',
+            'description' => 'Distrito 13 | Cronograma',
+        ];
+
+        return view('public.videos.show', compact('serie', 'videos', 'comites', 'metaData'));
     }
 }

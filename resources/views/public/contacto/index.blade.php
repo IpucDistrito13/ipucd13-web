@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     
-        <title>{{ $metaData['titulo'] }}</title>
+        <title>{{ $metaData['title'] }}</title>
         <meta name="author" content="{{ $metaData['autor'] }}">
         <meta name="description" content="{{ $metaData['description'] }}">
         <meta name="robots" content="noindex">

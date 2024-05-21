@@ -13,6 +13,7 @@ class ComiteController extends Controller
 {
     public function show(Comite $comite)
     {
+
         //MOSTRAR LAS ULTIMAS 10 SERIES SEGUN EL COMITE
         $comites = Comite::all();
 
@@ -36,8 +37,12 @@ class ComiteController extends Controller
             }
         }
         // REDES
+        
 
-        $series = Serie::ComitesUltimos10($comite);
+        $series = Serie::PublicShowSerie($comite->id)->get();
+
+        //return $comite;
+       // $series = Serie::where('comite_id', $comite)->get();
 
         //return   $series = Serie::all();
         $publicaciones = Publicacion::where('estado', 'Publicado')
