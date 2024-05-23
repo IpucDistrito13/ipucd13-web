@@ -65,9 +65,6 @@
                                         <br>
                                         <p>{{ $video->descripcion }}</p>
 
-                                        <br>
-                                        {{ $video->created_at }}
-
                                     </div>
                                     <div class="card-body pt-0">
                                         <div class="row">
@@ -85,7 +82,10 @@
                                     <div class="card-footer">
                                         @can('admin.videos.destroy')
                                             <div class="text-right">
-
+                                                <div class="btn-group" role="group" aria-label="Group of buttons">
+                                                    
+                                                   
+                                                </div>
                                                 
                                                 
                                             </div>

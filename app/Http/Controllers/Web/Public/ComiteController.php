@@ -41,8 +41,8 @@ class ComiteController extends Controller
 
         $series = Serie::PublicShowSerie($comite->id)->get();
 
-        //return $comite;
-       // $series = Serie::where('comite_id', $comite)->get();
+        //return $publicaciones = Publicacion::where('comite_id', $comite->id)->get();
+
 
         //return   $series = Serie::all();
         $publicaciones = Publicacion::where('estado', 'Publicado')

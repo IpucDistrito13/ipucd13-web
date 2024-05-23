@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Lista categoría</h1>
+        <h1 style="margin: 0;">Lista comité</h1>
         @can('admin.comites.create')
             <a class="btn btn-primary btn-sm" href="{{ route('admin.comites.create') }}">
                 Crear Nuevo

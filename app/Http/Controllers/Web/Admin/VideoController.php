@@ -84,13 +84,15 @@ class VideoController extends Controller
                 'message' => 'Video eliminado exitosamente.',
             ];
 
-            return redirect()->route('admin.series.listVideos', $video->serie_id)->with('success', $data['message']);
+            return back()->with('success', $data['message']);
+            //return redirect()->route('admin.series.listVideos', $video->serie_id)->with('success', $data['message']);
         } catch (\Exception $e) {
             $data = [
                 'message' => 'No se pudo eliminar el video.',
             ];
 
-            return redirect()->route('admin.series.listVideos', $video->serie_id)->with('error', $data['message']);
+            return back()->with('success', $data['message']);
+            //return redirect()->route('admin.series.listVideos', $video->serie_id)->with('error', $data['message']);
         }
     }
 }

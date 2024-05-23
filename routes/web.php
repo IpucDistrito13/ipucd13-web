@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\Public\ContactoController;
 use App\Http\Controllers\Web\Public\CronogramaController;
 use App\Http\Controllers\Web\Public\DescargableController;
 use App\Http\Controllers\Web\Public\EventoController;
+use App\Http\Controllers\Web\Public\PodcastController;
 use App\Http\Controllers\Web\Public\PublicacionController;
 use App\Http\Controllers\Web\Public\SerieController;
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,11 @@ Route::get('publicaciones', [PublicacionController::class, 'index'])->name('publ
 Route::get('contacto', [ContactoController::class, 'index'])->name('public.contacto.index');
 Route::get('publicaciones/{publicacion}', [PublicacionController::class, 'show'])->name('public.publicaciones.show');
 Route::get('series/{serie}', [SerieController::class, 'show'])->name('public.series.show');
+
+
+Route::get('test', [PodcastController::class, 'index']);
+
+
+
 
 

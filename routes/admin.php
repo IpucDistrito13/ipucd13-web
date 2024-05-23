@@ -127,12 +127,3 @@ Route::post('carpetas/storeCarpetaPrivada', [CarpetaController::class, 'storeCar
 // LISTA LOS ARCHIVOS SEGUN LA CARPETA
 Route::get('archivos/{carpeta}', [ArchivoController::class, 'index'])->name('admin.archivos.index');
 Route::post('archivos/carpetas', [ArchivoController::class, 'upload'])->name('admin.archivos.upload');//GUARDAR IMAGENES MASIVO
-
-
-
-
-//Route::get('carpetas/privado/{comite}', [CarpetaController::class, 'listCarpetasPrivado'])->name('admin.carpetas.listCarpetasPrivado');
-
-//Route::get('carpetas/privado/archivo/{uuid}', [CarpetaController::class, 'archivosPrivado'])->name('admin.archivos.archivosPrivado');
-
-
