@@ -36,7 +36,7 @@ Route::get('publicaciones/{publicacion}', [PublicacionController::class, 'show']
 Route::get('series/{serie}', [SerieController::class, 'show'])->name('public.series.show');
 
 
-Route::get('test', [PodcastController::class, 'index']);
+//Route::get('test', [PodcastController::class, 'index']);
 
 
 

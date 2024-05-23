@@ -157,10 +157,14 @@
             </div>
         </div>
         <div class="playlist">
-            <!-- Aquí se generará la lista de reproducción -->
+            <!-- Lista de reproducción -->
         </div>
     </div>
     <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        }
+
         const audioPlayer = document.getElementById('audioPlayer');
         const prevButton = document.getElementById('prevButton');
         const playPauseButton = document.getElementById('playPauseButton');
@@ -168,51 +172,13 @@
         const songTitle = document.getElementById('songTitle');
         const songDescription = document.getElementById('songDescription');
         const playlistElement = document.querySelector('.playlist');
-
         const progressBar = document.getElementById('progressBar');
-
         const durationElement = document.getElementById('duration');
 
-audioPlayer.addEventListener('loadedmetadata', () => {
-    const minutes = Math.floor(audioPlayer.duration / 60);
-    const seconds = Math.floor(audioPlayer.duration % 60);
-    durationElement.textContent = `Duración: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-});
-
-
-        audioPlayer.addEventListener('timeupdate', () => {
-            const {
-                currentTime,
-                duration
-            } = audioPlayer;
-            const progressPercent = (currentTime / duration) * 100;
-            progressBar.value = progressPercent;
-        });
-
-        progressBar.addEventListener('input', () => {
-            const seekTime = (progressBar.value / 100) * audioPlayer.duration;
-            audioPlayer.currentTime = seekTime;
-        });
-
-
-        const playlist = [{
-                src: 'https://mismp3cristianos.com/wp-content/uploads/2018/05/Profetizare.mp3',
-                title: 'Dios rey soberano y unico en el mundo testooooooooooooo oooooooooooo',
-                description: 'Descripción de la Canción 1',
-                img: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/music-album-cover-design-template-0b55f32b3855ba41707a08e386e95d6e_screen.jpg?ts=1561485226'
-            },
-            {
-                src: 'https://mismp3cristianos.com/wp-content/uploads/2016/06/Espritu-Santo.mp3',
-                title: 'Canción 2',
-                description: 'Descripción de la Canción 2',
-                img: 'album-art2.jpg'
-            },
-            {
-                src: 'https://mismp3cristianos.com/wp-content/uploads/2016/08/La-Tierra-Canta.mp3',
-                title: 'Canción 3',
-                description: 'Descripción de la Canción 3',
-                img: 'album-art3.jpg'
-            }
+        const playlist = [
+            { src: 'https://mismp3cristianos.com/wp-content/uploads/2018/05/Profetizare.mp3', title: 'Dios rey soberano y unico en el mundo testooooooooooooo oooooooooooo', description: 'Descripción de la Canción 1', img: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/music-album-cover-design-template-0b55f32b3855ba41707a08e386e95d6e_screen.jpg?ts=1561485226' },
+            { src: 'https://mismp3cristianos.com/wp-content/uploads/2016/06/Espritu-Santo.mp3', title: 'Canción 2', description: 'Descripción de la Canción 2', img: 'album-art2.jpg' },
+            { src: 'https://mismp3cristianos.com/wp-content/uploads/2016/08/La-Tierra-Canta.mp3', title: 'Canción 3', description: 'Descripción de la Canción 3', img: 'album-art3.jpg' }
         ];
 
         let currentSongIndex = 0;
@@ -230,7 +196,55 @@ audioPlayer.addEventListener('loadedmetadata', () => {
             });
 
             playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: song.title,
+                    artist: 'Artista Desconocido',
+                    album: 'Álbum Desconocido',
+                    artwork: [{ src: song.img, sizes: '512x512', type: 'image/jpeg' }]
+                });
+            }
         }
+
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setActionHandler('play', () => {
+                audioPlayer.play();
+                playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+            });
+
+            navigator.mediaSession.setActionHandler('pause', () => {
+                audioPlayer.pause();
+                playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+            });
+
+            navigator.mediaSession.setActionHandler('previoustrack', () => {
+                currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+                loadSong(currentSongIndex);
+            });
+
+            navigator.mediaSession.setActionHandler('nexttrack', () => {
+                currentSongIndex = (currentSongIndex + 1) % playlist.length;
+                loadSong(currentSongIndex);
+            });
+        }
+
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            const minutes = Math.floor(audioPlayer.duration / 60);
+            const seconds = Math.floor(audioPlayer.duration % 60);
+            durationElement.textContent = `Duración: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        });
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            const { currentTime, duration } = audioPlayer;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.value = progressPercent;
+        });
+
+        progressBar.addEventListener('input', () => {
+            const seekTime = (progressBar.value / 100) * audioPlayer.duration;
+            audioPlayer.currentTime = seekTime;
+        });
 
         audioPlayer.addEventListener('ended', () => {
             currentSongIndex = (currentSongIndex + 1) % playlist.length;
@@ -257,7 +271,6 @@ audioPlayer.addEventListener('loadedmetadata', () => {
             }
         });
 
-        // Generate playlist items
         playlist.forEach((song, index) => {
             const item = document.createElement('div');
             item.classList.add('playlist-item');
@@ -269,9 +282,7 @@ audioPlayer.addEventListener('loadedmetadata', () => {
             playlistElement.appendChild(item);
         });
 
-        // Load the first song
         loadSong(currentSongIndex);
     </script>
 </body>
-
 </html>
