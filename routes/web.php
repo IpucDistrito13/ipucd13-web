@@ -35,8 +35,11 @@ Route::get('contacto', [ContactoController::class, 'index'])->name('public.conta
 Route::get('publicaciones/{publicacion}', [PublicacionController::class, 'show'])->name('public.publicaciones.show');
 Route::get('series/{serie}', [SerieController::class, 'show'])->name('public.series.show');
 
+Route::get('podcasts', [PodcastController::class, 'index']);
+Route::get('podcasts/{podcast}', [PodcastController::class, 'episodios'])->name('public.podcasts.episodios');
 
 //Route::get('test', [PodcastController::class, 'index']);
+//Route::get('podcasts/{podcasts}', [PodcastController::class, 'show']);
 
 
 

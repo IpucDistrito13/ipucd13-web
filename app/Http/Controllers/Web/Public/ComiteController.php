@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comite;
+use App\Models\Podcast;
 use App\Models\Publicacion;
 use App\Models\Redes;
 use App\Models\Serie;
@@ -41,6 +42,12 @@ class ComiteController extends Controller
 
         $series = Serie::PublicShowSerie($comite->id)->get();
 
+        $podcasts = Podcast::where('comite_id', $comite->id)
+        ->orderBy('created_at', 'desc')
+        ->take(10)
+        ->get();
+
+
         //return $publicaciones = Publicacion::where('comite_id', $comite->id)->get();
 
 
@@ -48,7 +55,7 @@ class ComiteController extends Controller
         $publicaciones = Publicacion::where('estado', 'Publicado')
             ->where('comite_id', $comite->id)
             ->latest() // Ordenar por la columna 'created_at' de forma descendente
-            ->limit(4)  // Limitar a 4 resultados
+            ->limit(10)  // Limitar a 4 resultados
             ->get();    // Obtener los resultados
 
         
@@ -63,7 +70,9 @@ class ComiteController extends Controller
             'comites' => $comites,
             'comite' => $comite,
             'publicaciones' => $publicaciones,
+
             'series' => $series,
+            'podcasts' => $podcasts,
 
             'facebook' => $facebookLink,
             'youtube' => $youtubeLink,

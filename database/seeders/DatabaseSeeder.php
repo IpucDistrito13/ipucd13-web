@@ -50,11 +50,11 @@ class DatabaseSeeder extends Seeder
         $this->call([CategoriaSeeder::class]);
 
         \App\Models\Podcast::factory(30)->create();
-        \App\Models\Episodio::factory(10)->create();
-        \App\Models\Serie::factory(10)->create();
-        \App\Models\Video::factory(10)->create();
+        \App\Models\Episodio::factory(30)->create();
+        \App\Models\Serie::factory(30)->create();
+        \App\Models\Video::factory(30)->create();
 
-        \App\Models\Publicacion::factory(10)->create();
+        \App\Models\Publicacion::factory(30)->create();
         $this->call([GaleriaTipoSeeder::class]);
 
     }

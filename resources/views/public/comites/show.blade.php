@@ -13,6 +13,14 @@
     @include('public.layouts.iconos')
     <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" />
 
+    <style>
+        .podcast-row:hover {
+    box-shadow: 0 0 10px #00338d; /* Color: #00338d */
+}
+
+
+    </style>
+
 </head>
 
 <body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">
@@ -61,73 +69,85 @@
     </section>
     <!-- end descripcion comite -->
 
-{{--
-    <!-- start section photo -->
-    <section class="overflow-hidden position-relative overlap-height">
+
+        <!-- start section publicaciones -->
+        @if ($publicaciones->isNotEmpty())
+        <section
+        class="bg-gradient-tranquil-white overflow-hidden position-relative overlap-height pb-5 md-pb-7 xs-pb-50px">
         <div class="container overlap-gap-section">
-
-            <div class="row row-cols-1 row-cols-lg-4 row-cols-md-3 row-cols-sm-2"
-                data-anime='{ "el": "childs", "translateY": [0, 0], "perspective": [800,800], "scale": [1.1, 1], "rotateX": [30, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <!-- start team member item -->
-                <div class="col text-center team-style-05 mb-45px">
-                    <div class="position-relative mb-30px last-paragraph-no-margin border-radius-4px overflow-hidden">
-                        <img src="https://via.placeholder.com/600x756" alt="" />
-                        <div
-                            class="w-100 h-100 d-flex flex-column justify-content-end align-items-center p-35px lg-p-20px team-content bg-gradient-dark-transparent">
-
-                        </div>
-                    </div>
-                    <div class="fw-600 text-dark-gray lh-22 fs-18 ls-minus-05px">Jessica dover</div>
-                    <span class="fs-16">Director</span>
+            <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
+                <div class="col-xxl-8 col-md-7 sm-mb-10px">
+                    <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimas publicaciones</h2>
                 </div>
-                <!-- end team member item -->
-                <!-- start team member item -->
-                <div class="col text-center team-style-05 mb-45px">
-                    <div class="position-relative mb-30px last-paragraph-no-margin border-radius-4px overflow-hidden">
-                        <img src="https://via.placeholder.com/600x756" alt="" />
-                        <div
-                            class="w-100 h-100 d-flex flex-column justify-content-end align-items-center p-35px lg-p-20px team-content bg-gradient-dark-transparent">
-
-                        </div>
-                    </div>
-                    <div class="fw-600 text-dark-gray lh-22 fs-18 ls-minus-05px">Jeremy dupont</div>
-                    <span class="fs-16">Researcher</span>
+                <div class="col-xxl-4 col-md-5 text-center text-md-end"
+                    data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    <a href"#" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
+                        <span>
+                            <span class="btn-text">Explora todas las publicaciones</span>
+                            <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                            <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                        </span>
+                    </a>
                 </div>
-                <!-- end team member item -->
-                <!-- start team member item -->
-                <div class="col text-center team-style-05 mb-45px">
-                    <div class="position-relative mb-30px last-paragraph-no-margin border-radius-4px overflow-hidden">
-                        <img src="https://via.placeholder.com/600x756" alt="" />
-                        <div
-                            class="w-100 h-100 d-flex flex-column justify-content-end align-items-center p-35px lg-p-20px team-content bg-gradient-dark-transparent">
-
-                        </div>
-                    </div>
-                    <div class="fw-600 text-dark-gray lh-22 fs-18 ls-minus-05px">Johncy parker</div>
-                    <span class="fs-16">English teacher</span>
-                </div>
-                <!-- end team member item -->
-                <!-- start team member item -->
-                <div class="col text-center team-style-05 md-mb-45px">
-                    <div class="position-relative mb-30px last-paragraph-no-margin border-radius-4px overflow-hidden">
-                        <img src="https://via.placeholder.com/600x756" alt="" />
-                        <div
-                            class="w-100 h-100 d-flex flex-column justify-content-end align-items-center p-35px lg-p-20px team-content bg-gradient-dark-transparent">
-
-                        </div>
-                    </div>
-                    <div class="fw-600 text-dark-gray lh-22 fs-18 ls-minus-05px">Matthew taylor</div>
-                    <span class="fs-16">Design teacher</span>
-                </div>
-                <!-- end team member item -->
-
-
             </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col-12">
+                        <ul
+                            class="blog-grid blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
+                            <li class="grid-sizer"></li>
+                            <!-- start blog item -->
+                            @foreach ($publicaciones as $publicacion)
+                                <li class="grid-item">
+                                    <div
+                                        class="card border-0 border-radius-4px box-shadow-extra-large box-shadow-extra-large-hover">
+                                        <div class="blog-image">
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                                class="d-block">
+                                                <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : 'https://i.ibb.co/YcvYfpx/640x480.png' }}"
+                                                    alt="" />
+                                            </a>
+                                            <div class="blog-categories">
+                                                <a href="blog-classic.html"
+                                                    class="categories-btn bg-white text-dark-gray text-dark-gray-hover text-uppercase alt-font fw-700">{{ $publicacion->comite->nombre }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-12">
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                                class="card-title mb-15px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block">{{ $publicacion->titulo }}</a>
+                                            <p>{{ $publicacion->descripcion }}</p>
+                                            <div
+                                                class="author d-flex justify-content-center align-items-center position-relative overflow-hidden fs-14 text-uppercase">
+                                                <div class="me-auto">
+                                                    <span class="blog-date fw-500 d-inline-block">
+                                                        {{ $publicacion->created_at }}</span>
+                                                    <div class="d-inline-block author-name">By <a
+                                                            href="blog-classic.html"
+                                                            class="text-dark-gray text-dark-gray-hover text-decoration-line-bottom fw-600">{{ $publicacion->user->name }}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="like-count">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                            <!-- end blog item -->
+    
+                        </ul>
+                    </div>
+    
+    
+                </div>
+    
+            </div>
+            
         </div>
     </section>
-    <!-- end section photo -->
-
-    --}}
+    
+        @endif
+        <!-- end section publicaciones -->
 
     <!-- start section show serie -->
     @if ($series->isNotEmpty())
@@ -136,7 +156,7 @@
     <div class="container">
         <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
             <div class="col-xxl-8 col-md-7 sm-mb-10px">
-                <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimas series</h2>
+                <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimos videos</h2>
             </div>
             <div class="col-xxl-4 col-md-5 text-center text-md-end"
                 data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
@@ -189,6 +209,8 @@
                     </div>
                 </div>
                 <!-- start slider pagination -->
+                         <div class="swiper-pagination slider-four-slide-pagination swiper-pagination-style-2 swiper-pagination-clickable swiper-pagination-bullets"></div>
+
                 <!--<div class="swiper-pagination slider-four-slide-pagination swiper-pagination-style-2 swiper-pagination-clickable swiper-pagination-bullets"></div>-->
                 <!-- end slider pagination -->
             </div>
@@ -198,87 +220,8 @@
     @endif
     <!-- end section show serie-->
 
-    <!-- start section publicaciones -->
-    @if ($publicaciones->isNotEmpty())
-    <section
-    class="bg-gradient-tranquil-white overflow-hidden position-relative overlap-height pb-5 md-pb-7 xs-pb-50px">
-    <div class="container overlap-gap-section">
-        <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
-            <div class="col-xxl-8 col-md-7 sm-mb-10px">
-                <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimas publicaciones</h2>
-            </div>
-            <div class="col-xxl-4 col-md-5 text-center text-md-end"
-                data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <a href"#" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
-                    <span>
-                        <span class="btn-text">Explora todas las publicaciones</span>
-                        <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-                        <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-                    </span>
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="row">
-                <div class="col-12">
-                    <ul
-                        class="blog-grid blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
-                        <li class="grid-sizer"></li>
-                        <!-- start blog item -->
-                        @foreach ($publicaciones as $publicacion)
-                            <li class="grid-item">
-                                <div
-                                    class="card border-0 border-radius-4px box-shadow-extra-large box-shadow-extra-large-hover">
-                                    <div class="blog-image">
-                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}"
-                                            class="d-block">
-                                            <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : 'https://i.ibb.co/YcvYfpx/640x480.png' }}"
-                                                alt="" />
-                                        </a>
-                                        <div class="blog-categories">
-                                            <a href="blog-classic.html"
-                                                class="categories-btn bg-white text-dark-gray text-dark-gray-hover text-uppercase alt-font fw-700">{{ $publicacion->comite->nombre }}</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body p-12">
-                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}"
-                                            class="card-title mb-15px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block">{{ $publicacion->titulo }}</a>
-                                        <p>{{ $publicacion->descripcion }}</p>
-                                        <div
-                                            class="author d-flex justify-content-center align-items-center position-relative overflow-hidden fs-14 text-uppercase">
-                                            <div class="me-auto">
-                                                <span class="blog-date fw-500 d-inline-block">
-                                                    {{ $publicacion->created_at }}</span>
-                                                <div class="d-inline-block author-name">By <a
-                                                        href="blog-classic.html"
-                                                        class="text-dark-gray text-dark-gray-hover text-decoration-line-bottom fw-600">{{ $publicacion->user->name }}</a>
-                                                </div>
-                                            </div>
-                                            <div class="like-count">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                        <!-- end blog item -->
 
-                    </ul>
-                </div>
-
-
-            </div>
-
-        </div>
-        
-    </div>
-</section>
-
-    @endif
-
-    <!-- end section publicaciones -->
-
-    <!-- start section --> 
+    @if (!$podcasts->isEmpty())
     <section class="pt-2">
         <div class="container">
             <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
@@ -287,7 +230,7 @@
                 </div>
                 <div class="col-xxl-4 col-md-5 text-center text-md-end"
                     data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <a href"#" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
+                    <a href="#" class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
                         <span>
                             <span class="btn-text">Explora todos los podcasts</span>
                             <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
@@ -296,97 +239,73 @@
                     </a>
                 </div>
             </div>
-
+    
             <div class="row">
                 <div class="col-12" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <div class="row border-top border-color-dark-gray position-relative g-0 sm-border-top-0 sm-pb-30px">
+    
+                    @foreach ($podcasts as $serie)
+                    <a href="{{ route('public.podcasts.episodios', $serie) }}" class="row border-top border-color-dark-gray position-relative g-0 sm-border-top-0 sm-pb-30px podcast-row">
                         
                         <div class="col-lg-8 col-md-7 last-paragraph-no-margin ps-30px pe-30px pe-30px pt-25px pb-25px sm-pt-15px sm-pb-15px border-start border-color-dark-gray sm-border-start-0 sm-px-0"> 
-                            <p class="sm-w-85">Wildlife photographer of the year - <span class="fw-600 text-dark-gray">National geographic</span></p>
+                            <p class="sm-w-85"><span class="fw-600 text-dark-gray">{{ $serie->titulo }}</span></p>
                         </div>
                         <div class="col-lg-2 col-md-3 align-self-center text-md-end">
-                            <span>28 February 2023</span>
+                            <span>{{ $serie->created_at }}</span>
                         </div>
                         <div class="col-auto col-md-1 align-self-center text-end text-md-center sm-position-absolute right-5px">
-                            <a href="#"><i class="bi bi-arrow-right-short text-dark-gray icon-medium"></i></a>
+                            <i class="bi bi-arrow-right-short text-dark-gray icon-medium"></i>
                         </div>
-                    </div>
-                    <div class="row border-top border-color-dark-gray position-relative g-0 sm-pb-30px sm-pt-30px">
-                        
-                        <div class="col-lg-8 col-md-7 last-paragraph-no-margin ps-30px pe-30px pe-30px pt-25px pb-25px sm-pt-15px sm-pb-15px border-start border-color-dark-gray sm-border-start-0 sm-px-0"> 
-                            <p class="sm-w-85">Architectural photographer of the year - <span class="fw-600 text-dark-gray">International photography</span></p>
-                        </div>
-                        <div class="col-lg-2 col-md-3 align-self-center text-md-end">
-                            <span>09 November 2023</span>
-                        </div>
-                        <div class="col-auto col-md-1 align-self-center text-end text-md-center sm-position-absolute right-5px">
-                            <a href="#"><i class="bi bi-arrow-right-short text-dark-gray icon-medium"></i></a>
-                        </div>
-                    </div>
-
+                    </a>
+                    @endforeach
                 </div>
             </div>
-
-
-                    <!-- seecin redes -->
-        <div class="row justify-content-center mt-5">
-
-            <!-- start features box item -->
-            <div class="col-auto icon-with-text-style-08 md-mb-10px xs-mb-15px pe-25px md-pe-15px"
-                data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <div class="feature-box feature-box-left-icon-middle xs-lh-28">
-                    <div class="feature-box-icon me-10px">
-                        <i class="feather icon-feather-mail fs-20 text-dark-gray"></i>
-                    </div>
-                    <div class="feature-box-content">
-                        <span class="text-dark-gray fw-500 fs-20 xs-fs-18 ls-minus-05px">
-                            Suscríbete, mira videos y transmisiones en 
-                            <a href="{{ $youtube }}" target="_blank" class="text-decoration-line-bottom-medium text-dark-gray fw-600">Youtube</a>
-                        </span>
-                        
-                    </div>
-                </div>
-            </div>
-            <!-- end features box item -->
-            <!-- start features box item -->
-            <div class="col-auto icon-with-text-style-08 md-mb-10px xs-mb-15px pe-25px md-pe-15px"
-                data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <div class="feature-box feature-box-left-icon-middle xs-lh-28">
-                    <div class="feature-box-icon me-10px">
-                        <i class="feather icon-feather-mail fs-20 text-dark-gray"></i>
-                    </div>
-                    <div class="feature-box-content">
-                        <span class="text-dark-gray fw-500 fs-20 xs-fs-18 ls-minus-05px">Síguenos y ve nuestro
-                            contenido. <a href="{{ $instagram }}" target="_blank"
-                                class="text-decoration-line-bottom-medium text-dark-gray fw-600">Instagram</a></span>
-                    </div>
-                </div>
-            </div>
-            <!-- end features box item -->
-            <!-- start features box item -->
-            <div class="col-auto icon-with-text-style-08 ps-25px md-ps-15px md-pe-15px"
-                data-anime='{ "translateX": [50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <div class="feature-box feature-box-left-icon-middle xs-lh-28">
-                    <div class="feature-box-icon me-10px">
-                        <i class="feather icon-feather-thumbs-up fs-20 text-dark-gray"></i>
-                    </div>
-                    <div class="feature-box-content">
-                        <span class="text-dark-gray fw-500 fs-20 xs-fs-18 ls-minus-05px">Manténgase en contacto. <a
-                                href="{{ $facebook }}" target="_blank"
-                                class="text-decoration-line-bottom-medium text-dark-gray fw-600">Danos like en
-                                facebook</a></span>
-                    </div>
-                </div>
-            </div>
-            <!-- end features box item -->
-        </div>
-        <!-- end seccion redes -->
-
-
-
         </div>
     </section>
-    <!-- end section -->
+    @endif
+
+{{-- start section
+<section class="big-section bg-dark-gray">
+    <div class="container">
+        <div class="row justify-content-center mb-2">
+            <div class="col-xxl-5 col-xl-6 col-lg-8 col-md-10 text-center">
+                <h3 class="fw-600 text-white ls-minus-1px md-ls-0px">Últimos podcasts</h3>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-12 position-relative swiper-light-pagination">
+                <div class="swiper" data-slider-options='{ "slidesPerView": 1, "spaceBetween": 30, "loop": true, "autoplay": { "delay": 1600, "disableOnInteraction": false }, "pagination": { "el": ".swiper-pagination-bullets-03", "clickable": true, "dynamicBullets": false }, "navigation": { "nextEl": ".slider-one-slide-next-02", "prevEl": ".slider-one-slide-prev-02" }, "keyboard": { "enabled": true, "onlyInViewport": true }, "breakpoints": { "992": { "slidesPerView": 3 }, "768": { "slidesPerView": 3 }, "480": { "slidesPerView": 2 }, "320": { "slidesPerView": 1 } }, "effect": "slide" }'>
+                    <div class="swiper-wrapper align-items-center">
+
+                        @foreach ($podcasts as $serie)
+                        <div class="swiper-slide">
+                            <a href="link-to-podcast1.html">
+                                <img class="w-100" src="https://via.placeholder.com/420x500" alt="Podcast 1" />
+                                <h4 class="text-center text-white mt-2 fs-5">{{ $serie->titulo }}</h4>
+                            </a>
+                        </div>
+                        @endforeach
+                        
+                      
+                        
+                    </div>
+                </div>
+                <div class="slider-one-slide-prev-02 bg-transparent border border-2 border-color-transparent-white-very-light h-50px w-50px swiper-button-prev slider-navigation-style-03"><i class="fa-solid fa-arrow-left text-white"></i></div>
+                <div class="slider-one-slide-next-02 bg-transparent border border-2 border-color-transparent-white-very-light h-50px w-50px swiper-button-next slider-navigation-style-03"><i class="fa-solid fa-arrow-right text-white"></i></div>
+                <div class="swiper-pagination swiper-pagination-bullets-03 swiper-pagination-style-01 swiper-pagination-clickable swiper-pagination-bullets position-static mt-40px sm-mt-25px"></div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="todos-los-podcasts.html" class="btn btn-large btn-light text-uppercase">Explorar todos los podcasts</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+--}}
+<!-- end section -->
+
 
 
     
