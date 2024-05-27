@@ -12,6 +12,19 @@ class CronogramaController extends Controller
     public function index()
     {
         $cronogramas = Cronograma::paginate(10);
-        return CronogramaResource::collection($cronogramas);
+
+        // Transformar la colección de eventos usando el Resource
+        $cronogramaData = CronogramaResource::collection($cronogramas->items() );
+
+        // Crear la respuesta personalizada sin los campos 'links' y 'meta'
+        $response = [
+            'data' => $cronogramaData,
+            'total' => $cronogramas->total(),
+            'per_page' => $cronogramas->perPage(),
+            'current_page' => $cronogramas->currentPage(),
+            'last_page' => $cronogramas->lastPage(),
+        ];
+    
+        return response()->json($response);
     }
 }

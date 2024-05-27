@@ -21,8 +21,10 @@ class CronogramaResource extends JsonResource
             'end' => $this->end,
             'lugar' => $this->lugar,
             'descripcion' => $this->descripcion,
-            'url' => $this->url,
+            //'backgroundColor' => 'F0AB00',
+            //'url' => $this->url,
             'imagen' => '',
         ];
+    
     }
 }
