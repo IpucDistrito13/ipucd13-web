@@ -50,3 +50,8 @@ php artisan storage:link
 //Elimina la variables almacenada en cache
 Cache::flush();
 //Cache
+
+//git
+git add .
+git commit -m ''
+git push origin developer
