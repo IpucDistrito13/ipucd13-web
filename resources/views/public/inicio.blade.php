@@ -12,7 +12,6 @@
     <!-- favicon icon -->
     @include('public.layouts.iconos')
     <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" />
-    <link rel="stylesheet" href="{{ asset('demos/accounting/accounting.css') }}" />
 
 
     <style>

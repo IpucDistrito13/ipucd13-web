@@ -10,7 +10,6 @@
 
     <!-- favicon icon -->
     @include('public.layouts.iconos')
-    <link rel="stylesheet" href="{{ asset('demos/accounting/accounting.css') }}" />
 
 </head>
 
@@ -31,9 +30,7 @@
             <div class="row extra-very-small-screen align-items-center">
                 <div class="col-lg-5 col-sm-8 position-relative page-title-extra-small"
                     data-anime='{ "el": "childs", "opacity": [0, 1], "translateX": [-30, 0], "duration": 800, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <h1 class="mb-20px xs-mb-20px text-white text-shadow-medium"><span
-                            class="w-30px h-2px bg-yellow d-inline-block align-middle position-relative top-minus-2px me-10px"></span>#
-                    </h1>
+                   
                     <h2 class="text-white text-shadow-medium fw-500 ls-minus-2px mb-0">Descargables</h2>
                 </div>
             </div>
@@ -184,11 +181,6 @@
                     <figure class="position-relative m-0 text-center"
                         data-anime='{ "effect": "slide", "color": "#fff2ef", "direction":"rl", "easing": "easeOutQuad", "delay":50}'>
                         <img src="https://via.placeholder.com/525x741" alt="">
-                        <figcaption class="position-absolute bottom-90px right-0px"
-                            data-anime='{ "translateY": [-50, 0], "opacity": [0,1], "duration": 800, "delay": 1000, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                            <img src="https://via.placeholder.com/235x244"
-                                class="animation-float box-shadow-quadruple-large border-radius-6px" alt="">
-                        </figcaption>
                     </figure>
                 </div>
             </div>
@@ -322,11 +314,6 @@
                     <figure class="position-relative m-0 text-center"
                         data-anime='{ "effect": "slide", "color": "#fff2ef", "direction":"rl", "easing": "easeOutQuad", "delay":50}'>
                         <img src="https://via.placeholder.com/525x741" alt="">
-                        <figcaption class="position-absolute bottom-90px right-0px"
-                            data-anime='{ "translateY": [-50, 0], "opacity": [0,1], "duration": 800, "delay": 1000, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                            <img src="https://via.placeholder.com/235x244"
-                                class="animation-float box-shadow-quadruple-large border-radius-6px" alt="">
-                        </figcaption>
                     </figure>
                 </div>
             </div>

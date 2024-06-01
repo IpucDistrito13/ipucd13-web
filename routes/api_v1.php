@@ -20,6 +20,8 @@ Route::get('serie', [SerieController::class, 'index']);
 Route::get('getAudioEpisodio/{episodio}', [EpisodioController::class, 'apigetAudio'])->name('public.audio.episodio');
 
 Route::get('comites/{comiteId}', [ComiteController::class, 'show']);
+Route::get('podcast/{comiteId}', [ComiteController::class, 'show']);
+
 
 
 

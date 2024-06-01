@@ -19,7 +19,7 @@ class ComiteCollection extends ResourceCollection
                 'id' => $comite->id,
                 'nombre' => $comite->nombre,
                 'imagen' => $comite->imagen? $comite->imagen->url : null,
-                'imagenbanner' => $comite->imagen_banner,
+                //'imagenbanner' => $comite->imagen_banner,
             
             ];
         })->toArray();

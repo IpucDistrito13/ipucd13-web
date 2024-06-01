@@ -12,7 +12,7 @@ class ContactoController extends Controller
     public function index()
     {
         $metaData = [
-            'titulo' => 'Contacto | IPUC D13',
+            'title' => 'Contacto | IPUC D13',
             'autor' => 'IPUC D13',
             'description' => '',
         ];
