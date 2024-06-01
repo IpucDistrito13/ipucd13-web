@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ComiteCollection;
 use App\Http\Resources\ComiteResource;
 use App\Models\Comite;
 use Illuminate\Http\Request;
@@ -15,7 +16,9 @@ class ComiteController extends Controller
     public function index()
     {
         $comites = Comite::paginate(10);
-        return ComiteResource::collection($comites);
+        return new ComiteCollection(Comite::latest()->paginate(10));
+
+        //return ComiteResource::collection($comites);
         //return view('admin.comites.index', compact('comites'));
     }
 
@@ -38,9 +41,20 @@ class ComiteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($comiteId)
     {
-        //
+        // Find the comite by ID
+        //$comite = Comite::find($comiteId);
+        $comite = Comite::with('podcasts','series')->find($comiteId);
+
+        if (!$comite) {
+            return response()->json([
+                'message' => 'Comité no encontrado.'
+            ], 404);
+        }
+
+        // Return the comite data as JSON
+        return new ComiteResource($comite);
     }
 
     /**

@@ -28,7 +28,7 @@
 
     <div class="row">
         <!-- registro -->
-        
+
         <div class="col-md-5">
             <!-- general form elements -->
             <div class="card card-primary">
@@ -39,7 +39,7 @@
                 <!-- form start -->
                 <form method="POST" action="{{ route('admin.cronogramas.store') }}" autocomplete="off">
 
-                @csrf
+                    @csrf
                     <div class="card-body">
 
                         @include('admin.eventos.form')
@@ -80,11 +80,13 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+    {{-- Bootstrap 4 --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 @stop
 

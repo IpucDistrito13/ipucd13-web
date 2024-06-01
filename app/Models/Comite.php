@@ -26,6 +26,12 @@ class Comite extends Model
     }
 
 
+    public function podcasts()
+    {
+        return $this->hasMany(Podcast::class);
+    }
+
+
     public function getRouteKeyName()
     {
         return 'slug';

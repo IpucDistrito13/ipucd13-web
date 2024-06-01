@@ -32,6 +32,7 @@ php artisan make:seeder SolicitudTipoSeeder
 php artisan make:request VideoRequest
 
 php artisan serve
+npm run dev
 
 ///////////
 Listar

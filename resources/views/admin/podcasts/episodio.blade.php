@@ -387,7 +387,7 @@
                 detenerYEliminarAudio();
                 var episodioid = this.getAttribute('data-id');
 
-                axios.get('/api/getAudioEpisodio/' + episodioid)
+                axios.get('/api/v1/getAudioEpisodio/' + episodioid)
                     .then(function(response) {
                         console.log(response.data);
                         var datosCancion = response.data;

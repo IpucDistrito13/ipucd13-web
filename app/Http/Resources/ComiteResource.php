@@ -20,6 +20,21 @@ class ComiteResource extends JsonResource
             'descripcion' => $this->descripcion,
             'imagen' => $this->imagen ? $this->imagen->url : null,
             'imagenbanner' => $this->imagen_banner,
+
+            /*
+            'relationships' => [
+                'series' => [
+                    'id' => $this->series->id,
+                    'nombre' => $this->series->titulo,
+                ],
+
+                'podcasts' => [
+                    'id' => $this->podcasts->id,
+                    'nombre' => $this->podcasts->titulo,
+                ]
+            ]
+            */
+            
         ];
     }
 }

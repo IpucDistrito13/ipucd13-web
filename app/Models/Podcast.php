@@ -37,6 +37,12 @@ class Podcast extends Model
         return 'slug';
     }
 
+    //OBTIENE LOS PODCAST SEGUN EL COMITE
+    public function scopeGetPodcastComite($query, $comiteId)
+    {
+        return $query->where('comite_id', $comiteId);
+    }
+
     //RELACION UNO A UNO POLIMORFICA
     public function imagen()
     {

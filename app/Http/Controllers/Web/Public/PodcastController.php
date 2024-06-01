@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comite;
+use App\Models\Episodio;
 use App\Models\Podcast;
 use App\Models\Redes;
 use Illuminate\Http\Request;
@@ -76,4 +77,10 @@ class PodcastController extends Controller
         ]);
     }
     */
+
+    public function apigetAudio($episodioid)
+    {
+        $audio = Episodio::select('id', 'url', 'titulo')->where('id', $episodioid)->first();
+        return $audio;
+    }
 }

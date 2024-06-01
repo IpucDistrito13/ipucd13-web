@@ -15,6 +15,11 @@ class Categoria extends Model
         return $query->select('id', 'nombre', 'slug', 'descripcion', 'imagen_banner');
     }
 
+    public function podcasts()
+    {
+        return $this->hasMany(Podcast::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

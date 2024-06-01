@@ -58,8 +58,9 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
+    {{-- Bootstrap 4 --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    {{-- Datatable --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
     <style>
@@ -152,25 +153,25 @@
     <script>
         // datatable
         $("#datatable").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
 
-            language: {
-                    processing: "Procesando...",
-                    lengthMenu: "Mostrar _MENU_ registros por página",
-                    zeroRecords: "No se encontraron registros en el sistema...",
-                    info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
-                    infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros totales)",
-                    search: "Buscar",
-                    paginate: {
-                        next: "Siguiente",
-                        previous: "Anterior"
-                    },
-                    emptyTable: "No hay datos disponibles en la tabla"
-                },
-            })
+        language: {
+            processing: "Procesando...",
+            lengthMenu: "Mostrar _MENU_ registros por página",
+            zeroRecords: "No se encontraron registros en el sistema...",
+            info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
+            infoEmpty: "No hay registros disponibles",
+            infoFiltered: "(filtrado de _MAX_ registros totales)",
+            search: "Buscar",
+            paginate: {
+                next: "Siguiente",
+                previous: "Anterior"
+            },
+            emptyTable: "No hay datos disponibles en la tabla"
+        },
+        })
         });
         //end datatable
     </script>
