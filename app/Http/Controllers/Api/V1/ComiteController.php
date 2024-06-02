@@ -15,8 +15,8 @@ class ComiteController extends Controller
      */
     public function index()
     {
-        //$comites = Comite::paginate(10);
-        return new ComiteCollection(Comite::latest()->paginate(10));
+        $comites = Comite::paginate(10);
+        return new ComiteCollection(Comite::latest()->paginate(30));
 
         //return ComiteResource::collection($comites);
         //return view('admin.comites.index', compact('comites'));
