@@ -10,15 +10,30 @@ class Podcast extends Model
     use HasFactory;
     protected $fillable = ['titulo', 'slug', 'descripcion', 'contenido', 'comite_id', 'categoria_id', 'estado', 'user_id', 'imagen_banner'];
 
-    public function comite() {
+    //WEB
+    //MUESTRA LOS ULTIMOS PODCAST SEGUN EL COMITE
+    public function scopeGetUltimosPodcastComite($query, $comiteId)
+    {
+        return $query->select('id', 'titulo', 'slug', 'descripcion', 'comite_id', 'created_at')
+            ->where('comite_id', $comiteId)
+            ->latest()
+            ->take(8);
+    }
+
+    // END WEB
+
+    public function comite()
+    {
         return $this->belongsTo(Comite::class);
     }
 
-    public function categoria() {
+    public function categoria()
+    {
         return $this->belongsTo(Categoria::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -48,5 +63,4 @@ class Podcast extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
-
 }

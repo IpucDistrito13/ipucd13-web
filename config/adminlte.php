@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'IPUC D13',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -216,7 +216,7 @@ return [
 
     'sidebar_mini' => 'lg',
     'sidebar_collapse' => false,
-    'sidebar_collapse_auto_size' => false,
+    'sidebar_collapse_auto_size' => true,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -325,13 +325,11 @@ return [
             'can' => 'admin.cronogramas.create'
         ],
 
-
-
-        
         [
             'text' => 'Adm. Lista roles',
             'route' => 'admin.roles.index',
             'icon' => 'fas fa-bullhorn',
+            'active' => ['admin/roles*'],
             'can' => 'admin.roles.index'
         ],
 

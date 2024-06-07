@@ -33,7 +33,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos etiqueta
+                Datos publicación
             </span>
         </div>
         <!-- /.card-header -->
@@ -60,6 +60,8 @@
 @section('css')
     {{-- Add here extra stylesheets --}}
     <!-- Summernote CSS - CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <!-- //Summernote CSS - CDN Link -->
@@ -85,24 +87,24 @@
 
 @section('js')
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <!-- Popper.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
-    <!-- DataTables Responsive JS -->
-    <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Summernote JS - CDN Link -->
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
+    <script src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+    <script>
+        $(function () {
+          // Summernote
+          $('#contenido').summernote()
+      
+          // CodeMirror
+          CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+          });
+        })
+      </script>
 
 
     <script>
@@ -152,11 +154,13 @@
     </script>
 
     <script>
+        /*
         ClassicEditor
             .create(document.querySelector('#contenido'))
             .catch(error => {
                 console.error(error);
             });
+        */
     </script>
 
 

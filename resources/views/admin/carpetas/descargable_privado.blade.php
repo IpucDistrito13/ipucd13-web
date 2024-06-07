@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de Comités
+                Lista de comités
             </span>
         </div>
         <!-- /.card-header -->
@@ -20,7 +20,7 @@
             <table id="datatable" class="table table-striped table-bordered data-table">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="counter-column">#</th>
                         <th>Nombre</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
@@ -64,7 +64,11 @@
 
     <style>
         .acciones-column {
-            width: 200px;
+            width: 130px;
+        }
+
+        .counter-column {
+            width: 2%;
         }
     </style>
 @stop

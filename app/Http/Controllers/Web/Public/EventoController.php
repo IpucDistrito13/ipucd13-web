@@ -11,19 +11,22 @@ class EventoController extends Controller
 {
     public function index()
     {
-        $comites = Comite::all();
+        $comitesMenu = Comite::ComiteMenu()->get();
         $metaData = [
-            'titulo' => 'Eventos | IPUC D13',
-            'autor' => 'IPUC D13',
+            'title' => 'Eventos | IPUC D13',
+            'author' => 'IPUC D13',
             'description' => '',
         ];
 
-        return view('public.eventos.index', compact('metaData', 'comites'));
+        return view('public.eventos.index', [
+            'metaData' => $metaData,
+            'comites' => $comitesMenu,
+        ]);
     }
 
     public function apiGetEventos()
     {
-        $eventos = Evento::select('id','title', 'start', 'end', 'backgroundColor', 'borderColor','lugar' )->get();
+        $eventos = Evento::select('id', 'title', 'start', 'end', 'backgroundColor', 'borderColor', 'lugar')->get();
         return response()->json($eventos);
     }
 }

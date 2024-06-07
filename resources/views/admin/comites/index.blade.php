@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Comités')
+@section('title', 'Dashboard')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">Lista comité</h1>
-        @can('admin.comites.create')
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.comites.create') }}">
+        @can('admin.congregaciones.create')
+            <a id="create" class="btn btn-primary btn-sm" href="{{ route('admin.comites.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -46,24 +46,25 @@
             <table id="datatable" class="table table-striped table-bordered data-table">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="counter-column">#</th>
                         <th>Nombre</th>
                         <th>Slug</th>
-                        <th>Descripción</th>
+                        <th>Creado</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Aquí puedes iterar sobre tus categorías y mostrarlas en la tabla -->
-                    <!-- Ejemplo de una fila de la tabla -->
+                    @php
+                        $contador = 0;
+                    @endphp
                     @foreach ($comites as $item)
                         <tr>
-                            <td>{{ $item->id }}</td>
+                            <td style="text-align: center">{{ ++$contador }}</td>
                             <td>{{ $item->nombre }}</td>
                             <td>{{ $item->slug }}</td>
-                            <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->created_at }}</td>
                             <td>
-
+                                <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
                                     @can('admin.comites.edit')
                                         <!-- Update Button -->
@@ -106,6 +107,10 @@
         .acciones-column {
             width: 100px;
         }
+
+        .counter-column {
+            width: 2%;
+        }
     </style>
 @stop
 
@@ -114,7 +119,7 @@
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
@@ -122,6 +127,8 @@
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
+    <!-- sweetalert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(function() {

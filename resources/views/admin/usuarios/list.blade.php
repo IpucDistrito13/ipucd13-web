@@ -14,6 +14,8 @@
         <!-- Default box -->
         <div class="card card-solid">
             <div class="card-body pb-0">
+
+
                 <div class="row">
                     @foreach ($usuarios as $usuario)
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
@@ -127,6 +129,5 @@
 
 @section('js')
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 @stop

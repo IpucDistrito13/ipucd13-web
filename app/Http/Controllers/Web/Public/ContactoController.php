@@ -17,7 +17,7 @@ class ContactoController extends Controller
             'description' => '',
         ];
 
-        $comites = Comite::all();
+        $comitesMenu = Comite::ComiteMenu()->get();
 
         //REDES
         $redes_sociales = Redes::Activo()->get();
@@ -41,7 +41,7 @@ class ContactoController extends Controller
         // REDES
 
         return view('public.contacto.index', [
-            'comites' => $comites,
+            'comites' => $comitesMenu,
             'metaData' => $metaData,
 
             'facebook' => $facebookLink,

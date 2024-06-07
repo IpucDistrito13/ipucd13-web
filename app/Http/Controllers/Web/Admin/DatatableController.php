@@ -179,7 +179,7 @@ class DatatableController extends Controller
         $orderColumnIndex = $request->order[0]['column'] ?? '0';
         $orderBy = $request->order[0]['dir'] ?? 'desc';
 
-        $orderByName = "name";
+        $orderByName = "nombre";
 
         switch ($orderColumnIndex) {
             case "0":

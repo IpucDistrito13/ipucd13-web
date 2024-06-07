@@ -89,12 +89,6 @@
 
 @section('js')
 
-    <!-- Bootstrap -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- jQuery UI -->
-    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <!-- fullCalendar 2.2.5 -->
-    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('plugins/fullcalendar/main.js') }}"></script>
 
     <script>

@@ -6,7 +6,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">Editar congregacion: {{ $congregacion->direccion }}</h1>
         <div>
-            <a class="btn btn-secondary btn-sm" href="{{ route('admin.congregaciones.index')}}">
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.congregaciones.index') }}">
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
         </div>
@@ -63,10 +63,9 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
+
 
     <style>
         .image-wrapper {
@@ -86,16 +85,5 @@
 
 @section('js')
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <!-- Popper.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
-    <!-- DataTables Responsive JS -->
-    <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
 @stop

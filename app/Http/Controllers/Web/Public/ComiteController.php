@@ -15,8 +15,7 @@ class ComiteController extends Controller
     public function show(Comite $comite)
     {
 
-        //MOSTRAR LAS ULTIMAS 10 SERIES SEGUN EL COMITE
-        $comites = Comite::all();
+        $comitesMenu = Comite::ComiteMenu()->get();
 
         //REDES
         $redes_sociales = Redes::Activo()->get();
@@ -38,36 +37,19 @@ class ComiteController extends Controller
             }
         }
         // REDES
-        
 
-        $series = Serie::PublicShowSerie($comite->id)->get();
-
-        $podcasts = Podcast::where('comite_id', $comite->id)
-        ->orderBy('created_at', 'desc')
-        ->take(10)
-        ->get();
-
-
-        //return $publicaciones = Publicacion::where('comite_id', $comite->id)->get();
-
-
-        //return   $series = Serie::all();
-        $publicaciones = Publicacion::where('estado', 'Publicado')
-            ->where('comite_id', $comite->id)
-            ->latest() // Ordenar por la columna 'created_at' de forma descendente
-            ->limit(10)  // Limitar a 4 resultados
-            ->get();    // Obtener los resultados
-
-        
+        $series = Serie::GetUltimasSeries($comite->id)->get();
+        $podcasts = Podcast::GetUltimosPodcastComite($comite->id)->get();
+        $publicaciones = Publicacion::GetUltimasPublicaciones($comite->id)->get();
 
         $metaData = [
             'title' => 'Comité | IPUC D13',
             'author' => 'IPUC D13',
             'description' => 'Distrito 13 | Cronograma',
-        ];       
+        ];
 
         return view('public.comites.show', [
-            'comites' => $comites,
+            'comites' => $comitesMenu,
             'comite' => $comite,
             'publicaciones' => $publicaciones,
 
@@ -83,6 +65,5 @@ class ComiteController extends Controller
 
             'metaData' => $metaData,
         ]);
-
     }
 }

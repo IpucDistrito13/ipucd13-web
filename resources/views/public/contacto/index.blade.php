@@ -12,14 +12,21 @@
 
         <!-- favicon icon -->
         @include('public.layouts.iconos')
-       <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css')}}" />
+        <!-- <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" /> -->
 
         </head>
-    <body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">  
+        <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+        class="custom-cursor">
+            <!-- start cursor -->
+            <div class="cursor-page-inner">
+                <div class="circle-cursor circle-cursor-inner"></div>
+                <div class="circle-cursor circle-cursor-outer"></div>
+            </div>
+         <!-- end cursor -->
 
         @include('public.layouts.menu')
 
-        <!-- start page title -->
+        <!-- start page banner  -->
         <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography" style="background-image: url(https://via.placeholder.com/1920x540)">
             <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0" style="background-image: url('images/vertical-line-bg-small.svg')"></div>
             <div id="particles-style-01" class="h-100 position-absolute left-0px top-0 w-100" data-particle="true" data-particle-options='{"particles": {"number": {"value": 8,"density": {"enable": true,"value_area": 2000}},"color": {"value": ["#d5d52b", "#d5d52b", "#d5d52b", "#d5d52b", "#d5d52b"]},"shape": {"type": "circle","stroke":{"width":0,"color":"#000000"}},"opacity": {"value": 1,"random": false,"anim": {"enable": false,"speed": 1,"sync": false}},"size": {"value": 8,"random": true,"anim": {"enable": false,"sync": true}},"line_linked":{"enable":false,"distance":0,"color":"#ffffff","opacity":1,"width":1},"move": {"enable": true,"speed":1,"direction": "right","random": false,"straight": false}},"interactivity": {"detect_on": "canvas","events": {"onhover": {"enable": false,"mode": "repulse"},"onclick": {"enable": false,"mode": "push"},"resize": true}},"retina_detect": false}'></div>
@@ -31,7 +38,7 @@
                 </div>
             </div>
         </section>
-        <!-- end page title -->
+        <!-- end page banner -->
         
         <!-- start section -->
         <section class="position-relative overflow-hidden">

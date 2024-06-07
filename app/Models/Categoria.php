@@ -12,7 +12,7 @@ class Categoria extends Model
 
     public function scopeListarCategorias($query)
     {
-        return $query->select('id', 'nombre', 'slug', 'descripcion', 'imagen_banner');
+        return $query->select('id', 'nombre', 'slug', 'created_at');
     }
 
     public function podcasts()

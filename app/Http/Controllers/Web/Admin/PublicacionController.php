@@ -9,6 +9,8 @@ use App\Models\Publicacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use DOMDocument;
+
 
 class PublicacionController extends Controller
 {
@@ -43,6 +45,7 @@ class PublicacionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    /*
     public function store(Request $request)
     {
         $publicacion = Publicacion::create([
@@ -50,6 +53,49 @@ class PublicacionController extends Controller
             'slug' => $request->slug,
             'descripcion' => $request->descripcion,
             'contenido' => $request->editordata,
+            'comite_id' => $request->comite,
+            'categoria_id' => $request->categoria,
+            'estado' => $request->estado,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        if ($request->file('file')) {
+            $url = Storage::put('public/publicaciones', $request->file('file'));
+
+            $publicacion->imagen()->create([
+                'url' => $url,
+                'imageable_type' => Publicacion::class,
+            ]);
+        }
+
+        $data = [
+            'message' => 'Publicación creada exitosamente.',
+        ];
+
+        //Elimina la variables almacenada en cache
+        Cache::flush();
+        //Cache
+
+        return redirect()->route('admin.publicaciones.index')->with('success', $data['message']);
+    }
+    */
+
+    public function store(Request $request)
+    {
+
+        $contenido = $request->contenido;
+        $dom = new DOMDocument();
+        $dom->loadHTML($contenido, 9);
+        //CODIGO IMAGEN
+
+        //...
+        $contenido = $dom->saveHTML();
+
+        $publicacion = Publicacion::create([
+            'titulo' => $request->titulo,
+            'slug' => $request->slug,
+            'descripcion' => $request->descripcion,
+            'contenido' => $request->contenido,
             'comite_id' => $request->comite,
             'categoria_id' => $request->categoria,
             'estado' => $request->estado,
@@ -100,6 +146,15 @@ class PublicacionController extends Controller
      */
     public function update(Request $request, Publicacion $publicacion)
     {
+        $contenido = $request->contenido;
+        $dom = new DOMDocument();
+        $dom->loadHTML($contenido, 9);
+        //CODIGO IMAGEN
+
+        //...
+        $contenido = $dom->saveHTML();
+
+
         $publicacion->update($request->all());
 
         if ($request->file('file')) {

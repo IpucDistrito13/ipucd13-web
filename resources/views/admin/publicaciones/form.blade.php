@@ -75,7 +75,7 @@
     <div class="col-sm-12">
         <div class="form-group">
             <label>Contenido</label>
-            <textarea class="form-control" rows="3" placeholder="" id="contenido" name="editordata">{{ old('contenido', $publicacion->contenido ?? '') }}</textarea>
+            <textarea class="form-control" rows="3" placeholder="" id="contenido" name="contenido">{{ old('contenido', $publicacion->contenido ?? '') }}</textarea>
             @error('contenido')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -96,7 +96,7 @@
 
     <div class="col-sm-12">
         <div class="form-group">
-            <label>Imagen portada</label>
+            <label>Imagen portada (480x640) *</label>
             <input class="form-control-file" type="file" name="file" id="file" accept="image/*"
                 onchange="cambiarImagen(event)">
             @error('file')
@@ -110,7 +110,7 @@
             @if (isset($publicacion) && $publicacion->imagen)
                 <img id="imagen" src="{{ Storage::url($publicacion->imagen->url) }}" alt="" class="img-thumbnail">
             @else
-                <img id="imagen" src="https://i.ibb.co/YcvYfpx/640x480.png" alt="" class="img-thumbnail">
+                <img id="imagen"  alt="" class="img-thumbnail">
             @endif
         </div>
     </div>

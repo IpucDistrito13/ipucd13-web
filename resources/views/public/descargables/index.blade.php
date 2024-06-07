@@ -13,13 +13,15 @@
 
 </head>
 
-<body data-mobile-nav-style="classic" class="custom-cursor">
+<body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+    class="custom-cursor">
     <!-- start cursor -->
     <div class="cursor-page-inner">
         <div class="circle-cursor circle-cursor-inner"></div>
         <div class="circle-cursor circle-cursor-outer"></div>
     </div>
     <!-- end cursor -->
+
     <!-- start header -->
     @include('public.layouts.menu')
     <!-- end header -->
@@ -411,9 +413,9 @@
     </div>
     <!-- end scroll progress -->
     <!-- javascript libraries -->
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/vendors.min.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }} "></script>
+    <script type="text/javascript" src="{{ asset('js/vendors.min.js') }} "></script>
+    <script type="text/javascript" src="{{ asset('js/main.js') }} "></script>
 </body>
 
 </html>

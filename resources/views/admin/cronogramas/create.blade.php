@@ -3,7 +3,7 @@
 @section('title', 'Cronograma distrital | IPUC D13')
 
 @section('content_header')
-    <h1>Cronograma distrital</h1>
+    <h1>Cronograma distrital 22</h1>
 @stop
 
 @section('content')
@@ -81,23 +81,18 @@
 
 @section('css')
     {{-- Bootstrap 4 --}}
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
 @stop
 
 @section('js')
 
-    <!-- Bootstrap -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- jQuery UI -->
-    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <!-- fullCalendar 2.2.5 -->
-    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+    
     <script src="{{ asset('plugins/fullcalendar/main.js') }}"></script>
 
     <script>

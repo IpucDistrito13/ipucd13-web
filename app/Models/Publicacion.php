@@ -12,10 +12,50 @@ class Publicacion extends Model
     protected $table = 'publicaciones';
     protected $fillable = ['titulo', 'slug', 'descripcion', 'contenido', 'estado', 'comite_id', 'categoria_id', 'user_id'];
 
+    //WEB
+    //MUESTRA LAS PUBLICACONES SIMILARES SEGUN LA CATEGORIA
+    public function scopeGetSimilaresCategoria($query, $categoria_id)
+    {
+        return $query->select('id', 'titulo', 'slug', 'descripcion', 'comite_id', 'user_id', 'created_at')
+            ->where('categoria_id', $categoria_id)
+            ->where('estado', 'Publicado')
+            ->latest('id')
+            ->take(4);
+    }
+
+    //MUESTRA LAS ULTIMAS PUBLICACIONES SEGUN EL COMITE
+    public function scopeGetUltimasPublicaciones($query, $comiteId)
+    {
+        $query->select('id', 'titulo', 'slug', 'descripcion', 'comite_id', 'created_at')
+            ->where('estado', 'Publicado')
+            ->where('comite_id', $comiteId)
+            ->latest()
+            ->limit(8);
+    }
+
+    public function scopeListarPublicacionesPaginacion($query)
+    {
+        return $query->where('estado', 'Publicado')
+            ->latest('id')
+            ->paginate(8);
+    }
+
     public function scopeListarPublicaciones($query)
     {
-        return $query->select('id', 'titulo','slug', 'descripcion', 'created_at');
+        return $query->select('id', 'titulo', 'slug', 'descripcion', 'created_at');
     }
+    /*
+    public function scopeListarPublicaciones($query)
+    {
+        return $query->select('id', 'titulo', 'slug', 'descripcion', 'comite_id', 'created_at')
+            ->where('estado', 'Publicado')
+            ->latest()
+            ->paginate(8);
+    }
+*/
+    //END WEB
+
+
 
     //RELACION UNO A MUCHOS INVERSA
     public function user()
@@ -64,7 +104,8 @@ class Publicacion extends Model
     }
 
     //MUESTRAS LAS ULTIMAS PUBLICACIONES EN PUBLICO
-    public function scopeGetPublicoShowPublicaciones($query){
+    public function scopeGetPublicoShowPublicaciones($query)
+    {
         return $query->where('estado', 'Publicado')
             ->latest() // Ordenar por la columna 'created_at' de forma descendente
             ->limit(4) // Limitar a 4 resultados

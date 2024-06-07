@@ -7,19 +7,21 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
     <title>{{ $metaData['titulo'] }}</title>
-    <meta name="author" content="{{ $metaData['autor'] }}">
-    <meta name="description" content="{{ $metaData['description'] }}">
+    <meta name="author" content="Distrito 13">
+    <meta name="description" content="Iglesia Pentecostal Unida de Colombia - Distrito 13">
     <!-- favicon icon -->
     @include('public.layouts.iconos')
-    <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" />
+    <!-- <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" /> -->
 
 
     <style>
+        /*
         @font-face {
             font-family: 'Myriad Pro Bold';
             src: url('{{ asset('fuentes/myriadpro_bold.otf') }}') format('opentype');
             font-weight: bold;
         }
+        */
     
         body {
             font-family: Arial, sans-serif;
@@ -98,8 +100,8 @@
             }
         }
     </style>
-    
 
+    {{-- SECCION REPRODUCTOR --}}
     <div class="reproductor">
         <h2 class="titulo">Radio IPUC - <span id="liveText"> Live</span></h2>
         <div class="controles">
@@ -138,7 +140,7 @@
     </script>
 </head>
 
-<body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b"
+<body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
     class="custom-cursor">
     <!-- start cursor -->
     <div class="cursor-page-inner">
@@ -151,7 +153,7 @@
     @include('public.layouts.menu')
     <!-- end header -->
 
-    <!-- start section -->
+    <!-- start section principal -->
     <section
         class="p-0 overflow-hidden bg-dark-gray full-screen ipad-top-space-margin md-h-auto position-relative md-pb-70px sm-pb-40px cover-background"
         style="background-image: url('{{ asset('img/fondo_azul_principal.png') }}')">
@@ -168,12 +170,12 @@
             <div class="row align-items-center justify-content-center h-100">
                 <div class="col-xl-5 col-lg-6 col-md-12 text-white text-center text-lg-start position-relative z-index-1 d-flex flex-column justify-content-center h-100 md-mt-50px md-mb-20px xs-mb-10px"
                     data-anime='{ "el": "childs", "opacity": [0, 1], "rotateY": [90, 0], "rotateZ": [-10, 0], "translateY": [80, 0], "translateZ": [50, 0], "staggervalue": 200, "duration": 600, "delay": 100, "easing": "easeOutCirc" }'>
-                    <span id="text_secccion1" name="text_secccion1" class="alt-font fs-75 lh-65 sm-fs-60 fw-500 mb-25px ls-minus-2px">Iglesia Pentecostal Unida de Colombia</span>
+                    <span id="text_secccion1" name="text_secccion1" class="alt-font fs-75 lh-80 sm-fs-60 fw-500 mb-25px ls-minus-2px">Iglesia Pentecostal Unida de Colombia</span>
                     <div class="mb-30px w-80 md-w-60 sm-w-100 d-block mx-auto mx-lg-0 overflow-hidden">
-                        <span class="fs-75 lh-65 fw-500 opacity-5 d-inline-block">DISTRITO 13</span>
+                        <span class="fs-45 lh-65 fw-500 opacity-5 d-inline-block">DISTRITO 13</span>
                     </div>
                     <div class="overflow-hidden">
-                        <a href="https://www.youtube.com/watch?v=iYWko0Y2wC0&t"
+                        <a href="https://www.youtube.com/watch?v=#"
                             class="btn btn-extra-large btn-base-color btn-rounded btn-switch-text fw-600 d-inline-block me-25px sm-me-10px align-middle left-icon popup-youtube">
                             <span>
                                 <span><i class="feather icon-feather-youtube"></i></span>
@@ -205,7 +207,7 @@
                         <!-- end counter item -->
                         <!-- start counter item -->
                         <div class="col text-center text-lg-start">
-                            <h5 class="vertical-counter d-inline-flex alt-font text-white fw-600 mb-10px" data-text="+"
+                            <h5 class="vertical-counter d-inline-flex alt-font text-white fw-600 mb-10px" data-text=""
                                 data-to="{{ $cantidadCongregaciones }}"></h5>
                             <div
                                 class="divider-style-03 divider-style-03-01 border-2 border-color-base-color mb-5px w-80 xs-w-90 md-mx-auto">
@@ -230,9 +232,9 @@
             </div>
         </div>
     </section>
-    <!-- end section -->
+    <!-- end section principal -->
 
-    <!-- start section -->
+    <!-- start section  applicacion -->
     <section class="overflow-hidden">
         <div class="container">
             <div class="row justify-content-center align-items-center">
@@ -336,83 +338,68 @@
         </div>
 
     </section>
-    <!-- end section -->
+    <!-- end section aplicacion -->
 
-    <!-- start section publicaciones -->
-    <section
-        class="bg-gradient-tranquil-white overflow-hidden position-relative overlap-height pb-5 md-pb-7 xs-pb-50px">
-        <div class="container overlap-gap-section">
-            <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
-                <div class="col-xxl-8 col-md-7 sm-mb-10px">
-                    <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimas publicaciones</h2>
+
+            <!-- start section  ultimas publicaciones -->
+            <section class="pt-0 ps-15 pe-15 xl-ps-2 xl-pe-2 lg-ps-2 lg-pe-2 sm-mx-0">
+                <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
+                    <div class="col-xxl-8 col-md-7 sm-mb-10px">
+                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimas publicaciones</h2>
+                    </div>
+                    <div class="col-xxl-4 col-md-5 text-center text-md-end"
+                        data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        <a href="{{ route('public.publicaciones.index') }}"
+                            class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
+                            <span>
+                                <span class="btn-text">Explora todas las publicaciones</span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                            </span>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-xxl-4 col-md-5 text-center text-md-end"
-                    data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <a href="{{ route('public.publicaciones.index') }}"
-                        class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
-                        <span>
-                            <span class="btn-text">Explora todas las publicaciones</span>
-                            <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-                            <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="row">
-                    <div class="col-12">
-                        <ul
-                            class="blog-grid blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
-                            <li class="grid-sizer"></li>
-                            <!-- start blog item -->
-                            @foreach ($publicaciones as $publicacion)
+                <div class="container-fluid">
+                    
+                    <!-- start row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
+                                <li class="grid-sizer"></li>
+    
+                                @foreach ($publicaciones as $publicacion)
+    
+                                <!-- start blog item -->
                                 <li class="grid-item">
-                                    <div
-                                        class="card border-0 border-radius-4px box-shadow-extra-large box-shadow-extra-large-hover">
-                                        <div class="blog-image">
-                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
-                                                class="d-block">
-                                                <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : 'https://i.ibb.co/YcvYfpx/640x480.png' }}"
+                                    <div class="card bg-transparent border-0 h-100">
+                                        <div class="blog-image position-relative overflow-hidden border-radius-4px">
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}" >
+                                                <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
                                                     alt="" />
                                             </a>
-                                            <div class="blog-categories">
-                                                <a href="blog-classic.html"
-                                                    class="categories-btn bg-white text-dark-gray text-dark-gray-hover text-uppercase alt-font fw-700">{{ $publicacion->comite->nombre }}</a>
-                                            </div>
                                         </div>
-                                        <div class="card-body p-12">
-                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
-                                                class="card-title mb-15px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block">{{ $publicacion->titulo }}</a>
-                                            <p>{{ $publicacion->descripcion }}</p>
-                                            <div
-                                                class="author d-flex justify-content-center align-items-center position-relative overflow-hidden fs-14 text-uppercase">
-                                                <div class="me-auto">
-                                                    <span class="blog-date fw-500 d-inline-block">
-                                                        {{ $publicacion->created_at }}</span>
-                                                    <div class="d-inline-block author-name">By <a
-                                                            href="blog-classic.html"
-                                                            class="text-dark-gray text-dark-gray-hover text-decoration-line-bottom fw-600">{{ $publicacion->user->name }}</a>
-                                                    </div>
-                                                </div>
-                                                <div class="like-count">
-                                                </div>
-                                            </div>
+                                        <div class="card-body px-0 pt-30px pb-30px">
+                                            <span class="fs-13 text-uppercase mb-5px d-block"><a href="blog-grid.html" class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $publicacion->comite->nombre }}</a><a href="blog-grid.html" class="blog-date text-dark-gray-hover">26 August 2023</a></span>
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $publicacion->titulo }}</a>
+                                            <p class="mb-10px w-95">{{ $publicacion->descripcion }}</p>
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
                                         </div>
                                     </div>
                                 </li>
-                            @endforeach
-                            <!-- end blog item -->
-
-                        </ul>
+                                <!-- end blog item -->
+                                @endforeach
+    
+    
+                            </ul>
+                        </div>
+                        
                     </div>
-
+                    <!-- end row -->
 
                 </div>
 
-            </div>
 
-            
-            <!-- seecin redes -->
+                            <!-- seecin redes -->
             <div class="row justify-content-center mt-5">
 
                 <!-- start features box item -->
@@ -467,9 +454,9 @@
             <!-- end seccion redes -->
 
 
-        </div>
-    </section>
-    <!-- end section publicaciones -->
+            
+            </section>
+            <!-- end section ultimas publicaciones -->
 
     <!-- start footer -->
     @include('public.layouts.footer')
@@ -484,8 +471,8 @@
     </div>
     <!-- end scroll progress -->
     <!-- javascript libraries -->
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/vendors.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vendors.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 </body>
 

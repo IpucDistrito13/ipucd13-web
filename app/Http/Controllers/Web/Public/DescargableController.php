@@ -11,7 +11,7 @@ class DescargableController extends Controller
 {
     public function index()
     {
-        $comites = Comite::all();
+        $comitesMenu = Comite::ComiteMenu()->get();
         $metaData = [
             'titulo' => 'Descargable | IPUC D13',
             'autor' => 'IPUC D13',
@@ -40,7 +40,7 @@ class DescargableController extends Controller
         // REDES
 
         return view('public.descargables.index', [
-            'comites' => $comites,
+            'comites' => $comitesMenu,
             'metaData' => $metaData,
 
             'facebook' => $facebookLink,

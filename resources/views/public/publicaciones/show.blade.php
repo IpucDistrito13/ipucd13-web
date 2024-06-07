@@ -10,12 +10,11 @@
         <meta name="robots" content="noindex">
         <!-- favicon icon -->
         @include('public.layouts.iconos')
-        <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css')}}" />
 
         <style>
             a {
-    color: #00008B; /* Código de color para azul oscuro */
-}
+                color: #00008B; /* Código de color para azul oscuro */
+            }
 
         </style>
     </head>
@@ -37,7 +36,7 @@
                             </div>
                             <h5 class="text-dark-gray fw-600 w-80 sm-w-100 mb-6">{{ $publicacion->titulo }}</h5>
                             
-                            <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : 'https://i.ibb.co/YcvYfpx/640x480.png' }}" alt="" class="w-100 border-radius-6px mb-7">
+                            <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : asset('img/imagen_not_found_480x640.png') }}" alt="" class="w-100 border-radius-6px mb-7">
                             <p>                {!! $publicacion->contenido !!}                            </p>
                             <blockquote class="alt-font border-4 border-start border-color-base-color text-dark-gray fw-500 ps-40px mt-7 mb-7 ms-60px lg-ms-30px sm-ms-0 lg-ps-30px">
                                 <p>{{ $publicacion->descripcion }} </p>
@@ -108,40 +107,44 @@
                         <h4 class="text-dark-gray fw-600">Artículos Relacionados</h4>
                     </div>
                 </div>
+
+                <!-- start row -->
                 <div class="row">
                     <div class="col-12">
-                        <ul class="blog-grid blog-wrapper grid-loading grid grid-3col xl-grid-3col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
+                        <ul class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
                             <li class="grid-sizer"></li>
-                            <!-- start blog item -->
+
                             @foreach ($similares as $similar)
+
+                            <!-- start blog item -->
                             <li class="grid-item">
-                                <div class="card border-0 border-radius-4px box-shadow-extra-large box-shadow-extra-large-hover">
-                                    <div class="blog-image">
-                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="d-block">
-                                            <img src="{{ !empty($similar->imagen->url) ? Storage::url($similar->imagen->url) : 'https://i.ibb.co/YcvYfpx/640x480.png' }}" alt="" /></a>
-                                        <div class="blog-categories">
-                                            <a href="#" class="categories-btn bg-white text-dark-gray text-dark-gray-hover text-uppercase alt-font fw-700">{{ $similar->comite->nombre}}</a>
-                                        </div>
+                                <div class="card bg-transparent border-0 h-100">
+                                    <div class="blog-image position-relative overflow-hidden border-radius-4px">
+                                        <a href="{{ route('public.publicaciones.show', $similar) }}" >
+                                            <img src="{{ !empty($similar->imagen->url) ? Storage::url($similar->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
+                                                alt="" />
+                                        </a>
                                     </div>
-                                    <div class="card-body p-12">
-                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="card-title mb-15px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block">{{ $similar->titulo }}</a>
-                                        <p>{{ $similar->descripcion }}</p>
-                                        <div class="author d-flex justify-content-center align-items-center position-relative overflow-hidden fs-14 text-uppercase">
-                                            <div class="me-auto">
-                                                <span class="blog-date fw-500 d-inline-block">{{ $similar->created_at }}</span>
-                                                <div class="d-inline-block author-name">By <a href="#" class="text-dark-gray text-dark-gray-hover text-decoration-line-bottom fw-600">{{ $similar->user->nombre }}</a></div>
-                                            </div>
-                                            
-                                        </div>
+                                    <div class="card-body px-0 pt-30px pb-30px">
+                                        <span class="fs-13 text-uppercase mb-5px d-block"><a href="blog-grid.html" class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $similar->comite->nombre }}</a>
+                                            <a href="blog-grid.html" class="blog-date text-dark-gray-hover">{{ $similar->created_at }}</a>
+                                        </span>
+                                        <a href="{{ route('public.publicaciones.show', $similar) }}" class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $similar->titulo }}</a>
+                                        <p class="mb-10px w-95">{{ $similar->descripcion }}</p>
+                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
                                     </div>
                                 </div>
-                            </li>  
-                            @endforeach
+                            </li>
                             <!-- end blog item -->
+                            @endforeach
+
 
                         </ul>
                     </div>
+                    
                 </div>
+                <!-- end row -->
+
             </div>
         </section>
         <!-- end section -->

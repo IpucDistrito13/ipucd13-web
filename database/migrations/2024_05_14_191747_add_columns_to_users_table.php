@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('apellidos')->nullable();
             $table->string('celular')->nullable();
             $table->boolean('visible_celular');
+            $table->boolean('isbloqueo')->nullable();
+
 
             $table->string('telefono')->nullable();
 

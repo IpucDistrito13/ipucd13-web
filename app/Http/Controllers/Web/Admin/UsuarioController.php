@@ -26,8 +26,77 @@ class UsuarioController extends Controller
 
     protected static ?string $password;
 
-    public function index()
+    public function index(Request $request)
     {
+        return view('admin.usuarios.index');
+
+    }
+
+    public function serverSideJson(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = \DB::table("vista_roles_usuario")->get(); // Obtener los datos de la vista
+            
+            return DataTables::of($data)
+                ->addIndexColumn()
+                /*
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                    return $btn;
+                })
+
+
+
+
+                ->addColumn('action', function ($row) {
+                    $editUrl = route('admin.usuarios.editar', $row->id);
+                    $deleteUrl = route('admin.usuarios.destroy', ['usuarioId' => $row->id]);
+    
+                    $btn = '<a href="' . $editUrl . '" class="edit btn btn-primary btn-sm">Editar</a>';
+                    $btn .= '<form id="deleteForm_' . $row->id . '" action="' . $deleteUrl . '" method="POST" class="d-inline">';
+                    $btn .= csrf_field(); // Agregar token CSRF
+                    $btn .= '<input type="hidden" name="_method" value="DELETE">';
+                    $btn .= '<button type="button" onclick="confirmDelete(' . $row->id . ', \'' . $row->nombre . '\', \'' . $row->apellidos . '\')" class="delete btn btn-danger btn-sm">Eliminar</button>';
+                    $btn .= '</form>';
+                    
+                    return $btn;
+                })
+                */
+                ->addColumn('action', function ($row) {
+                    $editUrl = route('admin.usuarios.editar', $row->id);
+    
+                    $btn = '<a href="' . $editUrl . '" class="edit btn btn-primary btn-sm">Editar</a>';
+                    $btn .= '<form id="deleteForm_' . $row->id . '" action="' . $editUrl . '" method="POST" class="d-inline">';
+                    $btn .= csrf_field(); // Agregar token CSRF
+                    $btn .= '<input type="hidden" name="_method" value="DELETE">';
+                    $btn .= '<button type="button" onclick="confirmDelete(' . $row->id . ', \'' . $row->nombre . '\', \'' . $row->apellidos . '\')" class="delete btn btn-danger btn-sm">Eliminar</button>';
+                    $btn .= '</form>';
+                    
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+    
+    
+
+    public function index2(Request $request)
+    {
+        if ($request->ajax()) {
+            //$rolId = 2;
+            $data = DB::table('vista_roles_usuario')->get();
+
+            return datatables()::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $buttons = '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
+                    $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería General</a>';
+                    return $buttons;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
         return view('admin.usuarios.index');
     }
@@ -131,6 +200,24 @@ class UsuarioController extends Controller
             'roles' => $roles,
         ]);
     }
+
+    public function editar($usuarioId)
+    {
+        return $usuarioId;
+        /*
+        $roles = Role::all();
+        //return $usuario;
+
+        $congregaciones = Congregacion::SelectList()->get();
+        // return  $congregaciones = Congregacion::all();
+        return view('admin.usuarios.edit', [
+            'usuario' => $usuario,
+            'congregaciones' => $congregaciones,
+            'roles' => $roles,
+        ]);
+        */
+    }
+
 
 
     public function updatePerfil(Request $request, User $usuario)
@@ -305,6 +392,4 @@ class UsuarioController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
-
-    
 }

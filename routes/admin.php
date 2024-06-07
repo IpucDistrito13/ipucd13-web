@@ -67,6 +67,10 @@ Route::resource('videos', VideoController::class)->names('admin.videos');
 
 Route::resource('usuarios', UsuarioController::class)->names('admin.usuarios');
 Route::get('user', [UsuarioController::class, 'list'])->name('admin.usuarios.list');
+Route::get('users/edit/{userId}', [UsuarioController::class, 'editar'])->name('admin.usuarios.editar');
+
+Route::get('user/serverside', [UsuarioController::class, 'serverSideJson'])->name('admin.usuarios.serverside');
+
 
 Route::get('perfil', [UsuarioController::class, 'perfil'])->name('admin.usuario.perfil'); //LISTAR TODOS
 Route::post('usuarios/update/{usuario}', [UsuarioController::class, 'updatePerfil'])->name('admin.usuarios.updatePerfil'); //LISTAR TODOS
@@ -109,7 +113,7 @@ Route::get('galerias/pastores', [GaleriaController::class, 'list'])->name('admin
 // Elimina archivo individual desde Drozone
 Route::post('/file/delete', [GaleriaController::class, 'delete'])->name('file.delete');
 
-Route::post('/users/listJson', [DatatableController::class, 'listJson'])->name('users.listJson');
+Route::post('users/listJson', [DatatableController::class, 'listJson'])->name('users.listJson');
 
 
 Route::post('audio/upload', [EpisodioController::class, 'upload'])->name('audio.upload');

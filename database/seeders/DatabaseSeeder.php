@@ -27,17 +27,20 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin Test',
             'email' => 'haresje@gmail.com',
+            'isbloqueo' => true,
 
         ])->assignRole('Administrador');
 
         User::factory()->create([
             'name' => 'Decom Ipuc',
             'email' => 'admin@ipuc.com',
+            'isbloqueo' => true,
         ])->assignRole('Administrador');
 
         User::factory()->create([
             'name' => 'Decom Ipuc',
             'email' => 'decom@ipucdistrito13.org',
+            'isbloqueo' => true,
         ])->assignRole('Administrador');
 
         User::factory(2000)->create();
@@ -49,12 +52,12 @@ class DatabaseSeeder extends Seeder
         $this->call([ComiteSeeder::class]);
         $this->call([CategoriaSeeder::class]);
 
-        \App\Models\Podcast::factory(30)->create();
-        \App\Models\Episodio::factory(30)->create();
-        \App\Models\Serie::factory(30)->create();
-        \App\Models\Video::factory(30)->create();
+        \App\Models\Podcast::factory(90)->create();
+        \App\Models\Episodio::factory(90)->create();
+        \App\Models\Serie::factory(90)->create();
+        \App\Models\Video::factory(90)->create();
 
-        \App\Models\Publicacion::factory(30)->create();
+        \App\Models\Publicacion::factory(100)->create();
         $this->call([GaleriaTipoSeeder::class]);
 
     }

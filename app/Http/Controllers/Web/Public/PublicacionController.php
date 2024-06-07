@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web\Public;
 
 use App\Http\Controllers\Controller;
-use App\Models\Categoria;
 use App\Models\Comite;
 use App\Models\Publicacion;
 use App\Models\Redes;
@@ -14,7 +13,7 @@ class PublicacionController extends Controller
 {
     public function index()
     {
-        $comites = Comite::all();
+        $comitesMenu = Comite::ComiteMenu()->get();
 
         //REDES
         $redes_sociales = Redes::Activo()->get();
@@ -39,25 +38,24 @@ class PublicacionController extends Controller
 
         //PAGINACION POR CACHE
         if (request()->page) {
-            $key = 'publicaciones' . request()->page;
+            $key = 'publicacionesPage' . request()->page;
         } else {
-            $key = 'publicaciones';
+            $key = 'publicacionesPage';
         }
 
-        if (Cache::has('publicaciones')) {
-            $publicaciones = Cache::get('publicaciones');
+        if (Cache::has('publicacionesPage')) {
+            $publicaciones = Cache::get('publicacionesPage');
         } else {
+            $publicaciones = Publicacion::ListarPublicacionesPaginacion();
+            Cache::put($key, $publicaciones);
+
+            /*
             $publicaciones = Publicacion::where('estado', 'Publicado')
                 ->latest('id')
                 ->paginate(8);
             Cache::put($key, $publicaciones);
-        }
-        //PAGINACION POR CACHE
-
-        /*$publicaciones = Publicacion::where('estado', 'Publicado')
-            ->latest('id')
-            ->paginate(8);
             */
+        }
 
         $metaData = [
             'title' => 'Publicaciones | IPUC D13',
@@ -66,7 +64,7 @@ class PublicacionController extends Controller
         ];
 
         return view('public.publicaciones.index', [
-            'comites' => $comites,
+            'comites' => $comitesMenu,
             'publicaciones' => $publicaciones,
             'metaData' => $metaData,
 
@@ -78,15 +76,10 @@ class PublicacionController extends Controller
 
     public function show(Publicacion $publicacion)
     {
-        $categorias = Categoria::all();
         //$etiquetas = Etiqueta::all();
-        $comites = Comite::all();
-        $redes_sociales = Redes::where('estado', 'Activo')->get();
-        $similares = Publicacion::select('id', 'titulo', 'slug', 'descripcion', 'comite_id', 'user_id', 'created_at')->where('categoria_id', $publicacion->categoria_id)
-            ->where('estado', 'Publicado')
-            ->latest('id')
-            ->take(3)
-            ->get();
+        $comites = Comite::SeccionComites()->get();
+        $redes_sociales = Redes::Activo()->get();
+        $similares = Publicacion::GetSimilaresCategoria($publicacion->categoria_id)->get();
 
         $metaData = [
             'title' => 'Publicaciones | IPUC D13',
@@ -99,8 +92,6 @@ class PublicacionController extends Controller
             'similares' => $similares,
             'comites' => $comites,
             'redes_sociales' => $redes_sociales,
-            //'etiquetas' => $etiquetas,
-            'categorias' => $categorias,
             'metaData' => $metaData,
         ]);
     }

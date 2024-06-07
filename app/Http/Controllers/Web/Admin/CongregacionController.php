@@ -14,10 +14,21 @@ class CongregacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        //CACHE
+        if (Cache::has('congregaciones')) {
+            $congregaciones = Cache::get('congregaciones');
+        } else {
+            $congregaciones = Congregacion::ListarCongregaciones()->get();
+            Cache::put('congregaciones', $congregaciones);
+        }
+        //CACHE
 
-        $congregaciones = Congregacion::select('id', 'municipio_id', 'direccion')->with('municipio:id,nombre,departamento_id')->get();
+        /*
+        $congregaciones = Congregacion::select('id', 'municipio_id', 'direccion')
+            ->with('municipio:id,nombre,departamento_id')->get();
+            */
         return view('admin.congregaciones.index', compact('congregaciones'));
     }
 

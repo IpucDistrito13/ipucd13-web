@@ -22,7 +22,7 @@ class ComiteController extends Controller
         if (Cache::has('comites')) {
             $comites = Cache::get('comites');
         } else {
-            $comites = Comite::ListarComites()->get();
+            $comites = Comite::ListarComites()->latest()->get();
             Cache::put('comites', $comites);
         }
         //CACHE

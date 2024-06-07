@@ -12,7 +12,6 @@
     <meta name="robots" content="noindex">
     <!-- favicon icon -->
     @include('public.layouts.iconos')
-    <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css')}}" />
 </head>
 
 <body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">
@@ -30,7 +29,7 @@
             <div class="row align-items-center extra-small-screen">
                 <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9 position-relative page-title-extra-small"
                     data-anime='{ "el": "childs", "translateY": [-15, 0], "perspective": [1200,1200], "scale": [1.1, 1], "rotateX": [50, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <h1 class="mb-20px alt-font text-yellow">Serie</h1>
+                    <h1 class="mb-20px alt-font text-yellow"></h1>
                     <h2 class="fw-500 m-0 ls-minus-2px text-white alt-font">{{ $serie->titulo }}</h2>
                 </div>
             </div>
@@ -46,7 +45,7 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-12 col-md-6 sm-mb-30px">
                     <img class="w-100 border-radius-6px"
-                        src="{{ !empty($serie->imagen->url) ? Storage::url($serie->imagen->url) : 'https://i.ibb.co/YcvYfpx/640x480.png' }}"
+                        src="{{ !empty($serie->imagen->url) ? Storage::url($serie->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
                         alt="" />
                 </div>
                 <div class="col-12 col-lg-5 col-md-6 offset-lg-1 dropcap-style-01 last-paragraph-no-margin">

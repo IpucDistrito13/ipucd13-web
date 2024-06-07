@@ -13,7 +13,7 @@
     {{-- <meta name="robots" content="noindex"> --}}
    <!-- favicon icon -->
    @include('public.layouts.iconos')
-   <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css')}}" />
+    <!-- <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" /> -->
 
 
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
@@ -22,8 +22,15 @@
 
 </head>
 
-<body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">
-
+<body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+    class="custom-cursor">
+        <!-- start cursor -->
+        <div class="cursor-page-inner">
+            <div class="circle-cursor circle-cursor-inner"></div>
+            <div class="circle-cursor circle-cursor-outer"></div>
+        </div>
+        <!-- end cursor -->
+        
     @include('public.layouts.menu')
 
     <!-- start section -->

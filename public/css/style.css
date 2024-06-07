@@ -46,7 +46,15 @@ Table of contents
     02. CSS color variable
 ====================================== */
 :root {
-  --base-color: #2946f3;
+
+  /* COLORES IPUC */
+  --base-color_azul_oscuro: #00338D;
+  --base-color_azul_claro: #009FDA;
+  --base-color_azul_naranja: #F0AB00;
+  --base-color_azul_gris: #BBBBBB;
+
+  --base-color: #00338D;
+  /* --base-color: #2946f3; */
   --white: #ffffff;
   --black: #000000;
   --red: #dc3131;
@@ -2722,14 +2730,14 @@ input:focus, select:focus, textarea:focus, .form-control:focus {
     width: 6px;
     height: 6px;
     z-index: 10000001;
-    background-color: var(--base-color);
+    background-color: var(--base-color_azul_naranja);
   }
   .custom-cursor .circle-cursor-inner.cursor-link-hover {
     margin-left: -10px;
     margin-top: -10px;
     width: 20px;
     height: 20px;
-    background-color: var(--base-color);
+    background-color: var(--base-color_azul_naranja);
     opacity: 0.8;
   }
   .custom-cursor .circle-cursor-outer {
@@ -2737,7 +2745,7 @@ input:focus, select:focus, textarea:focus, .form-control:focus {
     margin-top: -15px;
     width: 30px;
     height: 30px;
-    border: 1px solid var(--base-color);
+    border: 1px solid var(--base-color_azul_naranja);
     z-index: 10000000;
     opacity: 0.8;
     -webkit-transition: 0.1s;

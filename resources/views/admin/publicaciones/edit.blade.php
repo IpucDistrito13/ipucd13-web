@@ -5,7 +5,7 @@
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">Editar publicación: {{ $publicacion->titulo }}</h1>
-        <a class="btn btn-secondary btn-sm" href="{{ route('admin.publicaciones.index')}}">
+        <a class="btn btn-secondary btn-sm" href="{{ route('admin.publicaciones.index') }}">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
     </div>
@@ -46,7 +46,7 @@
                 @csrf
                 @method('PUT') <!-- Establece el método PUT -->
 
-                @include('admin.publicaciones.form', $publicacion);
+                @include('admin.publicaciones.form', $publicacion)
 
 
                 <div class="modal-footer">
@@ -62,12 +62,14 @@
 
 @section('css')
     {{-- Add here extra stylesheets --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
+     <!-- Summernote CSS - CDN Link -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.0/classic/ckeditor.js"></script>
-
+     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+     <!-- //Summernote CSS - CDN Link -->
+ 
+     <script src="https://cdn.ckeditor.com/ckeditor5/41.3.0/classic/ckeditor.js"></script>
 
     <style>
         .image-wrapper {
@@ -87,17 +89,9 @@
 
 @section('js')
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <!-- Popper.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
-    <!-- DataTables Responsive JS -->
-    <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 
     <script>
         // Generate slug
@@ -146,11 +140,11 @@
     </script>
 
     <script>
-        ClassicEditor
-            .create(document.querySelector('#contenido'))
-            .catch(error => {
-                console.error(error);
-            });
+        $('#contenido').summernote({
+            placeholder: 'description...',
+            tabsize: 2,
+            height: 300
+        });
     </script>
 
 @stop

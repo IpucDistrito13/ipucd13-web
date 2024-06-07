@@ -5,7 +5,6 @@
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">Listar categoría</h1>
-
         @can('admin.categorias.create')
             <a class="btn btn-primary btn-sm" href="{{ route('admin.categorias.create') }}">
                 Crear Nuevo
@@ -51,7 +50,7 @@
                         <th class="counter-column">#</th>
                         <th>Nombre</th>
                         <th>Slug</th>
-                        <th>Descripción</th>
+                        <th>Creado</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -64,7 +63,7 @@
                             <td style="text-align: center">{{ ++$contador }}</td>
                             <td>{{ $item->nombre }}</td>
                             <td>{{ $item->slug }}</td>
-                            <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->created_at }}</td>
                             <td>
                                 <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Acciones">
@@ -122,7 +121,7 @@
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>

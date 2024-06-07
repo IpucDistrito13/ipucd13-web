@@ -21,7 +21,7 @@ class CategoriaController extends Controller
         if (Cache::has('categorias')) {
             $categorias = Cache::get('categorias');
         } else {
-            $categorias = Categoria::ListarCategorias()->get();
+            $categorias = Categoria::ListarCategorias()->latest()->get();
             Cache::put('categorias', $categorias);
         }
         //CACHE

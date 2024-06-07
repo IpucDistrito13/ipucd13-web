@@ -10,6 +10,20 @@ class Comite extends Model
     use HasFactory;
     protected $fillable = ['nombre', 'slug', 'descripcion', 'imagen_banner'];
 
+    //WEB
+    public function scopeSeccionComites($query)
+    {
+        return $query->select('id', 'nombre', 'slug', 'banner_little');
+
+    }
+
+    //MUESTRA LOS COMITES DESDE EL MENU
+    public function scopeComiteMenu($query)
+    {
+        return $query->select('id', 'nombre' , 'slug');
+    }
+    //END WEB
+
     public function scopeApiV1($query)
     {
         return $query->select('id', 'nombre', 'slug', 'descripcion', 'imagen_banner');
@@ -17,7 +31,7 @@ class Comite extends Model
 
     public function scopeListarComites($query)
     {
-        return $query->select('id', 'nombre', 'slug', 'descripcion', 'imagen_banner');
+        return $query->select('id', 'nombre', 'slug', 'created_at');
     }
 
     public function series()

@@ -54,6 +54,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //WEB
+    //Lista segun el rol
+    public function scopeListarPorRolPastor($query, $roleId)
+    {
+        return $query->whereHas('vista_rol_pastor', function($query) use ($roleId) {
+            $query->where('id', $roleId);
+        });
+    }
+    //END WEB
+
     //RELACION UNO A MUCHOS
     public function publicaciones()
     {
@@ -136,6 +146,134 @@ class User extends Authenticatable
     }
 
 
+    /*
+    select `users`.*, (select group_concat(`roles`.`name` separator ', ') from `roles` inner join `model_has_roles` on `roles`.`id` = `model_has_roles`.`role_id` 
+    where `model_has_roles`.`model_id` = `users`.`id` and `model_has_roles`.`model_type` = 'App\\Models\\User') as `roles` from `users` ORDER BY `roles` DESC limit 10 offset 0;
+
+
+
+
+
+    SELECT 
+    `users`.`id`, 
+    `users`.`email`, 
+    `users`.`uuid`, 
+    `users`.`codigo`,
+    `users`.`nombre`,
+    `users`.`apellidos`,
+    `users`.`celular`,
+    (SELECT GROUP_CONCAT(`roles`.`name` SEPARATOR ', ')
+     FROM `roles`
+     INNER JOIN `model_has_roles` ON `roles`.`id` = `model_has_roles`.`role_id`
+     WHERE `model_has_roles`.`model_id` = `users`.`id` 
+     AND `model_has_roles`.`model_type` = 'App\\Models\\User') AS `roles`
+FROM `users` 
+ORDER BY `roles` DESC 
+LIMIT 10 OFFSET 0;
+
+
+//MUESTRA LOS USUARIOS CON CADA UNOS DE LOS ROLES Y LA DIRECCION DONDE PERTENECE SOLO MUESTRA EL ROL PASTOR
+SELECT 
+    `users`.`id`, 
+    `users`.`email`, 
+    `users`.`uuid`, 
+    `users`.`codigo`,
+    `users`.`nombre`,
+    `users`.`apellidos`,
+    `users`.`celular`,
+    `congregaciones`.`direccion` AS `direccion_congregacion`,
+    (SELECT GROUP_CONCAT(`roles`.`name` SEPARATOR ', ')
+     FROM `roles`
+     INNER JOIN `model_has_roles` ON `roles`.`id` = `model_has_roles`.`role_id`
+     WHERE `model_has_roles`.`model_id` = `users`.`id` 
+     AND `model_has_roles`.`model_type` = 'App\\Models\\User') AS `roles`
+FROM `users`
+LEFT JOIN `congregaciones` ON `users`.`congregacion_id` = `congregaciones`.`id`
+WHERE EXISTS (
+    SELECT 1
+    FROM `model_has_roles`
+    WHERE `model_has_roles`.`model_id` = `users`.`id` 
+    AND `model_has_roles`.`model_type` = 'App\\Models\\User'
+    AND EXISTS (
+        SELECT 1
+        FROM `roles`
+        WHERE `roles`.`id` = `model_has_roles`.`role_id`
+        AND `roles`.`name` = 'Pastor'
+    )
+)
+ORDER BY `roles` DESC;
+
+
+//VISTA DE PASTORES
+CREATE VIEW vista_pastores AS
+SELECT 
+    `users`.`id`, 
+    `users`.`email`, 
+    `users`.`uuid`, 
+    `users`.`codigo`,
+    `users`.`nombre`,
+    `users`.`apellidos`,
+    `users`.`celular`,
+    `congregaciones`.`direccion` AS `direccion_congregacion`,
+    GROUP_CONCAT(`roles`.`name` SEPARATOR ', ') AS `roles`
+FROM `users`
+LEFT JOIN `congregaciones` ON `users`.`congregacion_id` = `congregaciones`.`id`
+INNER JOIN `model_has_roles` ON `users`.`id` = `model_has_roles`.`model_id`
+INNER JOIN `roles` ON `model_has_roles`.`role_id` = `roles`.`id`
+WHERE `model_has_roles`.`model_type` = 'App\\Models\\User'
+    AND `roles`.`name` = 'Pastor'
+GROUP BY `users`.`id`, 
+    `users`.`email`, 
+    `users`.`uuid`, 
+    `users`.`codigo`,
+    `users`.`nombre`,
+    `users`.`apellidos`,
+    `users`.`celular`,
+    `congregaciones`.`direccion`
+ORDER BY `users`.`id`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE VIEW vista_roles_usuario AS
+SELECT 
+    users.id, 
+    users.email, 
+    users.uuid, 
+    users.codigo,
+    users.nombre,
+    users.apellidos,
+    users.celular,
+    congregaciones.direccion AS direccion_congregacion,
+    (
+        SELECT GROUP_CONCAT(roles.name SEPARATOR ', ')
+        FROM roles
+        INNER JOIN model_has_roles ON roles.id = model_has_roles.role_id
+        WHERE model_has_roles.model_id = users.id 
+        AND model_has_roles.model_type = 'App\\Models\\User'
+    ) AS roles
+FROM 
+    users
+LEFT JOIN
+    congregaciones ON users.congregacion_id = congregaciones.id
+ORDER BY 
+    roles DESC;
+
+
+
+    */
 
     
 }
