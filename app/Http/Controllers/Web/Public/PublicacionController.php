@@ -78,26 +78,7 @@ class PublicacionController extends Controller
     {
         //$etiquetas = Etiqueta::all();
         $comites = Comite::SeccionComites()->get();
-        //REDES
-     return   $redes_sociales = Redes::Activo()->get();
-        $facebookLink = '';
-        $youtubeLink = '';
-        $instagramLink = '';
-        // Itera sobre la lista para encontrar Facebook
-        foreach ($redes_sociales as $redSocial) {
-            switch ($redSocial["nombre"]) {
-                case "Facebook":
-                    $facebookLink = $redSocial["url"];
-                    break;
-                case "YouTube":
-                    $youtubeLink = $redSocial["url"];
-                    break;
-                case "Instagram":
-                    $instagramLink = $redSocial["url"];
-                    break;
-            }
-        }
-        // REDES
+        $redes_sociales = Redes::Activo()->get();
         $similares = Publicacion::GetSimilaresCategoria($publicacion->categoria_id)->get();
 
         $metaData = [
@@ -112,10 +93,6 @@ class PublicacionController extends Controller
             'comites' => $comites,
             'redes_sociales' => $redes_sociales,
             'metaData' => $metaData,
-
-            'facebook' => $facebookLink,
-            'youtube' => $youtubeLink,
-            'instagram' => $instagramLink,
         ]);
     }
 }
