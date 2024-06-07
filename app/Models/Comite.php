@@ -13,7 +13,7 @@ class Comite extends Model
     //WEB
     public function scopeSeccionComites($query)
     {
-        return $query->select('id', 'nombre', 'slug', 'banner_little');
+        return $query->select('id', 'nombre', 'slug');
 
     }
 
