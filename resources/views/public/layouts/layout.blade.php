@@ -19,7 +19,6 @@
         <link rel="stylesheet" href="css/icon.min.css"/>
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/responsive.css"/>
-        <link rel="stylesheet" href="demos/elearning/elearning.css" />
     </head>
     <body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">
         <!-- start header -->
@@ -29,9 +28,9 @@
                 <div class="container-fluid">
                     <div class="col-auto col-lg-2 me-lg-0 me-auto">
                         <a class="navbar-brand" href="demo-elearning.html">
-                            <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="default-logo">
-                    <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="alt-logo">
-                    <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="mobile-logo"> 
+                            <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="default-logo">
+                            <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="alt-logo">
+                            <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="mobile-logo"> 
                         </a>
                     </div>
                     <div class="col-auto menu-order position-static">

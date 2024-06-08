@@ -5,9 +5,9 @@
         <div class="container-fluid">
             <div class="col-auto col-lg-2 me-lg-0 me-auto">
                 <a class="navbar-brand" href="demo-accounting.html">
-                    <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="default-logo">
-                    <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="alt-logo">
-                    <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="mobile-logo"> 
+                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="default-logo">
+                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="alt-logo">
+                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="mobile-logo"> 
                 </a>
             </div>
             <div class="col-auto menu-order position-static">
