@@ -42,9 +42,9 @@ class InicioController extends Controller
         //return $instagramLink;
 
         $metaData = [
-            'titulo' => 'Distrito 13 | Iglesia Pentecostal Unida de Colombia',
-            'autor' => 'IPUC D13',
-            'description' => 'Iglesia Pentecostal Unidad de Colombia',
+            'titulo' => 'Inicio | IPUC Distrito 13',
+            'autor' => 'IPUC Distrito 13',
+            'description' => 'Inicio | IPUC Distrito 13',
         ];
 
         $publicaciones = Publicacion::GetPublicoShowPublicaciones();

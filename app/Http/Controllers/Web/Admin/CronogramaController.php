@@ -97,7 +97,7 @@ class CronogramaController extends Controller
         $metaData = [
             'title' => 'Cronogramas',
             'author' => 'IPUC D13',
-            'description' => 'Distrito 13 | Cronograma',
+            'description' => 'Cronograma | Distrito 13',
         ];
         return view('publico.cronogramas.index', compact('metaData', 'comites'));
     }

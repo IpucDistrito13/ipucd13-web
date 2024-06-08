@@ -13,9 +13,9 @@ class DescargableController extends Controller
     {
         $comitesMenu = Comite::ComiteMenu()->get();
         $metaData = [
-            'titulo' => 'Descargable | IPUC D13',
-            'autor' => 'IPUC D13',
-            'description' => '',
+            'titulo' => 'Descargable | IPUC Distrito 13',
+            'autor' => 'IPUC Distrito 13',
+            'description' => 'Descargable | IPUC Distrito 13',
         ];
 
         //REDES

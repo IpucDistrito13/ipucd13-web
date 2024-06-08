@@ -13,9 +13,9 @@ class CronogramaController extends Controller
     {
         $comitesMenu = Comite::ComiteMenu()->get();
         $metaData = [
-            'title' => 'Cronogramas | IPUC D13',
+            'title' => 'Cronogramas | IPUC Distrito 13',
             'author' => 'IPUC D13',
-            'description' => 'Distrito 13 | Cronograma',
+            'description' => 'Cronogramas | IPUC Distrito 13',
         ];
 
         return view('public.eventos.index', [

@@ -12,9 +12,9 @@ class ContactoController extends Controller
     public function index()
     {
         $metaData = [
-            'title' => 'Contacto | IPUC D13',
-            'autor' => 'IPUC D13',
-            'description' => '',
+            'title' => 'Contacto | IPUC Distrito 13',
+            'autor' => 'IPUC Distrito 13',
+            'description' => 'Contacto | IPUC Distrito 13',
         ];
 
         $comitesMenu = Comite::ComiteMenu()->get();

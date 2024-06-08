@@ -43,9 +43,9 @@ class ComiteController extends Controller
         $publicaciones = Publicacion::GetUltimasPublicaciones($comite->id)->get();
 
         $metaData = [
-            'title' => 'Comité | IPUC D13',
-            'author' => 'IPUC D13',
-            'description' => 'Distrito 13 | Cronograma',
+            'title' => 'Comité | IPUC Distrito 13',
+            'author' => 'IPUC Distrito 13',
+            'description' => 'Comité | IPUC Distrito 13',
         ];
 
         return view('public.comites.show', [

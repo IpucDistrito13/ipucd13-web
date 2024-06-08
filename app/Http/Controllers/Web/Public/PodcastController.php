@@ -28,8 +28,8 @@ class PodcastController extends Controller
        // return $podcast;
        $metaData = [
         'title' => 'Cronogramas | IPUC D13',
-        'author' => 'IPUC D13',
-        'description' => 'Distrito 13 | Cronograma',
+        'author' => 'IPUC Distrito 13',
+        'description' => 'Cronogramas | IPUC D13',
     ];
 
      //REDES

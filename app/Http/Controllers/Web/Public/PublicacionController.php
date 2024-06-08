@@ -59,8 +59,8 @@ class PublicacionController extends Controller
 
         $metaData = [
             'title' => 'Publicaciones | IPUC D13',
-            'author' => 'IPUC D13',
-            'description' => '',
+            'author' => 'IPUC Distrito 13',
+            'description' => 'Publicaciones | IPUC D13',
         ];
 
         return view('public.publicaciones.index', [
@@ -83,8 +83,8 @@ class PublicacionController extends Controller
 
         $metaData = [
             'title' => 'Publicaciones | IPUC D13',
-            'author' => 'IPUC D13',
-            'description' => '',
+            'author' => 'IPUC Distrito 13',
+            'description' => 'Publicaciones | IPUC D13',
         ];
 
         return view('public.publicaciones.show', [

@@ -13,9 +13,9 @@ class EventoController extends Controller
     {
         $comitesMenu = Comite::ComiteMenu()->get();
         $metaData = [
-            'title' => 'Eventos | IPUC D13',
-            'author' => 'IPUC D13',
-            'description' => '',
+            'title' => 'Eventos | IPUC Distrito 13',
+            'author' => 'IPUC Distrito 13',
+            'description' => 'Eventos | IPUC Distrito 13',
         ];
 
         return view('public.eventos.index', [
