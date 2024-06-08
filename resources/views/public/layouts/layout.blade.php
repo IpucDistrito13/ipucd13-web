@@ -8,9 +8,9 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         <!-- favicon icon -->
         <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
-<link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon-57x57.png') }}">
-<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('img/apple-touch-icon-72x72.png') }}">
-<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('img/apple-touch-icon-114x114.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon-57x57.png') }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('img/apple-touch-icon-72x72.png') }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('img/apple-touch-icon-114x114.png') }}">
         <!-- google fonts preconnect -->
         <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,9 +29,9 @@
                 <div class="container-fluid">
                     <div class="col-auto col-lg-2 me-lg-0 me-auto">
                         <a class="navbar-brand" href="demo-elearning.html">
-                            <img src="images/demo-elearning-logo-white.png" data-at2x="images/demo-elearning-logo-white@2x.png" alt="" class="default-logo">
-                            <img src="images/demo-elearning-logo-black.png" data-at2x="images/demo-elearning-logo-black@2x.png" alt="" class="alt-logo">
-                            <img src="images/demo-elearning-logo-black.png" data-at2x="images/demo-elearning-logo-black@2x.png" alt="" class="mobile-logo"> 
+                            <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="default-logo">
+                    <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="alt-logo">
+                    <img src="{{ asset('img/logo-black.png') }}" data-at2x="{{ asset('img/logo-black@2x.png')}}" alt="" class="mobile-logo"> 
                         </a>
                     </div>
                     <div class="col-auto menu-order position-static">
