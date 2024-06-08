@@ -7,7 +7,26 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+        {{ session('success') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" class="text-white">&times;</span>
+        </button>
+    </div>
+    @endif
+
+    @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+        {{ session('error') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" class="text-white">&times;</span>
+        </button>
+    </div>
+    @endif
+    <p>Panel de administración.</p>
+
     <!-- Default box -->
     <div class="row">
         <div class="col-md-3">
@@ -30,7 +49,7 @@
                         <!-- text input -->
                         <div class="form-group">
                             <label>Transmisión Id *</label>
-                            <input id="id" name="id" value="4">
+                            <input id="id" name="id" value="4" hidden>
                             <input type="text" class="form-control" id="url" name="url"
                                 value="{{ old('nombre', $comite->nombre ?? '') }}" onkeyup="updateSlug()">
                             @error('nombre')
