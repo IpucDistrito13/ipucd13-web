@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('redes', function (Blueprint $table) {
             $table->id();
-            $table->string('iniciales');
-            $table->string('nombre');
-            $table->text('url');
-            $table->text('icono');
+            $table->string('iniciales')->nullable();
+            $table->string('nombre')->nullable();
+            $table->text('url')->nullable();
+            $table->text('icono')->nullable();
             $table->enum('estado', ['Activo', 'Inactivo']);
             $table->timestamps();
         });
