@@ -17,13 +17,16 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         </head>
-    <body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">  
+        <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+        class="custom-cursor">
 
         @include('public.layouts.menu')
         
         <!-- start section -->
         <section class="position-relative overflow-hidden">
             <div class="container position-relative">
+                <br>
+                <br>
  
                 <div class="row">
                     <div id="calendar"></div>

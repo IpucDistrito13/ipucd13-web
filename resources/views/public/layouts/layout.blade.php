@@ -20,7 +20,8 @@
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/responsive.css"/>
     </head>
-    <body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">
+    <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+    class="custom-cursor">
         <!-- start header -->
         <header> 
             <!-- start navigation -->

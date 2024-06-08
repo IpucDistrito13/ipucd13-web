@@ -13,8 +13,6 @@
     {{-- <meta name="robots" content="noindex"> --}}
    <!-- favicon icon -->
    @include('public.layouts.iconos')
-    <!-- <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" /> -->
-
 
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
@@ -36,6 +34,8 @@
     <!-- start section -->
     <section class="position-relative overflow-hidden">
         <div class="container position-relative">
+            <br>
+            <br>
 
             <div class="row">
                 <div id="calendar"></div>

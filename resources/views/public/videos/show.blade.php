@@ -14,8 +14,9 @@
     @include('public.layouts.iconos')
 </head>
 
-<body data-mobile-nav-trigger-alignment="right" data-mobile-nav-style="modern" data-mobile-nav-bg-color="#313e3b">
-
+<body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+    class="custom-cursor">
+    
     @include('public.layouts.menu')
     <!-- start page title -->
     <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography"
