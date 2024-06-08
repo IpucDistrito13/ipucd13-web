@@ -127,3 +127,6 @@ Categoria
         }
         //CACHE
         
+# Admin Dasboard
+REDES
+- AL actualizar los datos de tranmision existe campo oculto por parametro codeado el id

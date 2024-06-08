@@ -175,7 +175,7 @@
                         <span class="fs-45 lh-65 fw-500 opacity-5 d-inline-block">DISTRITO 13</span>
                     </div>
                     <div class="overflow-hidden">
-                        <a href="https://www.youtube.com/watch?v=#"
+                        <a href="https://www.youtube.com/embed/{{ $transmision->url }}?autoplay=0;&mute=0;rel=0&amp;showinfo=0"
                             class="btn btn-extra-large btn-base-color btn-rounded btn-switch-text fw-600 d-inline-block me-25px sm-me-10px align-middle left-icon popup-youtube">
                             <span>
                                 <span><i class="feather icon-feather-youtube"></i></span>

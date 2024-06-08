@@ -11,29 +11,45 @@
     <!-- Default box -->
     <div class="row">
         <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Trasmisión en vivo</h3>
+             <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <span id="card_title">
+                Datos transmisión
+            </span>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                            <i class="fas fa-times"></i>
-                        </button>
+            <form method="POST" action="{{ route('admin.redes.updateTransmision') }}" autocomplete="off"
+                enctype="multipart/form-data" file="true">
+
+                @csrf
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>Transmisión Id *</label>
+                            <input id="id" name="id" value="4">
+                            <input type="text" class="form-control" id="url" name="url"
+                                value="{{ old('nombre', $comite->nombre ?? '') }}" onkeyup="updateSlug()">
+                            @error('nombre')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-
-                    
 
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
+
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" href="{{ route('admin.comites.index') }}">Volver</a>
+                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
                 </div>
-                <!-- /.card-footer-->
-            </div>
+            </form>
+
+        </div>
+
+    </div>
             <!-- /.card -->
         </div>
     </div>

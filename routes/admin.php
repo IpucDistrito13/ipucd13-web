@@ -14,6 +14,7 @@ use App\Http\Controllers\Web\Admin\GaleriaController;
 use App\Http\Controllers\Web\Admin\HomeController;
 use App\Http\Controllers\Web\Admin\PodcastController;
 use App\Http\Controllers\Web\Admin\PublicacionController;
+use App\Http\Controllers\Web\Admin\RedesController;
 use App\Http\Controllers\Web\Admin\RolController;
 use App\Http\Controllers\Web\Admin\SerieController;
 use App\Http\Controllers\Web\Admin\SolicitudTipoController;
@@ -24,7 +25,11 @@ use App\Models\GaleriaTipo;
 use App\Models\SolicitudTipo;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('admin.dashboard');
+Route::get('transmision', [HomeController::class, 'transmision']);
+
+Route::post('redes/updateTransmision', [RedesController::class, 'updateTransmision'])->name('admin.redes.updateTransmision');
+
 
 
 Route::get('datatable/usuarios', [DatatableController::class, 'usuarios'])->name('datatable.usuarios');

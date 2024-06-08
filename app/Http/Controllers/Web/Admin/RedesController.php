@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Redes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class RedesController extends Controller
 {
@@ -50,9 +52,40 @@ class RedesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateTransmision(Request $request, Redes $redes)
     {
-        //
+        // Validate the request data
+        $validatedData = $request->validate([
+            'id' => 'required|exists:redes,id',
+            'url' => 'nullable|max:255',
+        ]);
+
+        // Fetch the record to update
+        $redes = Redes::findOrFail($validatedData['id']);
+
+        // Extract YouTube video ID if URL is provided
+        if (!empty($validatedData['url'])) {
+            $videoId = $this->extractYouTubeId($validatedData['url']);
+            $validatedData['url'] = $videoId;
+        }
+
+        // Update the record with the validated data
+        $redes->update([
+            'url' => $validatedData['url'],
+        ]);
+
+        // Clear the cache
+        Cache::flush();
+
+        // Redirect to the dashboard with a success message
+        return redirect()->route('admin.dashboard')->with('success', 'Transmisión actualizada exitosamente.');
+    }
+
+    // Function to extract YouTube video ID from URL
+    private function extractYouTubeId($url)
+    {
+        preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/.*v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $url, $matches);
+        return $matches[1] ?? null;
     }
 
     /**

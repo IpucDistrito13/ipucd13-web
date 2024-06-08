@@ -21,6 +21,7 @@ class InicioController extends Controller
         $departamentos = Departamento::select('id')->get();
 
         $redes_sociales = Redes::Activo()->get();
+        $transmision = Redes::GetTransmision()->first();
         $facebookLink = '';
         $youtubeLink = '';
         $instagramLink = '';
@@ -49,6 +50,7 @@ class InicioController extends Controller
 
         $publicaciones = Publicacion::GetPublicoShowPublicaciones();
         return view('public.inicio', [
+            'transmision' => $transmision,
             'comites' => $comites,
 
             'publicaciones' => $publicaciones,
