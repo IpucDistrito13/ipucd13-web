@@ -48,11 +48,11 @@
                     <div class="col-sm-12">
                         <!-- text input -->
                         <div class="form-group">
-                            <label>Transmisión Id *</label>
+                            <label>Url transmisión *</label>
                             <input id="id" name="id" value="4" hidden>
                             <input type="text" class="form-control" id="url" name="url"
-                                value="{{ old('nombre', $comite->nombre ?? '') }}" onkeyup="updateSlug()">
-                            @error('nombre')
+                                value="https://www.youtube.com/watch?v={{ old('url', $transmision->url ?? '') }}" >
+                            @error('url')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -75,8 +75,7 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
 @stop
