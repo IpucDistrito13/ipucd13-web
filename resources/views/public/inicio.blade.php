@@ -175,14 +175,17 @@
                         <span class="fs-45 lh-65 fw-500 opacity-5 d-inline-block">DISTRITO 13</span>
                     </div>
                     <div class="overflow-hidden">
-                        <a href="https://www.youtube.com/embed/{{ $transmision->url }}?autoplay=0;&mute=0;rel=0&amp;showinfo=0"
-                            class="btn btn-extra-large btn-base-color btn-rounded btn-switch-text fw-600 d-inline-block me-25px sm-me-10px align-middle left-icon popup-youtube">
-                            <span>
-                                <span><i class="feather icon-feather-youtube"></i></span>
-                                <span class="btn-double-text ls-minus-05px" data-text="Ver ahora">Estamos en vivo</span>
-                            </span>
-                        </a>
+                        @if(!empty($transmision->url))
+                            <a href="https://www.youtube.com/watch?v={{ $transmision->url }}"
+                                class="btn btn-extra-large btn-base-color btn-rounded btn-switch-text fw-600 d-inline-block me-25px sm-me-10px align-middle left-icon popup-youtube">
+                                <span>
+                                    <span><i class="feather icon-feather-youtube"></i></span>
+                                    <span class="btn-double-text ls-minus-05px" data-text="Ver ahora">Estamos en vivo</span>
+                                </span>
+                            </a>
+                        @endif
                     </div>
+                    
                     <div
                         class="row row-cols-3 justify-content-center counter-style-04 w-100 md-w-auto position-absolute lg-position-relative bottom-80px lg-bottom-0px lg-mt-50px">
                         <!-- start counter item -->
