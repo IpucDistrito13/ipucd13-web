@@ -29,14 +29,13 @@ class UsuarioController extends Controller
     public function index(Request $request)
     {
         return view('admin.usuarios.index');
-
     }
 
     public function serverSideJson(Request $request)
     {
         if ($request->ajax()) {
             $data = \DB::table("vista_roles_usuario")->get(); // Obtener los datos de la vista
-            
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 /*
@@ -64,22 +63,22 @@ class UsuarioController extends Controller
                 */
                 ->addColumn('action', function ($row) {
                     $editUrl = route('admin.usuarios.editar', $row->id);
-    
+
                     $btn = '<a href="' . $editUrl . '" class="edit btn btn-primary btn-sm">Editar</a>';
                     $btn .= '<form id="deleteForm_' . $row->id . '" action="' . $editUrl . '" method="POST" class="d-inline">';
                     $btn .= csrf_field(); // Agregar token CSRF
                     $btn .= '<input type="hidden" name="_method" value="DELETE">';
                     $btn .= '<button type="button" onclick="confirmDelete(' . $row->id . ', \'' . $row->nombre . '\', \'' . $row->apellidos . '\')" class="delete btn btn-danger btn-sm">Eliminar</button>';
                     $btn .= '</form>';
-                    
+
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
     }
-    
-    
+
+
 
     public function index2(Request $request)
     {
@@ -203,19 +202,20 @@ class UsuarioController extends Controller
 
     public function editar($usuarioId)
     {
-        return $usuarioId;
-        /*
-        $roles = Role::all();
-        //return $usuario;
-
+        $usuario = User::find($usuarioId);
         $congregaciones = Congregacion::SelectList()->get();
-        // return  $congregaciones = Congregacion::all();
-        return view('admin.usuarios.edit', [
-            'usuario' => $usuario,
-            'congregaciones' => $congregaciones,
-            'roles' => $roles,
-        ]);
-        */
+        $roles = Role::all();
+
+        if ($usuario) {
+            //return $usuario;
+            return view('admin.usuarios.edit', [
+                'usuario' => $usuario,
+                'congregaciones' => $congregaciones,
+                'roles' => $roles,
+            ]);
+        } else {
+            return 'Usuario no existe';
+        }
     }
 
 

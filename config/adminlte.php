@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'IPUC D13',
+    'title' => 'IPUC Distrito 13',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -295,9 +295,11 @@ return [
 
     'menu' => [
         // Navbar items:
+
+
         [
             'type' => 'navbar-search',
-            'text' => 'search',
+            'text' => 'Buscar',
             'topnav_right' => false,
         ],
         [
@@ -308,43 +310,76 @@ return [
 
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Buscar',
         ],
 
         [
-            'text' => ' Adm. Eventos',
-            'route' => 'admin.eventos.create',
-            'icon' => 'fas fa-calendar-alt',
-            'can' => 'admin.eventos.create'
+            'header' => 'ADMINISTRADOR',
+            //'can' => 'admin.roles.index'
         ],
 
         [
-            'text' => ' Adm. Cronograma distrital',
-            'route' => 'admin.cronogramas.create',
-            'icon' => 'fas fa-calendar-day',
-            'can' => 'admin.cronogramas.create'
-        ],
-
-        [
-            'text' => 'Adm. Lista roles',
+            'text' => 'Roles',
             'route' => 'admin.roles.index',
-            'icon' => 'fas fa-bullhorn',
+            'icon' => 'fas fa-user-check',
             'active' => ['admin/roles*'],
             'can' => 'admin.roles.index'
         ],
 
-        [
-            'text' => 'Dev. Solicitud tipo',
-            'route' => 'admin.solicitud_tipos.index',
-            'icon' => 'fas fa-bullhorn',
-            'can' => 'admin.solicitud_tipos.index'
-        ],
         [
             'text' => 'Congregaciones',
             'route' => 'admin.congregaciones.index',
             'icon' => 'fas fa-place-of-worship',
             'active' => ['admin/congregacion*'],
             'can' => 'admin.congregaciones.index'
+        ],
+
+        [
+            'text' => 'Usuarios',
+            'route' => 'admin.usuarios.index',
+            'icon' => 'fas fa-user',
+            'active' => ['admin/usuarios*'],
+            'can' => 'admin.usuarios.index'
+        ],
+
+        [
+            'text' => 'Solicitudes',
+            'icon' => 'fas fa-bullhorn',
+            'submenu' => [
+                [
+                    'text' => 'Tipos',
+                    'route' => 'admin.solicitud_tipos.index',
+                    'can' => 'admin.solicitud_tipos.index'
+                ],
+
+                [
+                    'text' => 'Solicitudes pendientes',
+                    'route' => 'admin.solicitud_tipos.index',
+                    'can' => 'admin.solicitud_tipos.index'
+                ],
+
+            ],
+        ],
+
+        [
+            'text' => 'Galeria',
+            'route' => 'admin.galerias.index',
+            'icon' => 'fas fa-file-image',
+            'can' => 'admin.galerias.index'
+        ],
+
+        [
+            'text' => 'Eventos',
+            'route' => 'admin.eventos.create',
+            'icon' => 'fas fa-calendar-alt',
+            'can' => 'admin.eventos.create'
+        ],
+
+        [
+            'text' => 'Cronograma distrital',
+            'route' => 'admin.cronogramas.create',
+            'icon' => 'fas fa-calendar-day',
+            'can' => 'admin.cronogramas.create'
         ],
 
         [
@@ -382,21 +417,6 @@ return [
             'icon' => 'fas fa-clipboard',
             'active' => ['admin/publicaciones*'],
             'can' => 'admin.publicaciones.index',
-        ],
-
-        [
-            'text' => 'Admin. Usuarios',
-            'route' => 'admin.usuarios.index',
-            'icon' => 'fas fa-user',
-            'active' => ['admin/usuarios*'],
-            'can' => 'admin.usuarios.index'
-        ],
-
-        [
-            'text' => 'Galeria',
-            'route' => 'admin.galerias.index',
-            'icon' => 'fas fa-file-image',
-            'can' => 'admin.galerias.index'
         ],
 
         [
@@ -512,7 +532,7 @@ return [
             ]
         ],
         */
-            
+
         'Datatables' => [
             'active' => false,
             'files' => [

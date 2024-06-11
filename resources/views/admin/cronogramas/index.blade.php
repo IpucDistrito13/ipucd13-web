@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Galería')
+@section('title', 'Cronograma distrital')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">

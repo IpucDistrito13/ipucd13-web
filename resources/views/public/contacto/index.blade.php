@@ -12,7 +12,6 @@
 
         <!-- favicon icon -->
         @include('public.layouts.iconos')
-        <!-- <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" /> -->
 
         </head>
         <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
@@ -43,6 +42,7 @@
         <!-- start section -->
         <section class="position-relative overflow-hidden">
             <div class="container position-relative">
+                <!--
                 <div class="row mb-5 align-items-center overflow-hidden">
                     <div class="col-lg-6">
                         <h1 class="alt-font fw-700 text-dark-gray fancy-text-style-4 ls-minus-2px md-mb-20px">Mensaje  
@@ -52,7 +52,8 @@
                     <div class="col-lg-6 last-paragraph-no-margin" data-anime='{ "el": "childs", "opacity": [0, 1], "translateX": [-50, 0], "staggervalue": 100, "easing": "easeOutQuad" }'>
                     <p>Estamos aquí para ayudar y responder cualquier pregunta que pueda tener. Esperamos con interés escuchar de usted.</p>
                     </div>
-                </div> 
+                </div>
+                -->
                 <div class="row">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.0911846878093!2d-72.51413512415537!3d7.8855284058371415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e664582feffd535%3A0x5776304a35f8b058!2sIglesia%20Pentecostal%20Unida%20de%20Colombia%20-%20C%C3%BAcuta%20Central!5e0!3m2!1ses-419!2sco!4v1713067838572!5m2!1ses-419!2sco" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                    </div> 
 

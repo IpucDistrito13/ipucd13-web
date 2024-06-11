@@ -100,6 +100,10 @@ class SolicitudTipoController extends Controller
             $data = [
                 'message' => 'Tipo de solicitud eliminado exitosamente.',
             ];
+            
+            //Elimina datos cache
+            Cache::flush();
+            //Cache
 
             return redirect()->route('admin.solicitud_tipos.index')->with('success', $data['message']);
         } catch (\Exception $e) {

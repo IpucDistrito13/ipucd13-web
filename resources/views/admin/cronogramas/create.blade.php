@@ -3,7 +3,7 @@
 @section('title', 'Cronograma distrital | IPUC D13')
 
 @section('content_header')
-    <h1>Cronograma distrital 22</h1>
+    <h1>Cronograma distrital</h1>
 @stop
 
 @section('content')

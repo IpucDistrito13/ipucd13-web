@@ -35,7 +35,7 @@
     <div class="col-md-12">
         <div class="form-group">
             <label for="exampleInputEmail1">Lugar</label>
-            <input type="text" class="form-control" id="lugar" name="lugar" placeholder="">
+            <input type="text" class="form-control" id="lugar" name="lugar" placeholder="" value="{{ old('lugar') }}">
             @error('lugar')
                 <div class="text-danger">{{ $message }}</div>
             @enderror

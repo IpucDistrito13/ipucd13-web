@@ -17,7 +17,7 @@
                 <input type="checkbox" class="form-check-input" id="permiso_{{ $permiso->id }}"
                     name="permissions[]" value="{{ $permiso->id }}"
                     {{ isset($role) && $role->permissions->contains($permiso) ? 'checked' : '' }}>
-                <label class="form-check-label" for="permiso_{{ $permiso->id }}">{{ $permiso->name }}</label>
+                <label class="form-check-label" for="permiso_{{ $permiso->id }}">{{ $permiso->descripcion }}</label>
             </div>
         @endforeach
     </div>

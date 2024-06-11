@@ -18,7 +18,7 @@ class CronogramaController extends Controller
             'description' => 'Cronogramas | IPUC Distrito 13',
         ];
 
-        return view('public.eventos.index', [
+        return view('public.cronogramas.index', [
             'metaData' => $metaData,
             'comites' => $comitesMenu,
         ]);
