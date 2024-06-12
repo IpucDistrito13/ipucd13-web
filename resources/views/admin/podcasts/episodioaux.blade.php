@@ -406,7 +406,7 @@
         Dropzone.options.myDropzone = {
             paramName: "file",
             acceptedFiles: ".mp3", // Tipos de archivos aceptados
-            maxFilesize: 2408, // Tamaño máximo del archivo en MB
+           
             maxFiles: 1,
 
             init: function() {
