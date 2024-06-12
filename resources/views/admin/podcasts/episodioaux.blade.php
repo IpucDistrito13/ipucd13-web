@@ -6,14 +6,15 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            <i class="fas fa-volume-up"></i> Podcast Ax: {{ $podcast->titulo }}
+            <i class="fas fa-volume-up"></i> Podcast:: {{ $podcast->titulo }}
         </h1>
         <div>
-            <a class="btn btn-secondary btn-sm" href="{{ route('admin.podcasts.index')}}">
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.podcasts.index') }}">
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
 
-            <a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_upload"><i class="fas fa-upload"></i> Registrar datos episodio</a>
+            <a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_data">
+                <i class="fas fa-pencil-alt"></i> Registrar datos episodio</a>
 
         </div>
     </div>
@@ -22,23 +23,23 @@
 
 @section('content')
 
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
-    {{ session('success') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true" class="text-white">&times;</span>
-    </button>
-</div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
 
-@if (session('error'))
-<div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
-    {{ session('error') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true" class="text-white">&times;</span>
-    </button>
-</div>
-@endif
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
 
     <div class="card" id="secttion_musica">
         <div class="card-body">
@@ -65,20 +66,16 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <h3 class="card-title">Lista de episodios</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
             <table id="example1" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th class="counter-column">#</th>
                         <th>Nombre</th>
-                        <th>Podcast</th>
-                        <th>Slug</th>
                         <th>Descripción</th>
-                        <th>Url</th>
-
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -95,25 +92,23 @@
                             $contador++;
                         @endphp
                         <tr>
-                            <td>{{ $contador }}</td>
+                            <td style="text-align: center">{{ ++$contador }}</td>
                             <td>{{ $item->titulo }}</td>
-                            <td>{{ $item->podcast->titulo }}</td>
-                            <td>{{ $item->slug }}</td>
                             <td>{{ $item->descripcion }}</td>
-                            <td>{{ $item->url }}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
 
-                                    <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal_upload"><i class="fas fa-upload"></i> Añadir audio</a>
+                                    <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
+                                        data-target="#modal_upload"><i class="fas fa-upload"></i> Añadir audio</a>
 
-                                    <button class="btn btn-primary btn-sm" data-id="{{ $item->id }}">Añadir audio</button>
-
-                                    @if($item->url)
-                                        <button class="btn btn-info btn-sm reproducir" data-id="{{ $item->id }}">Reproducir</button>
+                                    @if ($item->url)
+                                        <button class="btn btn-info btn-sm reproducir"
+                                            data-id="{{ $item->id }}">Reproducir</button>
                                     @else
-                                        <a class="btn btn-secondary btn-sm" href="{{ route('admin.episodios.edit', $item) }}">Subir episodio</a>
+                                        <a class="btn btn-secondary btn-sm"
+                                            href="{{ route('admin.episodios.edit', $item) }}">Subir episodio</a>
                                     @endif
-                    
+
                                     <form action="{{ route('admin.episodios.destroy', $item) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -136,8 +131,10 @@
     </div>
     <!-- /.card -->
 
+
+
     <!-- Modal -->
-    <div class="modal fade" id="modal_upload">
+    <div class="modal fade" id="modal_data">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -147,8 +144,8 @@
                     </button>
                 </div>
 
-                <form action="{{ route('admin.episodios.store') }}" method="POST" class="dropzone" enctype="multipart/form-data"
-                file="true" autocomplete="off">
+                <form action="{{ route('admin.episodios.store') }}" method="POST" class="dropzone"
+                    enctype="multipart/form-data" file="true" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -227,14 +224,52 @@
     </div>
     <!-- /.modal -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="modal_upload">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Subir audio</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{ route('admin.episodios.upload') }}" method="POST" enctype="multipart/form-data"
+                    class="dropzone" id="myDropzone">
+                    @csrf
+                    <div class="modal-body">
+
+                        <input type="hidden" value="{{ $podcast->id }}" id="podcast" name="podcast">
+
+                        <div class="fallback">
+                            <input type="file" name="file" multiple>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
     <style>
-         .acciones-column {
-            width: 360px;
+        .acciones-column {
+            width: 285px;
+        }
+
+        .counter-column {
+            width: 2%;
         }
 
         .progress-bar {
@@ -335,8 +370,35 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
     <script>
+        Dropzone.options.myDropzone = {
+            paramName: "file",
+            dictDefaultMessage: "Arrastra y suelta el audio aquí o haz clic para seleccionar. Se guardara de forma automatica.",
+            acceptedFiles: ".mp3",
+            maxFilesize: 20,
+            maxFiles: 1,
+            init: function() {
+                var myDropzone = this;
+
+                // Handler for file upload completion
+                this.on("queuecomplete", function() {
+
+                    alert("Se ha subido el archivo de audio.");
+                    if (confirm("¿Desea actualizar la página para ver los cambios?")) {
+                        window.location.reload();
+                    }
+
+                });
+
+                this.on("success", function(file, response) {
+                    // Attach the UUID from the response to the file object for later use
+                    file.upload.uuid = response.uuid;
+                });
+            }
+        };
+
         const hiddenDiv = document.querySelector('.section-pause');
         // Function to show the div
         // Function to show the div

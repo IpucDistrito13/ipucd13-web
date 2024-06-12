@@ -39,7 +39,7 @@ class EpisodioController extends Controller
      */
     public function store(Request $request)
     {
-        
+
 
         $request->validate([
             //'file.*' => 'required|mimes:mp3,ogg,wav', // Asegúrate de validar el tipo de archivo correcto
@@ -60,8 +60,6 @@ class EpisodioController extends Controller
         Cache::flush();
 
         $data = ['message' => 'Episodio creado exitosamente.'];
-
-        
 
         return back()->with('success', $data['message']);
     }
@@ -127,34 +125,6 @@ class EpisodioController extends Controller
         }
     }
 
-    // We are submitting are image along with userid and with the help of user id we are updateing our record
-    public function storeImage(Request $request)
-    {
-        if ($request->file('file')) {
-
-            $img = $request->file('file');
-
-            //here we are geeting userid alogn with an image
-            $userid = $request->userid;
-
-            $imageName = strtotime(now()) . rand(11111, 99999) . '.' . $img->getClientOriginalExtension();
-            $user_image = new User();
-            $original_name = $img->getClientOriginalName();
-            $user_image->image = $imageName;
-
-            if (!is_dir(public_path() . '/uploads/images/')) {
-                mkdir(public_path() . '/uploads/images/', 0777, true);
-            }
-
-            $request->file('file')->move(public_path() . '/uploads/images/', $imageName);
-
-            // we are updating our image column with the help of user id
-            $user_image->where('id', $userid)->update(['image' => $imageName]);
-
-            return response()->json(['status' => "success", 'imgdata' => $original_name, 'userid' => $userid]);
-        }
-    }
-
     public function apigetAudio($episodioid)
     {
         // return 'Hola'; // Elimina o comenta esta línea
@@ -163,28 +133,71 @@ class EpisodioController extends Controller
     }
 
     public function upload(Request $request)
-{
-    if ($request->hasFile('file')) {
-        $url = Storage::put('public/comites', $request->file('file'));
+    {
+        // Validar la solicitud
+        $podcast = $request->input('podcast');
 
-        $episodio = Episodio::create([
-            'titulo' => $request->titulo,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'podcast_id' => $request->podcast,
-        ]);
+        // Verificar si el archivo existe en la solicitud
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
 
-        $episodio->imagen()->create([
-            'url' => $url,
-            'imageable_type' => Episodio::class,
-        ]);
+            // Generar un nombre de archivo único
+            $fileName = time() . '-' . $file->getClientOriginalName();
 
-        // Aquí puedes procesar y guardar el archivo
+            // Validar el tipo de galería y definir la ruta de almacenamiento
+            $url = $file->storeAs('public/podcast/' . $podcast, $fileName);
 
-        // Por ahora, solo imprimimos los datos, pero puedes guardarlos en la base de datos, por ejemplo
-        return "Guardado exitosamente.";
-    } else {
-        return "No se ha enviado ningún archivo.";
+            if (!$url) {
+                return response()->json(['error' => 'Error al almacenar el archivo.'], 500);
+            }
+
+            // Generar UUID
+            $uuid = (string) Str::uuid();
+
+            // Crear el array de datos para guardar en la base de datos
+            $data = [
+                'url' => $url,
+                'filetable_id' => $podcast,
+                'filetipe_type' => Episodio::class,
+            ];
+
+            // Crear el registro en la base de datos
+            try {
+                $galeria = Episodio::create($data);
+                return response()->json(['message' => 'Se cargo el audio exitosamente.', 'uuid' => $uuid], 200);
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Error al guardar en la base de datos: ' . $e->getMessage()], 500);
+            }
+        } else {
+            return response()->json(['error' => 'No se ha cargado ningún archivo.'], 400);
+        }
     }
-}
+
+    /*
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $url = Storage::put('public/episodio', $request->file('file'));
+
+            $episodio = Episodio::create([
+                'titulo' => $request->titulo,
+                'slug' => $request->slug,
+                'descripcion' => $request->descripcion,
+                'podcast_id' => $request->podcast,
+            ]);
+
+            $episodio->imagen()->create([
+                'url' => $url,
+                'imageable_type' => Episodio::class,
+            ]);
+
+            // Aquí puedes procesar y guardar el archivo
+
+            // Por ahora, solo imprimimos los datos, pero puedes guardarlos en la base de datos, por ejemplo
+            return "Guardado exitosamente.";
+        } else {
+            return "No se ha enviado ningún archivo.";
+        }
+    }
+    */
 }

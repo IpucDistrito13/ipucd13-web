@@ -57,6 +57,7 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.episodios.create', 'descripcion' => 'Crear episodios'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.episodios.edit', 'descripcion' => 'Editar episodios'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.episodios.destroy', 'descripcion' => 'Eliminar episodios'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.episodios.upload', 'descripcion' => 'episodio subir archivo'])->syncRoles([$rol1]);
 
         $permission = Permission::create(['name' => 'admin.series.index', 'descripcion' => 'Ver listado de series'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.series.create', 'descripcion' => 'Crear serie'])->syncRoles([$rol1]);

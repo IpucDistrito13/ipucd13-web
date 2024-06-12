@@ -50,6 +50,7 @@ Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpiso
 Route::get('podcast/episodio/new/{podcast}', [PodcastController::class, 'createEpisodio'])->name('admin.podcasts.createEpisodio'); // CREAR NUEVO EPISODIO
 
 Route::resource('episodios', EpisodioController::class)->names('admin.episodios');
+Route::post('episodios/upload', [EpisodioController::class, 'upload'])->name('admin.episodios.upload');
 
 Route::get('episodios/apigetAudio/{episodioid}', [EpisodioController::class, 'apigetAudio'])->name('admin.episodio.apigetAudio');
 Route::get('episodio/{episodio}', function ($episodioid) {
