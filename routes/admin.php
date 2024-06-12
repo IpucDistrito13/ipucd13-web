@@ -30,8 +30,6 @@ Route::get('transmision', [HomeController::class, 'transmision']);
 
 Route::post('redes/updateTransmision', [RedesController::class, 'updateTransmision'])->name('admin.redes.updateTransmision');
 
-
-
 Route::get('datatable/usuarios', [DatatableController::class, 'usuarios'])->name('datatable.usuarios');
 Route::post('datatable/galerias', [DatatableController::class, 'galeriaTodos'])->name('datatable.galeriaTodos');
 
@@ -59,7 +57,12 @@ Route::get('episodio/{episodio}', function ($episodioid) {
     return $audio;
 });
 
+//Route::get('series', [SerieController::class, 'index'])->name('admin.series.index');
+Route::resource('series', SerieController::class)->names('admin.series');
+
+
 ////////////////////Error
+/*
 Route::get('series', [SerieController::class, 'index'])->name('admin.series.index');
 Route::get('series/video/{serie}', [SerieController::class, 'listVideos'])->name('admin.series.listVideos');
 Route::get('series/create', [SerieController::class, 'create'])->name('admin.series.create');
@@ -69,6 +72,8 @@ Route::get('series/video/{serie}/edit', [SerieController::class, 'edit'])->name(
 Route::delete('series/{serie}/delete', [SerieController::class, 'destroy'])->name('admin.series.destroy');
 
 Route::resource('videos', VideoController::class)->names('admin.videos');
+
+*/
 
 Route::resource('usuarios', UsuarioController::class)->names('admin.usuarios');
 Route::get('user', [UsuarioController::class, 'list'])->name('admin.usuarios.list');

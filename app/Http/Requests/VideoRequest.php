@@ -26,7 +26,7 @@ class VideoRequest extends FormRequest
         $rules = [
             'titulo' => 'required|max:230',
             'slug' => 'required|max:255|alpha_dash|unique:videos,slug',
-            'url' => 'required|max:100',
+            'url' => ['required', 'max:150', 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/'],
             'descripcion' => 'nullable|max:300',
         ];
 
@@ -49,6 +49,7 @@ class VideoRequest extends FormRequest
             'slug.unique' => 'El slug ya está en uso.',
             'url.required' => 'La URL es obligatoria.',
             'url.max' => 'La URL no puede tener más de :max caracteres.',
+            'url.regex' => 'La URL debe ser un enlace válido de YouTube.',
             'descripcion.max' => 'La descripción no puede tener más de :max caracteres.'
         ];
     }

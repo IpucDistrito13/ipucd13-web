@@ -50,7 +50,7 @@
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Celular</th>
-
+                        <th>Rol</th>
                         <th class="acciones-column">Acciones</th>
 
                     </tr>
@@ -138,6 +138,11 @@
                     {
                         data: 'celular',
                         name: 'celular'
+                    },
+
+                    {
+                        data: 'roles',
+                        name: 'roles'
                     },
                     {
                         data: 'action',

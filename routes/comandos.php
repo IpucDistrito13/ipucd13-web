@@ -76,3 +76,5 @@ public function scopeGetSimilaresCategoria($query, $categoria_id)
         ->latest('id')
         ->take(4);
     }
+
+    <td>{{ \Illuminate\Support\Str::limit($item->descripcion, 80) }}</td>

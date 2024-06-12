@@ -46,11 +46,9 @@
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
-                        <th>Fecha</th>
                         <th>Título</th>
-                        <th>Slug</th>
-                        <th>Descripción</th>
-                        <th>Cant. Videos</th>
+                        <th>Creación</th>
+
                         <th class="acciones">Acciones</th>
                     </tr>
                 </thead>
@@ -58,39 +56,18 @@
                     @php
                         $contador = 0;
                     @endphp
-                    @foreach ($series as $item)
+                    @foreach ($series as $serie)
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
-                            <td>{{ $item->created_at }}</td>
 
-                            <td>{{ $item->titulo }}</td>
-                            <td>{{ $item->slug }}</td>
-                            <td>{{ $item->descripcion }}</td>
-                            <td>{{ $item->cantidad_videos }}</td>
+                            <td>{{ $serie->titulo }}</td>
+                            <td>{{ $serie->created_at }}</td>
 
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
-
-                                    @can('admin.series.listVideos')
-                                        <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.series.listVideos', $item) }}">Videos</a>
-                                    @endcan
-
-                                    @can('admin.series.edit')
-                                        <a class="btn btn-success btn-sm"
-                                            href="{{ route('admin.series.edit', $item) }}">Actualizar</a>
-                                    @endcan
-
-                                    @can('admin.series.destroy')
-                                        <form action=" {{ route('admin.series.destroy', $item) }} " method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                        </form>
-                                    @endcan
-
+                                    <a class="btn btn-success btn-sm" href="#">Actualizar</a>
+                                    <a class="btn btn-danger btn-sm" href="#">Eliminar</a>
                                 </div>
-
 
                             </td>
 

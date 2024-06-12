@@ -28,11 +28,16 @@ class VideoController extends Controller
      */
     public function store(VideoRequest $request)
     {
+        // Extract YouTube video ID if URL is provided
+        if (!empty($request->url)) {
+            $videoId = $this->extractYouTubeId($request->url);
+        }
+
         $data = [
             'titulo' => $request->titulo,
             'slug' => $request->slug,
             'descripcion' => $request->descripcion,
-            'url' => $request->url,
+            'url' => $videoId,
             'enlace' => $request->enlace,
             'serie_id' => $request->serie,
         ];
@@ -45,6 +50,13 @@ class VideoController extends Controller
 
         return redirect()->back()->with('success', $data['message']);
     }
+
+        // Function to extract YouTube video ID from URL
+        private function extractYouTubeId($url)
+        {
+            preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/.*v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $url, $matches);
+            return $matches[1] ?? null;
+        }
 
     /**
      * Display the specified resource.
@@ -73,26 +85,31 @@ class VideoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Video $video)
+    public function destroy2(Video $video)
     {
-        
         try {
-
             $video->delete();
-
+    
             $data = [
                 'message' => 'Video eliminado exitosamente.',
             ];
-
+    
             return back()->with('success', $data['message']);
             //return redirect()->route('admin.series.listVideos', $video->serie_id)->with('success', $data['message']);
         } catch (\Exception $e) {
             $data = [
                 'message' => 'No se pudo eliminar el video.',
             ];
-
-            return back()->with('success', $data['message']);
+    
+            return back()->with('error', $data['message']);
             //return redirect()->route('admin.series.listVideos', $video->serie_id)->with('error', $data['message']);
         }
     }
+
+    public function deleteVideo($videoId)
+    {
+        return $videoId;
+    }
+    
+    
 }

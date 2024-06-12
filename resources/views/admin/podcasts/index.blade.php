@@ -47,11 +47,10 @@
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
-                        <th>Feccha</th>
                         <th>Título</th>
-                        <th>Slug</th>
-                        <th>Descripción</th>
-                        <th>Cant. Episodios</th>
+                        <th>Categoría</th>
+                        <th>Episodios</th>
+                        <th>Fecha</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -62,11 +61,11 @@
                     @foreach ($podcasts as $item)
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
-                            <td>{{ $item->created_at }}</td>
+
                             <td>{{ $item->titulo }}</td>
-                            <td>{{ $item->slug }}</td>
-                            <td>{{ \Illuminate\Support\Str::limit($item->descripcion, 80) }}</td>
-                            <td>{{ $item->cantidad_episodios }}</td>
+                            <td>{{ $item->categoria->nombre }}</td>
+                            <td>{{ $item->episodios_count }}</td>
+                            <td>{{ $item->created_at }}</td>
                             <td>
 
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
@@ -127,6 +126,8 @@
 
 @section('js')
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
@@ -162,7 +163,7 @@
                 },
             })
         });
-        
+
         function redirectUpdate(url) {
             window.location.href = url;
         }

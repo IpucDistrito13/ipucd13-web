@@ -171,8 +171,8 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
-    'classes_auth_header' => '',
+    'classes_auth_card' => 'card-outline card-navy',
+    'classes_auth_header' => 'bg-gradient-navy',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
@@ -216,7 +216,7 @@ return [
 
     'sidebar_mini' => 'lg',
     'sidebar_collapse' => false,
-    'sidebar_collapse_auto_size' => true,
+    'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
@@ -296,7 +296,6 @@ return [
     'menu' => [
         // Navbar items:
 
-
         [
             'type' => 'navbar-search',
             'text' => 'Buscar',
@@ -353,7 +352,13 @@ return [
                 ],
 
                 [
-                    'text' => 'Solicitudes pendientes',
+                    'text' => 'Pendientes #',
+                    'route' => 'admin.solicitud_tipos.index',
+                    'can' => 'admin.solicitud_tipos.index'
+                ],
+
+                [
+                    'text' => 'Respondidas #',
                     'route' => 'admin.solicitud_tipos.index',
                     'can' => 'admin.solicitud_tipos.index'
                 ],

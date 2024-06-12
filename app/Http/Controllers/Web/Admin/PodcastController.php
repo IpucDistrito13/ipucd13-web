@@ -19,12 +19,14 @@ class PodcastController extends Controller
      */
     public function index()
     {
-
         //CACHE
         if (Cache::has('podcasts')) {
             $podcasts = Cache::get('podcasts');
         } else {
-            $podcasts = Podcast::with('comite', 'categoria', 'user')->get();
+            $podcasts = Podcast::with('comite:id,nombre', 'categoria:id,nombre')
+                ->withCount('episodios')
+                ->orderBy('created_at', 'desc') // Ordenar por fecha de creación en orden descendente
+                ->get();
             Cache::put('podcasts', $podcasts);
         }
         //CACHE
@@ -199,7 +201,7 @@ class PodcastController extends Controller
         }
     }
 
-    
+
     public function listEpisodio(Podcast $podcast)
     {
         $episodios = Episodio::where('podcast_id', $podcast->id)->get();
@@ -214,7 +216,7 @@ class PodcastController extends Controller
         ]);
         */
     }
-    
+
 
     public function createEpisodio(Podcast $podcast)
     {

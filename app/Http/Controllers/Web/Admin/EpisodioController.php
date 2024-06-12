@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
+
 
 class EpisodioController extends Controller
 {
@@ -55,7 +57,11 @@ class EpisodioController extends Controller
             'podcast_id' => $request->podcast,
         ]);
 
+        Cache::flush();
+
         $data = ['message' => 'Episodio creado exitosamente.'];
+
+        
 
         return back()->with('success', $data['message']);
     }

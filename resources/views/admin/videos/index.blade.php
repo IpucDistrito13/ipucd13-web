@@ -43,65 +43,45 @@
     @endif
 
     <!-- Default box -->
-    <div class="card">
-        <div class="card-header">
-            <span id="card_title">
-                Lista de videos
-            </span>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-
-            <div class="card-body pb-0">
-                @if ($videos->isEmpty())
-                    <p class="text-center">No hay videos disponibles.</p>
-                @else
-                    <div class="row">
-                        @foreach ($videos as $video)
-                            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                                <div class="card bg-light d-flex flex-fill">
-                                    <div class="card-header text-muted border-bottom-0">
-                                        <b>{{ $video->titulo }}</b>
-                                        <br>
-                                        <p>{{ $video->descripcion }}</p>
-
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        <div class="row">
-                                            <div class="col-12 text-center">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <div class="plyr__video-embed" id="player">
-                                                        <iframe src="https://www.youtube.com/embed/{{ $video->url }}"
-                                                            allowfullscreen allowtransparency allow="autoplay"></iframe>
-                                                    </div>
-                                                </div>
+    <div class="pb-0">
+        @if ($videos->isEmpty())
+            <p class="text-center">No hay videos disponibles.</p>
+        @else
+            <div class="row">
+                @foreach ($videos as $video)
+                    <div class="col-12 col-sm-12 col-md-6 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                <b>{{ $video->titulo }}</b>
+                                <br>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <div class="plyr__video-embed" id="player">
+                                                <iframe src="https://www.youtube.com/embed/{{ $video->url }}"
+                                                    allowfullscreen allowtransparency allow="autoplay"></iframe>
                                             </div>
                                         </div>
-
-                                    </div>
-                                    <div class="card-footer">
-                                        @can('admin.videos.destroy')
-                                            <div class="text-right">
-                                                <div class="btn-group" role="group" aria-label="Group of buttons">
-                                                    
-                                                   
-                                                </div>
-                                                
-                                                
-                                            </div>
-                                        @endcan
                                     </div>
                                 </div>
+
                             </div>
-                        @endforeach
+                            <div class="card-footer">
+                                @can('admin.videos.destroy')
+                                   <p>{{ $video }}</p>
+
+                                 
+                                @endcan
+                            </div>
+                            
+                            
+                        </div>
                     </div>
-                @endif
+                @endforeach
             </div>
-
-
-
-        </div>
-
+        @endif
     </div>
 
 
@@ -146,33 +126,9 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Ejemplo video original</label>
-                                    <input type="text" class="form-control" id="recipient-name" disabled
-                                        value="https://www.youtube.com/watch?v=OccnRyU9_D0&t=2s">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="recipient-name2" class="col-form-label">Ejemplo de registro </label>
-                                    <input type="text" class="form-control" id="recipient-name" disabled
-                                        value="https://www.youtube.com/embed/OccnRyU9_D0">
-                                </div>
-                            </div>
-
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Video original</label>
-                                    <input type="text" class="form-control" id="recipient-name" disabled
-                                        value="www.youtube.com/embebed/">
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="url" class="col-form-label">VideoId</label>
+                                    <label for="url" class="col-form-label">Enlace YouTube *</label>
                                     <input type="text" class="form-control" id="url" name="url"
-                                        value="{{ old('url') }}" placeholder="OccnRyU9_D0">
+                                        value="{{ old('url') }}" placeholder="">
                                     @error('url')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

@@ -38,10 +38,5 @@ Route::get('series/{serie}', [SerieController::class, 'show'])->name('public.ser
 Route::get('podcasts', [PodcastController::class, 'index']);
 Route::get('podcasts/{podcast}', [PodcastController::class, 'episodios'])->name('public.podcasts.episodios');
 
-//Route::get('test', [PodcastController::class, 'index']);
-//Route::get('podcasts/{podcasts}', [PodcastController::class, 'show']);
-
-
-
 
 

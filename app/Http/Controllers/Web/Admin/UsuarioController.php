@@ -44,9 +44,6 @@ class UsuarioController extends Controller
                     return $btn;
                 })
 
-
-
-
                 ->addColumn('action', function ($row) {
                     $editUrl = route('admin.usuarios.editar', $row->id);
                     $deleteUrl = route('admin.usuarios.destroy', ['usuarioId' => $row->id]);
