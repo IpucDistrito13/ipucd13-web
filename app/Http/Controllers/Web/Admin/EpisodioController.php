@@ -131,17 +131,16 @@ class EpisodioController extends Controller
         return $audio;
     }
 
-    public function updateUrl(Request $request)
+    public function uploadUrl(Request $request)
     {
-        return $request;
-    }
+        // Validar los datos de la solicitud
+        $request->validate([
+            'podcast' => 'required|exists:episodios,id', // Asegurarse de que el podcast exista
+            'file' => 'required|mimes:mp3|max:20480'    // Asegurarse de que el archivo sea un mp3 y no exceda los 20MB
+        ]);
 
-    public function upload(Request $request)
-    {
-
-        return $request;
-        // Validar la solicitud
-        $podcast = $request->input('podcast');
+        $podcast = $request->podcast;
+        $episodio = Episodio::find($podcast);
 
         // Verificar si el archivo existe en la solicitud
         if ($request->hasFile('file')) {
@@ -150,60 +149,18 @@ class EpisodioController extends Controller
             // Generar un nombre de archivo único
             $fileName = time() . '-' . $file->getClientOriginalName();
 
-            // Validar el tipo de galería y definir la ruta de almacenamiento
-            $url = $file->storeAs('public/podcast/episodio' . $podcast, $fileName);
+            // Almacenar el archivo en el almacenamiento público
+            $url = $file->storeAs('public/podcasts/episodio/' . $podcast, $fileName);
 
-            if (!$url) {
-                return response()->json(['error' => 'Error al almacenar el archivo.'], 500);
-            }
+            // Actualizar la URL del episodio
+           // $episodio->url = Storage::url($url);
+            $episodio->save();
 
-            // Generar UUID
-            $uuid = (string) Str::uuid();
-
-            // Crear el array de datos para guardar en la base de datos
-            $data = [
-                'url' => $url,
-                'filetable_id' => $podcast,
-                'filetipe_type' => Episodio::class,
-            ];
-
-            // Crear el registro en la base de datos
-            try {
-                $galeria = Episodio::create($data);
-                return response()->json(['message' => 'Se cargo el audio exitosamente.', 'uuid' => $uuid], 200);
-            } catch (\Exception $e) {
-                return response()->json(['error' => 'Error al guardar en la base de datos: ' . $e->getMessage()], 500);
-            }
+            // Devolver una respuesta de éxito
+            return response()->json(['message' => 'Archivo cargado exitosamente'], 200);
         } else {
-            return response()->json(['error' => 'No se ha cargado ningún archivo.'], 400);
+            // Manejar el caso en el que no se presente ningún archivo en la solicitud
+            return response()->json(['error' => 'No se ha cargado ningún archivo'], 400);
         }
     }
-
-    /*
-    public function upload(Request $request)
-    {
-        if ($request->hasFile('file')) {
-            $url = Storage::put('public/episodio', $request->file('file'));
-
-            $episodio = Episodio::create([
-                'titulo' => $request->titulo,
-                'slug' => $request->slug,
-                'descripcion' => $request->descripcion,
-                'podcast_id' => $request->podcast,
-            ]);
-
-            $episodio->imagen()->create([
-                'url' => $url,
-                'imageable_type' => Episodio::class,
-            ]);
-
-            // Aquí puedes procesar y guardar el archivo
-
-            // Por ahora, solo imprimimos los datos, pero puedes guardarlos en la base de datos, por ejemplo
-            return "Guardado exitosamente.";
-        } else {
-            return "No se ha enviado ningún archivo.";
-        }
-    }
-    */
 }

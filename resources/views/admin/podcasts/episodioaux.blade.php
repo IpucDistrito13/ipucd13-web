@@ -91,32 +91,54 @@
                         @php
                             $contador++;
                         @endphp
-                        <tr>
-                            <td style="text-align: center">{{ ++$contador }}</td>
-                            <td>{{ $item->titulo }}</td>
-                            <td>{{ $item->descripcion }}</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Group of buttons">
-
-                                    <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                        data-target="#modal_upload"><i class="fas fa-upload"></i> Añadir audio</a>
-
-                                    @if ($item->url)
-                                        <button class="btn btn-info btn-sm reproducir"
-                                            data-id="{{ $item->id }}">Reproducir</button>
-                                    @else
-                                        <a class="btn btn-secondary btn-sm"
-                                            href="{{ route('admin.episodios.edit', $item) }}">Subir episodio</a>
-                                    @endif
-
-                                    <form action="{{ route('admin.episodios.destroy', $item) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                    </form>
+                       <tr>
+                        <td style="text-align: center">{{ ++$contador }}</td>
+                        <td>{{ $item->titulo }}</td>
+                        <td>{{ $item->descripcion }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Group of buttons">
+                                <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal_upload_{{ $item->id }}">
+                                    <i class="fas fa-upload"></i> Añadir audio
+                                </a>
+                    
+                                @if ($item->url)
+                                    <button class="btn btn-info btn-sm reproducir" data-id="{{ $item->id }}">Reproducir</button>
+                                @else
+                                    <a class="btn btn-secondary btn-sm" href="{{ route('admin.episodios.edit', $item) }}">Subir episodio</a>
+                                @endif
+                    
+                                <form action="{{ route('admin.episodios.destroy', $item) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+                    
+                                <!-- Modal -->
+                                <div class="modal fade" id="modal_upload_{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="modal_upload_label_{{ $item->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Subir audio</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('admin.episodios.upload') }}" method="POST" enctype="multipart/form-data" class="dropzone" id="myDropzone_{{ $item->id }}">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <input type="text" value="{{ $item->id }}" id="podcast_{{ $item->id }}" name="podcast">
+                                                    <div class="fallback">
+                                                        <input type="file" name="file" multiple>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </td>
+                    </tr>
+                    
                     @endforeach
 
                     <!-- Fin del ejemplo -->
@@ -227,38 +249,7 @@
     </div>
     <!-- /.modal -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="modal_upload">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Subir audio</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
 
-                <form action="{{ route('admin.episodios.upload') }}" method="POST" enctype="multipart/form-data"
-                    class="dropzone" id="myDropzone">
-                    @csrf
-                    <div class="modal-body">
-
-                        <input type="hidden" value="{{ $podcast->id }}" id="podcast" name="podcast">
-
-                        <div class="fallback">
-                            <input type="file" name="file" multiple>
-                        </div>
-
-                    </div>
-
-
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 
 @stop
 
@@ -409,8 +400,8 @@
             //addRemoveLinks: true,
             dictRemoveFile: 'Eliminar',
             dictDefaultMessage: "Arrastra y suelta las fotos aquí o haz clic para seleccionar las fotos de forma masiva. Maximo 20 archivos masivo, y tamaño 200 Mb",
-            maxFilesize: 100, // Tamaño máximo de archivo 100 Mb
-            maxFiles: 20,
+            maxFilesize: 240, // Tamaño máximo de archivo 100 Mb
+            maxFiles: 1,
             init: function() {
                 var myDropzone = this;
                 this.on("queuecomplete", function() {
