@@ -44,19 +44,17 @@ Route::resource('congregaciones', CongregacionController::class)->names('admin.c
 Route::resource('comites', ComiteController::class)->names('admin.comites');
 Route::resource('categorias', CategoriaController::class)->names('admin.categorias');
 Route::resource('podcasts', PodcastController::class)->names('admin.podcasts');
-
-Route::get('podcasts', [PodcastController::class, 'index'])->name('admin.podcasts.index');
-Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpisodio'])->name('admin.podcasts.listEpisodio'); // CREAR NUEVO EPISODIO
-Route::get('podcast/episodio/new/{podcast}', [PodcastController::class, 'createEpisodio'])->name('admin.podcasts.createEpisodio'); // CREAR NUEVO EPISODIO
+Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpisodio'])->name('admin.podcasts.listEpisodio'); // LISTAR LOS EPISODIOS SEGUN EL PODCAST
 
 Route::resource('episodios', EpisodioController::class)->names('admin.episodios');
 Route::post('episodios/uploadUrl', [EpisodioController::class, 'uploadUrl'])->name('admin.episodios.upload');
-
 Route::get('episodios/apigetAudio/{episodioid}', [EpisodioController::class, 'apigetAudio'])->name('admin.episodio.apigetAudio');
+/*
 Route::get('episodio/{episodio}', function ($episodioid) {
     $audio = Episodio::select('id', 'titulo', 'url')->where('id', $episodioid)->first();
     return $audio;
 });
+*/
 
 //Route::get('series', [SerieController::class, 'index'])->name('admin.series.index');
 Route::resource('series', SerieController::class)->names('admin.series');

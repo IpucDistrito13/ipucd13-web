@@ -393,6 +393,8 @@
         Dropzone.options.myDropzone = {
             paramName: "file",
             acceptedFiles: ".mp3", // Tipos de archivos aceptados
+            dictDefaultMessage: "Arrastra y suelta las fotos aquí o haz clic para seleccionar las fotos de forma masiva. Se guardara de forma automatica.",
+
 
             maxFiles: 1,
 

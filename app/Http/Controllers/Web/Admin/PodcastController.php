@@ -68,7 +68,7 @@ class PodcastController extends Controller
         ]);
 
         if ($request->file('file')) {
-            $url = Storage::put('public/posts', $request->file('file'));
+            $url = Storage::put('public/podcasts', $request->file('file'));
 
             $podcast->imagen()->create([
                 'url' => $url,
@@ -204,17 +204,14 @@ class PodcastController extends Controller
 
     public function listEpisodio(Podcast $podcast)
     {
-        $episodios = Episodio::where('podcast_id', $podcast->id)->get();
+        $episodios = Episodio::where('podcast_id', $podcast->id)
+            ->orderBy('id', 'desc')
+            ->get();
         return view('admin.podcasts.episodioaux', [
             'podcast' => $podcast,
             'episodios' => $episodios,
         ]);
-        /*
-        return view('admin.podcasts.episodio', [
-            'podcast' => $podcast,
-            'episodios' => $episodios,
-        ]);
-        */
+
     }
 
 
