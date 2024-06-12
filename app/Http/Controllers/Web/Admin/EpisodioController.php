@@ -40,7 +40,6 @@ class EpisodioController extends Controller
     public function store(Request $request)
     {
 
-
         $request->validate([
             //'file.*' => 'required|mimes:mp3,ogg,wav', // Asegúrate de validar el tipo de archivo correcto
             'titulo' => 'required|string|max:255',
@@ -132,8 +131,15 @@ class EpisodioController extends Controller
         return $audio;
     }
 
+    public function updateUrl(Request $request)
+    {
+        return $request;
+    }
+
     public function upload(Request $request)
     {
+
+        return $request;
         // Validar la solicitud
         $podcast = $request->input('podcast');
 
@@ -145,7 +151,7 @@ class EpisodioController extends Controller
             $fileName = time() . '-' . $file->getClientOriginalName();
 
             // Validar el tipo de galería y definir la ruta de almacenamiento
-            $url = $file->storeAs('public/podcast/' . $podcast, $fileName);
+            $url = $file->storeAs('public/podcast/episodio' . $podcast, $fileName);
 
             if (!$url) {
                 return response()->json(['error' => 'Error al almacenar el archivo.'], 500);

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Episodios')
 
 @section('content_header')
 
@@ -405,26 +405,22 @@
 
         Dropzone.options.myDropzone = {
             paramName: "file",
-            dictDefaultMessage: "Arrastra y suelta el audio aquí o haz clic para seleccionar. Se guardara de forma automatica.",
-            acceptedFiles: ".mp3",
-            maxFilesize: 20,
-            maxFiles: 1,
+            //autoProcessQueue: false,
+            //addRemoveLinks: true,
+            dictRemoveFile: 'Eliminar',
+            dictDefaultMessage: "Arrastra y suelta las fotos aquí o haz clic para seleccionar las fotos de forma masiva. Maximo 20 archivos masivo, y tamaño 200 Mb",
+            maxFilesize: 100, // Tamaño máximo de archivo 100 Mb
+            maxFiles: 20,
             init: function() {
                 var myDropzone = this;
-
-                // Handler for file upload completion
                 this.on("queuecomplete", function() {
-
-                    alert("Se ha subido el archivo de audio.");
+                    // Mostrar mensaje de carga completa
+                    alert("Se han completado todas las cargas de archivos.");
+                    // Preguntar al usuario si desea actualizar la página
                     if (confirm("¿Desea actualizar la página para ver los cambios?")) {
+                        // Actualizar la página
                         window.location.reload();
                     }
-
-                });
-
-                this.on("success", function(file, response) {
-                    // Attach the UUID from the response to the file object for later use
-                    file.upload.uuid = response.uuid;
                 });
             }
         };

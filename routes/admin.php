@@ -95,8 +95,6 @@ Route::get('apiGetCronogramas', [CronogramaController::class, 'apiGetCronogramas
 
 Route::get('apiGetEventos', [EventoController::class, 'apiGetEventos'])->name('admin.eventos.apiGetEventos');
 
-
-
 //CAMBIAMOS PARAMETRO A PUBLICACION
 Route::resource('publicaciones', PublicacionController::class)
     ->names('admin.publicaciones')
@@ -122,7 +120,7 @@ Route::delete('admin/galeria/{galeria}', [GaleriaController::class, 'destroy'])-
 Route::get('galerias/pastores', [GaleriaController::class, 'list'])->name('admin.galerias.list');
 
 // Elimina archivo individual desde Drozone
-Route::post('/file/delete', [GaleriaController::class, 'delete'])->name('file.delete');
+Route::post('file/delete', [GaleriaController::class, 'delete'])->name('file.delete');
 
 Route::post('users/listJson', [DatatableController::class, 'listJson'])->name('users.listJson');
 
