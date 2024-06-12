@@ -7,7 +7,6 @@
     "require": {
         "php": "^8.1",
         "fakerphp/faker": "^1.9.1",
-
         "guzzlehttp/guzzle": "^7.8",
         "intervention/image": "^3.6",
         "jeroennoten/laravel-adminlte": "^3.11",
@@ -18,6 +17,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.5",
         "laraveles/spanish": "^1.5",
+        "pion/laravel-chunk-upload": "^1.5",
         "spatie/laravel-permission": "^6.7",
         "yajra/laravel-datatables-oracle": "^10.11"
     },

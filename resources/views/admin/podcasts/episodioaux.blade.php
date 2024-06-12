@@ -97,17 +97,16 @@
                             <td>{{ $item->descripcion }}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
-                                    <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                        data-target="#modal_upload_{{ $item->id }}">
-                                        <i class="fas fa-upload"></i> Añadir audio
-                                    </a>
+
 
                                     @if ($item->url)
                                         <button class="btn btn-info btn-sm reproducir"
                                             data-id="{{ $item->id }}">Reproducir</button>
                                     @else
-                                        <a class="btn btn-secondary btn-sm"
-                                            href="{{ route('admin.episodios.edit', $item) }}">Subir episodio</a>
+                                        <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
+                                            data-target="#modal_upload_{{ $item->id }}">
+                                            <i class="fas fa-upload"></i> Añadir audio
+                                        </a>
                                     @endif
 
                                     <form action="{{ route('admin.episodios.destroy', $item) }}" method="POST"
@@ -225,18 +224,6 @@
                                     <label>Descripción</label>
                                     <textarea class="form-control" rows="3" placeholder="" id="descripcion" name="descripcion">{{ old('descripcion', $episodio->descripcion ?? '') }}</textarea>
                                     @error('descripcion')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <!-- text input -->
-                                <div class="form-group">
-                                    <label>Url *</label>
-                                    <input type="text" class="form-control" id="url" name="url"
-                                        value="{{ old('url', $episodio->url ?? '') }}">
-                                    @error('url')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -406,7 +393,7 @@
         Dropzone.options.myDropzone = {
             paramName: "file",
             acceptedFiles: ".mp3", // Tipos de archivos aceptados
-           
+
             maxFiles: 1,
 
             init: function() {
