@@ -78,3 +78,32 @@ public function scopeGetSimilaresCategoria($query, $categoria_id)
     }
 
     <td>{{ \Illuminate\Support\Str::limit($item->descripcion, 80) }}</td>
+
+
+
+    // Generate slug
+        function generateSlug(inputText) {
+            var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            var slug = withoutAccents.toLowerCase()
+                .replace(/[^a-zA-Z0-9 -]/g, '') // Remueve caracteres no alfanuméricos ni espacios
+                .replace(/\s+/g, '-') // Reemplaza espacios con guiones
+                .replace(/-+/g, '-') // Reemplaza múltiples guiones con uno solo
+                .trim(); // Elimina espacios en blanco al inicio y al final
+            return slug;
+        }
+
+        function updateSlug() {
+            var nombreInput = document.getElementById("nombre");
+            var slugInput = document.getElementById("slug");
+
+            if (nombreInput && slugInput) {
+                var nombre = nombreInput.value;
+                var slug = generateSlug(nombre);
+                slugInput.value = slug;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateSlug();
+        });
+        // End generate slug

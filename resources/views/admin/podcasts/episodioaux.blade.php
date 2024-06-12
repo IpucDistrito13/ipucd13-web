@@ -6,7 +6,7 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            <i class="fas fa-volume-up"></i> Podcast:: {{ $podcast->titulo }}
+            <i class="fas fa-volume-up"></i> Podcast::aaa {{ $podcast->titulo }}
         </h1>
         <div>
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.podcasts.index') }}">
@@ -144,18 +144,21 @@
                     </button>
                 </div>
 
-                <form action="{{ route('admin.episodios.store') }}" method="POST" class="dropzone"
-                    enctype="multipart/form-data" file="true" autocomplete="off">
+                <form action="{{ route('admin.episodios.store') }}" method="POST" enctype="multipart/form-data"
+                    file="true" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
+
+                            <input type="hidden" class="form-control" id="podcast" name="podcast" readonly
+                                value="{{ old('podcast', $podcast->id ?? '') }}">
 
                             <div class="col-sm-4">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Podcast *</label>
-                                    <input type="text" class="form-control" id="podcast" name="podcast" readonly
-                                        value="{{ old('podcast', $podcast->id ?? '') }}">
+                                    <input type="text" class="form-control" id="podcast_titulo" name="podcast_titulo"
+                                        readonly value="{{ old('podcast', $podcast->titulo ?? '') }}">
                                     @error('podcast')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -178,7 +181,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Slug *</label>
-                                    <input type="text" class="form-control" id="slug" name="slug"
+                                    <input type="text" class="form-control" id="slug" name="slug" readonly
                                         value="{{ old('slug', $episodio->slug ?? '') }}">
                                     @error('slug')
                                         <div class="text-danger">{{ $message }}</div>
@@ -260,12 +263,12 @@
 @stop
 
 @section('css')
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 
     <style>
         .acciones-column {
-            width: 285px;
+            width: 295px;
         }
 
         .counter-column {
@@ -373,6 +376,33 @@
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
     <script>
+        // Generate slug
+        function generateSlug(inputText) {
+            var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            var slug = withoutAccents.toLowerCase()
+                .replace(/[^a-zA-Z0-9 -]/g, '') // Remueve caracteres no alfanuméricos ni espacios
+                .replace(/\s+/g, '-') // Reemplaza espacios con guiones
+                .replace(/-+/g, '-') // Reemplaza múltiples guiones con uno solo
+                .trim(); // Elimina espacios en blanco al inicio y al final
+            return slug;
+        }
+
+        function updateSlug() {
+            var nombreInput = document.getElementById("titulo");
+            var slugInput = document.getElementById("slug");
+
+            if (nombreInput && slugInput) {
+                var nombre = nombreInput.value;
+                var slug = generateSlug(nombre);
+                slugInput.value = slug;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateSlug();
+        });
+        // End generate slug
+
         Dropzone.options.myDropzone = {
             paramName: "file",
             dictDefaultMessage: "Arrastra y suelta el audio aquí o haz clic para seleccionar. Se guardara de forma automatica.",
