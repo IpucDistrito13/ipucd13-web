@@ -41,7 +41,7 @@
         </div>
     @endif
 
-    <div class="card" id="secttion_musica">
+    <div class="card" id="seccion_musica">
         <div class="card-body">
             <audio></audio>
 
@@ -56,7 +56,7 @@
             <div class="section-pause" hidden>
                 <div class="buttons">
                     <button class="pause" id="pause">
-                        <i class="fas fa-pause"></i> Pausar
+                        <i class="fas fa-pause"></i> 
                     </button>
                 </div>
             </div>
@@ -64,44 +64,43 @@
         </div>
     </div>
 
+    <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Lista de episodios</h3>
+            <span id="card_title">
+                Lista de comités
+            </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="example1" class="table table-bordered table-hover">
+
+            <table id="datatable" class="table table-striped table-bordered data-table">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
+                        <th>Creado</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                <tbody>
-                    <!-- Aquí puedes iterar sobre tus categorías y mostrarlas en la tabla -->
-                    <!-- Ejemplo de una fila de la tabla -->
                     @php
                         $contador = 0;
                     @endphp
                     @foreach ($episodios as $item)
-                        @php
-                            $contador++;
-                        @endphp
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
                             <td>{{ $item->titulo }}</td>
                             <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->created_at }}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
 
 
                                     @if ($item->url)
                                         <button class="btn btn-info btn-sm reproducir"
-                                            data-id="{{ $item->id }}">Reproducir</button>
+                                            data-id="{{ $item->id }}" onclick="reproducirBtn()">Reproducir</button>
                                     @else
                                         <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
                                             data-target="#modal_upload_{{ $item->id }}">
@@ -146,24 +145,20 @@
                                     </div>
                                 </div>
                             </td>
+
                         </tr>
                     @endforeach
 
                     <!-- Fin del ejemplo -->
                 </tbody>
-                </tr>
-
-                </tbody>
-
             </table>
+
+
         </div>
-        <!-- /.card-body -->
+
     </div>
-    <!-- /.card -->
 
-
-
-    <!-- Modal -->
+    <!-- Modal data -->
     <div class="modal fade" id="modal_data">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -243,24 +238,25 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
-
+    <!-- /.modal data -->
 
 
 @stop
 
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
 
     <style>
         .acciones-column {
-            width: 295px;
+            width: 100px;
         }
 
         .counter-column {
             width: 2%;
         }
+
 
         .progress-bar {
             width: 100%;
@@ -359,10 +355,47 @@
 @stop
 
 @section('js')
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
+    <!-- DataTables Responsive JS -->
+    <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
+
+    <!-- sweetalert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        $(function() {
+            $("#datatable").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+
+                language: {
+                    processing: "Procesando...",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron registros en el sistema...",
+                    info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar",
+                    paginate: {
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    },
+                    emptyTable: "No hay datos disponibles en la tabla"
+                },
+            })
+        });
+
         // Generate slug
         function generateSlug(inputText) {
             var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -390,42 +423,13 @@
         });
         // End generate slug
 
-        Dropzone.options.myDropzone = {
-            paramName: "file",
-            acceptedFiles: ".mp3", // Tipos de archivos aceptados
-            dictDefaultMessage: "Arrastra y suelta las fotos aquí o haz clic para seleccionar las fotos de forma masiva. Se guardara de forma automatica.",
-
-
-            maxFiles: 1,
-
-            init: function() {
-                var myDropzone = this;
-
-                this.on("queuecomplete", function() {
-                    // Mostrar mensaje de carga completa
-                    alert("Se han completado todas las cargas de archivos.");
-                    // Preguntar al usuario si desea actualizar la página
-                    if (confirm("¿Desea actualizar la página para ver los cambios?")) {
-                        // Actualizar la página
-                        window.location.reload();
-                    }
-                });
-            }
-        };
-
-
-
-        const hiddenDiv = document.querySelector('.section-pause');
-        // Function to show the div
-        // Function to show the div
-        function showDiv() {
-            hiddenDiv.removeAttribute('hidden'); // Remove the hidden attribute
+        function reproducirBtn(){
+            console.log("Hola");
         }
 
 
         var botonesReproducir = document.querySelectorAll('.reproducir');
         var audioElement;
-
         var pauseButton = document.querySelector('.pause');
 
         // Add click event listener to the button
@@ -452,6 +456,13 @@
             }
         }
 
+        const hiddenDiv = document.querySelector('.section-pause');
+        // Function to show the div
+        // Function to show the div
+        function showDiv() {
+            hiddenDiv.removeAttribute('hidden'); // Remove the hidden attribute
+        }
+
         botonesReproducir.forEach(function(boton) {
             boton.addEventListener('click', function() {
                 detenerYEliminarAudio();
@@ -470,7 +481,7 @@
 
                         // Muestra la duración total del audio
                         audioElement.addEventListener('loadedmetadata', function() {
-                            showDiv();
+                          showDiv();
                             var totalDurationElement = document.getElementById(
                                 'total_duration');
                             totalDurationElement.textContent = 'Duración: ' + formatTime(
@@ -519,14 +530,6 @@
                             currentTimeElement.textContent = formatTime(currentTime);
                         });
 
-
-                        // Agrega un botón de pausa
-                        var botonPausa = document.createElement('button');
-                        botonPausa.textContent = 'Pausar';
-                        botonPausa.addEventListener('click', function() {
-                            audioElement.pause();
-                        });
-                        document.body.appendChild(botonPausa);
                     })
                     .catch(function(error) {
                         console.error(error);
@@ -548,6 +551,4 @@
             return `${minutes}:${(seconds < 10 ? '0' : '')}${seconds}`;
         }
     </script>
-
-
 @stop
