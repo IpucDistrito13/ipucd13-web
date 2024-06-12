@@ -136,7 +136,7 @@ class EpisodioController extends Controller
         // Validar los datos de la solicitud
         $request->validate([
             'podcast' => 'required|exists:episodios,id', // Asegurarse de que el podcast exista
-            //'file' => 'required|mimes:mp3|max:20480'    // Asegurarse de que el archivo sea un mp3 y no exceda los 20MB
+            'file' => 'required|mimes:mp3|max:20480'    // Asegurarse de que el archivo sea un mp3 y no exceda los 20MB
         ]);
 
         $podcast = $request->podcast;
@@ -151,10 +151,13 @@ class EpisodioController extends Controller
 
             // Almacenar el archivo en el almacenamiento público
             $url = $file->storeAs('public/podcasts/episodio/' . $podcast, $fileName);
+            $data = [
+                'url' => $url,
+            ];
 
             // Actualizar la URL del episodio
-           // $episodio->url = Storage::url($url);
-            $episodio->save();
+            $episodio->url = Storage::url($url);
+            $episodio->save($data);
 
             // Devolver una respuesta de éxito
             return response()->json(['message' => 'Archivo cargado exitosamente'], 200);
