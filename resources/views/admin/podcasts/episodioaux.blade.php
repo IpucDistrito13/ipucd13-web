@@ -91,54 +91,63 @@
                         @php
                             $contador++;
                         @endphp
-                       <tr>
-                        <td style="text-align: center">{{ ++$contador }}</td>
-                        <td>{{ $item->titulo }}</td>
-                        <td>{{ $item->descripcion }}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Group of buttons">
-                                <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal_upload_{{ $item->id }}">
-                                    <i class="fas fa-upload"></i> Añadir audio
-                                </a>
-                    
-                                @if ($item->url)
-                                    <button class="btn btn-info btn-sm reproducir" data-id="{{ $item->id }}">Reproducir</button>
-                                @else
-                                    <a class="btn btn-secondary btn-sm" href="{{ route('admin.episodios.edit', $item) }}">Subir episodio</a>
-                                @endif
-                    
-                                <form action="{{ route('admin.episodios.destroy', $item) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                </form>
-                    
-                                <!-- Modal -->
-                                <div class="modal fade" id="modal_upload_{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="modal_upload_label_{{ $item->id }}" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Subir audio</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <form action="{{ route('admin.episodios.upload') }}" method="POST" enctype="multipart/form-data" class="dropzone" id="myDropzone_{{ $item->id }}">
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <input type="text" value="{{ $item->id }}" id="podcast_{{ $item->id }}" name="podcast">
-                                                    <div class="fallback">
-                                                        <input type="file" name="file" multiple>
-                                                    </div>
+                        <tr>
+                            <td style="text-align: center">{{ ++$contador }}</td>
+                            <td>{{ $item->titulo }}</td>
+                            <td>{{ $item->descripcion }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Group of buttons">
+                                    <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
+                                        data-target="#modal_upload_{{ $item->id }}">
+                                        <i class="fas fa-upload"></i> Añadir audio
+                                    </a>
+
+                                    @if ($item->url)
+                                        <button class="btn btn-info btn-sm reproducir"
+                                            data-id="{{ $item->id }}">Reproducir</button>
+                                    @else
+                                        <a class="btn btn-secondary btn-sm"
+                                            href="{{ route('admin.episodios.edit', $item) }}">Subir episodio</a>
+                                    @endif
+
+                                    <form action="{{ route('admin.episodios.destroy', $item) }}" method="POST"
+                                        style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    </form>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modal_upload_{{ $item->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="modal_upload_label_{{ $item->id }}"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Subir audio</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                            </form>
+                                                <form action="{{ route('admin.episodios.upload') }}" method="POST"
+                                                    enctype="multipart/form-data" class="dropzone"
+                                                    id="myDropzone_{{ $item->id }}">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <input type="text" value="{{ $item->id }}"
+                                                            id="podcast_{{ $item->id }}" name="podcast">
+                                                        <div class="fallback">
+                                                            <input type="file" name="file" multiple>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    
+                            </td>
+                        </tr>
                     @endforeach
 
                     <!-- Fin del ejemplo -->
@@ -396,25 +405,27 @@
 
         Dropzone.options.myDropzone = {
             paramName: "file",
-            //autoProcessQueue: false,
-            //addRemoveLinks: true,
-            dictRemoveFile: 'Eliminar',
-            dictDefaultMessage: "Arrastra y suelta las fotos aquí o haz clic para seleccionar las fotos de forma masiva. Maximo 20 archivos masivo, y tamaño 200 Mb",
-            maxFilesize: 240, // Tamaño máximo de archivo 100 Mb
-            maxFiles: 1,
+            // Otras configuraciones Dropzone...
+
             init: function() {
                 var myDropzone = this;
-                this.on("queuecomplete", function() {
+
+                this.on("queuecomplete", function(file) {
                     // Mostrar mensaje de carga completa
-                    alert("Se han completado todas las cargas de archivos.");
-                    // Preguntar al usuario si desea actualizar la página
-                    if (confirm("¿Desea actualizar la página para ver los cambios?")) {
-                        // Actualizar la página
-                        window.location.reload();
+                    alert("Se ha subido el archivo exitosamente.");
+
+                    // Verificar si se debe recargar la página
+                    if (response.reload) {
+                        // Recargar la página después de un breve retraso para dar tiempo al usuario de ver el mensaje
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000); // 2000 milisegundos = 2 segundos
                     }
                 });
             }
         };
+
+
 
         const hiddenDiv = document.querySelector('.section-pause');
         // Function to show the div
