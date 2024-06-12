@@ -405,21 +405,20 @@
 
         Dropzone.options.myDropzone = {
             paramName: "file",
-            // Otras configuraciones Dropzone...
+            acceptedFiles: ".mp3", // Tipos de archivos aceptados
+            maxFilesize: 2408, // Tamaño máximo del archivo en MB
+            maxFiles: 1,
 
             init: function() {
                 var myDropzone = this;
 
-                this.on("queuecomplete", function(file) {
+                this.on("queuecomplete", function() {
                     // Mostrar mensaje de carga completa
-                    alert("Se ha subido el archivo exitosamente.");
-
-                    // Verificar si se debe recargar la página
-                    if (response.reload) {
-                        // Recargar la página después de un breve retraso para dar tiempo al usuario de ver el mensaje
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 2000); // 2000 milisegundos = 2 segundos
+                    alert("Se han completado todas las cargas de archivos.");
+                    // Preguntar al usuario si desea actualizar la página
+                    if (confirm("¿Desea actualizar la página para ver los cambios?")) {
+                        // Actualizar la página
+                        window.location.reload();
                     }
                 });
             }
