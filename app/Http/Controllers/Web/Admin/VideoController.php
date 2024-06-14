@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VideoRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class VideoController extends Controller
 {
@@ -14,6 +15,7 @@ class VideoController extends Controller
      */
     public function index()
     {
+        return 'Hola';
     }
 
     /**
@@ -44,6 +46,10 @@ class VideoController extends Controller
 
         $video = Video::create($data);
 
+        //Elimina la variables almacenada en cache
+        Cache::flush();
+        //Cache
+
         $data = [
             'message' => 'Video creado exitosamente.',
         ];
@@ -51,12 +57,12 @@ class VideoController extends Controller
         return redirect()->back()->with('success', $data['message']);
     }
 
-        // Function to extract YouTube video ID from URL
-        private function extractYouTubeId($url)
-        {
-            preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/.*v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $url, $matches);
-            return $matches[1] ?? null;
-        }
+    // Function to extract YouTube video ID from URL
+    private function extractYouTubeId($url)
+    {
+        preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/.*v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $url, $matches);
+        return $matches[1] ?? null;
+    }
 
     /**
      * Display the specified resource.
@@ -85,31 +91,27 @@ class VideoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy2(Video $video)
+    public function destroy(Video $video)
     {
         try {
+            $serie_id = $video->serie_id;
+
             $video->delete();
-    
+
             $data = [
                 'message' => 'Video eliminado exitosamente.',
             ];
-    
+
+            // Invalidar la caché relacionada con la serie específica
+            Cache::flush();
+
             return back()->with('success', $data['message']);
-            //return redirect()->route('admin.series.listVideos', $video->serie_id)->with('success', $data['message']);
         } catch (\Exception $e) {
             $data = [
                 'message' => 'No se pudo eliminar el video.',
             ];
-    
+
             return back()->with('error', $data['message']);
-            //return redirect()->route('admin.series.listVideos', $video->serie_id)->with('error', $data['message']);
         }
     }
-
-    public function deleteVideo($videoId)
-    {
-        return $videoId;
-    }
-    
-    
 }

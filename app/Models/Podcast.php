@@ -22,6 +22,18 @@ class Podcast extends Model
 
     // END WEB
 
+    //MUTADOR PRIMERA LETRA EN MAYUSCULA
+    public function setTituloAttribute($value)
+    {
+        $this->attributes['titulo'] = ucfirst($value);
+    }
+
+    public function setDescripcionAttribute($value)
+    {
+        $this->attributes['descripcion'] = ucfirst($value);
+    }
+    //
+
     public function comite()
     {
         return $this->belongsTo(Comite::class);

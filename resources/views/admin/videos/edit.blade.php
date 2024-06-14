@@ -33,7 +33,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos  de la serie
+                Datos de la serie
             </span>
         </div>
         <!-- /.card-header -->

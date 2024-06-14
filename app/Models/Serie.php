@@ -11,7 +11,6 @@ class Serie extends Model
     protected $fillable = ['titulo', 'slug', 'descripcion', 'contenido', 'imagen_banner', 'estado', 'comite_id', 'categoria_id', 'user_id'];
 
     //WEB
-
     public function scopeListarSeries($query)
     {
         return $query->select('id', 'titulo', 'comite_id', 'categoria_id', 'estado', 'created_at')

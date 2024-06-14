@@ -22,23 +22,22 @@ class SerieController extends Controller
         if (Cache::has('series')) {
             $series = Cache::get('series');
         } else {
-            $series = Serie::select('id', 'titulo', 'comite_id', 'categoria_id', 'estado', 'created_at')
-                ->with('comite:id,nombre', 'categoria:id,nombre')
+            $series = Serie::with('comite:id,nombre', 'categoria:id,nombre')
                 ->withCount('videos')  // Añadir conteo de videos
                 ->get();
             Cache::put('series', $series);
         }
         //CACHE
-    
+
         // Verificar si $series está vacío
         if ($series->isEmpty()) {
             $series = collect(); // Crear una colección vacía
         }
-    
+
         return view('admin.series.index', compact('series'));
     }
-    
-    
+
+
 
     public function indeasdsadx()
     {
@@ -230,9 +229,19 @@ class SerieController extends Controller
 
     public function listVideos(Serie $serie)
     {
-        //return  $videos = Video::where('serie_id', $serie->id)->get();
-       // $videos = Video::ListarxVideo($serie)->get();
 
-        return view('admin.videos.index', compact('serie', 'videos'));
+        //CACHE
+        $serie_id = $serie->id;
+        $cache_key = 'admin.videos.' . $serie_id;
+
+        if (Cache::has($cache_key)) {
+            $videos = Cache::get($cache_key);
+        } else {
+            $videos = Video::ListarVideoSerie($serie_id)->get();
+            Cache::put($cache_key, $videos);
+        }
+        //CACHE
+
+        return view('admin.series.videos', compact('serie', 'videos'));
     }
 }

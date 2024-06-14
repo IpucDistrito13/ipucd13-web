@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,18 @@ class Episodio extends Model
             ->orderBy('id', 'desc');
     }
 
+    // END WEB
+
+    //MUTADOR PRIMERA LETRA EN MAYUSCULA
+    public function setTituloAttribute($value)
+    {
+        $this->attributes['titulo'] = ucfirst($value);
+    }
+
+    public function setDescripcionAttribute($value)
+    {
+        $this->attributes['descripcion'] = ucfirst($value);
+    }
     //
 
 

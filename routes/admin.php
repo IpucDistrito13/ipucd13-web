@@ -33,7 +33,6 @@ Route::post('redes/updateTransmision', [RedesController::class, 'updateTransmisi
 Route::get('datatable/usuarios', [DatatableController::class, 'usuarios'])->name('datatable.usuarios');
 Route::post('datatable/galerias', [DatatableController::class, 'galeriaTodos'])->name('datatable.galeriaTodos');
 
-
 Route::resource('roles', RolController::class)->names('admin.roles');
 Route::resource('solicitud_tipos', SolicitudTipoController::class)->names('admin.solicitud_tipos');
 
@@ -43,21 +42,23 @@ Route::resource('congregaciones', CongregacionController::class)->names('admin.c
 
 Route::resource('comites', ComiteController::class)->names('admin.comites');
 Route::resource('categorias', CategoriaController::class)->names('admin.categorias');
+
 Route::resource('podcasts', PodcastController::class)->names('admin.podcasts');
-Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpisodio'])->name('admin.podcasts.listEpisodio'); // LISTAR LOS EPISODIOS SEGUN EL PODCAST
+// LISTAR LOS EPISODIOS SEGUN EL PODCAST
+Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpisodio'])->name('admin.podcasts.listEpisodio');
 
 Route::resource('episodios', EpisodioController::class)->names('admin.episodios');
 Route::post('episodios/uploadUrl', [EpisodioController::class, 'uploadUrl'])->name('admin.episodios.upload');
 Route::get('episodios/apigetAudio/{episodioid}', [EpisodioController::class, 'apigetAudio'])->name('admin.episodio.apigetAudio');
-/*
-Route::get('episodio/{episodio}', function ($episodioid) {
-    $audio = Episodio::select('id', 'titulo', 'url')->where('id', $episodioid)->first();
-    return $audio;
-});
-*/
+
 
 //Route::get('series', [SerieController::class, 'index'])->name('admin.series.index');
 Route::resource('series', SerieController::class)->names('admin.series');
+ // LISTAR LOS VIDEOS SEGUN LA SERIE
+Route::get('series/videos/{serie}', [SerieController::class, 'listVideos'])->name('admin.series.listVideos');
+Route::resource('videos', VideoController::class)->names('admin.videos');
+
+
 
 
 ////////////////////Error

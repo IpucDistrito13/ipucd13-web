@@ -68,15 +68,21 @@
                                 </div>
 
                             </div>
-                            <div class="card-footer">
-                                @can('admin.videos.destroy')
-                                   <p>{{ $video }}</p>
 
-                                 
-                                @endcan
-                            </div>
-                            
-                            
+                            @can('admin.videos.destroy')
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        <form action="{{ route('admin.videos.destroy', $video->id) }}" method="POST"
+                                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar este video?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endcan
+
+
                         </div>
                     </div>
                 @endforeach
@@ -102,16 +108,6 @@
                         <input type="hidden" name="serie" value="{{ $serie->id }}">
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="titulo" class="col-form-label">Título</label>
-                                    <input type="text" class="form-control" id="titulo" name="titulo"
-                                        value="{{ old('titulo') }}" onkeyup="updateSlug()">
-                                    @error('titulo')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -119,6 +115,16 @@
                                     <input type="text" class="form-control" id="slug" name="slug" readonly
                                         value="{{ old('slug') }}">
                                     @error('slug')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="titulo" class="col-form-label">Título</label>
+                                    <input type="text" class="form-control" id="titulo" name="titulo"
+                                        value="{{ old('titulo') }}" onkeyup="updateSlug()">
+                                    @error('titulo')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -146,7 +152,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a class="btn btn-secondary" href="{{ route('admin.podcasts.index') }}">Volver</a>
+                            <a class="btn btn-secondary" data-dismiss="modal">Volver</a>
                             <button type="submit" class="btn btn-primary float-right">Guardar</button>
                         </div>
                     </form>

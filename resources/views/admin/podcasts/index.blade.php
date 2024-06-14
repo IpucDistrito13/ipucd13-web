@@ -50,7 +50,7 @@
                         <th>Título</th>
                         <th>Categoría</th>
                         <th>Episodios</th>
-                        <th>Fecha</th>
+                        <th>Creado</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>

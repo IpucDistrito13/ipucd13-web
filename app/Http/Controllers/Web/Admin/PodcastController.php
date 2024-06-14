@@ -205,13 +205,16 @@ class PodcastController extends Controller
     public function listEpisodio(Podcast $podcast)
     {
         //CACHE
-        if (Cache::has('admin.episodios')) {
-            $episodios = Cache::get('admin.episodios');
+        $podcast_id = $podcast->id;
+        $cache_key = 'admin.episodios.' . $podcast_id;
+
+        if (Cache::has($cache_key)) {
+            $episodios = Cache::get($cache_key);
         } else {
-            $episodios = Episodio::ListarEpisodioPodcast($podcast->id)
-                ->get();
-            Cache::put('admin.episodios', $episodios);
+            $episodios = Episodio::ListarEpisodioPodcast($podcast_id)->get();
+            Cache::put($cache_key, $episodios);
         }
+
         //CACHE
 
         return view('admin.podcasts.episodio', [

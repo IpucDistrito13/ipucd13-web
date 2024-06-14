@@ -17,14 +17,17 @@ class EpisodioController extends Controller
     /**
      * Display a listing of the resource.
      */
+    /*
     public function index()
     {
         return  $episodios = Episodio::with('podcast:id,titulo')
             ->select('id', 'titulo', 'slug', 'descripcion', 'podcast_id')->get();
+
         return view('admin.episodios.index', [
             'episodios' => $episodios,
         ]);
     }
+    */
 
     /**
      * Show the form for creating a new resource.

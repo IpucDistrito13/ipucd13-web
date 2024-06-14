@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Serie')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -14,6 +14,7 @@
 @stop
 
 @section('content')
+
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
             {{ session('success') }}
@@ -36,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de series
+                Lista de podcats
             </span>
         </div>
         <!-- /.card-header -->
@@ -47,26 +48,49 @@
                     <tr>
                         <th class="counter-column">#</th>
                         <th>Título</th>
-                        <th>Creación</th>
-
-                        <th class="acciones">Acciones</th>
+                        <th>Categoría</th>
+                        <th>Episodios</th>
+                        <th>Creado</th>
+                        <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php
                         $contador = 0;
                     @endphp
-                    @foreach ($series as $serie)
+                    @foreach ($series as $item)
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
 
-                            <td>{{ $serie->titulo }}</td>
-                            <td>{{ $serie->created_at->format('Y-m-d h:i a') }}</td>
-
+                            <td>{{ $item->titulo }}</td>
+                            <td>{{ $item->categoria->nombre }}</td>
+                            <td>{{ $item->videos_count }}</td>
+                            <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
                             <td>
+
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
-                                    <a class="btn btn-success btn-sm" href="#">Actualizar</a>
-                                    <a class="btn btn-danger btn-sm" href="#">Eliminar</a>
+
+                                    @can('admin.series.listVideos')
+                                        <button class="btn btn-primary btn-sm"
+                                            data-url="{{ route('admin.series.listVideos', $item) }}"
+                                            onclick="redirectUpdate(this.getAttribute('data-url'))">Videos</button>
+                                    @endcan
+
+                                    @can('admin.podcasts.edit')
+                                        <!-- Update Button -->
+                                        <button class="btn btn-success btn-sm"
+                                            data-url="{{ route('admin.podcasts.edit', $item) }}"
+                                            onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
+                                    @endcan
+
+                                    @can('admin.podcasts.destroy')
+                                        <!-- Delete Button -->
+                                        <form action="{{ route('admin.podcasts.destroy', $item) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                        </form>
+                                    @endcan
                                 </div>
 
                             </td>
@@ -82,9 +106,7 @@
 
     </div>
 
-
 @stop
-
 
 @section('css')
     {{-- Add here extra stylesheets --}}
@@ -93,35 +115,31 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
 
     <style>
-        .acciones {
-            width: 200px;
+        .acciones-column {
+            width: 100px;
         }
 
         .counter-column {
             width: 2%;
         }
-
-        /* Estilo para centrar los botones dentro de la columna de acciones */
-        .acciones .btn-group {
-            display: flex;
-            justify-content: center;
-        }
     </style>
-
 @stop
 
 @section('js')
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+    <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-
-
+    <!-- Bootstrap JS -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
     <!-- DataTables Responsive JS -->
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
+
 
     <script>
         $(function() {
