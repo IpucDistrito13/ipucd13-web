@@ -136,7 +136,7 @@ class EpisodioController extends Controller
         // Validar los datos de la solicitud
         $request->validate([
             'podcast' => 'required|exists:episodios,id', // Asegurarse de que el podcast exista
-            'file' => 'required'    // Asegurarse de que el archivo sea un mp3 y no exceda los 20MB
+            'file' => 'required|mimes:mp3'    // Asegurarse de que el archivo sea un mp3 y no exceda los 20MB
         ]);
 
         $podcast = $request->podcast;

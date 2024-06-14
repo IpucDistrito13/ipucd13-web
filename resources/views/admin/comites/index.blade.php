@@ -62,7 +62,7 @@
                             <td style="text-align: center">{{ ++$contador }}</td>
                             <td>{{ $item->nombre }}</td>
                             <td>{{ $item->slug }}</td>
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
                             <td>
                                 <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
@@ -98,7 +98,6 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">

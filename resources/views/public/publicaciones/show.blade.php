@@ -30,7 +30,7 @@
                         <!-- start blog details  -->
                         <div class="col-12 blog-details mb-12"> 
                             <div class="entry-meta mb-20px fs-15">
-                                <span><i class="text-dark-gray feather icon-feather-calendar"></i><a href="#">{{ $publicacion->created_at }}</a></span>
+                                <span><i class="text-dark-gray feather icon-feather-calendar"></i><a href="#">{{ $publicacion->created_at->format('Y-m-d h:i a') }}</a></span>
                                 <span><i class="text-dark-gray feather icon-feather-user"></i><a href="#">{{ $publicacion->user->name }}</a></span>
                                 <span><i class="text-dark-gray feather icon-feather-folder"></i><a href="#">{{ $publicacion->comite->nombre }}</a></span> 
                             </div>
@@ -127,7 +127,7 @@
                                     </div>
                                     <div class="card-body px-0 pt-30px pb-30px">
                                         <span class="fs-13 text-uppercase mb-5px d-block"><a href="blog-grid.html" class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $similar->comite->nombre }}</a>
-                                            <a href="blog-grid.html" class="blog-date text-dark-gray-hover">{{ $similar->created_at }}</a>
+                                            <a href="blog-grid.html" class="blog-date text-dark-gray-hover">{{ $similar->created_at->format('Y-m-d h:i a') }}</a>
                                         </span>
                                         <a href="{{ route('public.publicaciones.show', $similar) }}" class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $similar->titulo }}</a>
                                         <p class="mb-10px w-95">{{ $similar->descripcion }}</p>

@@ -65,7 +65,7 @@
                             <td>{{ $item->titulo }}</td>
                             <td>{{ $item->categoria->nombre }}</td>
                             <td>{{ $item->episodios_count }}</td>
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
                             <td>
 
                                 <div class="btn-group" role="group" aria-label="Group of buttons">

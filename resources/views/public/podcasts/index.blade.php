@@ -602,7 +602,7 @@
                                         <div class="blog-categories mb-auto">
                                             <a href="blog-masonry.html" class="categories-btn bg-white text-dark-gray text-uppercase alt-font fw-700 ms-0 mb-auto align-self-start">{{ $podcast->comite->nombre }}</a>
                                         </div>
-                                        <a href="blog-masonry.html" class="fs-13 alt-font mb-5px text-white opacity-6 text-uppercase">{{ $podcast->created_at }}</a>
+                                        <a href="blog-masonry.html" class="fs-13 alt-font mb-5px text-white opacity-6 text-uppercase">{{ $podcast->created_at->format('Y-m-d h:i a') }}</a>
                                         <a href="demo-web-agency-blog-single-creative.html" class="text-white card-title fs-20 lh-30 fw-500 w-85 sm-w-100 alt-font">{{ $podcast->titulo }}</a>
                                     </figcaption>
                                 </figure>

@@ -57,7 +57,7 @@ style="background-image: url(https://via.placeholder.com/1920x560)">
                                     <div class="card-body px-0 pt-30px pb-30px">
                                         <span class="fs-13 text-uppercase mb-5px d-block"><a href="{{ route('public.publicaciones.show', $publicacion) }}" class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $publicacion->comite->nombre }}</a>
                                             <br>
-                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="blog-date text-dark-gray-hover">{{ $publicacion->created_at }}</a>
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="blog-date text-dark-gray-hover">{{ $publicacion->created_at->format('Y-m-d h:i a') }}</a>
                                         </span>
                                         <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $publicacion->titulo }}</a>
                                         <p class="mb-10px w-95">{{ $publicacion->descripcion }}</p>

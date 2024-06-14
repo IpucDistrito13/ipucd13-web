@@ -61,7 +61,7 @@
                             <td style="text-align: center">{{ ++$contador }}</td>
 
                             <td>{{ $serie->titulo }}</td>
-                            <td>{{ $serie->created_at }}</td>
+                            <td>{{ $serie->created_at->format('Y-m-d h:i a') }}</td>
 
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">

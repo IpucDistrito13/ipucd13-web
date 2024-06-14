@@ -10,6 +10,15 @@ class Episodio extends Model
     use HasFactory;
     protected $fillable = ['titulo', 'slug', 'descripcion', 'podcast_id', 'url', 'file'];
 
+    //WEB
+    public function scopeListarEpisodioPodcast($query, $podcastId)
+    {
+        return $query->where('podcast_id', $podcastId)
+            ->orderBy('id', 'desc');
+    }
+
+    //
+
 
     public function scopeListarEpisodio($query)
     {

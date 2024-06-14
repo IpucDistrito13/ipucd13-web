@@ -117,7 +117,7 @@
                                             <span class="fs-13 text-uppercase mb-5px d-block"><a href="#"
                                                     class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $publicacion->comite->nombre }}</a>
                                                     <br>
-                                                <a href="#" class="blog-date text-dark-gray-hover">{{ $publicacion->created_at }}</a>
+                                                <a href="#" class="blog-date text-dark-gray-hover">{{ $publicacion->created_at->format('Y-m-d h:i a') }}</a>
                                             </span>
                                             <a href="{{ route('public.publicaciones.show', $publicacion) }}"
                                                 class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $publicacion->titulo }}</a>
@@ -187,7 +187,7 @@
                                                     class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $serie->comite->nombre }}</a>
                                                 <br>
                                                 <a href="{{ route('public.series.show', $serie) }}"
-                                                    class="blog-date text-dark-gray-hover">{{ $serie->created_at }}</a>
+                                                    class="blog-date text-dark-gray-hover">{{ $serie->created_at->format('Y-m-d h:i a') }}</a>
                                             </span>
                                             <a href="{{ route('public.series.show', $serie) }} "
                                                 class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $serie->titulo }}</a>
@@ -257,7 +257,7 @@
                                                     class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $podcast->comite->nombre }}</a>
                                                     <br>
                                                 <a href="#"
-                                                    class="blog-date text-dark-gray-hover">{{ $podcast->created_at }}</a>
+                                                    class="blog-date text-dark-gray-hover">{{ $podcast->created_at->format('Y-m-d h:i a') }}</a>
                                             </span>
                                             <a href="{{ route('public.podcasts.episodios', $podcast) }}"
                                                 class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $podcast->titulo }}</a>

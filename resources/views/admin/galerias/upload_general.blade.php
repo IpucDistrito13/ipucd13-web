@@ -37,13 +37,13 @@
                         <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch flex-column">
                             <div class="card bg-light d-flex flex-fill">
                                 <div class="card-header text-muted border-bottom-0">
-                                    {{ $galeria->created_at }}
+                                    {{ $galeria->created_at->format('Y-m-d h:i a') }}
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="row">
                                         <div class="col-12 text-center">
                                             <a href="{{ Storage::url($galeria->url) }}" data-toggle="lightbox"
-                                                data-title="{{ $galeria->created_at }}" data-gallery="gallery">
+                                                data-title="{{ $galeria->created_at->format('Y-m-d h:i a') }}" data-gallery="gallery">
                                                 <img src="{{ Storage::url($galeria->url) }}" alt="Error, al mostrar."
                                                     class="img-thumbnail small-image img-fluid mb-2">
                                             </a>

@@ -63,7 +63,7 @@
                             <td style="text-align: center">{{ ++$contador }}</td>
                             <td>{{ $item->nombre }}</td>
                             <td>{{ $item->slug }}</td>
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
                             <td>
                                 <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Acciones">

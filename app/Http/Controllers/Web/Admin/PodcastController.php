@@ -201,17 +201,23 @@ class PodcastController extends Controller
         }
     }
 
-
+    //LISTAR LOS EPISODIOS SEGUN EL PODCAST
     public function listEpisodio(Podcast $podcast)
     {
-        $episodios = Episodio::where('podcast_id', $podcast->id)
-            ->orderBy('id', 'desc')
-            ->get();
-        return view('admin.podcasts.episodioaux', [
+        //CACHE
+        if (Cache::has('admin.episodios')) {
+            $episodios = Cache::get('admin.episodios');
+        } else {
+            $episodios = Episodio::ListarEpisodioPodcast($podcast->id)
+                ->get();
+            Cache::put('admin.episodios', $episodios);
+        }
+        //CACHE
+
+        return view('admin.podcasts.episodio', [
             'podcast' => $podcast,
             'episodios' => $episodios,
         ]);
-
     }
 
 
