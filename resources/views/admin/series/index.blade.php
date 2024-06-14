@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de podcats
+                Lista de series
             </span>
         </div>
         <!-- /.card-header -->
@@ -76,16 +76,16 @@
                                             onclick="redirectUpdate(this.getAttribute('data-url'))">Videos</button>
                                     @endcan
 
-                                    @can('admin.podcasts.edit')
+                                    @can('admin.series.edit')
                                         <!-- Update Button -->
                                         <button class="btn btn-success btn-sm"
-                                            data-url="{{ route('admin.podcasts.edit', $item) }}"
+                                            data-url="{{ route('admin.series.edit', $item) }}"
                                             onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
                                     @endcan
 
-                                    @can('admin.podcasts.destroy')
+                                    @can('admin.series.destroy')
                                         <!-- Delete Button -->
-                                        <form action="{{ route('admin.podcasts.destroy', $item) }}" method="POST">
+                                        <form action="{{ route('admin.series.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

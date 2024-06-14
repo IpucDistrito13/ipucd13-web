@@ -53,7 +53,9 @@ Route::get('episodios/apigetAudio/{episodioid}', [EpisodioController::class, 'ap
 
 
 //Route::get('series', [SerieController::class, 'index'])->name('admin.series.index');
-Route::resource('series', SerieController::class)->names('admin.series');
+Route::resource('series', SerieController::class)->names('admin.series')->parameters([
+    'series' => 'serie', // Cambia el nombre del parámetro de la ruta
+]);
  // LISTAR LOS VIDEOS SEGUN LA SERIE
 Route::get('series/videos/{serie}', [SerieController::class, 'listVideos'])->name('admin.series.listVideos');
 Route::resource('videos', VideoController::class)->names('admin.videos');

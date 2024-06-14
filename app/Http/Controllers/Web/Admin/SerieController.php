@@ -37,23 +37,6 @@ class SerieController extends Controller
         return view('admin.series.index', compact('series'));
     }
 
-
-
-    public function indeasdsadx()
-    {
-        //CACHE
-        if (Cache::has('series')) {
-            $series = Cache::get('series');
-        } else {
-            $series = Serie::ListarSeries()->with('comite', 'categoria')->get();
-            Cache::put('series', $series);
-        }
-        //CACHE
-
-        return view('admin.series.index', compact('series'));
-    }
-
-
     /**
      * Show the form for creating a new resource.
      */
@@ -227,6 +210,7 @@ class SerieController extends Controller
         }
     }
 
+    //LISTAR LOS VIDEOS SEGUN LA SERIE
     public function listVideos(Serie $serie)
     {
 

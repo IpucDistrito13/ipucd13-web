@@ -1,7 +1,6 @@
 <div class="row">
 
-
-
+    
     <div class="col-sm-3">
         <!-- select input -->
         <div class="form-group">

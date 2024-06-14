@@ -45,8 +45,9 @@
             <form method="POST" action="{{ route('admin.series.update', $serie) }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
                 @csrf
+                @method('PUT')
 
-                @include('admin.series.form')
+                @include('admin.series.form', $serie)
 
                 <div class="modal-footer">
                     <a class="btn btn-secondary" href="{{ route('admin.series.index') }}">Volver</a>
