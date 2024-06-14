@@ -41,6 +41,7 @@
         </div>
     @endif
 
+    <!-- Contenedor de audio en la tarjeta de música -->
     <div class="card" id="seccion_musica">
         <div class="card-body">
             <audio></audio>
@@ -49,14 +50,15 @@
 
             <div id="current_time">0:00</div>
             <div id="total_duration">Duración: --:--</div> <!-- Nuevo elemento para mostrar la duración total -->
-            <div class="progress-bar">
+            <div class="progress-bar" id="progress-bar" onclick="seek(event)">
                 <div class="progress-fill"></div>
+                <div class="progress-circle"></div> <!-- Círculo indicador -->
             </div>
 
-            <div class="section-pause" hidden>
+            <div class="section-pause">
                 <div class="buttons">
-                    <button class="pause" id="pause">
-                        <i class="fas fa-pause"></i> 
+                    <button class="pause" id="pause" onclick="togglePlayPause()">
+                        <i class="fas fa-pause" id="pause-icon"></i>
                     </button>
                 </div>
             </div>
@@ -97,10 +99,9 @@
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
 
-
                                     @if ($item->url)
-                                        <button class="btn btn-info btn-sm reproducir"
-                                            data-id="{{ $item->id }}" onclick="reproducirBtn()">Reproducir</button>
+                                        <button class="btn btn-info btn-sm reproducir" data-id="{{ $item->id }}"
+                                            onclick="reproducirBtn({{ $item->id }})">Reproducir</button>
                                     @else
                                         <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
                                             data-target="#modal_upload_{{ $item->id }}">
@@ -145,7 +146,6 @@
                                     </div>
                                 </div>
                             </td>
-
                         </tr>
                     @endforeach
 
@@ -257,21 +257,17 @@
             width: 2%;
         }
 
-
         .progress-bar {
             width: 100%;
-            /* Set desired width */
-            height: 10px;
-            /* Set desired height */
-            background-color: #ddd;
-            /* Background color for unfilled progress */
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
         }
 
         .progress-fill {
-            height: 100%;
-            /* Match container height */
+            height: 10px;
             background-color: #007bff;
-            /* Fill color for progress */
+            width: 0%;
         }
 
 
@@ -303,24 +299,34 @@
             margin-right: 10px;
         }
 
-        /* Progress Bar */
         .progress-bar {
             width: 100%;
-            height: 10px;
-            /* Adjust thickness */
-            background-color: #ddd;
-            /* Background color */
+            background-color: #f3f3f3;
             border-radius: 5px;
-            /* Rounded corners */
-            margin-bottom: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+            cursor: pointer;
+            /* Make the progress bar clickable */
+            position: relative;
+            /* Necesario para posicionar el círculo */
         }
 
-        /* Progress Fill */
         .progress-fill {
-            height: 100%;
-            /* Match progress bar height */
+            height: 10px;
             background-color: #007bff;
-            /* Fill color */
+            width: 0%;
+        }
+
+        .progress-circle {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #f0ab00;
+            border-radius: 50%;
+            pointer-events: none;
+            /* Para que el círculo no interfiera con los eventos de clic */
         }
 
         /* Pause Button */
@@ -422,133 +428,107 @@
             updateSlug();
         });
         // End generate slug
-
-        function reproducirBtn(){
-            console.log("Hola");
-        }
+    </script>
 
 
-        var botonesReproducir = document.querySelectorAll('.reproducir');
-        var audioElement;
-        var pauseButton = document.querySelector('.pause');
+    <script>
+        let audioPlayer;
+        let isPlaying = false;
 
-        // Add click event listener to the button
-        pauseButton.addEventListener('click', function() {
-            if (audioElement) {
-                // Check if audio is playing
-                if (audioElement.paused) {
-                    // Resume playback if paused
-                    audioElement.play();
-                    pauseButton.querySelector('i').classList.replace('fa-play', 'fa-pause'); // Update icon
-                } else {
-                    // Pause playback if currently playing
-                    audioElement.pause();
-                    pauseButton.querySelector('i').classList.replace('fa-pause', 'fa-play'); // Update icon
-                }
-            }
-        });
+        function reproducirBtn(episodioId) {
+            console.log('Audio: ' + episodioId);
 
-        function detenerYEliminarAudio() {
-            if (audioElement) {
-                audioElement.pause();
-                audioElement.parentNode.removeChild(audioElement);
-                audioElement = null;
-            }
-        }
+            axios.get('/api/v1/getAudioEpisodio/' + episodioId)
+                .then(function(response) {
+                    console.log(response.data);
+                    // Verifica que la respuesta contenga la URL del audio
+                    if (!response.data.url) {
+                        console.error('No se encontró la URL del audio en la respuesta');
+                        return;
+                    }
 
-        const hiddenDiv = document.querySelector('.section-pause');
-        // Function to show the div
-        // Function to show the div
-        function showDiv() {
-            hiddenDiv.removeAttribute('hidden'); // Remove the hidden attribute
-        }
+                    // Obtén la URL del audio desde la respuesta
+                    const audioUrl = response.data.url;
 
-        botonesReproducir.forEach(function(boton) {
-            boton.addEventListener('click', function() {
-                detenerYEliminarAudio();
-                var episodioid = this.getAttribute('data-id');
+                    // Obtén el elemento de audio
+                    audioPlayer = document.querySelector('#seccion_musica audio');
+                    if (!audioPlayer) {
+                        console.error('No se encontró el elemento de audio');
+                        return;
+                    }
 
-                axios.get('/api/v1/getAudioEpisodio/' + episodioid)
-                    .then(function(response) {
-                        console.log(response.data);
-                        var datosCancion = response.data;
-                        mostrarInformacionCancion(datosCancion);
-                        var audioUrl = datosCancion.url;
-                        audioElement = document.createElement('audio');
-                        audioElement.src = audioUrl;
-                        audioElement.play();
-                        document.body.appendChild(audioElement);
+                    // Establece la fuente del elemento de audio
+                    audioPlayer.src = audioUrl;
 
-                        // Muestra la duración total del audio
-                        audioElement.addEventListener('loadedmetadata', function() {
-                          showDiv();
-                            var totalDurationElement = document.getElementById(
-                                'total_duration');
-                            totalDurationElement.textContent = 'Duración: ' + formatTime(
-                                audioElement.duration);
-                        });
+                    // Actualiza la información de la canción
+                    document.getElementById('info-cancion').innerText = response.data.titulo;
 
-                        // Actualiza el tiempo de reproducción actual
-                        audioElement.addEventListener('timeupdate', function() {
-                            if (audioElement) { // Check if audioElement exists
-                                var currentTime = audioElement.currentTime;
-                                var duration = audioElement.duration;
-                                var progress = currentTime / duration;
-                                var progressFillElement = document.querySelector(
-                                    '.progress-fill');
-                                progressFillElement.style.width =
-                                    `${progress * 100}%`; // Set width as a percentage
-
-                                // Update current time element (existing code)
-                                var currentTimeElement = document.getElementById(
-                                    'current_time');
-                                currentTimeElement.textContent = formatTime(currentTime);
-                            }
-                        });
-
-                        document.querySelector('.progress-bar').addEventListener('click', function(
-                            event) {
-                            // Get click position relative to the progress bar
-                            var clickX = event.offsetX;
-                            var progressBarWidth = this.offsetWidth;
-                            var progress = clickX / progressBarWidth;
-
-                            // Calculate playback position based on click location
-                            var currentTime = progress * audioElement.duration;
-
-                            // Seek to the specified playback position
-                            audioElement.currentTime = currentTime;
-
-                            // Update progress bar visually
-                            var progressFillElement = document.querySelector(
-                                '.progress-fill');
-                            progressFillElement.style.width = `${progress * 100}%`;
-
-                            // Update current time display
-                            var currentTimeElement = document.getElementById(
-                                'current_time');
-                            currentTimeElement.textContent = formatTime(currentTime);
-                        });
-
-                    })
-                    .catch(function(error) {
-                        console.error(error);
+                    // Reproduce el audio
+                    audioPlayer.play().then(() => {
+                        console.log('Reproducción iniciada');
+                        isPlaying = true;
+                        document.getElementById('pause-icon').className = 'fas fa-pause';
+                    }).catch((error) => {
+                        console.error('Error al reproducir el audio:', error);
                     });
-            });
-        });
 
-        function mostrarInformacionCancion(datosCancion) {
-            var infoCancionDiv = document.getElementById('info-cancion');
-            infoCancionDiv.innerHTML = `
-            <h2>${datosCancion.titulo}</h2>
-        `;
+                    // Actualiza el tiempo actual y la duración total
+                    audioPlayer.addEventListener('timeupdate', updateProgress);
+                    audioPlayer.addEventListener('loadedmetadata', () => {
+                        document.getElementById('total_duration').innerText = 'Duración: ' + formatTime(
+                            audioPlayer.duration);
+                    });
+
+                })
+                .catch(function(error) {
+                    console.error('Error al obtener el audio:', error);
+                });
         }
 
-        // Función para formatear el tiempo en minutos y segundos
+        function togglePlayPause() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                document.getElementById('pause-icon').className = 'fas fa-play';
+            } else {
+                audioPlayer.play().then(() => {
+                    isPlaying = true;
+                    document.getElementById('pause-icon').className = 'fas fa-pause';
+                }).catch((error) => {
+                    console.error('Error al reproducir el audio:', error);
+                });
+            }
+        }
+
+        function updateProgress() {
+            const progressFill = document.querySelector('.progress-fill');
+            const progressCircle = document.querySelector('.progress-circle');
+            const currentTime = document.getElementById('current_time');
+
+            const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressFill.style.width = progressPercent + '%';
+            progressCircle.style.left = `calc(${progressPercent}% - 5px)`; // Centrar el círculo
+
+            currentTime.innerText = formatTime(audioPlayer.currentTime);
+        }
+
         function formatTime(seconds) {
-            var minutes = Math.floor(seconds / 60);
-            var seconds = Math.floor(seconds % 60);
-            return `${minutes}:${(seconds < 10 ? '0' : '')}${seconds}`;
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function seek(event) {
+            const progressBar = document.getElementById('progress-bar');
+            const rect = progressBar.getBoundingClientRect();
+            const offsetX = event.clientX - rect.left;
+            const totalWidth = rect.width;
+            const percentage = offsetX / totalWidth;
+            const seekTime = percentage * audioPlayer.duration;
+
+            audioPlayer.currentTime = seekTime;
+            updateProgress();
         }
     </script>
+
 @stop
