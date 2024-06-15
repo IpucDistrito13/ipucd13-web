@@ -45,12 +45,14 @@
 
     <div class="col-sm-12">
         <div class="form-group">
-            <label>Dirección</label>
-            <input type="text" class="form-control" id="direccion" name="direccion"
+            <label>Dirección congregación * </label>
+            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Cl. 10 #12 - 40, Nombre Barrio "
                 value="{{ old('direccion', $congregacion->direccion ?? '') }}"> @error('direccion')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
     </div>
+
+   
 
 </div>

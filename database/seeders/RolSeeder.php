@@ -29,6 +29,16 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.solicitud_tipos.edit', 'descripcion' => 'Editar tipo de solicitud'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.solicitud_tipos.destroy', 'descripcion' => 'Eliminar tipo de solicitud'])->syncRoles([$rol1]);
 
+        $permission = Permission::create(['name' => 'admin.solicitudes.index', 'descripcion' => 'Ver listado de solicitudes'])->syncRoles([$rol1, $rol2]);
+        $permission = Permission::create(['name' => 'admin.solicitudes.create', 'descripcion' => 'Crear solicitud'])->syncRoles([$rol1, $rol2]);
+        $permission = Permission::create(['name' => 'admin.solicitudes.edit', 'descripcion' => 'Editar solicitud'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.solicitudes.destroy', 'descripcion' => 'Eliminar solicitud'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.solicitudes.pendientes', 'descripcion' => 'Ver listado solicitudes pendientes'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.solicitudes.respondidas', 'descripcion' => 'Ver listado solicitudes respondidas'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'admin.solicitudes.download', 'descripcion' => 'Descargar archivo solicitud'])->syncRoles([$rol1, $rol2]);
+
+        
         $permission = Permission::create(['name' => 'admin.congregaciones.index', 'descripcion' => 'Ver listado de congregaciones'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.congregaciones.create', 'descripcion' => 'Crear congregación'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.congregaciones.store', 'descripcion' => 'Guardar congregación'])->syncRoles([$rol1]);

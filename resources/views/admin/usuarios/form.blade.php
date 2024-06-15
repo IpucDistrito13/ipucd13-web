@@ -4,12 +4,12 @@
         <!-- select input -->
         <div class="form-group">
             <label>Congregación *</label>
-            <select id="congregacion" name="congregacion" class="form-control">
+            <select id="congregacion" name="congregacion" class="form-control select2" style="width: 100%;">
                 <option value="" selected disabled>Selecciona</option>
                 @foreach ($congregaciones as $congregacion)
                     <option value="{{ $congregacion->id }}"
                         {{ old('congregacion') == $congregacion->id || (isset($usuario) && $usuario->congregacion_id == $congregacion->id) ? 'selected' : '' }}>
-                        {{ $congregacion->direccion }}
+                        {{  $congregacion->direccion }}
                     </option>
                 @endforeach
             </select>
@@ -114,14 +114,14 @@
     <div class="col-sm-2">
         <div class="form-group">
             @php
-                $imageUrl =
-                    isset($usuario) && $usuario->imagen
-                        ? Storage::url($usuario->imagen->url)
-                        : 'https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png';
+                $imageUrl = isset($usuario) && $usuario->imagen && $usuario->imagen->url
+                    ? Storage::url($usuario->imagen->url)
+                    : 'https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png';
             @endphp
             <img id="imagen" src="{{ $imageUrl }}" alt="Imagen del usuario" class="img-thumbnail">
         </div>
     </div>
+    
 
 
 

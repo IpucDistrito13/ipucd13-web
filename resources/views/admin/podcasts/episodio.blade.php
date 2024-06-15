@@ -42,29 +42,29 @@
     @endif
 
     <!-- Contenedor de audio en la tarjeta de música -->
-<div class="card" id="seccion_musica" style="display: none;">
-    <div class="card-body">
-        <audio></audio>
+    <div class="card" id="seccion_musica" style="display: none;">
+        <div class="card-body">
+            <audio></audio>
 
-        <div id="info-cancion"></div> <!-- Elemento para mostrar información de la canción -->
+            <div id="info-cancion"></div> <!-- Elemento para mostrar información de la canción -->
 
-        <div id="current_time">0:00</div>
-        <div id="total_duration">Duración: --:--</div> <!-- Nuevo elemento para mostrar la duración total -->
-        <div class="progress-bar" id="progress-bar" onclick="seek(event)">
-            <div class="progress-fill"></div>
-            <div class="progress-circle"></div> <!-- Círculo indicador -->
-        </div>
-
-        <div class="section-pause">
-            <div class="buttons">
-                <button class="pause" id="pause" onclick="togglePlayPause()">
-                    <i class="fas fa-pause" id="pause-icon"></i>
-                </button>
+            <div id="current_time">0:00</div>
+            <div id="total_duration">Duración: --:--</div> <!-- Nuevo elemento para mostrar la duración total -->
+            <div class="progress-bar" id="progress-bar" onclick="seek(event)">
+                <div class="progress-fill"></div>
+                <div class="progress-circle"></div> <!-- Círculo indicador -->
             </div>
-        </div>
 
+            <div class="section-pause">
+                <div class="buttons">
+                    <button class="pause" id="pause" onclick="togglePlayPause()">
+                        <i class="fas fa-pause" id="pause-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
 
     <!-- Default box -->
     <div class="card">
@@ -248,6 +248,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
 
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+
     <style>
         .acciones-column {
             width: 210px;
@@ -396,6 +399,9 @@
 
     <!-- sweetalert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
 
     <script>
         $(function() {
@@ -551,5 +557,6 @@
             updateProgress();
         }
     </script>
+
 
 @stop

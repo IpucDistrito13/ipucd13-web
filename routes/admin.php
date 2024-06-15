@@ -17,12 +17,11 @@ use App\Http\Controllers\Web\Admin\PublicacionController;
 use App\Http\Controllers\Web\Admin\RedesController;
 use App\Http\Controllers\Web\Admin\RolController;
 use App\Http\Controllers\Web\Admin\SerieController;
+use App\Http\Controllers\Web\Admin\SolicitudController;
 use App\Http\Controllers\Web\Admin\SolicitudTipoController;
 use App\Http\Controllers\Web\Admin\UsuarioController;
 use App\Http\Controllers\Web\Admin\VideoController;
-use App\Models\Episodio;
 use App\Models\GaleriaTipo;
-use App\Models\SolicitudTipo;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('admin.dashboard');
@@ -35,6 +34,17 @@ Route::post('datatable/galerias', [DatatableController::class, 'galeriaTodos'])-
 
 Route::resource('roles', RolController::class)->names('admin.roles');
 Route::resource('solicitud_tipos', SolicitudTipoController::class)->names('admin.solicitud_tipos');
+Route::get('solicitudes/download/{solicitudId}', [SolicitudController::class, 'download'])->name('admin.solicitudes.download');
+Route::get('solicitudes/pendientes', [SolicitudController::class, 'pendientes'])->name('admin.solicitudes.pendientes');
+Route::get('solicitudes/respondidas', [SolicitudController::class, 'respondidas'])->name('admin.solicitudes.respondidas');
+Route::get('solicitudes/download/{solicitudId}', [SolicitudController::class, 'download'])->name('admin.solicitudes.download');// CREAR NUEVO EPISODIO
+
+Route::resource('solicitudes', SolicitudController::class)->names('admin.solicitudes')->parameters([
+    'solicitudes' => 'solicitud',
+]);
+
+
+
 
 Route::resource('congregaciones', CongregacionController::class)->names('admin.congregaciones')->parameters([
     'congregaciones' => 'congregacion', // Cambia el nombre del parámetro de la ruta
@@ -56,7 +66,7 @@ Route::get('episodios/apigetAudio/{episodioid}', [EpisodioController::class, 'ap
 Route::resource('series', SerieController::class)->names('admin.series')->parameters([
     'series' => 'serie', // Cambia el nombre del parámetro de la ruta
 ]);
- // LISTAR LOS VIDEOS SEGUN LA SERIE
+// LISTAR LOS VIDEOS SEGUN LA SERIE
 Route::get('series/videos/{serie}', [SerieController::class, 'listVideos'])->name('admin.series.listVideos');
 Route::resource('videos', VideoController::class)->names('admin.videos');
 

@@ -314,7 +314,7 @@ return [
 
         [
             'header' => 'ADMINISTRADOR',
-            //'can' => 'admin.roles.index'
+            'can' => 'admin.roles.index'
         ],
 
         [
@@ -352,15 +352,15 @@ return [
                 ],
 
                 [
-                    'text' => 'Pendientes #',
-                    'route' => 'admin.solicitud_tipos.index',
-                    'can' => 'admin.solicitud_tipos.index'
+                    'text' => 'Pendientes',
+                    'route' => 'admin.solicitudes.pendientes',
+                    'can' => 'admin.solicitudes.pendientes'
                 ],
 
                 [
-                    'text' => 'Respondidas #',
-                    'route' => 'admin.solicitud_tipos.index',
-                    'can' => 'admin.solicitud_tipos.index'
+                    'text' => 'Respondidas',
+                    'route' => 'admin.solicitudes.respondidas',
+                    'can' => 'admin.solicitudes.respondidas'
                 ],
 
             ],
@@ -462,6 +462,14 @@ return [
             'icon' => 'fas fa-calendar-day',
             'can' => 'admin.cronogramas.index'
         ],
+
+        [
+            'text' => 'Solicitudes',
+            'route' => 'admin.solicitudes.create',
+            'icon' => 'fas fa-bullhorn',
+            'can' => 'admin.solicitudes.create'
+        ],
+
 
         [
             'text' => 'Directorio D13',

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Video')
+@section('title', 'Serie')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -66,6 +66,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
 
                             </div>
 

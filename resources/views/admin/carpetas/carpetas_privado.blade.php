@@ -15,9 +15,13 @@
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.carpetas.listComitePrivado') }}">
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
+
+            @can('admin.carpetas.privado.crearCarpetaPrivada')
             <a class="btn btn-primary btn-sm" href="{{ route('admin.carpetas.privado.crearCarpetaPrivada', $comite) }}">
                 <i class="fas fa-folder-open"></i> Crear carpeta
             </a>
+            @endcan
+            
         </div>
 
     </div>

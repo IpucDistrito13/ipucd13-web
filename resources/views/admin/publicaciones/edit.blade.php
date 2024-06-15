@@ -44,7 +44,7 @@
             <form method="POST" action="{{ route('admin.publicaciones.update', $publicacion) }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
                 @csrf
-                @method('PUT') <!-- Establece el método PUT -->
+                @method('PUT')
 
                 @include('admin.publicaciones.form', $publicacion)
 

@@ -11,15 +11,6 @@
 
 @section('content')
 
-        @if(session('errors'))
-    <div class="alert alert-danger">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
@@ -69,8 +60,11 @@
 
 @section('css')
     {{-- Add here extra stylesheets --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <style>
         .image-wrapper {
             position: relative;
@@ -88,6 +82,25 @@
 
 @section('js')
 
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+
+
+    <!-- Select2 -->
+    <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+
+
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+        })
+    </script>
     <script>
         // generate slug
         function generateSlug(inputText) {

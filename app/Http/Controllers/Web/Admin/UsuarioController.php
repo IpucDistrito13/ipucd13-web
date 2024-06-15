@@ -149,6 +149,7 @@ class UsuarioController extends Controller
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'celular' => $request->celular,
+            'visible_celular' => 1,
             'email' => $request->email,
             'profile_photo_path' => $url,
             'password' => static::$password ??= Hash::make('password'),

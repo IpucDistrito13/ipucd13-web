@@ -23,7 +23,7 @@ class UsuarioRequest extends FormRequest
     public function rules(): array
     {
         $usuario = $this->route()->parameter('usuario');
-    
+
         $rules = [
             'congregacion' => 'required',
             'nombre' => 'required|max:100',
@@ -38,7 +38,7 @@ class UsuarioRequest extends FormRequest
                 'required_if:roles.0,2', // Required if the first role is 2
             ],
         ];
-    
+
         // Conditionally add the unique rule for 'codigo'
         if (request()->input('roles.0') == 2) {
             $codigoRule = 'unique:users,codigo';
@@ -47,14 +47,34 @@ class UsuarioRequest extends FormRequest
             }
             $rules['codigo'][] = $codigoRule;
         }
-    
+
         if ($usuario) {
             $rules['email'] = 'required|email|unique:users,email,' . $usuario->id;
         }
-    
+
         return $rules;
     }
-    
-    
 
+    public function messages(): array
+    {
+        return [
+            'congregacion.required' => 'El campo congregación es obligatorio.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo nombre no debe ser mayor a :max caracteres.',
+            'apellidos.required' => 'El campo apellidos es obligatorio.',
+            'apellidos.max' => 'El campo apellidos no debe ser mayor a :max caracteres.',
+            'celular.required' => 'El campo celular es obligatorio.',
+            'celular.regex' => 'El campo celular debe tener un formato válido (10 dígitos numéricos).',
+            'email.required' => 'El campo email es obligatorio.',
+            'email.email' => 'El campo email debe ser una dirección de correo electrónico válida.',
+            'email.max' => 'El campo email no debe ser mayor a :max caracteres.',
+            'email.unique' => 'El campo email ya ha sido registrado.',
+            'file.image' => 'El archivo debe ser una imagen válida.',
+            'roles.required' => 'Debe seleccionar al menos un rol.',
+            'roles.array' => 'Los roles deben ser proporcionados en formato de arreglo.',
+            'roles.*.exists' => 'Uno de los roles seleccionados no es válido.',
+            'codigo.required_if' => 'El campo código es obligatorio cuando el segundo rol es seleccionado.',
+            'codigo.unique' => 'El campo código ya ha sido registrado.',
+        ];
+    }
 }
