@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class GaleriaController extends Controller
 {
@@ -20,14 +21,36 @@ class GaleriaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            $userUUID = @auth()->user()->uuid;
+
+            // Obtener los roles del usuario
+            $dataTipoRol = DB::table('vista_roles_usuario')
+                ->select('roles')
+                ->where('uuid', $userUUID)
+                ->first();
+
+            // Asumimos que 'roles' es un campo que contiene una lista separada por comas
+            $roles = explode(',', $dataTipoRol->roles);
+
             $rolId = 2;
-            $data = User::ListarPorRol($rolId);
+            $data = User::ListarPorRol($rolId)->get();
 
             return datatables()::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $buttons = '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
-                    $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería General</a>';
+                ->addColumn('action', function ($row) use ($roles) {
+                    $buttons = '';
+
+                    // Mostrar botones según los roles
+                    if (in_array('Administrador', $roles) || in_array('Pastor', $roles)) {
+                        $buttons .= '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
+                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería General</a>';
+                    } elseif (in_array('Pastor', $roles)) {
+                        $buttons .= '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
+                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería General</a>';
+                    } elseif (in_array('Lider', $roles)) {
+                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galería</a>';
+                    }
+
                     return $buttons;
                 })
                 ->rawColumns(['action'])
@@ -36,6 +59,7 @@ class GaleriaController extends Controller
 
         return view('admin.galerias.index');
     }
+
 
     public function list(Request $request)
     {
@@ -46,7 +70,7 @@ class GaleriaController extends Controller
             return datatables()::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $buttons = ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
+                    $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
                     return $buttons;
                 })
                 ->rawColumns(['action'])
@@ -133,8 +157,13 @@ class GaleriaController extends Controller
             // Generar un nombre de archivo único
             $fileName = time() . '-' . $file->getClientOriginalName();
 
-            // Validar el tipo de galería y definir la ruta de almacenamiento
             $url = $file->storeAs('public/galeria/' . $usuario, $fileName);
+            Storage::disk('digitalocean')->put('myfile.txt', $url);
+
+
+
+            // Validar el tipo de galería y definir la ruta de almacenamiento
+            //$url = $file->storeAs('public/galeria/' . $usuario, $fileName);
 
             if (!$url) {
                 return response()->json(['error' => 'Error al almacenar el archivo.'], 500);
@@ -180,7 +209,25 @@ class GaleriaController extends Controller
         return view('admin.galerias.upload_privado', compact('usuario', 'galerias'));
     }
 
-    //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES
+     //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES PASTORES
+     public function generalLider($uuid)
+     {
+         // 1 = GALERIA GENERAL
+         $tipoGeneral = 1;
+         $usuario = User::where('uuid', $uuid)->first();
+         $galerias = Galeria::galeriaTipoUsuario($tipoGeneral, $usuario->id)->paginate(8);
+ 
+         // Formatear created_at a un formato de 12 horas
+         foreach ($galerias as $galeria) {
+             $galeria->formatted_created_at = $galeria->created_at->format('Y-m-d h:i:s A');
+         }
+ 
+         return view('admin.galerias.upload_general_lider', compact('usuario', 'galerias'));
+     }
+
+    
+
+    //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES PASTORES Y ADMIN
     public function generalAdmin($uuid)
     {
         // 1 = GALERIA GENERAL

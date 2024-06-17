@@ -33,7 +33,8 @@ class User extends Authenticatable
         'congregacion_id',
         'estado',
         'visible_celular',
-        'file'
+        'file',
+        'url'
     ];
 
     /**

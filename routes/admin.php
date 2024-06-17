@@ -70,25 +70,10 @@ Route::resource('series', SerieController::class)->names('admin.series')->parame
 Route::get('series/videos/{serie}', [SerieController::class, 'listVideos'])->name('admin.series.listVideos');
 Route::resource('videos', VideoController::class)->names('admin.videos');
 
-
-
-
-////////////////////Error
-/*
-Route::get('series', [SerieController::class, 'index'])->name('admin.series.index');
-Route::get('series/video/{serie}', [SerieController::class, 'listVideos'])->name('admin.series.listVideos');
-Route::get('series/create', [SerieController::class, 'create'])->name('admin.series.create');
-Route::post('series/store', [SerieController::class, 'store'])->name('admin.series.store');
-Route::post('series/update/{serie}', [SerieController::class, 'update'])->name('admin.series.update');
-Route::get('series/video/{serie}/edit', [SerieController::class, 'edit'])->name('admin.series.edit');
-Route::delete('series/{serie}/delete', [SerieController::class, 'destroy'])->name('admin.series.destroy');
-
-Route::resource('videos', VideoController::class)->names('admin.videos');
-
-*/
-
 Route::resource('usuarios', UsuarioController::class)->names('admin.usuarios');
-Route::get('user', [UsuarioController::class, 'list'])->name('admin.usuarios.list');
+Route::get('user/directorio/pastores', [UsuarioController::class, 'directorioPastores'])->name('admin.usuarios.directorioPastores');
+Route::get('user/directorio/lideres', [UsuarioController::class, 'directorioLideres'])->name('admin.usuarios.directorioLideres');
+
 Route::get('users/edit/{userId}', [UsuarioController::class, 'editar'])->name('admin.usuarios.editar');
 
 Route::get('user/serverside', [UsuarioController::class, 'serverSideJson'])->name('admin.usuarios.serverside');
@@ -116,10 +101,12 @@ Route::resource('galeria_tipos', GaleriaTipo::class)->names('admin.galeria_tipos
 
 //LISTAR TODOS LOS USUARIOS CON ROL PASTOR
 Route::get('galerias', [GaleriaController::class, 'index'])->name('admin.galerias.index');
+//Route::get('galerias/show/lider', [GaleriaController::class, 'lider'])->name('admin.galerias.lider');
 
 //GALERIA PRIVADA ADMIN
 Route::get('galeria/privado/{usuario}', [GaleriaController::class, 'privadoAdmin'])->name('admin.galerias.privadoadmin');
 Route::get('galeria/general/{usuario}', [GaleriaController::class, 'generalAdmin'])->name('admin.galerias.generalAdmin');
+Route::get('galeria/generalLider/{usuario}', [GaleriaController::class, 'generalLider'])->name('admin.galerias.generalLider');
 
 //GUARDAR IMAGENES MASIVO
 Route::post('galerias/upload', [GaleriaController::class, 'upload'])->name('admin.galerias.upload');
@@ -127,7 +114,7 @@ Route::post('galerias/upload', [GaleriaController::class, 'upload'])->name('admi
 //ELIMINA UNA IMAGEN EN ESPECIFICA
 Route::delete('admin/galeria/{galeria}', [GaleriaController::class, 'destroy'])->name('admin.galeria.destroy');
 
-//LISTAR TODOS LOS USUARIOS CON ROL PASTOR
+//LISTAR TODOS LOS USUARIOS CON ROL PASTOR PARA LOS AUTENTICADOS TIPO LIDER
 Route::get('galerias/pastores', [GaleriaController::class, 'list'])->name('admin.galerias.list');
 
 // Elimina archivo individual desde Drozone

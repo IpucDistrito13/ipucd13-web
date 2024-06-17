@@ -448,6 +448,7 @@ return [
         ],
 
         ['header' => 'USUARIO'],
+        
 
         [
             'text' => ' Eventos',
@@ -470,20 +471,24 @@ return [
             'can' => 'admin.solicitudes.create'
         ],
 
-
         [
             'text' => 'Directorio D13',
-            'route' => 'admin.usuarios.list',
-            'icon' => 'fas fa-user',
-            'can' => 'admin.usuarios.list'
-        ],
+            'icon' => 'fas fa-cloud-download-alt',
+            'submenu' => [
+               
+                [
+                    'text' => 'Pastores',
+                    'route' => 'admin.usuarios.directorioPastores',
+                    'can' => 'admin.usuarios.directorioPastores',
+                ],
+                [
+                    'text' => 'Lideres',
+                    'route' => 'admin.usuarios.directorioLideres',
+                    'can' => 'admin.usuarios.directorioLideres'
+                ],
 
-        [
-            'text' => 'Galeria',
-            'route' => 'admin.galerias.list',
-            'icon' => 'fas fa-file-image',
-            'can' => 'admin.galerias.list'
-        ],
+            ],
+        ],       
 
         [
             'text' => 'profile',

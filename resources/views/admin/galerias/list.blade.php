@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Pastores</h1>
+        <h1 style="margin: 0;">Pastores 2</h1>
         
     </div>
 @stop

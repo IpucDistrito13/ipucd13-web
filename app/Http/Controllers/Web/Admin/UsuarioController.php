@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequest;
+use App\Mail\NuevoUsuarioMail;
 use App\Models\Congregacion;
 use App\Models\Galeria;
 use App\Models\User;
@@ -17,6 +18,8 @@ use Intervention\Image\Colors\Rgb\Channels\Red;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Mail;
+
 
 class UsuarioController extends Controller
 {
@@ -97,7 +100,51 @@ class UsuarioController extends Controller
         return view('admin.usuarios.index');
     }
 
-    public function list()
+    //LISTAR SOLO LOS LIDERES DESDE EL DIRECTORIO D13
+    public function directorioLideres(Request $request)
+    {
+        $rolId = 3;
+
+        if ($request->ajax()) {
+            $data = User::ListarPorRol($rolId);
+
+            return datatables()::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
+                    return $buttons;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.directorio.lideres');
+    }
+
+    //LISTAR SOLO LOS PASTORES DESDE EL DIRECTORIO D13
+    public function directorioPastores(Request $request)
+    {
+        $rolId = 3;
+
+        if ($request->ajax()) {
+            $data = User::ListarPorRol($rolId);
+
+            return datatables()::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
+                    return $buttons;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('admin.directorio.pastores');
+    }
+
+
+
+    public function directorio()
     {
         //$usuarios = User::select('nombre', 'apellidos', 'celular', 'visible_celular')->paginate(30);
         $usuarios = User::select('id', 'nombre', 'apellidos', 'celular', 'visible_celular', 'congregacion_id')
@@ -112,7 +159,8 @@ class UsuarioController extends Controller
         });
 
         //return $usuarios;
-        return view('admin.usuarios.list', compact('usuarios'));
+        //return view('admin.usuarios.list', compact('usuarios'));
+        return view('admin.directorio.index', compact('usuarios'));
     }
 
     /**
@@ -138,12 +186,14 @@ class UsuarioController extends Controller
 
         $codigo = in_array(2, $request->roles) ? $request->codigo : '';
 
+        $timeAndPassword = time();
+        $hashedPassword = Hash::make($timeAndPassword);
 
         $usuario = User::create([
             'name' => $request->nombre,
             'congregacion_id' => $request->congregacion,
 
-            'uuid' => time(),
+            'uuid' => $timeAndPassword,
             'codigo' => $codigo,
             //'codigo' => $request->codigo,
             'nombre' => $request->nombre,
@@ -152,7 +202,7 @@ class UsuarioController extends Controller
             'visible_celular' => 1,
             'email' => $request->email,
             'profile_photo_path' => $url,
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => $hashedPassword,
         ]);
 
         $usuario->roles()->sync($request->roles);
@@ -169,6 +219,9 @@ class UsuarioController extends Controller
         //Elimina datos cache
         Cache::flush();
         //Cache
+
+        Mail::to($usuario->email)->send(new NuevoUsuarioMail($usuario));
+
 
         return redirect()->route('admin.usuarios.index')->with('success', $data['message']);
     }
@@ -220,6 +273,7 @@ class UsuarioController extends Controller
 
     public function updatePerfil(Request $request, User $usuario)
     {
+
         $request->validate([
             'email' => [
                 'sometimes', // Solo validar si se proporciona el campo email
@@ -250,7 +304,12 @@ class UsuarioController extends Controller
         }
 
         if ($request->file('file')) {
-            $url = Storage::put('public/usuarios/perfil', $request->file('file'));
+
+     return     $url =  Storage::disk('DO')->put('test.txt', 'Este es un archivo de prueba'); 
+            
+           // $url = Storage::put('public/usuarios/perfil', $request->file('file'));
+            //dd($url);
+
 
             // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
             if ($usuario->imagen) {

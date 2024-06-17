@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Listar pastores ')
+@section('title', 'Galeria | Listar pastores ')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Usuarios</h1>
+        <h1 style="margin: 0;">Pastores</h1>
         @can('admin.usuarios.create')
             <a class="btn btn-primary btn-sm" href="{{ route('admin.usuarios.create') }}">
                 Crear Nuevo
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de usuarios
+                Lista de pastores
             </span>
         </div>
         <!-- /.card-header -->
@@ -50,7 +50,6 @@
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Celular</th>
-                        <th>Rol</th>
                         <th class="acciones-column">Acciones</th>
 
                     </tr>
@@ -88,7 +87,7 @@
 
     <style>
         .acciones-column {
-            width: 150px;
+            width: 260px;
         }
 
         .counter-column {
@@ -106,8 +105,6 @@
         $(function() {
             var table = $('.data-table').DataTable({
                 responsive: true,                
-                processing: true,
-                serverSide: true,
                 language: {
                     processing: "Procesando...",
                     lengthMenu: "Mostrar _MENU_ registros por página",
@@ -121,7 +118,7 @@
                         previous: "Anterior"
                     }
                 },
-                ajax: "{{ route('admin.usuarios.serverside') }}",
+                ajax: "{{ route('admin.galerias.index') }}",
                 columns: [{
                         data: 'codigo',
                         name: 'codigo'
@@ -138,11 +135,6 @@
                     {
                         data: 'celular',
                         name: 'celular'
-                    },
-
-                    {
-                        data: 'roles',
-                        name: 'roles'
                     },
                     {
                         data: 'action',

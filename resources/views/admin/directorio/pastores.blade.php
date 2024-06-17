@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Listar pastores ')
+@section('title', 'Directorio | Pastores ')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Usuarios</h1>
+        <h1 style="margin: 0;">Directorio</h1>
         @can('admin.usuarios.create')
             <a class="btn btn-primary btn-sm" href="{{ route('admin.usuarios.create') }}">
                 Crear Nuevo
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de usuarios
+                Lista de pastores
             </span>
         </div>
         <!-- /.card-header -->
@@ -46,11 +46,10 @@
             <table id="datatable" class="table table-striped table-bordered data-table data-table">
                 <thead>
                     <tr>
-                        <th>Código</th>
+                        <th>Imagen</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Celular</th>
-                        <th>Rol</th>
                         <th class="acciones-column">Acciones</th>
 
                     </tr>
@@ -88,7 +87,7 @@
 
     <style>
         .acciones-column {
-            width: 150px;
+            width: 260px;
         }
 
         .counter-column {
@@ -105,7 +104,7 @@
     <script>
         $(function() {
             var table = $('.data-table').DataTable({
-                responsive: true,                
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 language: {
@@ -121,10 +120,12 @@
                         previous: "Anterior"
                     }
                 },
-                ajax: "{{ route('admin.usuarios.serverside') }}",
+                ajax: "{{ route('admin.usuarios.directorioPastores') }}",
                 columns: [{
-                        data: 'codigo',
-                        name: 'codigo'
+                        "data": "nombre",
+                        "render": function(data, type, row) {
+                            return '<img src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png" alt="Image" style="width:50px;height:50px;"/>';
+                        }
                     },
                     {
                         data: 'nombre',
@@ -138,11 +139,6 @@
                     {
                         data: 'celular',
                         name: 'celular'
-                    },
-
-                    {
-                        data: 'roles',
-                        name: 'roles'
                     },
                     {
                         data: 'action',

@@ -23,7 +23,8 @@ class UsuarioRequest extends FormRequest
     public function rules(): array
     {
         $usuario = $this->route()->parameter('usuario');
-
+    
+        // Inicializa las reglas básicas
         $rules = [
             'congregacion' => 'required',
             'nombre' => 'required|max:100',
@@ -34,26 +35,30 @@ class UsuarioRequest extends FormRequest
             'roles' => 'required|array|min:1',
             'roles.*' => 'exists:roles,id',
             'codigo' => [
-                'nullable', // Default to nullable
-                'required_if:roles.0,2', // Required if the first role is 2
+                'nullable', // Por defecto es nullable
             ],
         ];
-
-        // Conditionally add the unique rule for 'codigo'
-        if (request()->input('roles.0') == 2) {
+    
+        // Revisa si alguno de los roles seleccionados es 2 (pastor)
+        if (in_array(2, request()->input('roles', []))) {
+            $rules['codigo'][] = 'required'; // Añade la regla de requerido
+    
+            // Añade la regla de unicidad para el campo 'codigo'
             $codigoRule = 'unique:users,codigo';
             if ($usuario) {
                 $codigoRule .= ',' . $usuario->id;
             }
             $rules['codigo'][] = $codigoRule;
         }
-
+    
+        // Ajusta la regla de email para permitir duplicados en la actualización del usuario actual
         if ($usuario) {
             $rules['email'] = 'required|email|unique:users,email,' . $usuario->id;
         }
-
+    
         return $rules;
     }
+    
 
     public function messages(): array
     {

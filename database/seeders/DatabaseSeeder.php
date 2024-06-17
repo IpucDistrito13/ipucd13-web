@@ -25,15 +25,15 @@ class DatabaseSeeder extends Seeder
         \App\Models\Congregacion::factory(100)->create();
 
         User::factory()->create([
-            'name' => 'Admin Test',
-            'email' => 'haresje@gmail.com',
+            'name' => 'Desarrollo Ipuc',
+            'email' => 'desarrollo@ipucdistrito13.org',
             'isbloqueo' => true,
 
         ])->assignRole('Administrador');
 
         User::factory()->create([
-            'name' => 'Decom Ipuc',
-            'email' => 'admin@ipuc.com',
+            'name' => 'Admin Ipuc',
+            'email' => 'admin@ipucdistrito13.org',
             'isbloqueo' => true,
         ])->assignRole('Administrador');
 
@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             'isbloqueo' => true,
         ])->assignRole('Administrador');
 
-        User::factory(2000)->create();
+        User::factory(3500)->create();
         
         \App\Models\Evento::factory(1)->create();
         \App\Models\Cronograma::factory(1)->create();
