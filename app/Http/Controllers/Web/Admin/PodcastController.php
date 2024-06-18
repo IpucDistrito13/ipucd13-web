@@ -68,7 +68,7 @@ class PodcastController extends Controller
         ]);
 
         if ($request->file('file')) {
-            $url = Storage::put('public/podcasts', $request->file('file'));
+            $url = Storage::disk('s3')->put('public/podcasts', $request->file('file'));
 
             $podcast->imagen()->create([
                 'url' => $url,
