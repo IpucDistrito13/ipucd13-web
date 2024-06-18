@@ -307,6 +307,7 @@ class UsuarioController extends Controller
 
             //     $url =  Storage::disk('s3')->put('test.txt', 'Este es un archivo de prueba'); 
             $url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
+            return $url;
             //dd($url);
 
 
