@@ -153,7 +153,9 @@ class EpisodioController extends Controller
             $fileName = time() . '-' . $file->getClientOriginalName();
 
             // Almacenar el archivo en el almacenamiento público
-            $url = $file->storeAs('public/podcasts/episodio/' . $podcast, $fileName);
+            //$url = $file->storeAs('public/podcasts/episodio/' . $podcast, $fileName);
+            $url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
+
             $data = [
                 'url' => $url,
             ];
