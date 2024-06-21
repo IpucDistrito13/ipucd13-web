@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Crear carpeta privada')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -45,8 +45,6 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            
-
             <form method="POST" action="{{ route('admin.carpetas.storeCarpetaPrivada') }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
 
@@ -66,7 +64,6 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <!-- Dropzone -->
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />

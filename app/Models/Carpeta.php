@@ -19,4 +19,6 @@ class Carpeta extends Model
     {
         return $this->belongsTo(GaleriaTipo::class, 'galeriatipo_id');
     }
+
+    
 }

@@ -10,4 +10,5 @@ class Archivo extends Model
     use HasFactory;
     protected $fillable = ['uuid', 'url', 'carpeta_id', 'user_id'];
 
+
 }

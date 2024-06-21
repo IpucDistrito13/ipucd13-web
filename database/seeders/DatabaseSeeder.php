@@ -58,6 +58,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Video::factory(90)->create();
 
         \App\Models\Publicacion::factory(100)->create();
+        \App\Models\Carpetaaux::factory(5)->create();
+
         $this->call([GaleriaTipoSeeder::class]);
 
     }

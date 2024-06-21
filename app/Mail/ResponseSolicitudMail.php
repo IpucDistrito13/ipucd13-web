@@ -14,13 +14,19 @@ class ResponseSolicitudMail extends Mailable
     use Queueable, SerializesModels;
 
     public $solicitud;
+    public $usuario;
+    public $loginUrl;
+    public $year;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($solicitud)
+    public function __construct($solicitud, $usuario)
     {
         $this->solicitud = $solicitud;
+        $this->usuario = $usuario;
+        $this->loginUrl = env('APP_URL') . '/login';
+        $this->year = date('Y');
     }
 
     /**
@@ -39,7 +45,7 @@ class ResponseSolicitudMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'email.respuesta_solicitud',
         );
     }
 

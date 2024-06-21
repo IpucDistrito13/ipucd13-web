@@ -5,10 +5,13 @@
     <nav class="navbar navbar-expand-lg header-light bg-white responsive-sticky">
         <div class="container-fluid">
             <div class="col-auto col-lg-2 me-lg-0 me-auto">
-                <a class="navbar-brand" href="{{ route('inicio.index')}} ">
-                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="default-logo">
-                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="alt-logo">
-                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png')}}" alt="" class="mobile-logo"> 
+                <a class="navbar-brand" href="{{ route('inicio.index') }} ">
+                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png') }}"
+                        alt="" class="default-logo">
+                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png') }}"
+                        alt="" class="alt-logo">
+                    <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png') }}"
+                        alt="" class="mobile-logo">
                 </a>
             </div>
             <div class="col-auto menu-order position-static">
@@ -51,8 +54,8 @@
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
                                 @foreach ($comites as $comite)
-                                <li class="dropdown"><a href="{{ route('comite.show', $comite ) }}">{{ $comite->nombre }}</a></li>
-
+                                    <li class="dropdown"><a
+                                            href="{{ route('comite.show', $comite) }}">{{ $comite->nombre }}</a></li>
                                 @endforeach
                                 {{-- 
                                     <li class="dropdown"><a href="#">Misiones Extranjeras</a></li>
@@ -77,12 +80,30 @@
                         </li>
 
 
+                        <li class="nav-item dropdown simple-dropdown">
+                            <a href="#" class="nav-link">Zona D13</a>
+                            <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink5"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
+                                <li class="dropdown">
+                                    <a href="{{ route('public.publicaciones.index') }}">Publicaciones</a>
+                                </li>
+                                <li class="dropdown"><a href="#">Videos</a></li>
+                                <li class="dropdown"><a href="#">Podcasts</a></li>
+
+                                {{-- 
+                                    <li class="dropdown"><a href="#">Misiones Extranjeras</a></li>
+                                <li class="dropdown"><a href="#">Misión Juvenil</a></li>
+                                --}}
+
+                            </ul>
+                        </li>
+
+
                         <li class="nav-item"><a href="{{ route('public.descargables.index') }}"
                                 class="nav-link">Descargables</a></li>
-                        <li class="nav-item"><a href="{{ route('public.publicaciones.index') }}"
-                                class="nav-link">Publicaciones</a>
-                        </li>
-                        <li class="nav-item"><a href="{{ route('public.contacto.index') }}" class="nav-link">Contacto</a>
+                        <li class="nav-item"><a href="{{ route('public.contacto.index') }}"
+                                class="nav-link">Contacto</a>
                         </li>
 
                         <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Iniciar sesión</a>

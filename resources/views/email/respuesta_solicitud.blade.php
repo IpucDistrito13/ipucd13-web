@@ -1,10 +1,12 @@
+<!-- resources/views/email/respuesta_solicitud.blade.php -->
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo Registro</title>
+    <title>Respuesta solicitud</title>
 
     <style>
         /* Estilos generales */
@@ -86,48 +88,32 @@
     </div>
 
     <div class="content">
-      
-        <h4><b>Nuevo Registro</b></h4>
+
+        <h4><b>Respuesta solicitud</b></h4>
 
         <br>
 
-        <p class="saludo">Estimado(a) {{ $usuario->nombre }},</p>
+        <p class="saludo">Estimado(a) {{ $solicitud->userSolicitud->nombre }},</p>
 
-        <p>Nos complace darle la bienvenida a nuestra plataforma. A continuación, encontrará la información necesaria
-            para acceder a su cuenta:</p>
+        <p>Una solicitud ha sido respondida</p>
 
         <br>
 
         <div class="informacion-cuenta">
-            <label>URL de acceso:</label>
-            <span><a href="{{ $loginUrl }}">{{ $loginUrl }}</a></span>
-
-            <label>Usuario:</label>
-            <span>{{ $usuario->email }}</span>
-
-            <label>Contraseña:</label>
-            <span>{{ $usuario->uuid }}</span>
+            <label>Para descargar el archivo, debes iniciar sesión.</label>
+            <span><a href="{{ $loginUrl }}">Iniciar sesión</a></span>
         </div>
 
         <br>
-
-        <p>Le agradecemos por registrarse en nuestra plataforma.</p>
 
         <p class="firma">Atentamente,</p>
         <p><strong>Iglesia Pentecostal Unida de Colombia - Distrito 13</strong></p>
     </div>
 
     <div class="footer">
-        <p>&copy; <span id="currentYear"></span> Iglesia Pentecostal Unida de Colombia</p>
+        <p>&copy; {{ $year }} Iglesia Pentecostal Unida de Colombia</p>
     </div>
 
-    <script>
-        // Get the current year and set it in the copyright element
-        const currentYearElement = document.getElementById('currentYear');
-        const currentYear = new Date().getFullYear();
-        currentYearElement.textContent = currentYear;
-    </script>
-</body>
 </body>
 
 </html>

@@ -50,7 +50,6 @@
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Celular</th>
-                        <th class="acciones-column">Acciones</th>
 
                     </tr>
                 </thead>
@@ -65,7 +64,6 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
@@ -87,7 +85,7 @@
 
     <style>
         .acciones-column {
-            width: 260px;
+            width: 110px;
         }
 
         .counter-column {
@@ -140,12 +138,7 @@
                         data: 'celular',
                         name: 'celular'
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
+                    
                 ]
             });
         });

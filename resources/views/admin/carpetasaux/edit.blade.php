@@ -1,11 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear podcast')
+@section('title', 'Editar carpeta')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear podcast</h1>
-
+        <h1 style="margin: 0;">Editar carpeta: {{ $carpetaaux->nombre }}</h1>
+        <div>
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.carpetasaux.index') }}">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
     </div>
 @stop
 
@@ -33,23 +37,22 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos podcast
+                Datos comité
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.podcasts.store') }}" autocomplete="off"
-                enctype="multipart/form-data" file="true" id="podcastForm">
-
-
+            <form method="POST" action="{{ route('admin.carpetasaux.update', $carpetaaux) }}" autocomplete="off"
+                enctype="multipart/form-data" file="true">
                 @csrf
+                @method('PUT') <!-- Establece el método PUT -->
 
-                @include('admin.podcasts.form')
+                @include('admin.carpetasaux.form', $carpetaaux)
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.podcasts.index') }}">Volver</a>
-                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
+                    <a class="btn btn-secondary" href="{{ route('admin.carpetasaux.index') }}">Volver</a>
+                    <button type="submit" class="btn btn-success float-right">Actualizar</button>
                 </div>
             </form>
 
@@ -60,7 +63,8 @@
 
 @section('css')
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
 
     <style>
         .image-wrapper {
@@ -75,23 +79,14 @@
             height: 100%;
         }
     </style>
+
 @stop
 
 @section('js')
 
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
     <script>
-        showErrores();
-
-
-        function showErrores() {
-            @if ($errors->any())
-
-                @foreach ($errors->all() as $error)
-                    console.error('{{ $error }}');
-                @endforeach
-            @endif
-        }
-
         // Generate slug
         function generateSlug(inputText) {
             var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -102,10 +97,9 @@
                 .trim(); // Elimina espacios en blanco al inicio y al final
             return slug;
         }
-        // End generate slug
 
         function updateSlug() {
-            var nombreInput = document.getElementById("titulo");
+            var nombreInput = document.getElementById("nombre");
             var slugInput = document.getElementById("slug");
 
             if (nombreInput && slugInput) {
@@ -118,16 +112,14 @@
         document.addEventListener("DOMContentLoaded", function() {
             updateSlug();
         });
-
-        // end generate slug
+        // End generate slug
 
         // Mostrar imagen
         function redirectUpdate(url) {
             window.location.href = url;
         }
 
-        document.getElementById("imagen").addEventListener("change", cambiarImagen);
-
+        //Mostrar imagen
         function cambiarImagen(evento) {
             var file = evento.target.files[0];
             var reader = new FileReader();
@@ -136,6 +128,7 @@
             }
             reader.readAsDataURL(file);
         }
+
         //end mostrar imagen
 
         //Mostrar imagen banner
@@ -148,35 +141,5 @@
             reader.readAsDataURL(file);
         }
         //end mostrar imagen banner
-    </script>
-
-    <script>
-        function guardarFormulario() {
-            // Get the form element
-            var form = document.getElementById('podcastForm');
-
-            // Create a new FormData object to store form data
-            var formData = new FormData(form);
-
-            // Fetch the CSRF token from the form or from a meta tag
-            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            // Append the CSRF token to the FormData object
-            formData.append('_token', csrfToken);
-
-            // Use fetch API or XMLHttpRequest to send form data to the server
-            fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    // Handle response
-                    console.log(response);
-                })
-                .catch(error => {
-                    // Handle errors
-                    console.error(error);
-                });
-        }
     </script>
 @stop

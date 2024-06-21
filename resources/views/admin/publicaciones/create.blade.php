@@ -39,8 +39,8 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.publicaciones.store') }}" autocomplete="off" enctype="multipart/form-data"
-                file="true">
+            <form method="POST" action="{{ route('admin.publicaciones.store') }}" autocomplete="off"
+                enctype="multipart/form-data" file="true">
 
                 @csrf
 
@@ -58,7 +58,7 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
+
     <!-- Summernote CSS - CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
@@ -94,17 +94,17 @@
     <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 
     <script>
-        $(function () {
-          // Summernote
-          $('#contenido').summernote()
-      
-          // CodeMirror
-          CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-            mode: "htmlmixed",
-            theme: "monokai"
-          });
+        $(function() {
+            // Summernote
+            $('#contenido').summernote()
+
+            // CodeMirror
+            CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+                mode: "htmlmixed",
+                theme: "monokai"
+            });
         })
-      </script>
+    </script>
 
 
     <script>
@@ -155,12 +155,12 @@
 
     <script>
         /*
-        ClassicEditor
-            .create(document.querySelector('#contenido'))
-            .catch(error => {
-                console.error(error);
-            });
-        */
+            ClassicEditor
+                .create(document.querySelector('#contenido'))
+                .catch(error => {
+                    console.error(error);
+                });
+            */
     </script>
 
 

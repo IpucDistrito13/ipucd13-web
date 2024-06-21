@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Archivo;
 use App\Models\Carpeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+
 
 class ArchivoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index(Carpeta $carpeta)
     {
         $archivos = Archivo::all();
@@ -61,9 +65,25 @@ class ArchivoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Archivo $archivo)
     {
-        //
+        try {
+            $archivo->delete();
+
+            Cache::flush();
+
+            $data = [
+                'message' => 'Archivo eliminado exitosamente.',
+            ];
+
+            return back()->with('success', $data['message']);
+        } catch (\Exception $e) {
+            $data = [
+                'message' => 'No se pudo eliminar el comité, debido a restricción de integridad.',
+            ];
+
+            return back()->with('error', $data['message']);
+        }
     }
 
     public function upload(Request $request)
@@ -93,6 +113,24 @@ class ArchivoController extends Controller
             // Manejar el caso en el que no se presente ningún archivo en la solicitud
             return response()->json(['error' => 'No se ha cargado ningún archivo'], 400);
         }
+    }
 
+    public function download($uuid)
+    {
+        // Busca el archivo en la base de datos usando el UUID
+        $archivo = Archivo::where('uuid', $uuid)->firstOrFail();
+
+        // Obtiene la URL del archivo
+        $filePath = storage_path("app/{$archivo->url}");
+
+        // Verifica si el archivo existe
+        if (!file_exists($filePath)) {
+            abort(404);
+        }
+
+        // Devuelve el archivo como respuesta de descarga
+        return response()->download($filePath, basename($filePath), [
+            'Content-Type' => mime_content_type($filePath)
+        ]);
     }
 }

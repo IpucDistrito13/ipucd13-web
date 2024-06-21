@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear podcast')
+@section('title', 'Crear carpeta')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear podcast</h1>
-
+        <h1 style="margin: 0;">Crear comité</h1>
+        
     </div>
 @stop
 
@@ -33,22 +33,20 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos podcast
+                Datos comité
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.podcasts.store') }}" autocomplete="off"
-                enctype="multipart/form-data" file="true" id="podcastForm">
-
+            <form method="POST" action="{{ route('admin.carpetas.store') }}" autocomplete="off"
+                enctype="multipart/form-data" file="true">
 
                 @csrf
-
-                @include('admin.podcasts.form')
+                @include('admin.carpetas.form')
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.podcasts.index') }}">Volver</a>
+                    <a class="btn btn-secondary" href="{{ route('admin.carpetas.index') }}">Volver</a>
                     <button type="submit" class="btn btn-primary float-right">Guardar</button>
                 </div>
             </form>
@@ -60,7 +58,8 @@
 
 @section('css')
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
     <style>
         .image-wrapper {
@@ -79,19 +78,10 @@
 
 @section('js')
 
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+   
+
     <script>
-        showErrores();
-
-
-        function showErrores() {
-            @if ($errors->any())
-
-                @foreach ($errors->all() as $error)
-                    console.error('{{ $error }}');
-                @endforeach
-            @endif
-        }
-
         // Generate slug
         function generateSlug(inputText) {
             var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -102,10 +92,9 @@
                 .trim(); // Elimina espacios en blanco al inicio y al final
             return slug;
         }
-        // End generate slug
 
         function updateSlug() {
-            var nombreInput = document.getElementById("titulo");
+            var nombreInput = document.getElementById("nombre"); // Corregido aquí
             var slugInput = document.getElementById("slug");
 
             if (nombreInput && slugInput) {
@@ -118,8 +107,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             updateSlug();
         });
-
-        // end generate slug
+        // End generate slug
 
         // Mostrar imagen
         function redirectUpdate(url) {
@@ -138,7 +126,7 @@
         }
         //end mostrar imagen
 
-        //Mostrar imagen banner
+        // Mostrar imagen banner
         function cambiarImagenBanner(evento) {
             var file = evento.target.files[0];
             var reader = new FileReader();
@@ -151,32 +139,27 @@
     </script>
 
     <script>
-        function guardarFormulario() {
-            // Get the form element
-            var form = document.getElementById('podcastForm');
+        // datatable
+        $("#datatable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
 
-            // Create a new FormData object to store form data
-            var formData = new FormData(form);
-
-            // Fetch the CSRF token from the form or from a meta tag
-            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-            // Append the CSRF token to the FormData object
-            formData.append('_token', csrfToken);
-
-            // Use fetch API or XMLHttpRequest to send form data to the server
-            fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    // Handle response
-                    console.log(response);
-                })
-                .catch(error => {
-                    // Handle errors
-                    console.error(error);
-                });
-        }
+            language: {
+                processing: "Procesando...",
+                lengthMenu: "Mostrar _MENU_ registros por página",
+                zeroRecords: "No se encontraron registros en el sistema...",
+                info: "Mostrando página _PAGE_ de _PAGES_",
+                infoEmpty: "No hay registros disponibles",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                search: "Buscar",
+                paginate: {
+                    next: "Siguiente",
+                    previous: "Anterior"
+                }
+            },
+        });
+        //end datatable
     </script>
+
 @stop

@@ -80,48 +80,6 @@ class GaleriaController extends Controller
         return view('admin.galerias.list');
     }
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -158,10 +116,8 @@ class GaleriaController extends Controller
             $fileName = time() . '-' . $file->getClientOriginalName();
 
             $url = $file->storeAs('public/galeria/' . $usuario, $fileName);
-            Storage::disk('digitalocean')->put('myfile.txt', $url);
-
-
-
+            //Storage::disk('digitalocean')->put('myfile.txt', $url);
+            
             // Validar el tipo de galería y definir la ruta de almacenamiento
             //$url = $file->storeAs('public/galeria/' . $usuario, $fileName);
 
@@ -243,27 +199,6 @@ class GaleriaController extends Controller
         return view('admin.galerias.upload_general', compact('usuario', 'galerias'));
     }
 
-    /*
-
-        public function privadoAdmin(User $usuario)
-    {
-        $galerias = Galeria::select('id', 'url', 'galeriatipo_id', 'created_at')
-            ->where('galeriatipo_id', 2)
-            ->where('user_id', $usuario->id)
-            ->latest() // Ordenar las fotos por fecha de creación en orden descendente
-            ->paginate(8);
-
-        // Formatear created_at a un formato de 12 horas
-        foreach ($galerias as $galeria) {
-            $galeria->formatted_created_at = $galeria->created_at->format('Y-m-d h:i:s A');
-        }
-
-        return view('admin.galerias.privado', compact('usuario', 'galerias'));
-    }
-    */
-
-
-
     public function delete(Request $request)
     {
         try {
@@ -288,17 +223,6 @@ class GaleriaController extends Controller
         }
     }
 
-    /*
-    public function pastores()
-    {
-        //$rol = 2; // 2 = Pastor
-        $usuarios = User::with(['roles:id,name', 'congregacion'])->get();
-        //return $usuarios;
-        return view('admin.galerias.pastores', compact('usuarios'));
-    }
-    */
-
-
     public function lideres(Request $request)
     {
 
@@ -307,7 +231,6 @@ class GaleriaController extends Controller
             $data =  $usersWithRole = User::whereHas('roles', function ($query) use ($rolId) {
                 $query->where('id', $rolId);
             })->with('roles')->get();
-            //$data = User::select('id', 'nombre', 'apellidos', 'celular');
 
             return datatables()::of($data)
                 ->addIndexColumn()
@@ -322,9 +245,6 @@ class GaleriaController extends Controller
 
         return view('admin.galerias.lideres');
 
-
-        //return view('admin.galerias.lideres');
-
     }
 
 
@@ -336,7 +256,6 @@ class GaleriaController extends Controller
         $galerias = Galeria::where('user_id', $usuario->id)->paginate(10); // Paginar los resultados, 10 registros por página
 
         return view('admin.galerias.test', compact('galerias', 'usuario'));
-
 
         // Verificar si se encontró la galería
         if (!$usuario) {

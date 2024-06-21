@@ -57,19 +57,18 @@ class User extends Authenticatable
     ];
 
     //WEB
-    //Lista segun el rol
-    public function scopeListarPorRolPastor($query, $roleId)
+
+    public function scopeVistaRolUsers($query, $rol)
     {
-        return $query->whereHas('vista_rol_pastor', function($query) use ($roleId) {
-            $query->where('id', $roleId);
-        });
+        return $query->from('vista_roles_usuario')
+            ->where('roles', $rol);
     }
     //END WEB
 
     //RELACION UNO A MUCHOS
     public function publicaciones()
     {
-        //return $this->hasMany(Publicacion::class);
+        return $this->hasMany(Publicacion::class);
     }
 
     public function podcasts()
@@ -79,12 +78,12 @@ class User extends Authenticatable
 
     public function galerias()
     {
-        //return $this->hasMany(Galeria::class, 'user_id');
+        return $this->hasMany(Galeria::class, 'user_id');
     }
 
     public function createdGalerias()
     {
-        //return $this->hasMany(Galeria::class, 'createdby_id');
+        return $this->hasMany(Galeria::class, 'createdby_id');
     }
 
     public function congregacion()
@@ -99,12 +98,12 @@ class User extends Authenticatable
 
     public function solicitudes()
     {
-        //return $this->hasMany(Solicitud::class, 'user_solicitud');
+        return $this->hasMany(Solicitud::class, 'user_solicitud');
     }
 
     public function respondedSolicitudes()
     {
-        //return $this->hasMany(Solicitud::class, 'user_response');
+        return $this->hasMany(Solicitud::class, 'user_response');
     }
 
     //RELACION UNO A UNO POLIMORFICA
@@ -124,88 +123,22 @@ class User extends Authenticatable
         $usuario = User::where('id', auth()->user()->id)->first();
         return  $usuario->profile_photo_url;
     }
-    
+
     public function adminlte_desc()
     {
         $usuario = User::select('id')->where('id', auth()->user()->id)->first();
         return $usuario->name;
     }
 
-    //Lista con los respectivos roles
-    public function scopeListarConRoles($query)
-    {
-        $usuarios = User::with(['roles' => function ($query) {
-            $query->select('name');
-        }])->paginate(10);
-    }
-
     //Lista segun el rol
     public function scopeListarPorRol($query, $roleId)
     {
-        return $query->whereHas('roles', function($query) use ($roleId) {
+        return $query->whereHas('roles', function ($query) use ($roleId) {
             $query->where('id', $roleId);
         });
     }
 
-
     /*
-    select `users`.*, (select group_concat(`roles`.`name` separator ', ') from `roles` inner join `model_has_roles` on `roles`.`id` = `model_has_roles`.`role_id` 
-    where `model_has_roles`.`model_id` = `users`.`id` and `model_has_roles`.`model_type` = 'App\\Models\\User') as `roles` from `users` ORDER BY `roles` DESC limit 10 offset 0;
-
-
-
-
-
-    SELECT 
-    `users`.`id`, 
-    `users`.`email`, 
-    `users`.`uuid`, 
-    `users`.`codigo`,
-    `users`.`nombre`,
-    `users`.`apellidos`,
-    `users`.`celular`,
-    (SELECT GROUP_CONCAT(`roles`.`name` SEPARATOR ', ')
-     FROM `roles`
-     INNER JOIN `model_has_roles` ON `roles`.`id` = `model_has_roles`.`role_id`
-     WHERE `model_has_roles`.`model_id` = `users`.`id` 
-     AND `model_has_roles`.`model_type` = 'App\\Models\\User') AS `roles`
-FROM `users` 
-ORDER BY `roles` DESC 
-LIMIT 10 OFFSET 0;
-
-
-//MUESTRA LOS USUARIOS CON CADA UNOS DE LOS ROLES Y LA DIRECCION DONDE PERTENECE SOLO MUESTRA EL ROL PASTOR
-SELECT 
-    `users`.`id`, 
-    `users`.`email`, 
-    `users`.`uuid`, 
-    `users`.`codigo`,
-    `users`.`nombre`,
-    `users`.`apellidos`,
-    `users`.`celular`,
-    `congregaciones`.`direccion` AS `direccion_congregacion`,
-    (SELECT GROUP_CONCAT(`roles`.`name` SEPARATOR ', ')
-     FROM `roles`
-     INNER JOIN `model_has_roles` ON `roles`.`id` = `model_has_roles`.`role_id`
-     WHERE `model_has_roles`.`model_id` = `users`.`id` 
-     AND `model_has_roles`.`model_type` = 'App\\Models\\User') AS `roles`
-FROM `users`
-LEFT JOIN `congregaciones` ON `users`.`congregacion_id` = `congregaciones`.`id`
-WHERE EXISTS (
-    SELECT 1
-    FROM `model_has_roles`
-    WHERE `model_has_roles`.`model_id` = `users`.`id` 
-    AND `model_has_roles`.`model_type` = 'App\\Models\\User'
-    AND EXISTS (
-        SELECT 1
-        FROM `roles`
-        WHERE `roles`.`id` = `model_has_roles`.`role_id`
-        AND `roles`.`name` = 'Pastor'
-    )
-)
-ORDER BY `roles` DESC;
-
-
 //VISTA DE PASTORES
 CREATE VIEW vista_pastores AS
 SELECT 
@@ -259,6 +192,7 @@ SELECT
     users.apellidos,
     users.celular,
     congregaciones.direccion AS direccion_congregacion,
+    municipios.nombre AS nombre_municipio,
     (
         SELECT GROUP_CONCAT(roles.name SEPARATOR ', ')
         FROM roles
@@ -270,12 +204,11 @@ FROM
     users
 LEFT JOIN
     congregaciones ON users.congregacion_id = congregaciones.id
+LEFT JOIN
+    municipios ON congregaciones.municipio_id = municipios.id
 ORDER BY 
     roles DESC;
 
 
-
     */
-
-    
 }

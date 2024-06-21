@@ -50,6 +50,7 @@
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Celular</th>
+                        <th>Municipio</th>
                         <th class="acciones-column">Acciones</th>
 
                     </tr>
@@ -65,7 +66,6 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
@@ -87,7 +87,7 @@
 
     <style>
         .acciones-column {
-            width: 260px;
+            width: 175px;
         }
 
         .counter-column {
@@ -101,54 +101,58 @@
         }
     </style>
 
-    <script>
-        $(function() {
-            var table = $('.data-table').DataTable({
-                responsive: true,
-                processing: true,
-                serverSide: true,
-                language: {
-                    processing: "Procesando...",
-                    lengthMenu: "Mostrar _MENU_ registros por página",
-                    zeroRecords: "No se encontraron registros en el sistema...",
-                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                    infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros totales)",
-                    search: "Buscar",
-                    paginate: {
-                        next: "Siguiente",
-                        previous: "Anterior"
+<script>
+    $(function() {
+        var table = $('.data-table').DataTable({
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            language: {
+                processing: "Procesando...",
+                lengthMenu: "Mostrar _MENU_ registros por página",
+                zeroRecords: "No se encontraron registros en el sistema...",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                infoEmpty: "No hay registros disponibles",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                search: "Buscar",
+                paginate: {
+                    next: "Siguiente",
+                    previous: "Anterior"
+                }
+            },
+            ajax: "{{ route('admin.usuarios.directorioPastores') }}",
+            columns: [{
+                    "data": "nombre",
+                    "render": function(data, type, row) {
+                        return '<img src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png" alt="Image" style="width:50px;height:50px;"/>';
                     }
                 },
-                ajax: "{{ route('admin.usuarios.directorioPastores') }}",
-                columns: [{
-                        "data": "nombre",
-                        "render": function(data, type, row) {
-                            return '<img src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png" alt="Image" style="width:50px;height:50px;"/>';
-                        }
-                    },
-                    {
-                        data: 'nombre',
-                        name: 'nombre'
-                    },
-                    {
-                        data: 'apellidos',
-                        name: 'apellidos'
-                    },
-
-                    {
-                        data: 'celular',
-                        name: 'celular'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
-                ]
-            });
+                {
+                    data: 'nombre',
+                    name: 'nombre'
+                },
+                {
+                    data: 'apellidos',
+                    name: 'apellidos'
+                },
+                {
+                    data: 'celular',
+                    name: 'celular'
+                },
+                {
+                    data: 'nombre_municipio', // Verifica que este nombre coincida con el alias o nombre de columna en tu vista SQL
+                    name: 'nombre_municipio'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                },
+            ]
         });
-    </script>
+    });
+</script>
+
 
 @stop

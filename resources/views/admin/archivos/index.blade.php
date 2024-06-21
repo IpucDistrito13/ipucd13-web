@@ -5,23 +5,43 @@
 @section('content_header')
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">{{ $carpeta->nombre }} - Archivos</h1>
+        <h1 style="margin: 0;">Carpeta: {{ $carpeta->nombre }} </h1>
 
-        <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_upload">
-            <i class="fas fa-upload"></i> Añadir archivos
-        </a>
+        @can('admin.archivos.upload')
+            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_upload">
+                <i class="fas fa-upload"></i> Añadir archivos
+            </a>
+        @endcan
+
 
     </div>
 @stop
 
 @section('content')
 
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
 
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de Comités
+                Lista de archivos
             </span>
         </div>
         <!-- /.card-header -->
@@ -31,23 +51,31 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>UUID</th>
-                        <th>Url</th>
+                        <th>Nombre</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Aquí puedes iterar sobre tus categorías y mostrarlas en la tabla -->
-                    <!-- Ejemplo de una fila de la tabla -->
+
                     @foreach ($archivos as $item)
                         <tr>
                             <td>{{ $item->id }}</td>
-                            <td>{{ $item->uuid }}</td>
-                            <td>{{ $item->url }}</td>
+                            <td>{{ basename($item->url) }}</td>
                             <td>
-
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
-                                   
+                                    @can('admin.archivos.download')
+                                        <a class="btn btn-success btn-sm"
+                                            href="{{ route('admin.archivos.download', $item->uuid) }}">Descargar</a>
+                                    @endcan
+
+                                    @can('admin.archivos.destroy')
+                                        <form action="{{ route('admin.archivos.destroy', $item) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                        </form>
+                                    @endcan
+
                                 </div>
 
 
@@ -80,7 +108,7 @@
                     @csrf
                     <div class="modal-body">
 
-                        <input type="text" value="{{ $carpeta->id }}" id="carpeta" name="carpeta">
+                        <input type="hidden" value="{{ $carpeta->id }}" id="carpeta" name="carpeta">
 
                         <div class="fallback">
                             <input type="file" name="file" multiple>
@@ -99,10 +127,19 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
 
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+    <style>
+        .acciones-column {
+            width: 100px;
+        }
+
+        .counter-column {
+            width: 2%;
+        }
+    </style>
 
 @stop
 

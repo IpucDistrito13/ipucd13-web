@@ -121,5 +121,27 @@ class RolSeeder extends Seeder
 
         //$permission = Permission::create(['name' => 'admin.galerias.list', 'descripcion' => 'Ver listado galerias - General'])->syncRoles([$rol3]);
 
+        $permission = Permission::create(['name' => 'admin.carpetas.index', 'descripcion' => 'Ver listado de carpetas'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.carpetas.create', 'descripcion' => 'Crear carpeta'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.carpetas.store', 'descripcion' => 'Guardar carpeta'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.carpetas.edit', 'descripcion' => 'Editar carpeta'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.carpetas.destroy', 'descripcion' => 'Eliminar carpeta'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'admin.carpetas.listComitePrivado', 'descripcion' => 'Descargable privado'])->syncRoles([$rol1, $rol2, $rol3]);
+        $permission = Permission::create(['name' => 'admin.carpetas.listComitePublico', 'descripcion' => 'Descargable publico'])->syncRoles([$rol1, $rol2, $rol3]);
+
+        $permission = Permission::create(['name' => 'admin.archivos.upload', 'descripcion' => 'Subir archivo'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.archivos.download', 'descripcion' => 'Descargar archivo'])->syncRoles([$rol1, $rol2, $rol3]);
+        $permission = Permission::create(['name' => 'admin.archivos.destroy', 'descripcion' => 'Eliminar archivo'])->syncRoles([$rol1]);
+
+
+        $permission = Permission::create(['name' => 'admin.carpetas.listCarpetasPublicoComite', 'descripcion' => 'Ver listado carpeta tipo publico'])->syncRoles([$rol1, $rol2, $rol3]);
+        $permission = Permission::create(['name' => 'admin.carpetas.publico.crearCarpetaPublico', 'descripcion' => 'Crear carpeta tipo publico'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'admin.carpetas.storeCarpetaPublico', 'descripcion' => 'Guardar carpeta tipo publico'])->syncRoles([$rol1]);
+
+
+
+
     }
 }

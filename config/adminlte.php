@@ -429,6 +429,11 @@ return [
             'icon' => 'fas fa-cloud-download-alt',
             'submenu' => [
                 [
+                    'text' => 'Carpetas',
+                    //'route' => 'admin.carpetas.index',
+                    //'route' => 'admin.carpetas.index'
+                ],
+                [
                     'text' => 'Descargable admin',
                     //'route' => 'admin.descargables.index',
                     //'route' => 'admin.descargables.index'
@@ -436,12 +441,12 @@ return [
                 [
                     'text' => 'Descargable privado',
                     'route' => 'admin.carpetas.listComitePrivado',
-                    //'can' => 'admin.descargables.privado',
+                    'can' => 'admin.carpetas.listComitePrivado',
                 ],
                 [
-                    'text' => 'Descargable general',
-                    //'route' => 'admin.descargables.general',
-                    //'can' => 'admin.galerias.listlideres'
+                    'text' => 'Descargable publico',
+                    'route' => 'admin.carpetas.listComitePublico',
+                    'can' => 'admin.carpetas.listComitePublico'
                 ],
 
             ],

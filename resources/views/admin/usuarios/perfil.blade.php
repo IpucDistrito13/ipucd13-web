@@ -49,8 +49,6 @@
 
                         <h3 class="profile-username text-center">{{ $usuario->congregacion->direccion }}</h3>
 
-
-
                         <div class="row">
 
                             <div class="col-sm-3">
@@ -132,10 +130,7 @@
                                         @enderror
                                     </div>
                                 </div>
-
-
-
-
+                                
                             </div>
 
                             <div class="modal-footer">
@@ -157,8 +152,6 @@
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
     <style>

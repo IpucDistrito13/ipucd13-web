@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResponseSolicitudMail;
 use App\Models\Solicitud;
 use App\Models\SolicitudTipo;
 use App\Models\User;
@@ -10,6 +11,8 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class SolicitudController extends Controller
@@ -37,6 +40,7 @@ class SolicitudController extends Controller
         $solicitudTipo = SolicitudTipo::all();
         $uuid = time();
         $usuario = @auth()->user();
+        
         $listSolicitudes = Solicitud::with('solicitudTipo')->SolicitudesListadoUser($usuario->id)
             ->orderBy('created_at', 'desc')  // Ordenar por created_at en orden descendente
             ->limit(100)                      // Limitar a los últimos 100 registros
@@ -103,62 +107,47 @@ class SolicitudController extends Controller
     {
         // Validación de los datos del formulario
         $validatedData = $request->validate([
-            // Otras reglas de validación para otros campos si es necesario
             'file' => 'required|file|mimes:jpeg,png,pdf|max:2048', // Acepta JPEG, PNG y PDF, tamaño máximo de 2MB
         ]);
 
         // Verificar si se cargó un nuevo archivo
         if ($request->file('file')) {
-
+            // Almacenar el archivo y obtener la URL
             $url = Storage::put('public/solicitudes', $request->file('file'));
 
-
-            // Si la categoría ya tiene una imagen, eliminar el archivo antiguo
-            if ($solicitud->imagen) {
+            // Si la solicitud ya tiene una imagen, eliminarla
+            if ($solicitud->url) {
                 Storage::delete($solicitud->url);
-
-                $data = [
-                    'id' => $request->id,
-                    'estado' => '1',
-                    'url' => $url,
-                    'user_response' => @auth()->user()->id,
-                ];
-
-                $solicitud->update($data);
-
-                /*
-                // Actualizar la relación de imagen con la nueva URL del archivo
-                $solicitud->imagen()->update([
-                    'url' => $url,
-                    'imageable_type' => Solicitud::class,
-                ]);
-                */
-            } else {
-                /* $solicitud->imagen()->create([
-                    'url' => $url,
-                    'imageable_type' => Solicitud::class,
-                ]);
-                */
-                $data = [
-                    'id' => $request->id,
-                    'estado' => '1',
-                    'url' => $url,
-                    'user_response' => @auth()->user()->id,
-                ];
-
-                $solicitud->update($data);
             }
+
+            // Datos a actualizar en la solicitud
+            $data = [
+                'estado' => '1',
+                'url' => $url,
+                'user_response' => auth()->user()->id,
+            ];
+
+            // Actualizar la solicitud
+            $solicitud->update($data);
+
+            // Enviar correo de respuesta
+            
+            Mail::to($solicitud->userSolicitud->email)
+                ->send(new ResponseSolicitudMail($solicitud, auth()->user()), );
+
+            // Limpiar la caché
+            Cache::flush();
+
+            // Redireccionar con un mensaje de éxito
+            return redirect()->route('admin.solicitudes.pendientes')
+                ->with('success', 'Solicitud ' . $solicitud->uuid . ' actualizada exitosamente.');
         }
 
-        Cache::flush();
-
-
-        // Redireccionar con un mensaje de éxito
-        $data = [
-            'message' => 'Solicitud ' . $solicitud->uuid . ' actualizada exitosamente.'
-        ];
-        return redirect()->route('admin.solicitudes.pendientes')->with('success', $data['message']);
+        // En caso de no haber archivo, redireccionar con mensaje de error
+        return redirect()->route('admin.solicitudes.pendientes')
+            ->with('error', 'No se ha cargado ningún archivo.');
     }
+
 
     /**
      * Remove the specified resource from storage.

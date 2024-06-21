@@ -1,28 +1,28 @@
 @extends('adminlte::page')
 
-@section('title', 'Lista carpeta privada')
+@section('title', 'Lista carpeta publico')
 
 @section('content_header')
 
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            Carpeta Privada - {{ $comite->nombre }}
+            Carpeta Publico - {{ $comite->nombre }}
         </h1>
 
 
         <div>
-            <a class="btn btn-secondary btn-sm" href="{{ route('admin.carpetas.listComitePrivado') }}">
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.carpetas.listComitePublico') }}">
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
 
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.carpetas.privado.crearCarpetaPrivada', $comite) }}">
-                <i class="fas fa-folder-open"></i> Crear carpeta
-            </a>
-            @can('admin.carpetas.privado.crearCarpetaPrivada')
-            
+
+            @can('admin.carpetas.publico.crearCarpetaPublico')
+                <a class="btn btn-primary btn-sm" href="{{ route('admin.carpetas.publico.crearCarpetaPublico', $comite) }}">
+                    <i class="fas fa-folder-open"></i> Crear carpeta
+                </a>
             @endcan
-            
+
         </div>
 
     </div>
@@ -48,22 +48,21 @@
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
 
                     @foreach ($carpetas as $item)
-                    <tr>
-                        <td>{{ $item->id }}</td>
-                        <td>{{ $item->nombre }}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Group of buttons">
-                                <!-- Update Button -->
-                                <a class="btn btn-primary btn-sm"
-                                   href="{{ route('admin.archivos.index', $item->id) }}">Ver más</a>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-                
+                        <tr>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->nombre }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Group of buttons">
+                                    <!-- Update Button -->
+                                    <a class="btn btn-primary btn-sm"
+                                        href="{{ route('admin.archivos.index', $item->id) }}">Ver más</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+
 
                     <!-- Fin del ejemplo -->
                 </tbody>
@@ -78,7 +77,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Nombre carpeta</h4>
+                    <h4 class="modal-title">Nombre carpeta aaaaaaaaaaaaaa</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -130,5 +129,5 @@
 @stop
 
 @section('js')
-    
+
 @stop

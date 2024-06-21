@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Podcasts')
+@section('title', 'Carpetas aux')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Listar podcasts</h1>
-        @can('admin.podcasts.create')
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.podcasts.create') }}">
+        <h1 style="margin: 0;">Lista carpeta aux</h1>
+        @can('admin.carpetas.create')
+            <a id="create" class="btn btn-primary btn-sm" href="{{ route('admin.carpetas.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de podcats
+                Lista de carpetas
             </span>
         </div>
         <!-- /.card-header -->
@@ -47,9 +47,8 @@
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
-                        <th>Título</th>
-                        <th>Categoría</th>
-                        <th>Episodios</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
                         <th>Creado</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
@@ -58,40 +57,32 @@
                     @php
                         $contador = 0;
                     @endphp
-                    @foreach ($podcasts as $item)
+                    @foreach ($carpetasaux as $item)
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
+                            <td>{{ $item->nombre }}</td>
+                            <td>{{ $item->visibilidad }}</td>
 
-                            <td>{{ $item->titulo }}</td>
-                            <td>{{ $item->categoria->nombre }}</td>
-                            <td>{{ $item->episodios_count }}</td>
                             <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
                             <td>
-
+                                <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
-
-                                    @can('admin.podcasts.listEpisodio')
-                                        <button class="btn btn-primary btn-sm"
-                                            data-url="{{ route('admin.podcasts.listEpisodio', $item) }}"
-                                            onclick="redirectUpdate(this.getAttribute('data-url'))">Episodios</button>
-                                    @endcan
-
-                                    @can('admin.podcasts.edit')
+                                    @can('admin.comites.edit')
                                         <!-- Update Button -->
-                                        <button class="btn btn-success btn-sm"
-                                            data-url="{{ route('admin.podcasts.edit', $item) }}"
-                                            onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
+                                        <a class="btn btn-success btn-sm"
+                                            href="{{ route('admin.carpetas.edit', $item) }}">Actualizar</a>
                                     @endcan
 
-                                    @can('admin.podcasts.destroy')
+                                    @can('admin.comites.destroy')
                                         <!-- Delete Button -->
-                                        <form action="{{ route('admin.podcasts.destroy', $item) }}" method="POST">
+                                        <form action="{{ route('admin.carpetas.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                         </form>
                                     @endcan
                                 </div>
+
 
                             </td>
 
@@ -105,11 +96,9 @@
         </div>
 
     </div>
-
 @stop
 
 @section('css')
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
@@ -127,8 +116,6 @@
 
 @section('js')
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-
     <!-- Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <!-- Bootstrap JS -->
@@ -140,6 +127,8 @@
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
+    <!-- sweetalert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(function() {

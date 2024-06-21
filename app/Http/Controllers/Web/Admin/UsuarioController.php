@@ -41,26 +41,6 @@ class UsuarioController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
-                /*
-                ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                    return $btn;
-                })
-
-                ->addColumn('action', function ($row) {
-                    $editUrl = route('admin.usuarios.editar', $row->id);
-                    $deleteUrl = route('admin.usuarios.destroy', ['usuarioId' => $row->id]);
-    
-                    $btn = '<a href="' . $editUrl . '" class="edit btn btn-primary btn-sm">Editar</a>';
-                    $btn .= '<form id="deleteForm_' . $row->id . '" action="' . $deleteUrl . '" method="POST" class="d-inline">';
-                    $btn .= csrf_field(); // Agregar token CSRF
-                    $btn .= '<input type="hidden" name="_method" value="DELETE">';
-                    $btn .= '<button type="button" onclick="confirmDelete(' . $row->id . ', \'' . $row->nombre . '\', \'' . $row->apellidos . '\')" class="delete btn btn-danger btn-sm">Eliminar</button>';
-                    $btn .= '</form>';
-                    
-                    return $btn;
-                })
-                */
                 ->addColumn('action', function ($row) {
                     $editUrl = route('admin.usuarios.editar', $row->id);
 
@@ -103,15 +83,15 @@ class UsuarioController extends Controller
     //LISTAR SOLO LOS LIDERES DESDE EL DIRECTORIO D13
     public function directorioLideres(Request $request)
     {
-        $rolId = 3;
-
+        //$rolId = 3;
+        $rol = 'Lider';
         if ($request->ajax()) {
-            $data = User::ListarPorRol($rolId);
+            $data = User::VistaRolUsers($rol)->get();
 
             return datatables()::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
+                    $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-primary btn-sm">LLamar</a>';
                     return $buttons;
                 })
                 ->rawColumns(['action'])
@@ -124,26 +104,26 @@ class UsuarioController extends Controller
     //LISTAR SOLO LOS PASTORES DESDE EL DIRECTORIO D13
     public function directorioPastores(Request $request)
     {
-        $rolId = 3;
-
+        //$rolId = 2;
+        $rol = 'Pastor';
+    
         if ($request->ajax()) {
-            $data = User::ListarPorRol($rolId);
-
+            $data = User::VistaRolUsers($rol)->get();
+    
             return datatables()::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
+                    $buttons .= ' <a href="tel:' . $row->celular . '" class="btn btn-primary btn-sm">Llamar</a>';
                     return $buttons;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
+    
         return view('admin.directorio.pastores');
     }
-
-
-
+    
     public function directorio()
     {
         //$usuarios = User::select('nombre', 'apellidos', 'celular', 'visible_celular')->paginate(30);
@@ -158,8 +138,6 @@ class UsuarioController extends Controller
             return $user;
         });
 
-        //return $usuarios;
-        //return view('admin.usuarios.list', compact('usuarios'));
         return view('admin.directorio.index', compact('usuarios'));
     }
 
@@ -195,7 +173,6 @@ class UsuarioController extends Controller
 
             'uuid' => $timeAndPassword,
             'codigo' => $codigo,
-            //'codigo' => $request->codigo,
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'celular' => $request->celular,
@@ -243,7 +220,6 @@ class UsuarioController extends Controller
         //return $usuario;
 
         $congregaciones = Congregacion::SelectList()->get();
-        // return  $congregaciones = Congregacion::all();
         return view('admin.usuarios.edit', [
             'usuario' => $usuario,
             'congregaciones' => $congregaciones,
@@ -269,28 +245,21 @@ class UsuarioController extends Controller
         }
     }
 
-
-
     public function updatePerfil(Request $request, User $usuario)
     {
-
         $request->validate([
             'email' => [
-                'sometimes', // Solo validar si se proporciona el campo email
+                'sometimes',
                 'email',
                 Rule::unique('users')->ignore($usuario->id),
             ],
-            'password' => 'nullable|string|min:8',
-            'password_confirmation' => 'nullable|string|min:8|same:password', // Validar que la repetición de la contraseña sea igual a la nueva contraseña
-
+            'password' => 'nullable|string|min:8|confirmed',
+            // usar confirmed en lugar de password_confirmation
         ]);
 
-        /////
-        // return $request;
-
+        // Preparar los datos para la actualización
         $data = [
             'email' => $request->email,
-            'password' => $request->password,
         ];
 
         // Validar y actualizar el correo electrónico si se proporciona
@@ -299,17 +268,13 @@ class UsuarioController extends Controller
         }
 
         // Validar y actualizar la contraseña si se proporciona
-        if ($request->has('password')) {
+        if ($request->filled('password')) {
             $data['password'] = bcrypt($request->input('password'));
         }
 
+        // Manejar la imagen de perfil si se proporciona
         if ($request->file('file')) {
-
-            //     $url =  Storage::disk('s3')->put('test.txt', 'Este es un archivo de prueba'); 
             $url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
-            //return $url;
-            //dd($url);
-
 
             // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
             if ($usuario->imagen) {
@@ -327,14 +292,11 @@ class UsuarioController extends Controller
             }
         }
 
-        // Actualizar los datos del usuario
+        // Actualizar el usuario con los datos preparados
         $usuario->update($data);
-
-        //Elimina datos cache
         Cache::flush();
-        //Cache
 
-        // Devolver una respuesta adecuada, por ejemplo, redireccionar al perfil del usuario
+        // Redirigir con un mensaje de éxito
         return redirect()->route('admin.usuario.perfil')->with('success', 'Perfil actualizado exitosamente.');
     }
 
@@ -345,7 +307,6 @@ class UsuarioController extends Controller
     public function update(UsuarioRequest $request, User $usuario)
     {
         $usuario->roles()->sync($request->roles);
-        // Actualizar los datos del usuario
         $data = [
             'name' => $request->nombre,
             'congregacion_id' => $request->congregacion,
@@ -378,11 +339,8 @@ class UsuarioController extends Controller
             }
         }
 
-        //Elimina datos cache
         Cache::flush();
-        //Cache
 
-        // Redireccionar con un mensaje de éxito
         $message = 'Usuario actualizada exitosamente.';
         return redirect()->route('admin.usuarios.edit', $usuario)->with('success', $message);
     }
@@ -396,29 +354,24 @@ class UsuarioController extends Controller
             $usuario->delete();
 
             $data = [
-                'message' => 'Usuario eliminado exitosamente.',
-            ];
+                $message = 'Usuario eliminado exitosamente.',
 
-            //Elimina datos cache
+            ];
             Cache::flush();
-            //Cache
 
             return redirect()->route('admin.usuarios.index')->with('success', $data['message']);
         } catch (\Exception $e) {
-            // Agrega un mensaje de registro para depuración
+
             \Log::error('Error al eliminar usuario: ' . $e->getMessage());
 
             $data = [
-                'message' => 'No se pudo eliminar el usuario, debido a restricción de integridad.',
+                $message = 'No se pudo eliminar el usuario, debido a restricción de integridad.',
             ];
-
-            //Elimina datos cache
-            Cache::flush();
-            //Cache
 
             return redirect()->route('admin.usuarios.index')->with('error', $data['message']);
         }
     }
+
 
     public function perfil()
     {
@@ -428,7 +381,6 @@ class UsuarioController extends Controller
 
     public function api()
     {
-        //return 'Test';
         $users = User::with(['roles', 'congregacion'])->get();
 
         return DataTables::of($users)

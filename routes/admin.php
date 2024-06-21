@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController as ControllersHomeController;
 use App\Http\Controllers\Web\Admin\ArchivoController;
+use App\Http\Controllers\Web\Admin\CarpetaauxController;
 use App\Http\Controllers\Web\Admin\CarpetaController;
 use App\Http\Controllers\Web\Admin\CategoriaController;
 use App\Http\Controllers\Web\Admin\ComiteController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Web\Admin\SolicitudController;
 use App\Http\Controllers\Web\Admin\SolicitudTipoController;
 use App\Http\Controllers\Web\Admin\UsuarioController;
 use App\Http\Controllers\Web\Admin\VideoController;
+use App\Models\Carpetaaux;
 use App\Models\GaleriaTipo;
 use Illuminate\Support\Facades\Route;
 
@@ -37,7 +39,7 @@ Route::resource('solicitud_tipos', SolicitudTipoController::class)->names('admin
 Route::get('solicitudes/download/{solicitudId}', [SolicitudController::class, 'download'])->name('admin.solicitudes.download');
 Route::get('solicitudes/pendientes', [SolicitudController::class, 'pendientes'])->name('admin.solicitudes.pendientes');
 Route::get('solicitudes/respondidas', [SolicitudController::class, 'respondidas'])->name('admin.solicitudes.respondidas');
-Route::get('solicitudes/download/{solicitudId}', [SolicitudController::class, 'download'])->name('admin.solicitudes.download');// CREAR NUEVO EPISODIO
+//Route::get('solicitudes/download/{solicitudId}', [SolicitudController::class, 'download'])->name('admin.solicitudes.download');// CREAR NUEVO EPISODIO
 
 Route::resource('solicitudes', SolicitudController::class)->names('admin.solicitudes')->parameters([
     'solicitudes' => 'solicitud',
@@ -122,19 +124,34 @@ Route::post('file/delete', [GaleriaController::class, 'delete'])->name('file.del
 
 Route::post('users/listJson', [DatatableController::class, 'listJson'])->name('users.listJson');
 
-
-//Route::post('audio/upload', [EpisodioController::class, 'updateUrl'])->name('admin.audio.upload');
-
-
 Route::get('carpetas/privado', [CarpetaController::class, 'listComitePrivado'])->name('admin.carpetas.listComitePrivado');
-Route::get('carpetas/privado/{comite}', [CarpetaController::class, 'listCarpetasPrivadoComite'])->name('admin.carpetas.listCarpetasPrivadoComite');
+Route::get('carpetas/publico', [CarpetaController::class, 'listComitePublico'])->name('admin.carpetas.listComitePublico');
+
+Route::get('carpetas/privada/{comite}', [CarpetaController::class, 'listCarpetasPrivadoComite'])->name('admin.carpetas.listCarpetasPrivadoComite');
+Route::get('carpetas/publico/{comite}', [CarpetaController::class, 'listCarpetasPublicoComite'])->name('admin.carpetas.listCarpetasPublicoComite');
 
 // CREAR CARPETA PRIVADA FORMULARIO
-Route::get('carpetas/privado/create/{comite}', [CarpetaController::class, 'crearCarpetaPrivada'])->name('admin.carpetas.privado.crearCarpetaPrivada');
+Route::get('carpetas/privada/create/{comite}', [CarpetaController::class, 'crearCarpetaPrivada'])->name('admin.carpetas.privado.crearCarpetaPrivada');
+// CREAR CARPETA PUBLICO FORMULARIO
+Route::get('carpetas/publico/create/{comite}', [CarpetaController::class, 'crearCarpetaPublico'])->name('admin.carpetas.publico.crearCarpetaPublico');
 
 // GUARDAR DATOS DE CARPETAS PRIVADA
-Route::post('carpetas/storeCarpetaPrivada', [CarpetaController::class, 'storeCarpetaPrivada'])->name('admin.carpetas.storeCarpetaPrivada');
+Route::post('carpetas/storeCarpetaPrivada', [CarpetaController::class, 'storeCarpetaPrivada'])
+    ->name('admin.carpetas.storeCarpetaPrivada');
+
+// GUARDAR DATOS DE CARPETAS PUBLICO
+Route::post('carpetas/storeCarpetaPublico', [CarpetaController::class, 'storeCarpetaPublico'])
+    ->name('admin.carpetas.storeCarpetaPublico');
 
 // LISTA LOS ARCHIVOS SEGUN LA CARPETA
+//Route::resource('archivos', ArchivoController::class)->names('admin.archivos');
+Route::get('archivos', [ArchivoController::class, 'index'])->name('admin.archivos.index');
+
 Route::get('archivos/{carpeta}', [ArchivoController::class, 'index'])->name('admin.archivos.index');
-Route::post('archivos/carpetas', [ArchivoController::class, 'upload'])->name('admin.archivos.upload');//GUARDAR IMAGENES MASIVO
+Route::delete('admin/archivos/{archivo}', [ArchivoController::class, 'destroy'])->name('admin.archivos.destroy');
+
+Route::post('archivos/carpetas', [ArchivoController::class, 'upload'])->name('admin.archivos.upload');
+
+Route::resource('carpetas', CarpetaauxController::class)->names('admin.carpetas');
+
+Route::get('archivos/download/{archivoId}', [ArchivoController::class, 'download'])->name('admin.archivos.download');
