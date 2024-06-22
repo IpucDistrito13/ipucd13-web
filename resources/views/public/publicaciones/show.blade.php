@@ -38,9 +38,7 @@
                             
                             <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : asset('img/imagen_not_found_480x640.png') }}" alt="" class="w-100 border-radius-6px mb-7">
                             <p>                {!! $publicacion->contenido !!}                            </p>
-                            <blockquote class="alt-font border-4 border-start border-color-base-color text-dark-gray fw-500 ps-40px mt-7 mb-7 ms-60px lg-ms-30px sm-ms-0 lg-ps-30px">
-                                <p>{{ $publicacion->descripcion }} </p>
-                            </blockquote>
+                            
                         </div>
                         
                         <!-- end blog details -->

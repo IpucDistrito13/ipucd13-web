@@ -42,7 +42,7 @@ class Publicacion extends Model
 
     public function scopeListarPublicaciones($query)
     {
-        return $query->select('id', 'titulo', 'slug', 'descripcion', 'created_at');
+        return $query->select('id', 'titulo', 'slug', 'descripcion', 'created_at')->latest('id');
     }
     /*
     public function scopeListarPublicaciones($query)

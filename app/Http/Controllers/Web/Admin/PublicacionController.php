@@ -23,7 +23,7 @@ class PublicacionController extends Controller
         if (Cache::has('publicaciones')) {
             $publicaciones = Cache::get('publicaciones');
         } else {
-            $publicaciones = Publicacion::ListarPublicaciones()->get();
+            $publicaciones = Publicacion::with('categoria')->ListarPublicaciones()->get();
             Cache::put('publicaciones', $publicaciones);
         }
         //CACHE
@@ -42,17 +42,45 @@ class PublicacionController extends Controller
         return view('admin.publicaciones.create', compact('comites', 'categorias'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    /*
     public function store(Request $request)
     {
-        $publicacion = Publicacion::create([
+        $content = $request->contenido;
+        $dom = new \DomDocument();
+        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $imageFile = $dom->getElementsByTagName('img');
+
+        foreach ($imageFile as $item => $image) {
+            $data = $image->getAttribute('src');
+            list($type, $data) = explode(';', $data);
+            list(, $data) = explode(',', $data);
+            $imgeData = base64_decode($data);
+
+            // Define the directory and ensure it exists
+            $directory = public_path('publicaciones/upload');
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true); // Creates the directory with appropriate permissions
+            }
+
+            // Generate the image name and path
+            $image_name = "/publicaciones/upload/" . time() . $item . '.png';
+            $path = $directory . '/' . time() . $item . '.png';
+
+
+            // Save the image
+            file_put_contents($path, $imgeData);
+
+            // Update the image src attribute
+            $image->removeAttribute('src');
+            $image->setAttribute('src', $image_name);
+        }
+
+        $content = $dom->saveHTML();
+
+        $post = Publicacion::create([
             'titulo' => $request->titulo,
             'slug' => $request->slug,
             'descripcion' => $request->descripcion,
-            'contenido' => $request->editordata,
+            'contenido' => $content, // Save the modified content
             'comite_id' => $request->comite,
             'categoria_id' => $request->categoria,
             'estado' => $request->estado,
@@ -62,7 +90,7 @@ class PublicacionController extends Controller
         if ($request->file('file')) {
             $url = Storage::put('public/publicaciones', $request->file('file'));
 
-            $publicacion->imagen()->create([
+            $post->imagen()->create([
                 'url' => $url,
                 'imageable_type' => Publicacion::class,
             ]);
@@ -78,49 +106,7 @@ class PublicacionController extends Controller
 
         return redirect()->route('admin.publicaciones.index')->with('success', $data['message']);
     }
-    */
 
-    public function store(Request $request)
-    {
-
-        $contenido = $request->contenido;
-        $dom = new DOMDocument();
-        $dom->loadHTML($contenido, 9);
-        //CODIGO IMAGEN
-
-        //...
-        $contenido = $dom->saveHTML();
-
-        $publicacion = Publicacion::create([
-            'titulo' => $request->titulo,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'contenido' => $request->contenido,
-            'comite_id' => $request->comite,
-            'categoria_id' => $request->categoria,
-            'estado' => $request->estado,
-            'user_id' => auth()->user()->id,
-        ]);
-
-        if ($request->file('file')) {
-            $url = Storage::put('public/publicaciones', $request->file('file'));
-
-            $publicacion->imagen()->create([
-                'url' => $url,
-                'imageable_type' => Publicacion::class,
-            ]);
-        }
-
-        $data = [
-            'message' => 'Publicación creada exitosamente.',
-        ];
-
-        //Elimina la variables almacenada en cache
-        Cache::flush();
-        //Cache
-
-        return redirect()->route('admin.publicaciones.index')->with('success', $data['message']);
-    }
 
     /**
      * Display the specified resource.
@@ -141,47 +127,75 @@ class PublicacionController extends Controller
         return view('admin.publicaciones.edit', compact('publicacion', 'comites', 'categorias'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Publicacion $publicacion)
     {
-        $contenido = $request->contenido;
-        $dom = new DOMDocument();
-        $dom->loadHTML($contenido, 9);
-        //CODIGO IMAGEN
+        $content = $request->contenido;
+        $dom = new \DomDocument();
+        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $imageFile = $dom->getElementsByTagName('img');
 
-        //...
-        $contenido = $dom->saveHTML();
+        foreach ($imageFile as $item => $image) {
+            $data = $image->getAttribute('src');
 
+            if (strpos($data, 'data:image') === 0) {
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $imageData = base64_decode($data);
 
-        $publicacion->update($request->all());
+                // Define the directory and ensure it exists
+                $directory = public_path('publicaciones/upload');
+                if (!is_dir($directory)) {
+                    mkdir($directory, 0755, true);
+                }
+
+                // Generate the image name and path
+                $image_name = "/publicaciones/upload/" . time() . $item . '.png';
+                $path = $directory . '/' . time() . $item . '.png';
+
+                // Save the image
+                file_put_contents($path, $imageData);
+
+                // Update the image src attribute
+                $image->removeAttribute('src');
+                $image->setAttribute('src', $image_name);
+            }
+        }
+
+        $content = $dom->saveHTML();
+
+        $publicacion->update([
+            'titulo' => $request->titulo,
+            'slug' => $request->slug,
+            'descripcion' => $request->descripcion,
+            'contenido' => $content,
+            'comite_id' => $request->comite,
+            'categoria_id' => $request->categoria,
+            'estado' => $request->estado,
+            'user_id' => auth()->user()->id,
+        ]);
 
         if ($request->file('file')) {
-            $url = Storage::put('public/publicaciones', $request->file('file'));
-
+            // Delete the old image if it exists
             if ($publicacion->imagen) {
                 Storage::delete($publicacion->imagen->url);
-                $publicacion->imagen()->update([
-                    'url' => $url,
-                    'imageable_type' => Publicacion::class,
-                ]);
-            } else {
-                // Si el usuario no tiene una imagen, agregar una nueva imagen
-                $publicacion->imagen()->create([
-                    'url' => $url,
-                    'imageable_type' => Publicacion::class,
-                ]);
+                $publicacion->imagen()->delete();
             }
+
+            // Store the new image
+            $url = Storage::put('public/publicaciones', $request->file('file'));
+
+            $publicacion->imagen()->create([
+                'url' => $url,
+                'imageable_type' => Publicacion::class,
+            ]);
         }
 
         $data = [
             'message' => 'Publicación actualizada exitosamente.',
         ];
 
-        //Elimina la variables almacenada en cache
+        // Elimina las variables almacenadas en cache
         Cache::flush();
-        //Cache
 
         return redirect()->route('admin.publicaciones.index')->with('success', $data['message']);
     }

@@ -47,7 +47,7 @@
                         <th class="counter-column">#</th>
                         <th>Título</th>
                         <th>Slug</th>
-                        <th>Descripción</th>
+                        <th>Creado</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -60,7 +60,7 @@
                             <td style="text-align: center">{{ ++$contador }}</td>
                             <td>{{ $item->titulo }}</td>
                             <td>{{ $item->slug }}</td>
-                            <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
                             <td>
                                 <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Acciones">

@@ -8,11 +8,8 @@
                 <div class="col-xl-7 ps-0 text-center text-xl-start lg-mb-10px"> 
                     <ul class="footer-navbar fs-16 lh-normal"> 
                         <li class="nav-item active"><a href="{{ route('inicio.index')}}" class="nav-link ps-0">Inicio</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Calendario</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Comités</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Descargables</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Publicaciones</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Contacto</a></li>
+                        <li class="nav-item"><a href="{{route('public.politicas_datos') }}" class="nav-link">Política de Tratamiento de datos</a></li>
+
                     </ul>
                 </div> 
                 <!-- end footer menu -->

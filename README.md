@@ -130,3 +130,6 @@ Categoria
 # Admin Dasboard
 REDES
 - AL actualizar los datos de tranmision existe campo oculto por parametro codeado el id
+
+# CREAR PUBLICACION
+Para las imagenes que se suban en el mismo contenido se guardara de forma interna en el servidor VPS en store y update

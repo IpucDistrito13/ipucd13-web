@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Admin\DatatableController;
+use App\Http\Controllers\Web\Admin\PoliticaController;
 use App\Http\Controllers\Web\InicioController;
 use App\Http\Controllers\Web\Public\ComiteController;
 use App\Http\Controllers\Web\Public\ContactoController;
@@ -39,4 +40,5 @@ Route::get('podcasts', [PodcastController::class, 'index']);
 Route::get('podcasts/{podcast}', [PodcastController::class, 'episodios'])->name('public.podcasts.episodios');
 
 
+Route::get('politicas-tratamiento-datos', [PoliticaController::class, 'index'])->name('public.politicas_datos');
 
