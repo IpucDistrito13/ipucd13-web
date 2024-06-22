@@ -145,7 +145,7 @@ Route::post('carpetas/storeCarpetaPublico', [CarpetaController::class, 'storeCar
 
 // LISTA LOS ARCHIVOS SEGUN LA CARPETA
 //Route::resource('archivos', ArchivoController::class)->names('admin.archivos');
-Route::get('archivos', [ArchivoController::class, 'index'])->name('admin.archivos.index');
+//Route::get('archivos', [ArchivoController::class, 'index'])->name('admin.archivos.index');
 
 Route::get('archivos/{carpeta}', [ArchivoController::class, 'index'])->name('admin.archivos.index');
 Route::delete('admin/archivos/{archivo}', [ArchivoController::class, 'destroy'])->name('admin.archivos.destroy');
