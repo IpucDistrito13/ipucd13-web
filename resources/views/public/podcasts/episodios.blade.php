@@ -13,133 +13,101 @@
     <!-- favicon icon -->
     @include('public.layouts.iconos')
 
-
     <style>
         a {
             color: #00008B;
         }
 
-
         .progress-bar {
-            width: 100%;
-            background-color: #f3f3f3;
-            border-radius: 5px;
-            overflow: hidden;
-        }
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+    cursor: pointer;
+    position: relative;
+}
 
-        .progress-fill {
-            height: 10px;
-            background-color: #007bff;
-            width: 0%;
-        }
+.progress-fill {
+    height: 10px;
+    background-color: #007bff;
+    width: 0%;
+}
 
+.progress-circle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: #F0AB00;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: left 0.1s ease-out; /* Agregamos transición para suavizar el movimiento */
+}
 
-        /* Audio Element */
-        audio {
-            width: 300px;
-            /* Adjust as needed */
-            height: 40px;
-            /* Adjust as needed */
-            border-radius: 5px;
-            /* Rounded corners */
-            border: 1px solid #ccc;
-            /* Border */
-            margin-bottom: 10px;
-        }
+.audio-player-container {
+    margin-top: 20px;
+}
 
-        /* Song Information */
-        #info-cancion {
-            flex-grow: 1;
-            /* Allow to expand */
-            font-size: 16px;
-            text-align: center;
-        }
+.audio-player-container audio {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
 
-        /* Current Time and Duration */
-        #current_time,
-        #total_duration {
-            font-size: 14px;
-            margin-right: 10px;
-        }
+.info-cancion {
+    font-size: 16px;
+    text-align: center;
+}
 
-        .progress-bar {
-            width: 100%;
-            background-color: #f3f3f3;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 10px;
-            cursor: pointer;
-            /* Make the progress bar clickable */
-            position: relative;
-            /* Necesario para posicionar el círculo */
-        }
+.current_time,
+.total_duration {
+    font-size: 14px;
+    margin-right: 10px;
+}
 
-        .progress-fill {
-            height: 10px;
-            background-color: #007bff;
-            width: 0%;
-        }
+.section-pause .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
 
-        .progress-circle {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
-            background-color: #F0AB00;
-            border-radius: 50%;
-            pointer-events: none;
-            /* Para que el círculo no interfiera con los eventos de clic */
-        }
+.section-pause .pause {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 24px;
+    cursor: pointer;
+    outline: none;
+}
 
-        .section-pause .buttons {
-            display: flex;
-            align-items: center;
-            /* Centra verticalmente */
-            justify-content: center;
-            /* Centra horizontalmente */
-            height: 100%;
-            /* Ajusta la altura para centrar */
-        }
+.pause {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        .section-pause .pause {
-            background: none;
-            border: none;
-            color: #007bff;
-            font-size: 24px;
-            cursor: pointer;
-            outline: none;
-        }
+.pause:hover {
+    background-color: #e9e9e9;
+}
 
-        /* Pause Button */
-        .pause {
-            display: flex;
-            align-items: center;
-            padding: 10px 15px;
-            /* Adjust padding */
-            border: 1px solid #ccc;
-            /* Border */
-            border-radius: 5px;
-            /* Rounded corners */
-            cursor: pointer;
-            transition: background-color 0.3s;
-            /* Smooth transition */
-        }
+.pause i {
+    font-size: 20px;
+    margin-right: 5px;
+    color: #007bff;
+}
 
-        /* Hover effect for Pause Button */
-        .pause:hover {
-            background-color: #e9e9e9;
-            /* Lighter background on hover */
-        }
-
-        /* Icon styles (assuming you're using Font Awesome icons) */
-        .pause i {
-            font-size: 20px;
-            margin-right: 5px;
-            color: #007bff;
-            /* Blue icon color */
-        }
     </style>
+
+
 </head>
 
 <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D" class="custom-cursor">
@@ -194,74 +162,67 @@
     </section>
     <!-- end section -->
 
-    <section class="ipad-top-space-margin md-pt-0">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="card" id="seccion_musica" style="display: none;">
-                    <div class="card-body">
-                        <audio id="audio-player"></audio>
-    
-                        <div id="info-cancion"></div>
-                        <div id="current_time">0:00</div>
-                        <div id="total_duration">Duración: --:--</div>
-    
-                        <div class="progress-bar" id="progress-bar" onclick="seek(event)">
-                            <div class="progress-fill"></div>
-                            <div class="progress-circle"></div>
-                        </div>
-    
-                        <div class="section-pause">
-                            <div class="buttons">
-                                <button class="pause" id="pause" onclick="togglePlayPause()">
-                                    <i class="fas fa-play" id="pause-icon"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
     @if ($episodios->isNotEmpty())
-    <section class="big-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-10"
-                    data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    @foreach ($episodios as $episodio)
-                    <div
-                        class="row border-bottom border-2 border-color-dark-gray pb-50px mb-50px sm-pb-35px sm-mb-35px align-items-center">
-                        <div class="col-md-1 text-center text-md-end md-mb-15px">
-                            <div class="fs-16 fw-600 text-dark-gray">01</div>
-                        </div>
-                        <div class="col-md-7 offset-lg-1 icon-with-text-style-01 md-mb-25px">
-                            <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
-                                <div class="feature-box-icon me-50px md-me-35px">
-                                    <img src="https://via.placeholder.com/130x130" class="w-75px" alt="" />
+        <section class="big-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10"
+                        data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        @foreach ($episodios as $episodio)
+                            <div
+                                class="row border-bottom border-2 border-color-dark-gray pb-50px mb-50px sm-pb-35px sm-mb-35px align-items-center">
+                                <div class="col-md-1 text-center text-md-end md-mb-15px">
+                                    <div class="fs-16 fw-600 text-dark-gray">01</div>
                                 </div>
-                                <div class="feature-box-content">
-                                    <span class="d-inline-block text-dark-gray mb-5px fs-20 ls-minus-05px"><span
-                                            class="fw-700">{{ $episodio->titulo }}</span></span>
-                                    <p class="w-90 md-w-100">{{ $episodio->descripcion }}</p>
+                                <div class="col-md-7 offset-lg-1 icon-with-text-style-01 md-mb-25px">
+                                    <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
+                                        <div class="feature-box-icon me-50px md-me-35px">
+                                            <img src="https://via.placeholder.com/130x130" class="w-75px"
+                                                alt="" />
+                                        </div>
+                                        <div class="feature-box-content">
+                                            <span class="d-inline-block text-dark-gray mb-5px fs-20 ls-minus-05px"><span
+                                                    class="fw-700">{{ $episodio->titulo }}</span></span>
+                                            <p class="w-90 md-w-100">{{ $episodio->descripcion }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-4 text-center text-md-end">
+                                    @if ($episodio->url)
+                                        <div class="audio-player-container">
+                                            <audio id="audio-player-{{ $episodio->id }}"></audio>
+
+                                            <div class="info-cancion" id="info-cancion-{{ $episodio->id }}"></div>
+                                            <div class="current_time" id="current_time-{{ $episodio->id }}">0:00</div>
+                                            <div class="total_duration" id="total_duration-{{ $episodio->id }}">
+                                                Duración: --:--</div>
+
+                                            <div class="progress-bar" id="progress-bar-{{ $episodio->id }}"
+                                                onclick="seek(event, {{ $episodio->id }})">
+                                                <div class="progress-fill" id="progress-fill-{{ $episodio->id }}">
+                                                </div>
+                                                <div class="progress-circle"></div>
+                                            </div>
+
+                                            <div class="mt-3 text-center">
+                                                <button
+                                                    class="btn btn-dark-gray btn-box-shadow btn-medium btn-sm btn-rounded reproducir"
+                                                    data-id="{{ $episodio->id }}"
+                                                    onclick="reproducirBtn({{ $episodio->id }}, this)">Reproducir</button>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
-                        </div>
-    
-                        @if ($episodio->url)
-                        <div class="col-lg-3 col-md-4 text-center text-md-end">
-                            <button class="btn btn-dark-gray btn-box-shadow btn-medium btn-sm btn-rounded reproducir"
-                                data-id="{{ $episodio->id }}" onclick="reproducirBtn({{ $episodio->id }}, this)">Reproducir</button>
-                        </div>
-                        @endif
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
-    
+
+
     <!-- end section movies -->
 
     <!-- start footer -->
@@ -283,107 +244,83 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        let audioPlayer = document.getElementById('audio-player');
-let isPlaying = false;
-let currentEpisodioId = null;
-let currentButton = null;
+document.addEventListener("DOMContentLoaded", function() {
+    // Puede que necesites inicializar algunas variables o configuraciones aquí
+});
 
 function reproducirBtn(episodioId, button) {
-    if (audioPlayer && episodioId === currentEpisodioId) {
-        togglePlayPause();
-        return;
-    }
+    let audioPlayer = document.getElementById(`audio-player-${episodioId}`);
+    let isPlaying = !audioPlayer.paused;
 
-    if (audioPlayer && isPlaying) {
-        audioPlayer.pause();
-        isPlaying = false;
-        if (currentButton) {
-            currentButton.innerHTML = 'Reproducir';
-        }
+    if (!isPlaying) {
+        playAudio(audioPlayer, episodioId, button);
+    } else {
+        pauseAudio(audioPlayer, button);
     }
+}
 
-    axios.get('/api/v1/getAudioEpisodio/' + episodioId)
+function playAudio(audioPlayer, episodioId, button) {
+    axios.get(`/api/v1/getAudioEpisodio/${episodioId}`)
         .then(function(response) {
             if (!response.data.url) {
                 console.error('No se encontró la URL del audio en la respuesta');
                 return;
             }
 
-            const audioUrl = response.data.url;
-            audioPlayer.src = audioUrl;
-            document.getElementById('info-cancion').innerText = response.data.titulo;
-            document.getElementById('seccion_musica').style.display = 'block';
-
-            audioPlayer.play().then(() => {
-                isPlaying = true;
-                currentEpisodioId = episodioId;
-                currentButton = button;
-                button.innerHTML = 'Pausar';
-                document.getElementById('pause-icon').className = 'fas fa-pause';
-            }).catch((error) => {
-                console.error('Error al reproducir el audio:', error);
-            });
-
-            audioPlayer.addEventListener('timeupdate', updateProgress);
-            audioPlayer.addEventListener('loadedmetadata', () => {
-                document.getElementById('total_duration').innerText = 'Duración: ' + formatTime(audioPlayer.duration);
-            });
-
+            audioPlayer.src = response.data.url;
+            audioPlayer.play()
+                .then(() => {
+                    updatePlayerUI(audioPlayer, episodioId);
+                    button.innerText = 'Pausar';
+                })
+                .catch((error) => {
+                    console.error('Error al reproducir el audio:', error);
+                });
         })
         .catch(function(error) {
             console.error('Error al obtener el audio:', error);
         });
 }
 
-function togglePlayPause() {
-    if (isPlaying) {
-        audioPlayer.pause();
-        isPlaying = false;
-        document.getElementById('pause-icon').className = 'fas fa-play';
-        if (currentButton) {
-            currentButton.innerHTML = 'Reproducir';
-        }
-    } else {
-        audioPlayer.play().then(() => {
-            isPlaying = true;
-            document.getElementById('pause-icon').className = 'fas fa-pause';
-            if (currentButton) {
-                currentButton.innerHTML = 'Pausar';
-            }
-        }).catch((error) => {
-            console.error('Error al reproducir el audio:', error);
-        });
-    }
+function pauseAudio(audioPlayer, button) {
+    audioPlayer.pause();
+    button.innerText = 'Reproducir';
 }
 
-function updateProgress() {
-    const progressFill = document.querySelector('.progress-fill');
-    const progressCircle = document.querySelector('.progress-circle');
-    const currentTime = document.getElementById('current_time');
+function updatePlayerUI(audioPlayer, episodioId) {
+    audioPlayer.addEventListener('timeupdate', function() {
+        let progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        let progressFill = document.getElementById(`progress-fill-${episodioId}`);
+        progressFill.style.width = `${progress}%`;
 
-    const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-    progressFill.style.width = progressPercent + '%';
-    progressCircle.style.left = `calc(${progressPercent}% - 5px)`;
+        let progressCircle = document.querySelector(`#progress-bar-${episodioId} .progress-circle`);
+        progressCircle.style.left = `calc(${progress}% - 5px)`; // Ajusta el desplazamiento del círculo
 
-    currentTime.innerText = formatTime(audioPlayer.currentTime);
+        let currentTime = formatTime(audioPlayer.currentTime);
+        document.getElementById(`current_time-${episodioId}`).innerText = currentTime;
+    });
+
+    audioPlayer.addEventListener('loadedmetadata', function() {
+        let duration = formatTime(audioPlayer.duration);
+        document.getElementById(`total_duration-${episodioId}`).innerText = `Duración: ${duration}`;
+    });
+}
+
+function seek(event, episodioId) {
+    let progressBar = document.getElementById(`progress-bar-${episodioId}`);
+    let rect = progressBar.getBoundingClientRect();
+    let offsetX = event.clientX - rect.left;
+    let totalWidth = rect.width;
+    let percentage = offsetX / totalWidth;
+    let seekTime = percentage * document.getElementById(`audio-player-${episodioId}`).duration;
+
+    document.getElementById(`audio-player-${episodioId}`).currentTime = seekTime;
 }
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-}
-
-function seek(event) {
-    const progressBar = document.getElementById('progress-bar');
-    const rect = progressBar.getBoundingClientRect();
-    const offsetX = event.clientX - rect.left;
-    const totalWidth = rect.width;
-    const percentage = offsetX / totalWidth;
-    const seekTime = percentage * audioPlayer.duration;
-
-    audioPlayer.currentTime = seekTime;
-    updateProgress();
 }
 
     </script>
