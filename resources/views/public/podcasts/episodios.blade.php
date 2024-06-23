@@ -163,64 +163,68 @@
     <!-- end section -->
 
     @if ($episodios->isNotEmpty())
-        <section class="big-section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-10"
-                        data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                        @foreach ($episodios as $episodio)
-                            <div
-                                class="row border-bottom border-2 border-color-dark-gray pb-50px mb-50px sm-pb-35px sm-mb-35px align-items-center">
-                                <div class="col-md-1 text-center text-md-end md-mb-15px">
-                                    <div class="fs-16 fw-600 text-dark-gray">01</div>
-                                </div>
-                                <div class="col-md-7 offset-lg-1 icon-with-text-style-01 md-mb-25px">
-                                    <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
-                                        <div class="feature-box-icon me-50px md-me-35px">
-                                            <img src="https://via.placeholder.com/130x130" class="w-75px"
-                                                alt="" />
-                                        </div>
-                                        <div class="feature-box-content">
-                                            <span class="d-inline-block text-dark-gray mb-5px fs-20 ls-minus-05px"><span
-                                                    class="fw-700">{{ $episodio->titulo }}</span></span>
-                                            <p class="w-90 md-w-100">{{ $episodio->descripcion }}</p>
-                                        </div>
+    <section class="big-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10"
+                    data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    @php $contador = 1; @endphp <!-- Inicializamos el contador -->
+                    @foreach ($episodios as $episodio)
+                        <div
+                            class="row border-bottom border-2 border-color-dark-gray pb-50px mb-50px sm-pb-35px sm-mb-35px align-items-center">
+                            <div class="col-md-1 text-center text-md-end md-mb-15px">
+                                <div class="fs-16 fw-600 text-dark-gray">{{ str_pad($contador, 2, '0', STR_PAD_LEFT) }}</div>
+                                <!-- Mostramos el contador con formato 01, 02, etc. -->
+                            </div>
+                            <div class="col-md-7 offset-lg-1 icon-with-text-style-01 md-mb-25px">
+                                <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
+                                    <div class="feature-box-icon me-50px md-me-35px">
+                                        <img src="https://via.placeholder.com/130x130" class="w-75px"
+                                            alt="" />
+                                    </div>
+                                    <div class="feature-box-content">
+                                        <span class="d-inline-block text-dark-gray mb-5px fs-20 ls-minus-05px"><span
+                                                class="fw-700">{{ $episodio->titulo }}</span></span>
+                                        <p class="w-90 md-w-100">{{ $episodio->descripcion }}</p>
                                     </div>
                                 </div>
-
-                                <div class="col-lg-3 col-md-4 text-center text-md-end">
-                                    @if ($episodio->url)
-                                        <div class="audio-player-container">
-                                            <audio id="audio-player-{{ $episodio->id }}"></audio>
-
-                                            <div class="info-cancion" id="info-cancion-{{ $episodio->id }}"></div>
-                                            <div class="current_time" id="current_time-{{ $episodio->id }}">0:00</div>
-                                            <div class="total_duration" id="total_duration-{{ $episodio->id }}">
-                                                Duración: --:--</div>
-
-                                            <div class="progress-bar" id="progress-bar-{{ $episodio->id }}"
-                                                onclick="seek(event, {{ $episodio->id }})">
-                                                <div class="progress-fill" id="progress-fill-{{ $episodio->id }}">
-                                                </div>
-                                                <div class="progress-circle"></div>
-                                            </div>
-
-                                            <div class="mt-3 text-center">
-                                                <button
-                                                    class="btn btn-dark-gray btn-box-shadow btn-medium btn-sm btn-rounded reproducir"
-                                                    data-id="{{ $episodio->id }}"
-                                                    onclick="reproducirBtn({{ $episodio->id }}, this)">Reproducir</button>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
                             </div>
-                        @endforeach
-                    </div>
+
+                            <div class="col-lg-3 col-md-4 text-center text-md-end">
+                                @if ($episodio->url)
+                                    <div class="audio-player-container">
+                                        <audio id="audio-player-{{ $episodio->id }}"></audio>
+
+                                        <div class="info-cancion" id="info-cancion-{{ $episodio->id }}"></div>
+                                        <div class="current_time" id="current_time-{{ $episodio->id }}">0:00</div>
+                                        <div class="total_duration" id="total_duration-{{ $episodio->id }}">
+                                            Duración: --:--</div>
+
+                                        <div class="progress-bar" id="progress-bar-{{ $episodio->id }}"
+                                            onclick="seek(event, {{ $episodio->id }})">
+                                            <div class="progress-fill" id="progress-fill-{{ $episodio->id }}">
+                                            </div>
+                                            <div class="progress-circle"></div>
+                                        </div>
+
+                                        <div class="mt-3 text-center">
+                                            <button
+                                                class="btn btn-dark-gray btn-box-shadow btn-medium btn-sm btn-rounded reproducir"
+                                                data-id="{{ $episodio->id }}"
+                                                onclick="reproducirBtn({{ $episodio->id }}, this)">Reproducir</button>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        @php $contador++; @endphp 
+                    @endforeach
                 </div>
             </div>
-        </section>
-    @endif
+        </div>
+    </section>
+@endif
+
 
 
     <!-- end section movies -->
