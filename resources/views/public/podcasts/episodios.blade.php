@@ -19,92 +19,92 @@
         }
 
         .progress-bar {
-    width: 100%;
-    background-color: #f3f3f3;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 10px;
-    cursor: pointer;
-    position: relative;
-}
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+            cursor: pointer;
+            position: relative;
+        }
 
-.progress-fill {
-    height: 10px;
-    background-color: #007bff;
-    width: 0%;
-}
+        .progress-fill {
+            height: 10px;
+            background-color: #007bff;
+            width: 0%;
+        }
 
-.progress-circle {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 10px;
-    height: 10px;
-    background-color: #F0AB00;
-    border-radius: 50%;
-    pointer-events: none;
-    transition: left 0.1s ease-out; /* Agregamos transición para suavizar el movimiento */
-}
+        .progress-circle {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #F0AB00;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: left 0.1s ease-out;
+            /* Agregamos transición para suavizar el movimiento */
+        }
 
-.audio-player-container {
-    margin-top: 20px;
-}
+        .audio-player-container {
+            margin-top: 20px;
+        }
 
-.audio-player-container audio {
-    width: 100%;
-    height: 40px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-}
+        .audio-player-container audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
 
-.info-cancion {
-    font-size: 16px;
-    text-align: center;
-}
+        .info-cancion {
+            font-size: 16px;
+            text-align: center;
+        }
 
-.current_time,
-.total_duration {
-    font-size: 14px;
-    margin-right: 10px;
-}
+        .current_time,
+        .total_duration {
+            font-size: 14px;
+            margin-right: 10px;
+        }
 
-.section-pause .buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
+        .section-pause .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
 
-.section-pause .pause {
-    background: none;
-    border: none;
-    color: #007bff;
-    font-size: 24px;
-    cursor: pointer;
-    outline: none;
-}
+        .section-pause .pause {
+            background: none;
+            border: none;
+            color: #007bff;
+            font-size: 24px;
+            cursor: pointer;
+            outline: none;
+        }
 
-.pause {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        .pause {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-.pause:hover {
-    background-color: #e9e9e9;
-}
+        .pause:hover {
+            background-color: #e9e9e9;
+        }
 
-.pause i {
-    font-size: 20px;
-    margin-right: 5px;
-    color: #007bff;
-}
-
+        .pause i {
+            font-size: 20px;
+            margin-right: 5px;
+            color: #007bff;
+        }
     </style>
 
 
@@ -163,64 +163,65 @@
     <!-- end section -->
 
     @if ($episodios->isNotEmpty())
-    <section class="big-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-10"
-                    data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    @php $contador = 1; @endphp <!-- Inicializamos el contador -->
-                    @foreach ($episodios as $episodio)
-                        <div
-                            class="row border-bottom border-2 border-color-dark-gray pb-50px mb-50px sm-pb-35px sm-mb-35px align-items-center">
-                            <div class="col-md-1 text-center text-md-end md-mb-15px">
-                                <div class="fs-16 fw-600 text-dark-gray">{{ str_pad($contador, 2, '0', STR_PAD_LEFT) }}</div>
-                                <!-- Mostramos el contador con formato 01, 02, etc. -->
-                            </div>
-                            <div class="col-md-7 offset-lg-1 icon-with-text-style-01 md-mb-25px">
-                                <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
-                                    
-                                    <div class="feature-box-content">
-                                        <span class="d-inline-block text-dark-gray mb-5px fs-20 ls-minus-05px"><span
-                                                class="fw-700">{{ $episodio->titulo }}</span></span>
-                                        <p class="w-90 md-w-100">{{ $episodio->descripcion }}</p>
+        <section class="big-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10"
+                        data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        @php $contador = 1; @endphp <!-- Inicializamos el contador -->
+                        @foreach ($episodios as $episodio)
+                            <div
+                                class="row border-bottom border-2 border-color-dark-gray pb-50px mb-50px sm-pb-35px sm-mb-35px align-items-center">
+                                <div class="col-md-1 text-center text-md-end md-mb-15px">
+                                    <div class="fs-16 fw-600 text-dark-gray">
+                                        {{ str_pad($contador, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <!-- Mostramos el contador con formato 01, 02, etc. -->
+                                </div>
+                                <div class="col-md-7 offset-lg-1 icon-with-text-style-01 md-mb-25px">
+                                    <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
+
+                                        <div class="feature-box-content">
+                                            <span class="d-inline-block text-dark-gray mb-5px fs-20 ls-minus-05px"><span
+                                                    class="fw-700">{{ $episodio->titulo }}</span></span>
+                                            <p class="w-90 md-w-100">{{ $episodio->descripcion }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-lg-3 col-md-4 text-center text-md-end">
-                                @if ($episodio->url)
-                                    <div class="audio-player-container">
-                                        <audio id="audio-player-{{ $episodio->id }}"></audio>
+                                <div class="col-lg-3 col-md-4 text-center text-md-end">
+                                    @if ($episodio->url)
+                                        <div class="audio-player-container">
+                                            <audio id="audio-player-{{ $episodio->id }}"></audio>
 
-                                        <div class="info-cancion" id="info-cancion-{{ $episodio->id }}"></div>
-                                        <div class="current_time" id="current_time-{{ $episodio->id }}">0:00</div>
-                                        <div class="total_duration" id="total_duration-{{ $episodio->id }}">
-                                            Duración: --:--</div>
+                                            <div class="info-cancion" id="info-cancion-{{ $episodio->id }}"></div>
+                                            <div class="current_time" id="current_time-{{ $episodio->id }}">0:00</div>
+                                            <div class="total_duration" id="total_duration-{{ $episodio->id }}">
+                                                Duración: --:--</div>
 
-                                        <div class="progress-bar" id="progress-bar-{{ $episodio->id }}"
-                                            onclick="seek(event, {{ $episodio->id }})">
-                                            <div class="progress-fill" id="progress-fill-{{ $episodio->id }}">
+                                            <div class="progress-bar" id="progress-bar-{{ $episodio->id }}"
+                                                onclick="seek(event, {{ $episodio->id }})">
+                                                <div class="progress-fill" id="progress-fill-{{ $episodio->id }}">
+                                                </div>
+                                                <div class="progress-circle"></div>
                                             </div>
-                                            <div class="progress-circle"></div>
-                                        </div>
 
-                                        <div class="mt-3 text-center">
-                                            <button
-                                                class="btn btn-dark-gray btn-box-shadow btn-medium btn-sm btn-rounded reproducir"
-                                                data-id="{{ $episodio->id }}"
-                                                onclick="reproducirBtn({{ $episodio->id }}, this)">Reproducir</button>
+                                            <div class="mt-3 text-center">
+                                                <button
+                                                    class="btn btn-dark-gray btn-box-shadow btn-medium btn-sm btn-rounded reproducir"
+                                                    data-id="{{ $episodio->id }}"
+                                                    onclick="reproducirBtn({{ $episodio->id }}, this)">Reproducir</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        @php $contador++; @endphp 
-                    @endforeach
+                            @php $contador++; @endphp
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-@endif
+        </section>
+    @endif
 
 
 
@@ -245,30 +246,64 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Puede que necesites inicializar algunas variables o configuraciones aquí
-});
+        // Variable global para almacenar la URL del audio una vez obtenida
+        let audioUrl = null;
+        // Variable para controlar la posición de reproducción
+        let currentPlaybackTime = 0;
 
-function reproducirBtn(episodioId, button) {
-    let audioPlayer = document.getElementById(`audio-player-${episodioId}`);
-    let isPlaying = !audioPlayer.paused;
+        // Función para manejar el botón de reproducir/pausar
+        function reproducirBtn(episodioId, button) {
+            let audioPlayer = document.getElementById(`audio-player-${episodioId}`);
+            let isPlaying = !audioPlayer.paused;
 
-    if (!isPlaying) {
-        playAudio(audioPlayer, episodioId, button);
-    } else {
-        pauseAudio(audioPlayer, button);
-    }
-}
+            if (!isPlaying) {
+                // Si no se ha obtenido la URL del audio, obtenerla
+                if (!audioUrl) {
+                    obtenerUrlAudio(episodioId, button);
+                } else {
+                    playAudio(audioPlayer, episodioId, button);
+                }
+            } else {
+                pauseAudio(audioPlayer, button);
+            }
+        }
 
-function playAudio(audioPlayer, episodioId, button) {
-    axios.get(`/api/v1/getAudioEpisodio/${episodioId}`)
-        .then(function(response) {
-            if (!response.data.url) {
-                console.error('No se encontró la URL del audio en la respuesta');
-                return;
+        // Función para obtener la URL del audio del servidor
+        function obtenerUrlAudio(episodioId, button) {
+            axios.get(`/api/v1/getAudioEpisodio/${episodioId}`)
+                .then(function(response) {
+                    if (!response.data.url) {
+                        console.error('No se encontró la URL del audio en la respuesta');
+                        return;
+                    }
+
+                    audioUrl = response.data.url;
+                    let audioPlayer = document.getElementById(`audio-player-${episodioId}`);
+                    playAudio(audioPlayer, episodioId, button);
+                })
+                .catch(function(error) {
+                    console.error('Error al obtener el audio:', error);
+                });
+        }
+
+        // Función para reproducir el audio
+        function playAudio(audioPlayer, episodioId, button) {
+            // Establecer la URL del audio solo si es necesario
+            if (audioPlayer.src !== audioUrl) {
+                audioPlayer.src = audioUrl;
             }
 
-            audioPlayer.src = response.data.url;
+            // Configurar evento para manejar tiempo de reproducción
+            audioPlayer.addEventListener('timeupdate', function onTimeUpdate() {
+                currentPlaybackTime = audioPlayer.currentTime;
+            });
+
+            // Si el audio ya se ha cargado antes, continuar desde currentPlaybackTime
+            if (currentPlaybackTime > 0 && !isNaN(currentPlaybackTime)) {
+                audioPlayer.currentTime = currentPlaybackTime;
+            }
+
+            // Iniciar la reproducción
             audioPlayer.play()
                 .then(() => {
                     updatePlayerUI(audioPlayer, episodioId);
@@ -277,59 +312,52 @@ function playAudio(audioPlayer, episodioId, button) {
                 .catch((error) => {
                     console.error('Error al reproducir el audio:', error);
                 });
+        }
 
-                // Asegúrate de que la duración se muestre correctamente al inicio
+        // Función para pausar el audio
+        function pauseAudio(audioPlayer, button) {
+            audioPlayer.pause();
+            button.innerText = 'Reproducir';
+        }
+
+        // Función para actualizar la interfaz del reproductor
+        function updatePlayerUI(audioPlayer, episodioId) {
+            audioPlayer.addEventListener('timeupdate', function() {
+                let progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                let progressFill = document.getElementById(`progress-fill-${episodioId}`);
+                progressFill.style.width = `${progress}%`;
+
+                let progressCircle = document.querySelector(`#progress-bar-${episodioId} .progress-circle`);
+                progressCircle.style.left = `calc(${progress}% - 5px)`; // Ajusta el desplazamiento del círculo
+
+                let currentTime = formatTime(audioPlayer.currentTime);
+                document.getElementById(`current_time-${episodioId}`).innerText = currentTime;
+            });
+
             audioPlayer.addEventListener('loadedmetadata', function() {
                 let duration = formatTime(audioPlayer.duration);
                 document.getElementById(`total_duration-${episodioId}`).innerText = `Duración: ${duration}`;
             });
-        })
-        .catch(function(error) {
-            console.error('Error al obtener el audio:', error);
-        });
-}
+        }
 
-function pauseAudio(audioPlayer, button) {
-    audioPlayer.pause();
-    button.innerText = 'Reproducir';
-}
+        // Función para buscar en la barra de progreso
+        function seek(event, episodioId) {
+            let progressBar = document.getElementById(`progress-bar-${episodioId}`);
+            let rect = progressBar.getBoundingClientRect();
+            let offsetX = event.clientX - rect.left;
+            let totalWidth = rect.width;
+            let percentage = offsetX / totalWidth;
+            let seekTime = percentage * document.getElementById(`audio-player-${episodioId}`).duration;
 
-function updatePlayerUI(audioPlayer, episodioId) {
-    audioPlayer.addEventListener('timeupdate', function() {
-        let progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-        let progressFill = document.getElementById(`progress-fill-${episodioId}`);
-        progressFill.style.width = `${progress}%`;
+            document.getElementById(`audio-player-${episodioId}`).currentTime = seekTime;
+        }
 
-        let progressCircle = document.querySelector(`#progress-bar-${episodioId} .progress-circle`);
-        progressCircle.style.left = `calc(${progress}% - 5px)`; // Ajusta el desplazamiento del círculo
-
-        let currentTime = formatTime(audioPlayer.currentTime);
-        document.getElementById(`current_time-${episodioId}`).innerText = currentTime;
-    });
-
-    audioPlayer.addEventListener('loadedmetadata', function() {
-        let duration = formatTime(audioPlayer.duration);
-        document.getElementById(`total_duration-${episodioId}`).innerText = `Duración: ${duration}`;
-    });
-}
-
-function seek(event, episodioId) {
-    let progressBar = document.getElementById(`progress-bar-${episodioId}`);
-    let rect = progressBar.getBoundingClientRect();
-    let offsetX = event.clientX - rect.left;
-    let totalWidth = rect.width;
-    let percentage = offsetX / totalWidth;
-    let seekTime = percentage * document.getElementById(`audio-player-${episodioId}`).duration;
-
-    document.getElementById(`audio-player-${episodioId}`).currentTime = seekTime;
-}
-
-function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-}
-
+        // Función para formatear el tiempo en formato mm:ss
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
     </script>
 
 </body>
