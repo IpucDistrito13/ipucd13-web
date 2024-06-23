@@ -277,6 +277,12 @@ function playAudio(audioPlayer, episodioId, button) {
                 .catch((error) => {
                     console.error('Error al reproducir el audio:', error);
                 });
+
+                // Asegúrate de que la duración se muestre correctamente al inicio
+            audioPlayer.addEventListener('loadedmetadata', function() {
+                let duration = formatTime(audioPlayer.duration);
+                document.getElementById(`total_duration-${episodioId}`).innerText = `Duración: ${duration}`;
+            });
         })
         .catch(function(error) {
             console.error('Error al obtener el audio:', error);
