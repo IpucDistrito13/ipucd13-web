@@ -178,10 +178,7 @@
                             </div>
                             <div class="col-md-7 offset-lg-1 icon-with-text-style-01 md-mb-25px">
                                 <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
-                                    <div class="feature-box-icon me-50px md-me-35px">
-                                        <img src="https://via.placeholder.com/130x130" class="w-75px"
-                                            alt="" />
-                                    </div>
+                                    
                                     <div class="feature-box-content">
                                         <span class="d-inline-block text-dark-gray mb-5px fs-20 ls-minus-05px"><span
                                                 class="fw-700">{{ $episodio->titulo }}</span></span>
