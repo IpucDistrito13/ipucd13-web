@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
+    
     <head>
         <title>{{ $metaData['title'] }}</title>
         <meta charset="utf-8">
@@ -13,12 +14,12 @@
 
         <style>
             a {
-                color: #00008B; /* Código de color para azul oscuro */
+                color: #00008B;
             }
-
         </style>
     </head>
-    <body data-mobile-nav-style="classic">
+    <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+    class="custom-cursor">
 
         @include('public.layouts.menu')
 

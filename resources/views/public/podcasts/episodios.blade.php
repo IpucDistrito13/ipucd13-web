@@ -1,285 +1,387 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html class="no-js" lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor de Música</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- favicon icon -->
-    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon-57x57.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('img/apple-touch-icon-72x72.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('img/apple-touch-icon-114x114.png') }}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
-    <!-- google fonts preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- style sheets and font icons -->
-    <link rel="stylesheet" href="{{ asset('css/vendors.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/icon.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}" />
+    <title>{{ $metaData['title'] }}</title>
+    <meta name="author" content="{{ $metaData['author'] }}">
+    <meta name="description" content="{{ $metaData['description'] }}">
+    <meta name="robots" content="noindex">
+    <!-- favicon icon -->
+    @include('public.layouts.iconos')
+
 
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
-            margin: 10px;
-            font-family: Arial, sans-serif;
+        a {
+            color: #00008B;
         }
 
-        .player-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
+        .progress-bar {
             width: 100%;
-            box-sizing: border-box;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+            cursor: pointer;
+            position: relative;
         }
 
-        .player {
-            width: 100%;
-            max-width: 400px; /* Establecer un ancho máximo para mantener el diseño en dispositivos grandes */
+        .progress-fill {
+            height: 10px;
+            background-color: #007bff;
+            width: 0%;
+        }
+
+        .progress-circle {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #F0AB00;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        audio {
+            width: 300px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        #info-cancion {
+            flex-grow: 1;
+            font-size: 16px;
             text-align: center;
         }
 
-        .album-art {
-            width: 100%;
-            max-width: 300px; /* Ajustar el tamaño máximo de la imagen del álbum */
-            border-radius: 10px;
-            margin-bottom: 15px;
+        #current_time,
+        #total_duration {
+            font-size: 14px;
+            margin-right: 10px;
         }
 
-        .song-title {
-            font-size: 1.5em;
-            margin: 10px 0;
-        }
-
-        .song-description {
-            font-size: 1em;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .controls {
+        .section-pause .buttons {
             display: flex;
+            align-items: center;
             justify-content: center;
+            height: 100%;
+        }
+
+        .section-pause .pause {
+            background: none;
+            border: none;
+            color: #007bff;
+            font-size: 24px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .pause {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .pause:hover {
+            background-color: #e9e9e9;
+        }
+
+        .pause i {
+            font-size: 20px;
+            margin-right: 5px;
+            color: #007bff;
+        }
+
+        .seek-buttons {
+            display: flex;
+            justify-content: space-between;
             margin-top: 10px;
         }
 
-        button {
-            margin: 0 5px;
-            padding: 10px;
-            background-color: #00338D;
+        .seek-buttons button {
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 5px;
+            padding: 10px;
             cursor: pointer;
-            font-size: 1.2em;
+            transition: background-color 0.3s;
         }
 
-        button:hover {
+        .seek-buttons button:hover {
             background-color: #0056b3;
         }
-
-        .playlist {
-            width: 100%;
-            max-width: 400px; /* Establecer un ancho máximo para mantener el diseño en dispositivos grandes */
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 20px;
-        }
-
-        .playlist-item {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-        }
-
-        .playlist-item:hover {
-            background-color: #f0f0f0;
-        }
-
-        .playlist-item.active {
-            background-color: #00338D;
-            color: white;
-        }
-
-        /* Responsivo */
-        @media (max-width: 600px) {
-            .song-title {
-                font-size: 1.2em;
-            }
-
-            .song-description {
-                font-size: 0.9em;
-            }
-
-            button {
-                padding: 8px;
-                font-size: 0.9em;
-            }
-        }
-
     </style>
 </head>
 
-<body>
-    <div class="player-container">
-        <div class="player">
-            <img src="album-art.jpg" alt="Álbum Art" class="album-art">
-            <div class="song-info">
-                <div class="song-title" id="songTitle">Título de la Canción</div>
-                <div class="song-description" id="songDescription">Descripción breve de la canción.</div>
-                <div id="duration">Duración: 0:00</div>
-            </div>
-            <audio id="audioPlayer" controls style="display: none;">
-                <source src="cancion1.mp3" type="audio/mp3">
-                Tu navegador no soporta la reproducción de audio.
-            </audio>
-            <input type="range" id="progressBar" value="0" style="width: 100%;">
-            <div class="controls">
-                <button id="prevButton"><i class="fas fa-backward"></i></button>
-                <button id="playPauseButton"><i class="fas fa-play"></i></button>
-                <button id="nextButton"><i class="fas fa-forward"></i></button>
-            </div>
-          <!--  <button id="backButton" style="margin-top: 10px; font-size: 0.9em;"><i class="fas fa-arrow-left" style="font-size: 0.9em;"></i> Volver</button> -->
-        </div>
-        <div class="playlist">
-            <!-- Aquí se generará la lista de reproducción -->
-        </div>
+<body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D" class="custom-cursor">
+
+    <!-- start cursor -->
+    <div class="cursor-page-inner">
+        <div class="circle-cursor circle-cursor-inner"></div>
+        <div class="circle-cursor circle-cursor-outer"></div>
     </div>
+    <!-- end cursor -->
+
+    @include('public.layouts.menu')
+    <!-- start page title -->
+    <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography"
+        style="background-image: url({{ Storage::url($podcast->imagen_banner) }} )">
+        <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
+            style="background-image: url('{{ asset('images/vertical-line-bg-small.svg') }}')"></div>
+        <div id="particles-style-01" class="h-100 position-absolute left-0px top-0 w-100" data-particle="true"
+            data-particle-options='{"particles": {"number": {"value": 8,"density": {"enable": true,"value_area": 2000}},"color": {"value": ["#d5d52b", "#d5d52b", "#d5d52b", "#d5d52b", "#d5d52b"]},"shape": {"type": "circle","stroke":{"width":0,"color":"#000000"}},"opacity": {"value": 1,"random": false,"anim": {"enable": false,"speed": 1,"sync": false}},"size": {"value": 8,"random": true,"anim": {"enable": false,"sync": true}},"line_linked":{"enable":false,"distance":0,"color":"#ffffff","opacity":1,"width":1},"move": {"enable": true,"speed":1,"direction": "right","random": false,"straight": false}},"interactivity": {"detect_on": "canvas","events": {"onhover": {"enable": false,"mode": "repulse"},"onclick": {"enable": false,"mode": "push"},"resize": true}},"retina_detect": false}'>
+        </div>
+        <div class="container">
+            <div class="row align-items-center extra-small-screen">
+                <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9 position-relative page-title-extra-small"
+                    data-anime='{ "el": "childs", "translateY": [-15, 0], "perspective": [1200,1200], "scale": [1.1, 1], "rotateX": [50, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    <h1 class="mb-20px alt-font text-yellow"></h1>
+                    <h2 class="fw-500 m-0 ls-minus-2px text-white alt-font">{{ $podcast->titulo }}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end page title -->
+
+
+    <!-- start section -->
+    <section class="bg-very-light-gray">
+        <div class="container">
+            <!-- start dropcaps item -->
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 col-md-6 sm-mb-30px">
+                    <img class="w-100 border-radius-6px"
+                        src="{{ !empty($podcast->imagen->url) ? Storage::url($podcast->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
+                        alt="" />
+                </div>
+                <div class="col-12 col-lg-5 col-md-6 offset-lg-1 dropcap-style-01 last-paragraph-no-margin">
+                    <p><span
+                            class="first-letter text-dark-gray fw-700">{{ strtoupper(substr($podcast->contenido, 0, 1)) }}</span>{{ substr($podcast->contenido, 1) }}
+                    </p>
+                </div>
+            </div>
+            <!-- end dropcaps item -->
+        </div>
+    </section>
+    <!-- end section -->
+    <section class="ipad-top-space-margin md-pt-0">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card" id="seccion_musica" style="display: none;">
+                    <div class="card-body">
+                        <audio id="audio-player"></audio>
+
+                        <div id="info-cancion"></div>
+                        <div id="current_time">0:00</div>
+                        <div id="total_duration">Duración: --:--</div>
+
+                        <div class="progress-bar" id="progress-bar">
+                            <div class="progress-fill"></div>
+                            <div class="progress-circle"></div>
+                        </div>
+
+                        <div class="section-pause">
+                            <div class="buttons">
+                                <button class="pause" id="pause" onclick="togglePlayPause()">
+                                    <i class="fas fa-play" id="pause-icon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="seek-buttons">
+                            <button onclick="seekBackward()">Retroceder 15s</button>
+                            <button onclick="seekForward()">Adelantar 15s</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @if ($episodios->isNotEmpty())
+        <section class="big-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10"
+                        data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        @foreach ($episodios as $episodio)
+
+                        <audio controls>
+                            <source src="{{ $episodio->url }}" type="audio/ogg">
+                            <source src="{{ $episodio->url }}" type="audio/mpeg">
+                          Your browser does not support the audio element.
+                          </audio>
+
+                            <div
+                                class="row border-bottom border-2 border-color-dark-gray pb-50px mb-50px sm-pb-35px sm-mb-35px align-items-center">
+                                <div class="col-md-1 text-center text-md-end md-mb-15px">
+                                    <div class="fs-16 fw-600 text-dark-gray">01</div>
+                                </div>
+                                <div class="col-md-7 offset-lg-1 icon-with-text-style-01 md-mb-25px">
+                                    <div class="feature-box feature-box-left-icon-middle last-paragraph-no-margin">
+                                        <div class="feature-box-icon me-50px md-me-35px">
+                                            <img src="https://via.placeholder.com/130x130" class="w-75px"
+                                                alt="" />
+                                        </div>
+                                        <div class="feature-box-content">
+                                            <span class="d-inline-block text-dark-gray mb-5px fs-20 ls-minus-05px"><span
+                                                    class="fw-700">{{ $episodio->titulo }}</span></span>
+                                            <p class="w-90 md-w-100">{{ $episodio->descripcion }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @if ($episodio->url)
+                                    <div class="col-lg-3 col-md-4 text-center text-md-end">
+                                        <button
+                                            class="btn btn-dark-gray btn-box-shadow btn-medium btn-sm btn-rounded reproducir"
+                                            data-id="{{ $episodio->id }}"
+                                            onclick="reproducirBtn({{ $episodio->id }}, this)">Reproducir</button>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    <!-- end section movies -->
+
+    <!-- start footer -->
+    @include('public.layouts.footer')
+    <!-- end footer -->
+
+    <!-- start scroll progress -->
+    <div class="scroll-progress d-none d-xxl-block">
+        <a href="#" class="scroll-top" aria-label="scroll">
+            <span class="scroll-text">Scroll</span><span class="scroll-line"><span class="scroll-point"></span></span>
+        </a>
+    </div>
+    <!-- end scroll progress -->
+    <!-- javascript libraries -->
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }} "></script>
+    <script type="text/javascript" src="{{ asset('js/vendors.min.js') }} "></script>
+    <script type="text/javascript" src="{{ asset('js/main.js') }} "></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
-        const audioPlayer = document.getElementById('audioPlayer');
-        const prevButton = document.getElementById('prevButton');
-        const playPauseButton = document.getElementById('playPauseButton');
-        const nextButton = document.getElementById('nextButton');
-       // const backButton = document.getElementById('backButton');
-        const songTitle = document.getElementById('songTitle');
-        const songDescription = document.getElementById('songDescription');
-        const playlistElement = document.querySelector('.playlist');
+        let audioPlayer = document.getElementById('audio-player');
+        let isPlaying = false;
+        let currentEpisodioId = null;
+        let currentButton = null;
 
-        const progressBar = document.getElementById('progressBar');
-
-        const durationElement = document.getElementById('duration');
-
-        audioPlayer.addEventListener('loadedmetadata', () => {
-            const minutes = Math.floor(audioPlayer.duration / 60);
-            const seconds = Math.floor(audioPlayer.duration % 60);
-            durationElement.textContent = `Duración: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-        });
-
-
-        audioPlayer.addEventListener('timeupdate', () => {
-            const {
-                currentTime,
-                duration
-            } = audioPlayer;
-            const progressPercent = (currentTime / duration) * 100;
-            progressBar.value = progressPercent;
-        });
-
-        progressBar.addEventListener('input', () => {
-            const seekTime = (progressBar.value / 100) * audioPlayer.duration;
-            audioPlayer.currentTime = seekTime;
-        });
-
-
-        const playlist = [{
-                src: 'https://mismp3cristianos.com/wp-content/uploads/2018/05/Profetizare.mp3',
-                title: 'Episodio 1',
-                description: 'Descripción de la Episodio 1',
-                img: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/music-album-cover-design-template-0b55f32b3855ba41707a08e386e95d6e_screen.jpg?ts=1561485226'
-            },
-            {
-                src: 'https://mismp3cristianos.com/wp-content/uploads/2016/06/Espritu-Santo.mp3',
-                title: 'Episodio 2',
-                description: 'Descripción de la Episodio 2',
-                img: 'album-art2.jpg'
-            },
-            {
-                src: 'https://mismp3cristianos.com/wp-content/uploads/2016/08/La-Tierra-Canta.mp3',
-                title: 'Episodio 3',
-                description: 'Descripción de la Episodio 3',
-                img: 'album-art3.jpg'
+        function reproducirBtn(episodioId, button) {
+            if (audioPlayer && episodioId === currentEpisodioId) {
+                togglePlayPause();
+                return;
             }
-        ];
 
-        let currentSongIndex = 0;
+            if (audioPlayer && isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                if (currentButton) {
+                    currentButton.innerHTML = 'Reproducir';
+                }
+            }
 
-        function loadSong(index) {
-            const song = playlist[index];
-            audioPlayer.src = song.src;
-            songTitle.textContent = song.title;
-            songDescription.textContent = song.description;
-            document.querySelector('.album-art').src = song.img;
-            audioPlayer.play();
+            axios.get('/api/v1/getAudioEpisodio/' + episodioId)
+                .then(function(response) {
+                    if (!response.data.url) {
+                        console.error('No se encontró la URL del audio en la respuesta');
+                        return;
+                    }
 
-            document.querySelectorAll('.playlist-item').forEach((item, i) => {
-                item.classList.toggle('active', i === index);
-            });
+                    const audioUrl = response.data.url;
+                    audioPlayer.src = audioUrl;
+                    document.getElementById('info-cancion').innerText = response.data.titulo;
+                    document.getElementById('seccion_musica').style.display = 'block';
 
-            playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+                    audioPlayer.play().then(() => {
+                        isPlaying = true;
+                        currentEpisodioId = episodioId;
+                        currentButton = button;
+                        button.innerHTML = 'Pausar';
+                        document.getElementById('pause-icon').className = 'fas fa-pause';
+                    }).catch((error) => {
+                        console.error('Error al reproducir el audio:', error);
+                    });
+
+                    audioPlayer.addEventListener('timeupdate', updateProgress);
+                    audioPlayer.addEventListener('loadedmetadata', () => {
+                        document.getElementById('total_duration').innerText = 'Duración: ' + formatTime(
+                            audioPlayer.duration);
+                    });
+
+                })
+                .catch(function(error) {
+                    console.error('Error al obtener el audio:', error);
+                });
         }
 
-        audioPlayer.addEventListener('ended', () => {
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            loadSong(currentSongIndex);
-        });
-
-        prevButton.addEventListener('click', () => {
-            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-            loadSong(currentSongIndex);
-        });
-
-        nextButton.addEventListener('click', () => {
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            loadSong(currentSongIndex);
-        });
-
-        playPauseButton.addEventListener('click', () => {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
+        function togglePlayPause() {
+            if (isPlaying) {
                 audioPlayer.pause();
-                playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+                isPlaying = false;
+                document.getElementById('pause-icon').className = 'fas fa-play';
+                if (currentButton) {
+                    currentButton.innerHTML = 'Reproducir';
+                }
+            } else {
+                audioPlayer.play().then(() => {
+                    isPlaying = true;
+                    document.getElementById('pause-icon').className = 'fas fa-pause';
+                    if (currentButton) {
+                        currentButton.innerHTML = 'Pausar';
+                    }
+                }).catch((error) => {
+                    console.error('Error al reproducir el audio:', error);
+                });
             }
-        });
+        }
 
-        // Botón para volver atrás en la página
-        /*
-        backButton.addEventListener('click', () => {
-            window.history.back();
-        });
-        */
+        function updateProgress() {
+            const progressFill = document.querySelector('.progress-fill');
+            const progressCircle = document.querySelector('.progress-circle');
+            const currentTime = document.getElementById('current_time');
 
-        // Generate playlist items
-        playlist.forEach((song, index) => {
-            const item = document.createElement('div');
-            const link = document.createElement('a');
-          
-            link.textContent = song.title;
-            item.classList.add('playlist-item');
-            item.appendChild(link);
-            item.addEventListener('click', () => {
-                currentSongIndex = index;
-                loadSong(currentSongIndex);
-            });
-            playlistElement.appendChild(item);
-        });
+            const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressFill.style.width = progressPercent + '%';
+            progressCircle.style.left = `calc(${progressPercent}% - 5px)`;
 
-        // Load the first song
-        loadSong(currentSongIndex);
+            currentTime.innerText = formatTime(audioPlayer.currentTime);
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function seekForward() {
+            console.log('aaaaaaaaaaa');
+
+            audioPlayer.currentTime = Math.min(audioPlayer.currentTime + 15, audioPlayer.duration);
+        }
+
+        function seekBackward() {
+            audioPlayer.currentTime = Math.max(audioPlayer.currentTime - 15, 0);
+        }
     </script>
+
 </body>
 
 </html>
-

@@ -162,7 +162,8 @@ class EpisodioController extends Controller
             $episodio->url = Storage::url($url);
             $episodio->save($data);
 
-            // Devolver una respuesta de éxito
+            Cache::flush();
+
             return response()->json(['message' => 'Archivo cargado exitosamente'], 200);
         } else {
             // Manejar el caso en el que no se presente ningún archivo en la solicitud

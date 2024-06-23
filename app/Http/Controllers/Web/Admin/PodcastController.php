@@ -76,9 +76,7 @@ class PodcastController extends Controller
             ]);
         }
 
-        //Elimina la variables almacenada en cache
         Cache::flush();
-        //Cache
 
         $data = [
             'message' => 'Podcast creado exitosamente.',

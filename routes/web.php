@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\Admin\DatatableController;
 use App\Http\Controllers\Web\Admin\PoliticaController;
+use App\Http\Controllers\Web\Admin\SerieController as AdminSerieController;
 use App\Http\Controllers\Web\InicioController;
 use App\Http\Controllers\Web\Public\ComiteController;
 use App\Http\Controllers\Web\Public\ContactoController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Web\Public\EventoController;
 use App\Http\Controllers\Web\Public\PodcastController;
 use App\Http\Controllers\Web\Public\PublicacionController;
 use App\Http\Controllers\Web\Public\SerieController;
+use App\Http\Controllers\Web\Public\VideoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,6 +41,6 @@ Route::get('series/{serie}', [SerieController::class, 'show'])->name('public.ser
 Route::get('podcasts', [PodcastController::class, 'index']);
 Route::get('podcasts/{podcast}', [PodcastController::class, 'episodios'])->name('public.podcasts.episodios');
 
-
 Route::get('politicas-tratamiento-datos', [PoliticaController::class, 'index'])->name('public.politicas_datos');
+Route::get('series', [SerieController::class, 'index'])->name('public.series.index');
 

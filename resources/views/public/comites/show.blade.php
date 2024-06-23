@@ -150,11 +150,11 @@
             <div class="container">
                 <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
                     <div class="col-xxl-8 col-md-7 sm-mb-10px">
-                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimos videos</h2>
+                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimos series</h2>
                     </div>
                     <div class="col-xxl-4 col-md-5 text-center text-md-end"
                         data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                        <a href"#"
+                        <a href="{{ route('public.series.index') }}"
                             class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
                             <span>
                                 <span class="btn-text">Explora todas las series</span>
@@ -224,7 +224,7 @@
                     </div>
                     <div class="col-xxl-4 col-md-5 text-center text-md-end"
                         data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                        <a href"#"
+                        <a href="#"
                             class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
                             <span>
                                 <span class="btn-text">Explora todas los podcasts</span>

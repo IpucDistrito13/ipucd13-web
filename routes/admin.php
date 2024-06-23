@@ -45,9 +45,6 @@ Route::resource('solicitudes', SolicitudController::class)->names('admin.solicit
     'solicitudes' => 'solicitud',
 ]);
 
-
-
-
 Route::resource('congregaciones', CongregacionController::class)->names('admin.congregaciones')->parameters([
     'congregaciones' => 'congregacion', // Cambia el nombre del parámetro de la ruta
 ]);

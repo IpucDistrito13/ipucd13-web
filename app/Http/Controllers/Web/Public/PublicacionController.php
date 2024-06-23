@@ -49,12 +49,6 @@ class PublicacionController extends Controller
             $publicaciones = Publicacion::ListarPublicacionesPaginacion();
             Cache::put($key, $publicaciones);
 
-            /*
-            $publicaciones = Publicacion::where('estado', 'Publicado')
-                ->latest('id')
-                ->paginate(8);
-            Cache::put($key, $publicaciones);
-            */
         }
 
         $metaData = [

@@ -58,7 +58,8 @@
     </section>
     <!-- end section -->
 
-    <!-- start section movies -->
+   <!-- start section movies -->
+    @if ($videos->isNotEmpty())
     <section class="bg-gradient-very-light-gray ps-6 pe-6 lg-ps-2 lg-pe-2">
         <div class="container-fluid">
             <div class="row justify-content-center">
@@ -75,11 +76,12 @@
                         <div class="text-dark-gray fs-18 fw-600 mt-6">{{ $video->titulo }}</div>
                     </div>                    
                 @endforeach
-               
             </div>
         </div>
     </section>
-    <!-- end section movies -->
+    @endif
+<!-- end section movies -->
+
 
 
 

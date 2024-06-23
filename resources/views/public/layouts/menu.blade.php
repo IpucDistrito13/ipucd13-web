@@ -88,7 +88,7 @@
                                 <li class="dropdown">
                                     <a href="{{ route('public.publicaciones.index') }}">Publicaciones</a>
                                 </li>
-                                <li class="dropdown"><a href="#">Videos</a></li>
+                                <li class="dropdown"><a href="{{ route('public.series.index') }}">Series</a></li>
                                 <li class="dropdown"><a href="#">Podcasts</a></li>
 
                                 {{-- 

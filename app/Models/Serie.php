@@ -32,6 +32,14 @@ class Serie extends Model
     {
         return $query->where('comite_id', $comiteId);
     }
+
+    public function scopeListarSeriesPaginacion($query)
+    {
+        return $query->where('estado', 'Publicado')
+            ->latest('id')
+            ->paginate(8);
+    }
+    
     //END WEB
     public function comite()
     {

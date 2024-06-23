@@ -7,6 +7,7 @@ use App\Models\Comite;
 use App\Models\Episodio;
 use App\Models\Podcast;
 use App\Models\Redes;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class PodcastController extends Controller
@@ -15,7 +16,7 @@ class PodcastController extends Controller
     {
         $podcasts = Podcast::all();
         //return $podcasts;
-       // return view('public.podcasts.index', compact('podcasts'));
+        // return view('public.podcasts.index', compact('podcasts'));
     }
 
     public function show(Podcast $podcast)
@@ -25,49 +26,96 @@ class PodcastController extends Controller
 
     public function episodios(Podcast $podcast)
     {
-       // return $podcast;
-       $metaData = [
-        'title' => 'Cronogramas | IPUC D13',
-        'author' => 'IPUC Distrito 13',
-        'description' => 'Cronogramas | IPUC D13',
-    ];
+        //$videos = Video::where('serie_id', $podcast->id)->get();
+        $episodios = Episodio::where('podcast_id', $podcast->id)->get();
+        //return $episodios;
 
-     //REDES
-     $redes_sociales = Redes::Activo()->get();
-     $facebookLink = '';
-     $youtubeLink = '';
-     $instagramLink = '';
-     // Itera sobre la lista para encontrar Facebook
-     foreach ($redes_sociales as $redSocial) {
-         switch ($redSocial["nombre"]) {
-             case "Facebook":
-                 $facebookLink = $redSocial["url"];
-                 break;
-             case "YouTube":
-                 $youtubeLink = $redSocial["url"];
-                 break;
-             case "Instagram":
-                 $instagramLink = $redSocial["url"];
-                 break;
-         }
-     }
-     // REDES
+        $metaData = [
+            'title' => 'Podcasts | IPUC D13',
+            'author' => 'IPUC Distrito 13',
+            'description' => 'Podcasts | IPUC D13',
+        ];
 
-    $comites = Comite::all();
+        //REDES
+        $redes_sociales = Redes::Activo()->get();
+        $facebookLink = '';
+        $youtubeLink = '';
+        $instagramLink = '';
+        // Itera sobre la lista para encontrar Facebook
+        foreach ($redes_sociales as $redSocial) {
+            switch ($redSocial["nombre"]) {
+                case "Facebook":
+                    $facebookLink = $redSocial["url"];
+                    break;
+                case "YouTube":
+                    $youtubeLink = $redSocial["url"];
+                    break;
+                case "Instagram":
+                    $instagramLink = $redSocial["url"];
+                    break;
+            }
+        }
+        // REDES
+
+        $comites = Comite::all();
 
         return view('public.podcasts.episodios', [
             'comites' => $comites,
             'podcast' => $podcast,
-           'metaData' => $metaData,
-
-           'facebook' => $facebookLink,
-           'youtube' => $youtubeLink,
-           'instagram' => $instagramLink,
+            'metaData' => $metaData,
+            'episodios' => $episodios,
+            'facebook' => $facebookLink,
+            'youtube' => $youtubeLink,
+            'instagram' => $instagramLink,
 
         ]);
-
-
     }
+
+    /*
+        public function episodios(Podcast $podcast)
+    {
+        // return $podcast;
+        $metaData = [
+            'title' => 'Cronogramas | IPUC D13',
+            'author' => 'IPUC Distrito 13',
+            'description' => 'Cronogramas | IPUC D13',
+        ];
+
+        //REDES
+        $redes_sociales = Redes::Activo()->get();
+        $facebookLink = '';
+        $youtubeLink = '';
+        $instagramLink = '';
+        // Itera sobre la lista para encontrar Facebook
+        foreach ($redes_sociales as $redSocial) {
+            switch ($redSocial["nombre"]) {
+                case "Facebook":
+                    $facebookLink = $redSocial["url"];
+                    break;
+                case "YouTube":
+                    $youtubeLink = $redSocial["url"];
+                    break;
+                case "Instagram":
+                    $instagramLink = $redSocial["url"];
+                    break;
+            }
+        }
+        // REDES
+
+        $comites = Comite::all();
+
+        return view('public.podcasts.episodios', [
+            'comites' => $comites,
+            'podcast' => $podcast,
+            'metaData' => $metaData,
+
+            'facebook' => $facebookLink,
+            'youtube' => $youtubeLink,
+            'instagram' => $instagramLink,
+
+        ]);
+    }
+        */
 
     /*
     public function listEpisodio(Podcast $podcast)
