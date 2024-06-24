@@ -1,12 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="es">
 
 <head>
+    <title>{{ $metaData['titulo'] }}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-
-    <title>{{ $metaData['titulo'] }}</title>
     <meta name="author" content="Distrito 13">
     <meta name="description" content="Iglesia Pentecostal Unida de Colombia - Distrito 13">
     <!-- favicon icon -->

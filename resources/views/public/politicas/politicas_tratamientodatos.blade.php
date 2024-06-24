@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="es">
     <head>
         <title>Política de tratamiento de datos | IPUC Distrito 13</title>
         <meta charset="utf-8">

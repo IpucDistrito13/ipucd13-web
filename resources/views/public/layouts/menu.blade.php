@@ -57,25 +57,7 @@
                                     <li class="dropdown"><a
                                             href="{{ route('comite.show', $comite) }}">{{ $comite->nombre }}</a></li>
                                 @endforeach
-                                {{-- 
-                                    <li class="dropdown"><a href="#">Misiones Extranjeras</a></li>
-                                <li class="dropdown"><a href="#">Misión Juvenil</a></li>
-                                <li class="dropdown"><a href="#">Instituto Biblico</a></li>
-                                <li class="dropdown"><a href="#">Jovenes D13</a></li>
-                                <li class="dropdown"><a href="#">Música D13</a></li>
-                                <li class="dropdown"><a href="#">Refam</a></li>
-                                <li class="dropdown"><a href="#">BIS</a></li>
-                                <li class="dropdown"><a href="">Corpertunida</a></li>
-                                <li class="dropdown"><a href="#">Esfom</a></li>
-                                <li class="dropdown"><a href="#">Damas Dorcas D13</a></li>
-                                <li class="dropdown"><a href="#">Red de Familia</a></li>
-                                <li class="dropdown"><a href="#">Obra Social</a></li>
-                                <li class="dropdown"><a href="#">Escuela Dominical D13</a></li>
-                                <li class="dropdown"><a href="#">Obra Carcelaria D13</a></li>
-                                <li class="dropdown"><a href="#">FECP</a></li>
-                                <li class="dropdown"><a href="#">Artística</a></li>
-                                --}}
-
+                                
                             </ul>
                         </li>
 
@@ -89,13 +71,7 @@
                                     <a href="{{ route('public.publicaciones.index') }}">Publicaciones</a>
                                 </li>
                                 <li class="dropdown"><a href="{{ route('public.series.index') }}">Series</a></li>
-                                <li class="dropdown"><a href="#">Podcasts</a></li>
-
-                                {{-- 
-                                    <li class="dropdown"><a href="#">Misiones Extranjeras</a></li>
-                                <li class="dropdown"><a href="#">Misión Juvenil</a></li>
-                                --}}
-
+                                <li class="dropdown"><a href="{{ route('public.podcasts.index') }}">Podcasts</a></li>
                             </ul>
                         </li>
 

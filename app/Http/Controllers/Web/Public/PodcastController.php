@@ -7,16 +7,69 @@ use App\Models\Comite;
 use App\Models\Episodio;
 use App\Models\Podcast;
 use App\Models\Redes;
+use App\Models\Serie;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 
 class PodcastController extends Controller
 {
     public function index()
     {
-        $podcasts = Podcast::all();
-        //return $podcasts;
-        // return view('public.podcasts.index', compact('podcasts'));
+        //return 'Hola';
+        $comitesMenu = Comite::ComiteMenu()->get();
+
+        //REDES
+        $redes_sociales = Redes::Activo()->get();
+        $facebookLink = '';
+        $youtubeLink = '';
+        $instagramLink = '';
+        // Itera sobre la lista para encontrar Facebook
+        foreach ($redes_sociales as $redSocial) {
+            switch ($redSocial["nombre"]) {
+                case "Facebook":
+                    $facebookLink = $redSocial["url"];
+                    break;
+                case "YouTube":
+                    $youtubeLink = $redSocial["url"];
+                    break;
+                case "Instagram":
+                    $instagramLink = $redSocial["url"];
+                    break;
+            }
+        }
+
+        // REDES
+
+        //PAGINACION POR CACHE
+        if (request()->page) {
+            $key = 'podcastsPage' . request()->page;
+        } else {
+            $key = 'podcastsPage';
+        }
+
+        if (Cache::has('podcastsPage')) {
+            $podcasts = Cache::get('podcastsPage');
+        } else {
+            $podcasts = Podcast::ListarPodcastsPaginacion();
+            Cache::put($key, $podcasts);
+        }
+
+        $metaData = [
+            'title' => 'Series | IPUC D13',
+            'author' => 'IPUC Distrito 13',
+            'description' => 'Series | IPUC D13',
+        ];
+
+        return view('public.podcasts.index', [
+            'comites' => $comitesMenu,
+            'podcasts' => $podcasts,
+            'metaData' => $metaData,
+            'facebook' => $facebookLink,
+            'youtube' => $youtubeLink,
+            'instagram' => $instagramLink,
+        ]);
     }
 
     public function show(Podcast $podcast)

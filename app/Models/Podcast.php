@@ -20,6 +20,13 @@ class Podcast extends Model
             ->take(8);
     }
 
+    public function scopeListarPodcastsPaginacion($query)
+    {
+        return $query->where('estado', 'Publicado')
+            ->latest('id')
+            ->paginate(8);
+    }
+
     // END WEB
 
     //MUTADOR PRIMERA LETRA EN MAYUSCULA

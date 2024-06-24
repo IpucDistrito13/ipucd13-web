@@ -36,10 +36,10 @@ Route::get('descargables', [DescargableController::class, 'index'])->name('publi
 Route::get('post', [PublicacionController::class, 'index'])->name('public.publicaciones.index');
 Route::get('contacto', [ContactoController::class, 'index'])->name('public.contacto.index');
 Route::get('publicaciones/{publicacion}', [PublicacionController::class, 'show'])->name('public.publicaciones.show');
-Route::get('series/{serie}', [SerieController::class, 'show'])->name('public.series.show');
 
-Route::get('podcasts', [PodcastController::class, 'index']);
+Route::get('podcasts', [PodcastController::class, 'index'])->name('public.podcasts.index');
 Route::get('podcasts/{podcast}', [PodcastController::class, 'episodios'])->name('public.podcasts.episodios');
+Route::get('podcasts/series/{serie}', [SerieController::class, 'show'])->name('public.series.show');
 
 Route::get('politicas-tratamiento-datos', [PoliticaController::class, 'index'])->name('public.politicas_datos');
 Route::get('series', [SerieController::class, 'index'])->name('public.series.index');
