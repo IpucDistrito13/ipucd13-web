@@ -10,6 +10,8 @@ use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+
 
 class SerieController extends Controller
 {
@@ -47,51 +49,74 @@ class SerieController extends Controller
         return view('admin.series.create', compact('comites', 'categorias'));
     }
 
+    private function storeFile($file, $ubicacion)
+    {
+        if (env('APP_ENV') === 'local') {
+            return Storage::put($ubicacion, $file);
+        } else {
+            return Storage::disk('s3')->put($ubicacion, $file);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $url_banner = '';
-        if ($request->hasFile('imagen_banner')) {
-            $url_banner = Storage::put('public/comites/banner', $request->file('imagen_banner'));
+        try {
+            // Iniciar una transacción de base de datos
+            DB::beginTransaction();
+
+            $url_banner = '';
+
+            // Verificar si se cargó un nuevo banner
+            if ($request->hasFile('imagen_banner')) {
+                $fileBanner = $request->file('imagen_banner');
+                $ubicacionBanner = 'public/series/banner';
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
+            }
+
+            $data = [
+                'titulo' => $request->titulo,
+                'slug' => $request->slug,
+                'descripcion' => $request->descripcion,
+                'contenido' => $request->contenido,
+                'imagen_banner' => $url_banner,
+                'comite_id' => $request->comite,
+                'categoria_id' => $request->categoria,
+                'estado' => 'Publicado',
+                'user_id' => auth()->user()->id,
+            ];
+
+            $serie = Serie::create($data);
+
+            // Verificar si se cargó un nuevo archivo
+            if ($request->hasFile('file')) {
+                $filePortada = $request->file('file');
+                $ubicacionPortada = 'public/series/portadas';
+                $url = $this->storeFile($filePortada, $ubicacionPortada);
+
+                $serie->imagen()->create([
+                    'url' => $url,
+                    'imageable_type' => Serie::class,
+                ]);
+            }
+
+            // Commit si no hay errores
+            DB::commit();
+
+            // Eliminar datos almacenados en cache
+            Cache::flush();
+
+            // Redireccionar con un mensaje de éxito
+            return redirect()->route('admin.series.index')->with('success', 'Serie creada exitosamente.');
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+
+            // Redireccionar con un mensaje de error
+            return redirect()->back()->with('error', 'Error al crear la serie: ' . $e->getMessage())->withInput();
         }
-
-        $data = [
-            'titulo' => $request->titulo,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'contenido' => $request->contenido,
-            'imagen_banner' => $url_banner,
-
-            'comite_id' => $request->comite,
-            'categoria_id' => $request->categoria,
-            'estado' => 'Publicado',
-            'user_id' => auth()->user()->id,
-        ];
-
-        $serie = Serie::create($data);
-
-        // Morpho Image // 
-        if ($request->file('file')) {
-            $url = Storage::put('public/serie/', $request->file('file'));
-
-            $serie->imagen()->create([
-                'url' => $url,
-                'imageable_type' => Serie::class,
-            ]);
-        }
-        // Morpho Image // 
-
-        $data = [
-            'message' => 'Serie creada exitosamente.',
-        ];
-
-        //Elimina la variables almacenada en cache
-        Cache::flush();
-        //Cache
-
-        return redirect()->route('admin.series.index')->with('success', $data['message']);
     }
 
     /**
@@ -117,67 +142,74 @@ class SerieController extends Controller
      */
     public function update(Request $request, Serie $serie)
     {
-        $url_banner = $serie->imagen_banner;
-        // Obtener la URL actual del banner
+        try {
+            // Iniciar una transacción de base de datos
+            DB::beginTransaction();
 
-        // Verificar si se cargó un nuevo banner
-        if ($request->hasFile('imagen_banner')) {
-            // Si se cargó un nuevo banner, almacenar y obtener su URL
-            $url_banner = Storage::put('public/serie/banner', $request->file('imagen_banner'));
+            $url_banner = $serie->imagen_banner;
 
-            // Eliminar el banner anterior si existe
-            if ($serie->imagen_banner) {
-                Storage::delete($serie->imagen_banner);
+            // Verificar si se cargó un nuevo banner
+            if ($request->hasFile('imagen_banner')) {
+                $fileBanner = $request->file('imagen_banner');
+                $ubicacionBanner = 'public/series/banner';
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
+
+                // Eliminar el banner anterior si existe
+                if ($serie->imagen_banner) {
+                    Storage::delete($serie->imagen_banner);
+                }
             }
-        }
 
-        $data = [
-            'titulo' => $request->titulo,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'contenido' => $request->contenido,
-            'imagen_banner' => $url_banner,
+            $data = [
+                'titulo' => $request->titulo,
+                'slug' => $request->slug,
+                'descripcion' => $request->descripcion,
+                'contenido' => $request->contenido,
+                'imagen_banner' => $url_banner,
+                'comite_id' => $request->comite,
+                'categoria_id' => $request->categoria,
+            ];
 
-            'comite_id' => $request->comite,
-            'categoria_id' => $request->categoria,
-        ];
-        $serie->update($data);
+            $serie->update($data);
 
-        // MORPHO IMAGEN // 
+            // Verificar si se cargó un nuevo archivo
+            if ($request->hasFile('file')) {
+                $filePortada = $request->file('file');
+                $ubicacionPortada = 'public/series/portadas';
+                $url = $this->storeFile($filePortada, $ubicacionPortada);
 
-        // Verificar si se cargó un nuevo archivo
-        if ($request->file('file')) {
+                if ($serie->imagen) {
+                    Storage::delete($serie->imagen->url);
 
-            $url = Storage::put('public/serie', $request->file('file'));
-
-            // Si la serie ya tiene una imagen, eliminar el archivo antiguo
-            if ($serie->imagen) {
-                Storage::delete($serie->imagen->url);
-
-                // Actualizar la relación de imagen con la nueva URL del archivo
-                return   $serie->imagen()->update([
-                    'url' => $url,
-                    'imageable_type' => Serie::class,
-                ]);
-            } else {
-                // Si EL serie no tiene una imagen, agregar una nueva imagen
-                $serie->imagen()->create([
-                    'url' => $url,
-                    'imageable_type' => Serie::class,
-                ]);
+                    // Actualizar la relación de imagen con la nueva URL del archivo
+                    $serie->imagen()->update([
+                        'url' => $url,
+                        'imageable_type' => Serie::class,
+                    ]);
+                } else {
+                    // Si la serie no tiene una imagen, agregar una nueva imagen
+                    $serie->imagen()->create([
+                        'url' => $url,
+                        'imageable_type' => Serie::class,
+                    ]);
+                }
             }
+
+            // Commit si no hay errores
+            DB::commit();
+
+            // Eliminar datos almacenados en cache
+            Cache::flush();
+
+            // Redireccionar con un mensaje de éxito
+            return redirect()->route('admin.series.edit', $serie)->with('success', 'Serie actualizada exitosamente.');
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+
+            // Redireccionar con un mensaje de error
+            return redirect()->back()->with('error', 'Error al actualizar la serie: ' . $e->getMessage())->withInput();
         }
-        // MORPHO IMAGEN // 
-
-        $data = [
-            'message' => 'Serie actualizada exitosamente.',
-        ];
-
-        //Elimina la variables almacenada en cache
-        Cache::flush();
-        //Cache
-
-        return redirect()->route('admin.series.edit', $serie)->with('success', $data['message']);
     }
 
     /**

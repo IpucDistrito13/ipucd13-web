@@ -73,7 +73,7 @@ class CategoriaController extends Controller
         // Verificar si se cargó un nuevo archivo
         if ($request->hasFile('file')) {
             $filePortada = $request->file('file');
-            $ubicacionPortada = 'public/categorias';
+            $ubicacionPortada = 'public/categorias/portadas';
             $url = $this->storeFile($filePortada, $ubicacionPortada);
 
             $categoria->imagen()->create([
@@ -132,7 +132,7 @@ class CategoriaController extends Controller
         // Verificar si se cargó un nuevo archivo
         if ($request->hasFile('file')) {
             $filePortada = $request->file('file');
-            $ubicacionPortada = 'public/categorias';
+            $ubicacionPortada = 'public/categorias/portadas';
             $url = $this->storeFile($filePortada, $ubicacionPortada);
 
             if ($categoria->imagen) {

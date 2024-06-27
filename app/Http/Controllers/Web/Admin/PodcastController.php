@@ -10,6 +10,8 @@ use App\Models\Episodio;
 use App\Models\Podcast;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+
 
 class PodcastController extends Controller
 {
@@ -43,46 +45,74 @@ class PodcastController extends Controller
         return view('admin.podcasts.create', compact('comites', 'categorias'));
     }
 
+    private function storeFile($file, $ubicacion)
+    {
+        if (env('APP_ENV') === 'local') {
+            return Storage::put($ubicacion, $file);
+        } else {
+            return Storage::disk('s3')->put($ubicacion, $file);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(PodcastRequest $request)
     {
-        $url_banner = '';
-        if ($request->hasFile('imagen_banner')) {
-            $url_banner = Storage::put('public/podcasts/banner', $request->file('imagen_banner'));
-        }
+        try {
+            // Iniciar una transacción de base de datos
+            DB::beginTransaction();
 
-        $podcast = Podcast::create([
-            'titulo' => $request->titulo,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'contenido' => $request->contenido,
-            'imagen_banner' => $url_banner,
+            $url_banner = '';
 
-            'comite_id' => $request->comite,
-            'categoria_id' => $request->categoria,
-            'estado' => 'Publicado',
-            'user_id' => auth()->user()->id, // Corrected the user ID access
-        ]);
+            // Verificar si se cargó un nuevo banner
+            if ($request->hasFile('imagen_banner')) {
+                $fileBanner = $request->file('imagen_banner');
+                $ubicacionBanner = 'public/podcasts/banner';
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
+            }
 
-        if ($request->file('file')) {
-            $url = Storage::put('public/podcasts', $request->file('file'));
-
-            $podcast->imagen()->create([
-                'url' => $url,
-                'imageable_type' => Podcast::class,
+            $podcast = Podcast::create([
+                'titulo' => $request->titulo,
+                'slug' => $request->slug,
+                'descripcion' => $request->descripcion,
+                'contenido' => $request->contenido,
+                'imagen_banner' => $url_banner,
+                'comite_id' => $request->comite,
+                'categoria_id' => $request->categoria,
+                'estado' => 'Publicado',
+                'user_id' => auth()->user()->id,
             ]);
+
+            // Verificar si se cargó un nuevo archivo
+            if ($request->hasFile('file')) {
+                $filePortada = $request->file('file');
+                $ubicacionPortada = 'public/podcasts/portadas';
+                $url = $this->storeFile($filePortada, $ubicacionPortada);
+
+                $podcast->imagen()->create([
+                    'url' => $url,
+                    'imageable_type' => Podcast::class,
+                ]);
+            }
+
+            // Commit si no hay errores
+            DB::commit();
+
+            // Eliminar datos almacenados en cache
+            Cache::flush();
+
+            // Redireccionar con un mensaje de éxito
+            return redirect()->route('admin.podcasts.index')->with('success', 'Podcast creado exitosamente.');
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+
+            // Redireccionar con un mensaje de error
+            return redirect()->back()->with('error', 'Error al crear el podcast: ' . $e->getMessage())->withInput();
         }
-
-        Cache::flush();
-
-        $data = [
-            'message' => 'Podcast creado exitosamente.',
-        ];
-
-        return redirect()->route('admin.podcasts.index')->with('success', $data['message']);
     }
+
 
     /**
      * Display the specified resource.
@@ -111,60 +141,73 @@ class PodcastController extends Controller
      */
     public function update(PodcastRequest $request, Podcast $podcast)
     {
-        $url_banner = $podcast->imagen_banner; // Obtener la URL actual del banner
+        try {
+            // Iniciar una transacción de base de datos
+            DB::beginTransaction();
 
-        // Verificar si se cargó un nuevo banner
-        if ($request->hasFile('imagen_banner')) {
-            // Si se cargó un nuevo banner, almacenar y obtener su URL
-            $url_banner = Storage::put('public/podcast/banner', $request->file('imagen_banner'));
+            $url_banner = $podcast->imagen_banner;
 
-            // Eliminar el banner anterior si existe
-            if ($podcast->imagen_banner) {
-                Storage::delete($podcast->imagen_banner);
+            // Verificar si se cargó un nuevo banner
+            if ($request->hasFile('imagen_banner')) {
+                $fileBanner = $request->file('imagen_banner');
+                $ubicacionBanner = 'public/podcast/banner';
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
+
+                // Eliminar el banner anterior si existe
+                if ($podcast->imagen_banner) {
+                    Storage::delete($podcast->imagen_banner);
+                }
             }
-        }
 
-        $podcast->update([
-            'titulo' => $request->titulo,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'contenido' => $request->contenido,
-            'imagen_banner' => $url_banner,
+            $podcast->update([
+                'titulo' => $request->titulo,
+                'slug' => $request->slug,
+                'descripcion' => $request->descripcion,
+                'contenido' => $request->contenido,
+                'imagen_banner' => $url_banner,
+                'comite_id' => $request->comite,
+                'categoria_id' => $request->categoria,
+                'estado' => 'Publicado',
+            ]);
 
-            'comite_id' => $request->comite,
-            'categoria_id' => $request->categoria,
-            'estado' => 'Publicado',
-        ]);
+            // Verificar si se cargó un nuevo archivo
+            if ($request->hasFile('file')) {
+                $filePortada = $request->file('file');
+                $ubicacionPortada = 'public/podcasts/portadas';
+                $url = $this->storeFile($filePortada, $ubicacionPortada);
 
-        // Verificar si se cargó un nuevo archivo
-        if ($request->file('file')) {
-            $url = Storage::put('public/podcasts', $request->file('file'));
+                if ($podcast->imagen) {
+                    Storage::delete($podcast->imagen->url);
 
-            // Si la categoría ya tiene una imagen, eliminar el archivo antiguo
-            if ($podcast->imagen) {
-                Storage::delete($podcast->imagen->url);
-
-                // Actualizar la relación de imagen con la nueva URL del archivo
-                $podcast->imagen()->update([
-                    'url' => $url,
-                    'imageable_type' => Podcast::class,
-                ]);
-            } else {
-                // Si la categoría no tiene una imagen, agregar una nueva imagen
-                $podcast->imagen()->create([
-                    'url' => $url,
-                    'imageable_type' => Podcast::class,
-                ]);
+                    // Actualizar la relación de imagen con la nueva URL del archivo
+                    $podcast->imagen()->update([
+                        'url' => $url,
+                        'imageable_type' => Podcast::class,
+                    ]);
+                } else {
+                    // Si el podcast no tiene una imagen, agregar una nueva imagen
+                    $podcast->imagen()->create([
+                        'url' => $url,
+                        'imageable_type' => Podcast::class,
+                    ]);
+                }
             }
+
+            // Commit si no hay errores
+            DB::commit();
+
+            // Eliminar datos almacenados en cache
+            Cache::flush();
+
+            // Redireccionar con un mensaje de éxito
+            return redirect()->route('admin.podcasts.edit', $podcast)->with('success', 'Podcast actualizado exitosamente.');
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+
+            // Redireccionar con un mensaje de error
+            return redirect()->back()->with('error', 'Error al actualizar el podcast: ' . $e->getMessage())->withInput();
         }
-
-        Cache::flush();
-
-        // Redireccionar con un mensaje de éxito
-        $data = [
-            'message' => 'Podcast actualizado exitosamente.'
-        ];
-        return redirect()->route('admin.podcasts.edit', $podcast)->with('success', $data['message']);
     }
 
 

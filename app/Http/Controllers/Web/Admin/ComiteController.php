@@ -79,7 +79,7 @@ class ComiteController extends Controller
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
                 $filePortada = $request->file('file');
-                $ubicacionPortada = 'public/comites';
+                $ubicacionPortada = 'public/comites/portadas';
                 $url = $this->storeFile($filePortada, $ubicacionPortada);
 
                 $comite->imagen()->create([
@@ -88,10 +88,8 @@ class ComiteController extends Controller
                 ]);
             }
 
-            // Commit si no hay errores
             DB::commit();
 
-            // Eliminar datos almacenados en cache
             Cache::flush();
 
             // Redireccionar con un mensaje de éxito
@@ -129,68 +127,71 @@ class ComiteController extends Controller
      */
     public function update(ComiteRequest $request, Comite $comite)
     {
-
-        $url_banner = $comite->imagen_banner;
-        // Obtener la URL actual del banner
-
-        // Verificar si se cargó un nuevo banner
-        if ($request->hasFile('imagen_banner')) {
-            // Si se cargó un nuevo banner, almacenar y obtener su URL
-            $url_banner = Storage::put('public/comites/banner', $request->file('imagen_banner'));
-
-            // Eliminar el banner anterior si existe
-            if ($comite->imagen_banner) {
-                Storage::delete($comite->imagen_banner);
+        try {
+            // Iniciar una transacción de base de datos
+            DB::beginTransaction();
+    
+            $url_banner = $comite->imagen_banner;
+    
+            // Verificar si se cargó un nuevo banner
+            if ($request->hasFile('imagen_banner')) {
+                $fileBanner = $request->file('imagen_banner');
+                $ubicacionBanner = 'public/comites/banner';
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
+    
+                // Eliminar el banner anterior si existe
+                if ($comite->imagen_banner) {
+                    Storage::delete($comite->imagen_banner);
+                }
             }
-        }
-
-        $data = [
-            'nombre' => $request->nombre,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'imagen_banner' => $url_banner,
-        ];
-
-        $comite->update($data);
-
-        // MORPHO IMAGEN // 
-
-        // Verificar si se cargó un nuevo archivo
-        if ($request->file('file')) {
-
-            $url = Storage::put('public/comites', $request->file('file'));
-
-            // Si la comite ya tiene una imagen, eliminar el archivo antiguo
-            if ($comite->imagen) {
-                Storage::delete($comite->imagen->url);
-
-                // Actualizar la relación de imagen con la nueva URL del archivo
-                return   $comite->imagen()->update([
-                    'url' => $url,
-                    'imageable_type' => Comite::class,
-                ]);
-            } else {
-                // Si EL comite no tiene una imagen, agregar una nueva imagen
-                $comite->imagen()->create([
-                    'url' => $url,
-                    'imageable_type' => Comite::class,
-                ]);
+    
+            $data = [
+                'nombre' => $request->nombre,
+                'slug' => $request->slug,
+                'descripcion' => $request->descripcion,
+                'imagen_banner' => $url_banner,
+            ];
+    
+            $comite->update($data);
+    
+            // Verificar si se cargó un nuevo archivo
+            if ($request->hasFile('file')) {
+                $filePortada = $request->file('file');
+                $ubicacionPortada = 'public/comites/portadas';
+                $url = $this->storeFile($filePortada, $ubicacionPortada);
+    
+                if ($comite->imagen) {
+                    Storage::delete($comite->imagen->url);
+    
+                    // Actualizar la relación de imagen con la nueva URL del archivo
+                    $comite->imagen()->update([
+                        'url' => $url,
+                        'imageable_type' => Comite::class,
+                    ]);
+                } else {
+                    // Si el comité no tiene una imagen, agregar una nueva imagen
+                    $comite->imagen()->create([
+                        'url' => $url,
+                        'imageable_type' => Comite::class,
+                    ]);
+                }
             }
+    
+            // Commit si no hay errores
+            DB::commit();
+    
+            // Eliminar datos almacenados en cache
+            Cache::flush();
+    
+            // Redireccionar con un mensaje de éxito
+            return back()->with('success', 'Comité actualizado exitosamente.');
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+    
+            // Redireccionar con un mensaje de error
+            return back()->with('error', 'Error al actualizar el comité: ' . $e->getMessage())->withInput();
         }
-        // MORPHO IMAGEN // 
-
-        //Elimina la variables almacenada en cache
-        Cache::flush();
-        //Cache
-
-
-        // Redireccionar con un mensaje de éxito
-        $data = [
-            'message' => 'Comité actualizado exitosamente.'
-        ];
-
-
-        return back()->with('success', $data['message']);
     }
 
     /**
