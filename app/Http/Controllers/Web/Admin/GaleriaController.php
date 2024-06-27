@@ -99,27 +99,45 @@ class GaleriaController extends Controller
         }
     }
 
-    public function upload(Request $request)
+    private function storeFile($file, $ubicacion, $fileName)
     {
-        // Validar la solicitud
+        if (env('APP_ENV') === 'local') {
+            return $file->storeAs('public/' . $ubicacion, $fileName);
+        } else {
+            return Storage::disk('s3')->put($ubicacion, $file);
+        }
+    }
 
+    public function upload(Request $request)
+{
+    DB::beginTransaction();
+
+    try {
+        // Validar la solicitud
+        $request->validate([
+            'file' => 'required|file',
+            'usuario' => 'required',
+            'type' => 'required',
+        ]);
+
+        // Obtener datos de la solicitud
         $usuario = $request->input('usuario');
         $tipo = $request->input('type');
+        $file = $request->file('file');
 
         // Verificar si el archivo existe en la solicitud
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-
+        if ($file) {
             // Generar un nombre de archivo único
             $fileName = time() . '-' . $file->getClientOriginalName();
 
-            $url = $file->storeAs('public/galeria/' . $usuario, $fileName);
-            //Storage::disk('digitalocean')->put('myfile.txt', $url);
-            
-            // Validar el tipo de galería y definir la ruta de almacenamiento
-            //$url = $file->storeAs('public/galeria/' . $usuario, $fileName);
+            // Determinar la ubicación de almacenamiento según el entorno
+            $ubicacion = (env('APP_ENV') === 'local') ? 'public/galeria/' . $usuario : 'galeria/' . $usuario;
+
+            // Almacenar el archivo en el sistema de archivos utilizando storeFile
+            $url = $this->storeFile($file, $ubicacion, $fileName);
 
             if (!$url) {
+                DB::rollback();
                 return response()->json(['error' => 'Error al almacenar el archivo.'], 500);
             }
 
@@ -136,16 +154,21 @@ class GaleriaController extends Controller
             ];
 
             // Crear el registro en la base de datos
-            try {
-                $galeria = Galeria::create($data);
-                return response()->json(['message' => 'Se cargaron las fotos exitosamente.', 'uuid' => $uuid], 200);
-            } catch (\Exception $e) {
-                return response()->json(['error' => 'Error al guardar en la base de datos: ' . $e->getMessage()], 500);
-            }
+            $galeria = Galeria::create($data);
+
+            DB::commit();
+
+            return response()->json(['message' => 'Se cargaron las fotos exitosamente.', 'uuid' => $uuid], 200);
         } else {
+            DB::rollback();
             return response()->json(['error' => 'No se ha cargado ningún archivo.'], 400);
         }
+    } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json(['error' => 'Error en la carga de fotos: ' . $e->getMessage()], 500);
     }
+}
+
 
 
     public function privadoAdmin($uuid)
@@ -163,23 +186,23 @@ class GaleriaController extends Controller
         return view('admin.galerias.upload_privado', compact('usuario', 'galerias'));
     }
 
-     //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES PASTORES
-     public function generalLider($uuid)
-     {
-         // 1 = GALERIA GENERAL
-         $tipoGeneral = 1;
-         $usuario = User::where('uuid', $uuid)->first();
-         $galerias = Galeria::galeriaTipoUsuario($tipoGeneral, $usuario->id)->paginate(8);
- 
-         // Formatear created_at a un formato de 12 horas
-         foreach ($galerias as $galeria) {
-             $galeria->formatted_created_at = $galeria->created_at->format('Y-m-d h:i:s A');
-         }
- 
-         return view('admin.galerias.upload_general_lider', compact('usuario', 'galerias'));
-     }
+    //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES PASTORES
+    public function generalLider($uuid)
+    {
+        // 1 = GALERIA GENERAL
+        $tipoGeneral = 1;
+        $usuario = User::where('uuid', $uuid)->first();
+        $galerias = Galeria::galeriaTipoUsuario($tipoGeneral, $usuario->id)->paginate(8);
 
-    
+        // Formatear created_at a un formato de 12 horas
+        foreach ($galerias as $galeria) {
+            $galeria->formatted_created_at = $galeria->created_at->format('Y-m-d h:i:s A');
+        }
+
+        return view('admin.galerias.upload_general_lider', compact('usuario', 'galerias'));
+    }
+
+
 
     //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES PASTORES Y ADMIN
     public function generalAdmin($uuid)
@@ -242,7 +265,6 @@ class GaleriaController extends Controller
         }
 
         return view('admin.galerias.lideres');
-
     }
 
 
