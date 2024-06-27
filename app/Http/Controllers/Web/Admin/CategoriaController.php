@@ -46,13 +46,7 @@ class CategoriaController extends Controller
 
         $url_banner = '';
         if ($request->hasFile('imagen_banner')) {
-            //$url_banner = Storage::put('public/categorias/banner', $request->file('imagen_banner'));
-            $ubicacion = 'public/categorias/banner';
-            if (env('APP_ENV') === 'local') {
-                $url = Storage::put($ubicacion, $request->file('file'));
-            } else {
-                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
-            }
+            $url_banner = Storage::put('public/categorias/banner', $request->file('imagen_banner'));
         }
 
         $data = [
@@ -66,13 +60,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::create($data);
 
         if ($request->file('file')) {
-            //$url = Storage::put('public/categorias', $request->file('file'));
-            $ubicacion = 'public/categorias';
-            if (env('APP_ENV') === 'local') {
-                $url = Storage::put($ubicacion, $request->file('file'));
-            } else {
-                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
-            }
+            $url = Storage::put('public/categorias', $request->file('file'));
 
             $categoria->imagen()->create([
                 'url' => $url,
@@ -112,49 +100,33 @@ class CategoriaController extends Controller
      */
     public function update(CategoriaRequest $request, Categoria $categoria)
     {
-
         $url_banner = $categoria->imagen_banner; // Obtener la URL actual del banner
 
         // Verificar si se cargó un nuevo banner
         if ($request->hasFile('imagen_banner')) {
-            // Si se cargó un nuevo banner, almacenar y obtener su URL
-            //$url_banner = Storage::put('public/categorias/banner', $request->file('imagen_banner'));
+            $file = $request->file('imagen_banner');
             $ubicacion = 'public/categorias/banner';
-            if (env('APP_ENV') === 'local') {
-                $url = Storage::put($ubicacion, $request->file('file'));
+
+            if ($file->isValid()) {
+                if (env('APP_ENV') === 'local') {
+                    $url_banner = Storage::put($ubicacion, $file);
+                } else {
+                    $url_banner = Storage::disk('s3')->put($ubicacion, $file);
+                }
+
+                // Eliminar el banner anterior si existe
+                if ($categoria->imagen_banner) {
+                    Storage::delete($categoria->imagen_banner);
+                }
             } else {
-                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
-            }
-            
-            // Eliminar el banner anterior si existe
-            if ($categoria->imagen_banner) {
-                Storage::delete($categoria->imagen_banner);
+                return response()->json(['error' => 'El archivo no es válido.'], 400);
             }
         }
 
-        $data = [
-            'nombre' => $request->nombre,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'imagen_banner' => $url_banner,
-        ];
-
-        $categoria->update($data);
-
-        ///////////// MORPHO IMAGE
-
         // Verificar si se cargó un nuevo archivo
         if ($request->file('file')) {
+            $url = Storage::put('public/categorias', $request->file('file'));
 
-            //$url = Storage::put('public/categorias', $request->file('file'));
-            $ubicacion = 'public/categorias';
-            if (env('APP_ENV') === 'local') {
-                $url = Storage::put($ubicacion, $request->file('file'));
-            } else {
-                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
-            }
-
-            // Si la categoría ya tiene una imagen, eliminar el archivo antiguo
             if ($categoria->imagen) {
                 Storage::delete($categoria->imagen->url);
 
@@ -172,14 +144,24 @@ class CategoriaController extends Controller
             }
         }
 
-        //Elimina datos cache
+        // Actualizar los datos de la categoría
+        $data = [
+            'nombre' => $request->nombre,
+            'slug' => $request->slug,
+            'descripcion' => $request->descripcion,
+            'imagen_banner' => $url_banner,
+        ];
+
+        $categoria->update($data);
+
+        // Elimina datos cache
         Cache::flush();
-        //Cache
 
         // Redireccionar con un mensaje de éxito
         $data = [
             'message' => 'Categoría actualizada exitosamente.'
         ];
+
         return redirect()->route('admin.categorias.edit', $categoria)->with('success', $data['message']);
     }
 
