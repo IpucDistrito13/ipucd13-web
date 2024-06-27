@@ -275,10 +275,11 @@ class UsuarioController extends Controller
         // Manejar la imagen de perfil si se proporciona
         if ($request->file('file')) {
             //$url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
+            $ubicacion = 'public/usuarios/perfil';
             if (env('APP_ENV') === 'local') {
-                $url = Storage::put('public/usuarios/perfil', $request->file('file'));
+                $url = Storage::put($ubicacion, $request->file('file'));
             } else {
-                $url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
+                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
             }
             
             // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL

@@ -46,7 +46,13 @@ class CategoriaController extends Controller
 
         $url_banner = '';
         if ($request->hasFile('imagen_banner')) {
-            $url_banner = Storage::put('public/categorias/banner', $request->file('imagen_banner'));
+            //$url_banner = Storage::put('public/categorias/banner', $request->file('imagen_banner'));
+            $ubicacion = 'public/categorias/banner';
+            if (env('APP_ENV') === 'local') {
+                $url = Storage::put($ubicacion, $request->file('file'));
+            } else {
+                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
+            }
         }
 
         $data = [
@@ -60,7 +66,13 @@ class CategoriaController extends Controller
         $categoria = Categoria::create($data);
 
         if ($request->file('file')) {
-            $url = Storage::put('public/categorias', $request->file('file'));
+            //$url = Storage::put('public/categorias', $request->file('file'));
+            $ubicacion = 'public/categorias';
+            if (env('APP_ENV') === 'local') {
+                $url = Storage::put($ubicacion, $request->file('file'));
+            } else {
+                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
+            }
 
             $categoria->imagen()->create([
                 'url' => $url,
@@ -106,8 +118,14 @@ class CategoriaController extends Controller
         // Verificar si se cargó un nuevo banner
         if ($request->hasFile('imagen_banner')) {
             // Si se cargó un nuevo banner, almacenar y obtener su URL
-            $url_banner = Storage::put('public/categorias/banner', $request->file('imagen_banner'));
-
+            //$url_banner = Storage::put('public/categorias/banner', $request->file('imagen_banner'));
+            $ubicacion = 'public/categorias/banner';
+            if (env('APP_ENV') === 'local') {
+                $url = Storage::put($ubicacion, $request->file('file'));
+            } else {
+                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
+            }
+            
             // Eliminar el banner anterior si existe
             if ($categoria->imagen_banner) {
                 Storage::delete($categoria->imagen_banner);
@@ -128,7 +146,13 @@ class CategoriaController extends Controller
         // Verificar si se cargó un nuevo archivo
         if ($request->file('file')) {
 
-            $url = Storage::put('public/categorias', $request->file('file'));
+            //$url = Storage::put('public/categorias', $request->file('file'));
+            $ubicacion = 'public/categorias';
+            if (env('APP_ENV') === 'local') {
+                $url = Storage::put($ubicacion, $request->file('file'));
+            } else {
+                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
+            }
 
             // Si la categoría ya tiene una imagen, eliminar el archivo antiguo
             if ($categoria->imagen) {
