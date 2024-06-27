@@ -38,29 +38,43 @@ class CategoriaController extends Controller
         return view('admin.categorias.create');
     }
 
+    private function storeFile($file, $ubicacion)
+    {
+        if (env('APP_ENV') === 'local') {
+            return Storage::put($ubicacion, $file);
+        } else {
+            return Storage::disk('s3')->put($ubicacion, $file);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(CategoriaRequest $request)
     {
-
         $url_banner = '';
+
+        // Verificar si se cargó un nuevo banner
         if ($request->hasFile('imagen_banner')) {
-            $url_banner = Storage::put('public/categorias/banner', $request->file('imagen_banner'));
+            $fileBanner = $request->file('imagen_banner');
+            $ubicacionBanner = 'public/categorias/banner';
+            $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
         }
 
         $data = [
             'nombre' => $request->nombre,
             'slug' => $request->slug,
             'descripcion' => $request->descripcion,
-            'imagen_banner' => $url_banner
+            'imagen_banner' => $url_banner,
         ];
-
 
         $categoria = Categoria::create($data);
 
-        if ($request->file('file')) {
-            $url = Storage::put('public/categorias', $request->file('file'));
+        // Verificar si se cargó un nuevo archivo
+        if ($request->hasFile('file')) {
+            $filePortada = $request->file('file');
+            $ubicacionPortada = 'public/categorias';
+            $url = $this->storeFile($filePortada, $ubicacionPortada);
 
             $categoria->imagen()->create([
                 'url' => $url,
@@ -68,15 +82,11 @@ class CategoriaController extends Controller
             ]);
         }
 
-        //Elimina datos cache
+        // Elimina datos cache
         Cache::flush();
-        //Cache
 
-        $data = [
-            'message' => 'Categoría creada exitosamente.',
-        ];
-
-        return redirect()->route('admin.categorias.index')->with('success', $data['message']);
+        // Redireccionar con un mensaje de éxito
+        return redirect()->route('admin.categorias.index')->with('success', 'Categoría creada exitosamente.');
     }
 
     /**
@@ -104,15 +114,11 @@ class CategoriaController extends Controller
 
         // Verificar si se cargó un nuevo banner
         if ($request->hasFile('imagen_banner')) {
-            $file = $request->file('imagen_banner');
-            $ubicacion = 'public/categorias/banner';
+            $fileBanner = $request->file('imagen_banner');
+            $ubicacionBanner = 'public/categorias/banner';
 
-            if ($file->isValid()) {
-                if (env('APP_ENV') === 'local') {
-                    $url_banner = Storage::put($ubicacion, $file);
-                } else {
-                    $url_banner = Storage::disk('s3')->put($ubicacion, $file);
-                }
+            if ($fileBanner->isValid()) {
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
 
                 // Eliminar el banner anterior si existe
                 if ($categoria->imagen_banner) {
@@ -124,8 +130,10 @@ class CategoriaController extends Controller
         }
 
         // Verificar si se cargó un nuevo archivo
-        if ($request->file('file')) {
-            $url = Storage::put('public/categorias', $request->file('file'));
+        if ($request->hasFile('file')) {
+            $filePortada = $request->file('file');
+            $ubicacionPortada = 'public/categorias';
+            $url = $this->storeFile($filePortada, $ubicacionPortada);
 
             if ($categoria->imagen) {
                 Storage::delete($categoria->imagen->url);
@@ -145,25 +153,20 @@ class CategoriaController extends Controller
         }
 
         // Actualizar los datos de la categoría
-        $data = [
+        $categoria->update([
             'nombre' => $request->nombre,
             'slug' => $request->slug,
             'descripcion' => $request->descripcion,
             'imagen_banner' => $url_banner,
-        ];
+        ]);
 
-        $categoria->update($data);
-
-        // Elimina datos cache
         Cache::flush();
 
-        // Redireccionar con un mensaje de éxito
-        $data = [
-            'message' => 'Categoría actualizada exitosamente.'
-        ];
-
-        return redirect()->route('admin.categorias.edit', $categoria)->with('success', $data['message']);
+        return redirect()->route('admin.categorias.edit', $categoria)->with('success', 'Categoría actualizada exitosamente.');
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -175,9 +178,7 @@ class CategoriaController extends Controller
             'message' => 'Categoría eliminada exitosamente.',
         ];
 
-        //Elimina datos cache
         Cache::flush();
-        //Cache
 
         return redirect()->route('admin.categorias.index')->with('success', $data['message']);
     }

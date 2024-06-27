@@ -30,12 +30,21 @@ class ComiteController extends Controller
         return view('admin.comites.index', compact('comites'));
     }
 
+    private function storeFile($file, $ubicacion)
+    {
+        if (env('APP_ENV') === 'local') {
+            return Storage::put($ubicacion, $file);
+        } else {
+            return Storage::disk('s3')->put($ubicacion, $file);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        
+
         return view('admin.comites.create');
     }
 
@@ -49,8 +58,12 @@ class ComiteController extends Controller
             DB::beginTransaction();
 
             $url_banner = '';
+
+            // Verificar si se cargó un nuevo banner
             if ($request->hasFile('imagen_banner')) {
-                $url_banner = Storage::put('public/comites/banner', $request->file('imagen_banner'));
+                $fileBanner = $request->file('imagen_banner');
+                $ubicacionBanner = 'public/comites/banner';
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
             }
 
             $data = [
@@ -63,38 +76,33 @@ class ComiteController extends Controller
             // Crear el comité
             $comite = Comite::create($data);
 
-            // Morpho Image
-            if ($request->file('file')) {
-                $url = Storage::put('public/comites', $request->file('file'));
+            // Verificar si se cargó un nuevo archivo
+            if ($request->hasFile('file')) {
+                $filePortada = $request->file('file');
+                $ubicacionPortada = 'public/comites';
+                $url = $this->storeFile($filePortada, $ubicacionPortada);
 
                 $comite->imagen()->create([
                     'url' => $url,
                     'imageable_type' => Comite::class,
                 ]);
             }
-            // Fin Morpho Image
 
             // Commit si no hay errores
             DB::commit();
 
-            //Elimina la variables almacenada en cache
+            // Eliminar datos almacenados en cache
             Cache::flush();
-            //Cache
 
-            $data = [
-                'message' => 'Comité creado exitosamente.',
-            ];
-
-            return redirect()->route('admin.comites.index')->with('success', $data['message']);
+            // Redireccionar con un mensaje de éxito
+            return redirect()->route('admin.comites.index')
+                ->with('success', 'Comité creado exitosamente.');
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
 
-            $data = [
-                'error' => 'Error al crear el comité: ' . $e->getMessage(),
-            ];
-
-            return redirect()->back()->with('error', $data['error'])->withInput();
+            // Redireccionar con un mensaje de error
+            return redirect()->back()->with('error', 'Error al crear el comité: ' . $e->getMessage())->withInput();
         }
     }
 
