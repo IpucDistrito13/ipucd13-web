@@ -104,7 +104,8 @@ class SolicitudController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Solicitud $solicitud)
-    {
+{
+    try {
         // Validación de los datos del formulario
         $validatedData = $request->validate([
             'file' => 'required|file|mimes:jpeg,png,pdf|max:2048', // Acepta JPEG, PNG y PDF, tamaño máximo de 2MB
@@ -131,9 +132,8 @@ class SolicitudController extends Controller
             $solicitud->update($data);
 
             // Enviar correo de respuesta
-            
             Mail::to($solicitud->userSolicitud->email)
-                ->send(new ResponseSolicitudMail($solicitud, auth()->user()), );
+                ->send(new ResponseSolicitudMail($solicitud, auth()->user()));
 
             // Limpiar la caché
             Cache::flush();
@@ -146,7 +146,14 @@ class SolicitudController extends Controller
         // En caso de no haber archivo, redireccionar con mensaje de error
         return redirect()->route('admin.solicitudes.pendientes')
             ->with('error', 'No se ha cargado ningún archivo.');
+
+    } catch (\Exception $e) {
+        // Capturar excepciones generales
+        return redirect()->route('admin.solicitudes.pendientes')
+            ->with('error', 'Ocurrió un error al procesar la solicitud: ' . $e->getMessage());
     }
+}
+
 
 
     /**

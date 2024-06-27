@@ -6,7 +6,7 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            <i class="fas fa-images"></i> Galería general: {{ $usuario->nombre . ' ' . $usuario->apellidos }}
+            <i class="fas fa-images"></i> Galería publica: {{ $usuario->nombre . ' ' . $usuario->apellidos }}
         </h1>
         <div>
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.galerias.index') }}">
@@ -25,7 +25,26 @@
 @stop
 
 @section('content')
-    <p><b>Congregación: </b> {{ $usuario->congregacion->direccion }}</p>
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    <p><b>Congregación: </b> {{ $usuario->congregacion ? $usuario->congregacion->direccion : 'Sin congregación' }}</p>
     <!-- Default box -->
     <div class="card card-solid">
         <div class="card-body pb-0">
@@ -43,7 +62,8 @@
                                     <div class="row">
                                         <div class="col-12 text-center">
                                             <a href="{{ Storage::url($galeria->url) }}" data-toggle="lightbox"
-                                                data-title="{{ $galeria->created_at->format('Y-m-d h:i a') }}" data-gallery="gallery">
+                                                data-title="{{ $galeria->created_at->format('Y-m-d h:i a') }}"
+                                                data-gallery="gallery">
                                                 <img src="{{ Storage::url($galeria->url) }}" alt="Error, al mostrar."
                                                     class="img-thumbnail small-image img-fluid mb-2">
                                             </a>
@@ -53,12 +73,42 @@
                                 <div class="card-footer">
                                     <div class="text-right">
                                         @can('admin.galerias.upload')
-                                            <form action="{{ route('admin.galeria.destroy', $galeria->id) }}" method="POST"
-                                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta foto?');">
+                                            <!-- Botón de Eliminar -->
+                                            <form id="deleteForm{{ $galeria->id }}"
+                                                action="{{ route('admin.galeria.destroy', $galeria->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    onclick="confirmDelete({{ $galeria->id }})">Eliminar</button>
                                             </form>
+
+                                            <script>
+                                                function confirmDelete(itemId) {
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    });
+
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: '¿Estás seguro?',
+                                                        text: '¡No podrás revertir esto!',
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Eliminar',
+                                                        confirmButtonColor: '#a5161d',
+                                                        denyButtonColor: '#270a0a',
+                                                        cancelButtonText: 'Cancelar',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            document.getElementById('deleteForm' + itemId).submit();
+                                                        }
+                                                    });
+                                                }
+                                            </script>
                                         @endcan
                                     </div>
                                 </div>
@@ -147,7 +197,8 @@
 
 @section('css')
 
-<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <link rel="stylesheet" href="{{ asset('plugins/ekko-lightbox/ekko-lightbox.css') }}">
 
     <style>
@@ -163,7 +214,7 @@
 
 @section('js')
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
     <script>
         Dropzone.options.myDropzone = {

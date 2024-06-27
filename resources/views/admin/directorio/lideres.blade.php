@@ -50,6 +50,7 @@
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Celular</th>
+                        <th>Municipio</th>
 
                     </tr>
                 </thead>
@@ -99,49 +100,55 @@
         }
     </style>
 
-    <script>
-        $(function() {
-            var table = $('.data-table').DataTable({
-                responsive: true,
-                processing: true,
-                serverSide: true,
-                language: {
-                    processing: "Procesando...",
-                    lengthMenu: "Mostrar _MENU_ registros por página",
-                    zeroRecords: "No se encontraron registros en el sistema...",
-                    info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                    infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros totales)",
-                    search: "Buscar",
-                    paginate: {
-                        next: "Siguiente",
-                        previous: "Anterior"
+<script>
+    $(function() {
+        var table = $('.data-table').DataTable({
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            language: {
+                processing: "Procesando...",
+                lengthMenu: "Mostrar _MENU_ registros por página",
+                zeroRecords: "No se encontraron registros en el sistema...",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                infoEmpty: "No hay registros disponibles",
+                infoFiltered: "(filtrado de _MAX_ registros totales)",
+                search: "Buscar",
+                paginate: {
+                    next: "Siguiente",
+                    previous: "Anterior"
+                }
+            },
+            ajax: "{{ route('admin.usuarios.directorioLideres') }}",
+            columns: [
+                {
+                    "data": "image_url",
+                    "render": function(data, type, row) {
+                        var baseUrl = '{{ env('APP_URL') }}/storage/'; // Usa APP_URL del archivo .env
+                        var imageUrl = row.image_url ? baseUrl + row.image_url.replace('public/', '') : 'https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png';
+                        return '<img src="' + imageUrl + '" alt="Image" style="width:50px;height:50px;"/>';
                     }
                 },
-                ajax: "{{ route('admin.usuarios.directorioLideres') }}",
-                columns: [{
-                        "data": "nombre",
-                        "render": function(data, type, row) {
-                            return '<img src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png" alt="Image" style="width:50px;height:50px;"/>';
-                        }
-                    },
-                    {
-                        data: 'nombre',
-                        name: 'nombre'
-                    },
-                    {
-                        data: 'apellidos',
-                        name: 'apellidos'
-                    },
-
-                    {
-                        data: 'celular',
-                        name: 'celular'
-                    },
-                    
-                ]
-            });
+                {
+                    data: 'nombre',
+                    name: 'nombre'
+                },
+                {
+                    data: 'apellidos',
+                    name: 'apellidos'
+                },
+                {
+                    data: 'celular',
+                    name: 'celular'
+                },
+                {
+                    data: 'nombre_municipio',
+                    name: 'nombre_municipio'
+                },
+            ]
         });
-    </script>
+    });
+</script>
+
 
 @stop

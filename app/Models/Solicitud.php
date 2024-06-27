@@ -22,9 +22,12 @@ class Solicitud extends Model
         return $query->where('estado', '0');
     }
 
+    // Listar untimos 300 solicitudes respondias
     public function scopeSolicitudesListadoRespondidas($query)
     {
-        return $query->where('estado', '1');
+        return $query->where('estado', '1')
+            ->orderBy('id', 'desc') 
+            ->take(300);
     }
     //
 

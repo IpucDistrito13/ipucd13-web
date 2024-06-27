@@ -43,7 +43,7 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
@@ -65,22 +65,49 @@
                             <td>{{ $rol->isbloqued }}</td>
 
                             <td>
-                                <a href="{{ route('admin.roles.edit', $rol) }}" class="btn btn-sm btn-primary">Ver</a>
-
-                                @can('admin.roles.destroy')
-                                    @if ($rol->isbloqued != 'Si')
-                                        <form action="{{ route('admin.roles.destroy', $rol) }}" method="POST"
-                                            style="display: inline;">
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este rol?')">Eliminar</button>
-                                        </form>
-                                    @endif
-                                @endcan
-
+                                <div class="btn-group" role="group">
+                                    <a href="{{ route('admin.roles.edit', $rol) }}" class="btn btn-sm btn-primary">Ver</a>
+                            
+                                    @can('admin.roles.destroy')
+                                        @if ($rol->isbloqued != 'Si')
+                                            <form id="deleteForm{{ $rol->id }}" action="{{ route('admin.roles.destroy', $rol) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $rol->id }})">Eliminar</button>
+                                            </form>
+                                        @endif
+                            
+                                        <script>
+                                            function confirmDelete(itemId) {
+                                                const swalWithBootstrapButtons = Swal.mixin({
+                                                    customClass: {
+                                                        confirmButton: 'btn btn-success',
+                                                        cancelButton: 'btn btn-danger'
+                                                    },
+                                                    buttonsStyling: false
+                                                });
+                            
+                                                swalWithBootstrapButtons.fire({
+                                                    title: '¿Estás seguro?',
+                                                    text: '¡No podrás revertir esto!',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Eliminar',
+                                                    confirmButtonColor: '#a5161d',
+                                                    denyButtonColor: '#270a0a',
+                                                    cancelButtonText: 'Cancelar',
+                                                    reverseButtons: true
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        document.getElementById('deleteForm' + itemId).submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                    @endcan
+                                </div>
                             </td>
+                            
 
                         </tr>
                     @endforeach
@@ -122,6 +149,8 @@
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
+    <!-- sweetalert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(function() {

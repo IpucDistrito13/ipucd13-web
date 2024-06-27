@@ -47,8 +47,10 @@
                             @endif
                         </div>
 
-                        <h3 class="profile-username text-center">{{ $usuario->congregacion->direccion }}</h3>
-
+                        <h3 class="profile-username text-center">
+                            {{ $usuario->congregacion && $usuario->congregacion->direccion ? $usuario->congregacion->direccion : 'Sin congregación' }}
+                        </h3>
+                        
                         <div class="row">
 
                             <div class="col-sm-3">
@@ -70,16 +72,19 @@
                                 <div class="form-group">
                                     <label>Departamento</label>
                                     <input type="text" class="form-control"
-                                        value="{{ $usuario->congregacion->municipio->departamento->nombre }}" disabled>
+                                        value="{{ optional($usuario->congregacion)->municipio ? optional($usuario->congregacion->municipio)->departamento ? optional($usuario->congregacion->municipio->departamento)->nombre : 'Sin información' : 'Sin información' }}" disabled>
                                 </div>
                             </div>
+                            
                             <div class="col-sm-3">
+                                <!-- text input -->
                                 <div class="form-group">
-                                    <label>Municipio</label>
+                                    <label>Departamento</label>
                                     <input type="text" class="form-control"
-                                        value="{{ $usuario->congregacion->municipio->nombre }}" disabled>
+                                        value="{{ $usuario->congregacion && $usuario->congregacion->municipio && $usuario->congregacion->municipio->departamento ? $usuario->congregacion->municipio->departamento->nombre : 'Sin información' }}" disabled>
                                 </div>
                             </div>
+                            
 
 
                         </div>

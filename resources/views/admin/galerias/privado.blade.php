@@ -22,7 +22,8 @@
 @stop
 
 @section('content')
-    <p><b>Congregación: </b> {{ $usuario->congregacion->direccion }}</p>
+<p><b>Congregación: </b> {{ $usuario->congregacion ? $usuario->congregacion->direccion : 'Sin congregación' }}</p>
+
     <!-- Default box -->
     <div class="card card-solid">
         <div class="card-body pb-0">

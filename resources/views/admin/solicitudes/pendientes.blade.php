@@ -39,7 +39,7 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
@@ -74,12 +74,7 @@
                                     @endcan
 
                                     @can('admin.solicitudes.destroy')
-                                        <!-- Delete Button -->
-                                        <form action="{{ route('admin.solicitudes.destroy', $item) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                        </form>
+                                       
                                     @endcan
                                 </div>
 

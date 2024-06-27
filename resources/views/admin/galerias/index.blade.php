@@ -4,12 +4,8 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Pastores 1</h1>
-        @can('admin.usuarios.create')
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.usuarios.create') }}">
-                Crear Nuevo
-            </a>
-        @endcan
+        <h1 style="margin: 0;">Pastores</h1>
+
     </div>
 @stop
 
@@ -51,7 +47,6 @@
                         <th>Apellidos</th>
                         <th>Celular</th>
                         <th class="acciones-column">Acciones</th>
-
                     </tr>
                 </thead>
                 <tbody>

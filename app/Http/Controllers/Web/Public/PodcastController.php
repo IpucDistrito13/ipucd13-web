@@ -7,9 +7,6 @@ use App\Models\Comite;
 use App\Models\Episodio;
 use App\Models\Podcast;
 use App\Models\Redes;
-use App\Models\Serie;
-use App\Models\Video;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 

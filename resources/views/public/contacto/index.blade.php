@@ -60,8 +60,8 @@
                 <div class="position-absolute bottom-130px z-index-minus-1 w-100 left-0px d-none d-lg-block">
                     <div class="row position-relative mt-50px">
                         <div class="col-12">
-                            <!-- start marquees -->
-                            <div class="marquees-text fs-200 ls-minus-2px alt-font fw-600 text-nowrap opacity-3">We'd love to hear from your side</div>
+                            <!-- start marquees texto que corre -->
+                            <div class="marquees-text fs-200 ls-minus-2px alt-font fw-600 text-nowrap opacity-3"></div>
                             <!-- end marquees -->
                         </div>
                     </div>

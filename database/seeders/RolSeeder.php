@@ -32,7 +32,7 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.solicitudes.index', 'descripcion' => 'Ver listado de solicitudes'])->syncRoles([$rol1, $rol2]);
         $permission = Permission::create(['name' => 'admin.solicitudes.create', 'descripcion' => 'Crear solicitud'])->syncRoles([$rol1, $rol2]);
         $permission = Permission::create(['name' => 'admin.solicitudes.edit', 'descripcion' => 'Editar solicitud'])->syncRoles([$rol1]);
-        $permission = Permission::create(['name' => 'admin.solicitudes.destroy', 'descripcion' => 'Eliminar solicitud'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.solicitudes.destroy', 'descripcion' => 'Eliminar solicitud'])->syncRoles([$rol3]);
         $permission = Permission::create(['name' => 'admin.solicitudes.pendientes', 'descripcion' => 'Ver listado solicitudes pendientes'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.solicitudes.respondidas', 'descripcion' => 'Ver listado solicitudes respondidas'])->syncRoles([$rol1]);
 

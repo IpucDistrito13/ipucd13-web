@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Desarrollo Ipuc',
+            'nombre' => 'Desarrollo',
+            'apellidos' => 'D13',
             'email' => 'desarrollo@ipucdistrito13.org',
             'isbloqueo' => true,
 
@@ -33,12 +35,16 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Admin Ipuc',
+            'nombre' => 'Admin',
+            'apellidos' => 'D13',
             'email' => 'admin@ipucdistrito13.org',
             'isbloqueo' => true,
         ])->assignRole('Administrador');
 
         User::factory()->create([
             'name' => 'Decom Ipuc',
+            'nombre' => 'Decom',
+            'apellidos' => 'D13',
             'email' => 'decom@ipucdistrito13.org',
             'isbloqueo' => true,
         ])->assignRole('Administrador');

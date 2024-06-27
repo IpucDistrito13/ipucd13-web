@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 
 class GaleriaController extends Controller
@@ -43,10 +41,10 @@ class GaleriaController extends Controller
                     // Mostrar botones según los roles
                     if (in_array('Administrador', $roles) || in_array('Pastor', $roles)) {
                         $buttons .= '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
-                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería General</a>';
+                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería Publica</a>';
                     } elseif (in_array('Pastor', $roles)) {
                         $buttons .= '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
-                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería General</a>';
+                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería Publica</a>';
                     } elseif (in_array('Lider', $roles)) {
                         $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galería</a>';
                     }

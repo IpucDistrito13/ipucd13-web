@@ -121,10 +121,13 @@
                 }
             },
             ajax: "{{ route('admin.usuarios.directorioPastores') }}",
-            columns: [{
-                    "data": "nombre",
+            columns: [
+                {
+                    "data": "image_url",
                     "render": function(data, type, row) {
-                        return '<img src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png" alt="Image" style="width:50px;height:50px;"/>';
+                        var baseUrl = '{{ env('APP_URL') }}/storage/'; // Usa APP_URL del archivo .env
+                        var imageUrl = row.image_url ? baseUrl + row.image_url.replace('public/', '') : 'https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png';
+                        return '<img src="' + imageUrl + '" alt="Image" style="width:50px;height:50px;"/>';
                     }
                 },
                 {
@@ -140,7 +143,7 @@
                     name: 'celular'
                 },
                 {
-                    data: 'nombre_municipio', // Verifica que este nombre coincida con el alias o nombre de columna en tu vista SQL
+                    data: 'nombre_municipio',
                     name: 'nombre_municipio'
                 },
                 {

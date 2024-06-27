@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Solicitudes pendientes</h1>
+        <h1 style="margin: 0;">Solicitudes respondidas</h1>
 
     </div>
 @stop
@@ -33,13 +33,13 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de solicitudes pendientes
+                Lista de solicitudes respondidas
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
@@ -47,6 +47,8 @@
                         <th>Código</th>
                         <th>Tipo</th>
                         <th>Creado</th>
+                        <th>Respondido</th>
+
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -62,6 +64,7 @@
 
                             <td>{{ $item->solicitudTipo->nombre }}</td>
                             <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
+                            <td>{{ $item->updated_at->format('Y-m-d h:i a') }}</td>
 
                             <td>
                                 <!-- Botones de acciones -->
@@ -74,12 +77,7 @@
                                     @endcan
 
                                     @can('admin.solicitudes.destroy')
-                                        <!-- Delete Button -->
-                                        <form action="{{ route('admin.solicitudes.destroy', $item) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                        </form>
+                                       
                                     @endcan
                                 </div>
 

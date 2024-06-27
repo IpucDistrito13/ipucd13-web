@@ -61,8 +61,9 @@ class User extends Authenticatable
     public function scopeVistaRolUsers($query, $rol)
     {
         return $query->from('vista_roles_usuario')
-            ->where('roles', $rol);
+            ->where('roles', 'LIKE', '%' . $rol . '%');
     }
+    
     //END WEB
 
     //RELACION UNO A MUCHOS
@@ -139,48 +140,6 @@ class User extends Authenticatable
     }
 
     /*
-//VISTA DE PASTORES
-CREATE VIEW vista_pastores AS
-SELECT 
-    `users`.`id`, 
-    `users`.`email`, 
-    `users`.`uuid`, 
-    `users`.`codigo`,
-    `users`.`nombre`,
-    `users`.`apellidos`,
-    `users`.`celular`,
-    `congregaciones`.`direccion` AS `direccion_congregacion`,
-    GROUP_CONCAT(`roles`.`name` SEPARATOR ', ') AS `roles`
-FROM `users`
-LEFT JOIN `congregaciones` ON `users`.`congregacion_id` = `congregaciones`.`id`
-INNER JOIN `model_has_roles` ON `users`.`id` = `model_has_roles`.`model_id`
-INNER JOIN `roles` ON `model_has_roles`.`role_id` = `roles`.`id`
-WHERE `model_has_roles`.`model_type` = 'App\\Models\\User'
-    AND `roles`.`name` = 'Pastor'
-GROUP BY `users`.`id`, 
-    `users`.`email`, 
-    `users`.`uuid`, 
-    `users`.`codigo`,
-    `users`.`nombre`,
-    `users`.`apellidos`,
-    `users`.`celular`,
-    `congregaciones`.`direccion`
-ORDER BY `users`.`id`;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 CREATE VIEW vista_roles_usuario AS
 SELECT 
@@ -199,7 +158,14 @@ SELECT
         INNER JOIN model_has_roles ON roles.id = model_has_roles.role_id
         WHERE model_has_roles.model_id = users.id 
         AND model_has_roles.model_type = 'App\\Models\\User'
-    ) AS roles
+    ) AS roles,
+    (
+        SELECT url
+        FROM images
+        WHERE images.imageable_id = users.id 
+        AND images.imageable_type = 'App\\Models\\User'
+        LIMIT 1
+    ) AS image_url
 FROM 
     users
 LEFT JOIN
@@ -208,6 +174,7 @@ LEFT JOIN
     municipios ON congregaciones.municipio_id = municipios.id
 ORDER BY 
     roles DESC;
+
 
 
     */

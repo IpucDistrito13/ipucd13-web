@@ -37,7 +37,7 @@ class UsuarioController extends Controller
     public function serverSideJson(Request $request)
     {
         if ($request->ajax()) {
-            $data = \DB::table("vista_roles_usuario")->get(); // Obtener los datos de la vista
+            $data = \DB::table("vista_roles_usuario")->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -58,8 +58,7 @@ class UsuarioController extends Controller
         }
     }
 
-
-
+    /*
     public function index2(Request $request)
     {
         if ($request->ajax()) {
@@ -79,6 +78,7 @@ class UsuarioController extends Controller
 
         return view('admin.usuarios.index');
     }
+    */
 
     //LISTAR SOLO LOS LIDERES DESDE EL DIRECTORIO D13
     public function directorioLideres(Request $request)
@@ -274,8 +274,13 @@ class UsuarioController extends Controller
 
         // Manejar la imagen de perfil si se proporciona
         if ($request->file('file')) {
-            $url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
-
+            //$url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
+            if (env('APP_ENV') === 'local') {
+                $url = Storage::put('public/usuarios/perfil', $request->file('file'));
+            } else {
+                $url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
+            }
+            
             // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
             if ($usuario->imagen) {
                 Storage::delete($usuario->imagen->url);
