@@ -104,10 +104,10 @@ class UsuarioController extends Controller
     {
         //$rolId = 2;
         $rol = 'Pastor';
-    
+
         if ($request->ajax()) {
             $data = User::VistaRolUsers($rol)->get();
-    
+
             return datatables()::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -118,10 +118,10 @@ class UsuarioController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-    
+
         return view('admin.directorio.pastores');
     }
-    
+
     public function directorio()
     {
         //$usuarios = User::select('nombre', 'apellidos', 'celular', 'visible_celular')->paginate(30);
@@ -145,7 +145,7 @@ class UsuarioController extends Controller
     public function create()
     {
         $roles = Role::all();
-        $congregaciones = Congregacion::select('id', 'direccion')->where('estado', 'Activo')->get();
+        $congregaciones = Congregacion::select('id', 'direccion', 'nombre')->where('estado', 'Activo')->get();
         return view('admin.usuarios.create', compact('congregaciones', 'roles'));
     }
 
@@ -215,8 +215,6 @@ class UsuarioController extends Controller
     public function edit(User $usuario)
     {
         $roles = Role::all();
-        //return $usuario;
-
         $congregaciones = Congregacion::SelectList()->get();
         return view('admin.usuarios.edit', [
             'usuario' => $usuario,
@@ -279,7 +277,7 @@ class UsuarioController extends Controller
             } else {
                 $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
             }
-            
+
             // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
             if ($usuario->imagen) {
                 Storage::delete($usuario->imagen->url);

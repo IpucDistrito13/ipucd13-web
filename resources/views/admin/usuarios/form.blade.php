@@ -9,7 +9,7 @@
                 @foreach ($congregaciones as $congregacion)
                     <option value="{{ $congregacion->id }}"
                         {{ old('congregacion') == $congregacion->id || (isset($usuario) && $usuario->congregacion_id == $congregacion->id) ? 'selected' : '' }}>
-                        {{  $congregacion->direccion }}
+                        {{  $congregacion->direccion .' - '.  $congregacion->nombre }}
                     </option>
                 @endforeach
             </select>

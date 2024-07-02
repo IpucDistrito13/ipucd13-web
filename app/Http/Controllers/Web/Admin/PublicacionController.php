@@ -180,7 +180,11 @@ class PublicacionController extends Controller
     {
         $comites = Comite::selectList()->get();
         $categorias = Categoria::selectList()->get();
-        return view('admin.publicaciones.edit', compact('publicacion', 'comites', 'categorias'));
+        return view('admin.publicaciones.edit', [
+            'publicacion' => $publicacion,
+            'comites' => $comites,
+            'categorias' => $categorias
+        ]);
     }
 
     public function update(Request $request, Publicacion $publicacion)

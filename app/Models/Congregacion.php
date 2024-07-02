@@ -20,7 +20,7 @@ class Congregacion extends Model
 
     public function scopeSelectList($query)
     {
-        return $query->select('id', 'direccion', 'municipio_id');
+        return $query->select('id', 'direccion', 'municipio_id', 'nombre');
     }
 
     public function municipio()
