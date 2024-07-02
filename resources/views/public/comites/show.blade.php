@@ -31,8 +31,7 @@
 
     @include('public.layouts.menu')
 
-    <!-- start banner          style="background-image: url(https://via.placeholder.com/1920x560)">
-  -->
+    <!-- start banner -->
     <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography"
         @if ($comite->imagen_banner) style="background-image: url({{ Storage::url($comite->imagen_banner) }} )" @endif>
         <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
