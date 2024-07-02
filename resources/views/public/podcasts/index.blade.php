@@ -18,7 +18,7 @@
     @include('public.layouts.menu')
     <!-- end header -->
 
-    <!-- start banner -->
+    <!-- start banner  -->
     <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography"
         style="background-image: url(https://via.placeholder.com/1920x560)">
         <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"

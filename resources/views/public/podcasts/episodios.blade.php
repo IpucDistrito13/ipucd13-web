@@ -119,6 +119,7 @@
     <!-- end cursor -->
 
     @include('public.layouts.menu')
+    
     <!-- start page title -->
     <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography"
         style="background-image: url({{ Storage::url($podcast->imagen_banner) }} )">
