@@ -122,7 +122,7 @@
 
     <!-- start banner -->
     <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography"
-        @if ($podcast->imagen_banner) style="background-image: url({{ Storage::url($podcast->imagen_banner) }} )" @endif>
+        style="background-image: url({{ Storage::url($podcast->imagen_banner) }} )">
         <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
             style="background-image: url('{{ asset('images/vertical-line-bg-small.svg') }}')"></div>
         <div id="particles-style-01" class="h-100 position-absolute left-0px top-0 w-100" data-particle="true"
