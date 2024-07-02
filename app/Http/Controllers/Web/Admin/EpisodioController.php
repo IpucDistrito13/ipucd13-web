@@ -59,9 +59,10 @@ class EpisodioController extends Controller
             'podcast_id' => $request->podcast,
         ]);
 
+        $data = ['message' => 'Episodio creado exitosamente.'];
+
         Cache::flush();
 
-        $data = ['message' => 'Episodio creado exitosamente.'];
 
         return back()->with('success', $data['message']);
     }
@@ -98,6 +99,10 @@ class EpisodioController extends Controller
         $data = [
             'message' => 'Episodio actualizado exitosamente.',
         ];
+
+        Cache::flush();
+
+
         return redirect()->route('admin.episodios.edit', $episodio)->with('success', $data['message']);
     }
 
@@ -112,6 +117,9 @@ class EpisodioController extends Controller
             $data = [
                 'message' => 'Episodio eliminado exitosamente.',
             ];
+
+            Cache::flush();
+
 
             return back()->with('success', $data['message']);
         } catch (\Exception $e) {

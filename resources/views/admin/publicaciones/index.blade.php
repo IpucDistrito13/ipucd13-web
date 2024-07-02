@@ -41,7 +41,7 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
@@ -65,16 +65,49 @@
                                 <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Acciones">
                                     <!-- Update Button -->
-                                    <button class="btn btn-success btn-sm"
-                                        data-url="{{ route('admin.publicaciones.edit', $item) }}"
-                                        onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
+                                    @can('admin.publicaciones.edit')
+                                        <button class="btn btn-success btn-sm"
+                                            data-url="{{ route('admin.publicaciones.edit', $item) }}"
+                                            onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
+                                    @endcan
 
-                                    <!-- Delete Button -->
-                                    <form action="{{ route('admin.publicaciones.destroy', $item) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                    </form>
+                                    @can('admin.publicaciones.destroy')
+                                        <form id="deleteForm{{ $item->id }}"
+                                            action="{{ route('admin.publicaciones.destroy', $item) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete({{ $item->id }})">Eliminar</button>
+                                        </form>
+
+                                        <script>
+                                            function confirmDelete(itemId) {
+                                                const swalWithBootstrapButtons = Swal.mixin({
+                                                    customClass: {
+                                                        confirmButton: 'btn btn-success',
+                                                        cancelButton: 'btn btn-danger'
+                                                    },
+                                                    buttonsStyling: false
+                                                });
+
+                                                swalWithBootstrapButtons.fire({
+                                                    title: '¿Estás seguro?',
+                                                    text: '¡No podrás revertir esto!',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Eliminar',
+                                                    confirmButtonColor: '#a5161d',
+                                                    denyButtonColor: '#270a0a',
+                                                    cancelButtonText: 'Cancelar',
+                                                    reverseButtons: true
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        document.getElementById('deleteForm' + itemId).submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                    @endcan
                                 </div>
 
                             </td>
@@ -121,7 +154,8 @@
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
-
+    <!-- sweetalert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(function() {

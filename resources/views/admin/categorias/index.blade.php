@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Listar categoría</h1>
+        <h1 style="margin: 0;">Lista categoría</h1>
         @can('admin.categorias.create')
             <a class="btn btn-primary btn-sm" href="{{ route('admin.categorias.create') }}">
                 Crear Nuevo
@@ -44,7 +44,7 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
@@ -76,11 +76,42 @@
 
                                     @can('admin.categorias.destroy')
                                         <!-- Delete Button -->
-                                        <form action="{{ route('admin.categorias.destroy', $item) }}" method="POST">
+                                        <form id="deleteForm{{ $item->id }}"
+                                            action="{{ route('admin.categorias.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete({{ $item->id }})">Eliminar</button>
                                         </form>
+
+
+                                        <script>
+                                            function confirmDelete(itemId) {
+                                                const swalWithBootstrapButtons = Swal.mixin({
+                                                    customClass: {
+                                                        confirmButton: 'btn btn-success',
+                                                        cancelButton: 'btn btn-danger'
+                                                    },
+                                                    buttonsStyling: false
+                                                });
+
+                                                swalWithBootstrapButtons.fire({
+                                                    title: '¿Estás seguro?',
+                                                    text: '¡No podrás revertir esto!',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Eliminar',
+                                                    confirmButtonColor: '#a5161d',
+                                                    denyButtonColor: '#270a0a',
+                                                    cancelButtonText: 'Cancelar',
+                                                    reverseButtons: true
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        document.getElementById('deleteForm' + itemId).submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
                                     @endcan
                                 </div>
 
@@ -127,6 +158,9 @@
     <!-- DataTables Responsive JS -->
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script>
         $(function() {

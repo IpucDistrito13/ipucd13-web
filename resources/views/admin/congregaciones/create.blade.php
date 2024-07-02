@@ -43,7 +43,7 @@
                 enctype="multipart/form-data" file="true">
 
                 @csrf
-                
+
                 @include('admin.congregaciones.form')
 
                 <div class="modal-footer">
@@ -78,7 +78,7 @@
 @section('js')
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-   
+
     <script>
         // generate slug
         function generateSlug(inputText) {
@@ -142,5 +142,18 @@
             },
         });
         //end datatable
+    </script>
+
+    <script>
+        function textoMayuscula(elementId) {
+            var element = document.getElementById(elementId);
+            element.addEventListener('keyup', function() {
+                this.value = this.value.toUpperCase();
+            });
+        }
+
+        // Llamar al método para cada campo
+        textoMayuscula('direccion');
+        textoMayuscula('nombre');
     </script>
 @stop

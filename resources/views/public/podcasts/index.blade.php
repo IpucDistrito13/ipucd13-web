@@ -51,23 +51,23 @@
                             <li class="grid-item">
                                 <div class="card bg-transparent border-0 h-100">
                                     <div class="blog-image position-relative overflow-hidden border-radius-4px">
-                                        <a href="{{ route('public.series.show', $podcast) }}">
+                                        <a href="{{ route('public.podcasts.episodios', $podcast) }}">
                                             <img src="{{ !empty($podcast->imagen->url) ? Storage::url($podcast->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
                                                 alt="" />
                                         </a>
                                     </div>
                                     <div class="card-body px-0 pt-30px pb-30px">
                                         <span class="fs-13 text-uppercase mb-5px d-block"><a
-                                                href="{{ route('public.series.show', $podcast) }}"
+                                                href="{{ route('public.podcasts.episodios', $podcast) }}"
                                                 class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $podcast->comite->nombre }}</a>
                                             <br>
-                                            <a href="{{ route('public.series.show', $podcast) }}"
+                                            <a href="{{ route('public.podcasts.episodios', $podcast) }}"
                                                 class="blog-date text-dark-gray-hover">{{ $podcast->created_at->format('Y-m-d h:i a') }}</a>
                                         </span>
-                                        <a href="{{ route('public.series.show', $podcast) }}"
+                                        <a href="{{ route('public.podcasts.episodios', $podcast) }}"
                                             class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $podcast->titulo }}</a>
                                         <p class="mb-10px w-95">{{ $podcast->descripcion }}</p>
-                                        <a href="{{ route('public.series.show', $podcast) }}"
+                                        <a href="{{ route('public.podcasts.episodios', $podcast) }}"
                                             class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver
                                             más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
                                     </div>

@@ -84,6 +84,17 @@
 @stop
 
 @section('js')
+    <script>
+        function textoMayuscula(elementId) {
+            var element = document.getElementById(elementId);
+            element.addEventListener('keyup', function() {
+                this.value = this.value.toUpperCase();
+            });
+        }
 
+        // Llamar al método para cada campo
+        textoMayuscula('direccion');
+        textoMayuscula('nombre');
+    </script>
 
 @stop

@@ -100,9 +100,11 @@
         }
     </style>
 
+    
+
     <script>
         $(function() {
-            var table = $('.data-table').DataTable({
+            var table = $('#datatable').DataTable({
                 responsive: true,                
                 language: {
                     processing: "Procesando...",

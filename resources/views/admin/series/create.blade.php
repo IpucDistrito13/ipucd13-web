@@ -39,8 +39,8 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.series.store') }}" autocomplete="off" enctype="multipart/form-data"
-                file="true">
+            <form method="POST" action="{{ route('admin.series.store') }}" autocomplete="off" 
+            enctype="multipart/form-data" file="true">
                 @csrf
 
                 @include('admin.series.form')

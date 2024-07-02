@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('direccion');
             $table->string('nombre')->nullable()->comment('Nombre de congregación');
             $table->enum('estado', ['Activo', 'Inactivo'])->default('Activo');
+            
             $table->timestamps();
         });
     }

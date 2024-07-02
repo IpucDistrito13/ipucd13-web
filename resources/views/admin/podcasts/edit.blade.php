@@ -96,14 +96,19 @@
             @endif
         }
 
-        // generate slug
+        // Generate slug
         function generateSlug(inputText) {
-            var slug = inputText.toLowerCase().replace(/[^a-zA-Z0-9 -]/g, '').replace(/\s+/g, '-');
+            var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            var slug = withoutAccents.toLowerCase()
+                .replace(/[^a-zA-Z0-9 -]/g, '') // Remueve caracteres no alfanuméricos ni espacios
+                .replace(/\s+/g, '-') // Reemplaza espacios con guiones
+                .replace(/-+/g, '-') // Reemplaza múltiples guiones con uno solo
+                .trim(); // Elimina espacios en blanco al inicio y al final
             return slug;
         }
 
         function updateSlug() {
-            var nombreInput = document.getElementById("nombre");
+            var nombreInput = document.getElementById("titulo");
             var slugInput = document.getElementById("slug");
 
             if (nombreInput && slugInput) {
@@ -116,6 +121,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             updateSlug();
         });
+        // End generate slug
 
         // end generate slug
 

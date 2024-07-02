@@ -41,7 +41,7 @@
     <div class="col-sm-4">
         <!-- text input -->
         <div class="form-group">
-            <label>Podcasts *</label>
+            <label>Podcast *</label>
             <input type="text" class="form-control" id="titulo" name="titulo"
                 value="{{ old('titulo', $podcast->titulo ?? '') }}" onkeyup="updateSlug()">
             @error('titulo')
@@ -64,7 +64,7 @@
 
     <div class="col-sm-12">
         <div class="form-group">
-            <label>Descripción</label>
+            <label>Descripción *</label>
             <textarea class="form-control" rows="2" placeholder="" id="descripcion" name="descripcion">{{ old('descripcion', $podcast->descripcion ?? '') }}</textarea>
             <div class="text-muted">Máximo 300 caracteres</div>
             @error('descripcion')
@@ -75,7 +75,7 @@
 
     <div class="col-sm-12">
         <div class="form-group">
-            <label>Contenido</label>
+            <label>Contenido *</label>
             <textarea class="form-control" rows="3" placeholder="" id="contenido" name="contenido">{{ old('contenido', $podcast->contenido ?? '') }}</textarea>
             <div class="text-muted">Máximo 1.000 caracteres</div>
             @error('contenido')

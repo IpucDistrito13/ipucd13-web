@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SerieRequest;
 use App\Models\Categoria;
 use App\Models\Comite;
 use App\Models\Serie;
@@ -46,7 +47,10 @@ class SerieController extends Controller
     {
         $comites = Comite::selectList()->get();
         $categorias = Categoria::selectList()->get();
-        return view('admin.series.create', compact('comites', 'categorias'));
+        return view('admin.series.create', [
+            'comites' => $comites,
+            'categorias' => $categorias,
+        ]);
     }
 
     private function storeFile($file, $ubicacion)
@@ -61,8 +65,10 @@ class SerieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SerieRequest $request)
     {
+        
+
         try {
             // Iniciar una transacción de base de datos
             DB::beginTransaction();
@@ -77,13 +83,14 @@ class SerieController extends Controller
             }
 
             $data = [
+
+                'comite_id' => $request->comite,
+                'categoria_id' => $request->categoria,
                 'titulo' => $request->titulo,
                 'slug' => $request->slug,
                 'descripcion' => $request->descripcion,
                 'contenido' => $request->contenido,
                 'imagen_banner' => $url_banner,
-                'comite_id' => $request->comite,
-                'categoria_id' => $request->categoria,
                 'estado' => 'Publicado',
                 'user_id' => auth()->user()->id,
             ];
@@ -102,20 +109,18 @@ class SerieController extends Controller
                 ]);
             }
 
-            // Commit si no hay errores
             DB::commit();
-
-            // Eliminar datos almacenados en cache
             Cache::flush();
 
-            // Redireccionar con un mensaje de éxito
-            return redirect()->route('admin.series.index')->with('success', 'Serie creada exitosamente.');
+            return redirect()->route('admin.series.index')
+                ->with('success', 'Serie creada exitosamente.');
         } catch (\Exception $e) {
-            // Revertir la transacción en caso de error
             DB::rollBack();
+            \Log::error('Error al crear la serie: ' . $e->getMessage());
 
-            // Redireccionar con un mensaje de error
-            return redirect()->back()->with('error', 'Error al crear la serie: ' . $e->getMessage())->withInput();
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Error al crear la serie. Por favor, inténtelo de nuevo.');
         }
     }
 
@@ -140,7 +145,7 @@ class SerieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Serie $serie)
+    public function update(SerieRequest $request, Serie $serie)
     {
         try {
             // Iniciar una transacción de base de datos

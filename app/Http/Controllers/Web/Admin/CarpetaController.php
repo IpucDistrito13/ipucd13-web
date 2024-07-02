@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CarpetaRequest;
 use App\Models\Carpeta;
 use App\Models\Comite;
 use Illuminate\Http\Request;
@@ -70,7 +71,7 @@ class CarpetaController extends Controller
     }
 
 
-    public function storeCarpetaPrivada(Request $request)
+    public function storeCarpetaPrivada(CarpetaRequest $request)
     {
         $data = [
             'nombre' => $request->nombre,

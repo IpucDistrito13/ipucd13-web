@@ -71,6 +71,7 @@ class SerieController extends Controller
 
     public function show(Serie $serie)
     {
+        //return 'Hola';
 
         $comites = Comite::all();
         $videos = Video::where('serie_id', $serie->id)->get();

@@ -6,7 +6,7 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            <i class="fas fa-volume-up"></i> Podcast:{{ $podcast->titulo }}
+            <i class="fas fa-volume-up"></i> Podcast: {{ $podcast->titulo }}
         </h1>
         <div>
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.podcasts.index') }}">
@@ -76,7 +76,7 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
@@ -109,11 +109,47 @@
                                         </a>
                                     @endif
 
-                                    <form action="{{ route('admin.episodios.destroy', $item) }}" method="POST"
-                                        style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    @can('admin.episodios.destroy')
+                                        <!-- Delete Button -->
+                                        <form id="deleteForm{{ $item->id }}"
+                                            action="{{ route('admin.episodios.destroy', $item) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete({{ $item->id }})">Eliminar</button>
+                                        </form>
+
+
+                                        <script>
+                                            function confirmDelete(itemId) {
+                                                const swalWithBootstrapButtons = Swal.mixin({
+                                                    customClass: {
+                                                        confirmButton: 'btn btn-success',
+                                                        cancelButton: 'btn btn-danger'
+                                                    },
+                                                    buttonsStyling: false
+                                                });
+
+                                                swalWithBootstrapButtons.fire({
+                                                    title: '¿Estás seguro?',
+                                                    text: '¡No podrás revertir esto!',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Eliminar',
+                                                    confirmButtonColor: '#a5161d',
+                                                    denyButtonColor: '#270a0a',
+                                                    cancelButtonText: 'Cancelar',
+                                                    reverseButtons: true
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        document.getElementById('deleteForm' + itemId).submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                    @endcan
+
+
                                     </form>
 
                                     <!-- Modal -->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SolicitudRequest;
 use App\Mail\ResponseSolicitudMail;
 use App\Models\Solicitud;
 use App\Models\SolicitudTipo;
@@ -103,7 +104,7 @@ class SolicitudController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Solicitud $solicitud)
+    public function update(SolicitudRequest $request, Solicitud $solicitud)
 {
     try {
         // Validación de los datos del formulario

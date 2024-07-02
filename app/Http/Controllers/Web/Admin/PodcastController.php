@@ -255,7 +255,6 @@ class PodcastController extends Controller
             Cache::put($cache_key, $episodios);
         }
 
-        //CACHE
 
         return view('admin.podcasts.episodio', [
             'podcast' => $podcast,

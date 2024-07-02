@@ -26,12 +26,11 @@ class CongregacionRequest extends FormRequest
         // Reglas de validación por defecto
         $rules = [
             'municipio' => 'required|numeric',
-            'longitud' => 'nullable|max:10',
-            'latitud' => 'nullable|max:10',
+            'longitud' => 'nullable|max:15',
+            'latitud' => 'nullable|max:15',
             'direccion' => 'required|max:250',
+            'nombre' => 'required|max:250'
         ];
-
-        
 
         return $rules;
     }
@@ -45,6 +44,8 @@ class CongregacionRequest extends FormRequest
             'latitud.max' => 'El campo latitud no puede tener más de :max caracteres.',
             'direccion.required' => 'El campo dirección es obligatorio.',
             'direccion.max' => 'El campo dirección no puede tener más de :max caracteres.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.max' => 'El campo nombre no puede tener más de :max caracteres.',
         ];
     }
 }

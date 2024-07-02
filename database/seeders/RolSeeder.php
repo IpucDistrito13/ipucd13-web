@@ -127,6 +127,8 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.carpetas.edit', 'descripcion' => 'Editar carpeta'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.carpetas.destroy', 'descripcion' => 'Eliminar carpeta'])->syncRoles([$rol1]);
 
+        //$permission = Permission::create(['name' => '', 'descripcion' => 'Descargable privado'])->syncRoles([$rol1, $rol2, $rol3]);
+
         $permission = Permission::create(['name' => 'admin.carpetas.listComitePrivado', 'descripcion' => 'Descargable privado'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.carpetas.listComitePublico', 'descripcion' => 'Descargable publico'])->syncRoles([$rol1, $rol2, $rol3]);
 

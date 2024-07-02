@@ -80,8 +80,10 @@
 @stop
 
 @section('css')
+
+
     {{-- Bootstrap 4 --}}
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
@@ -92,7 +94,7 @@
 
 @section('js')
 
-    
+
     <script src="{{ asset('plugins/fullcalendar/main.js') }}"></script>
 
     <script>
@@ -196,7 +198,7 @@
                             // Realizar la solicitud AJAX para eliminar el evento
                             $.ajax({
 
-                                url: "{{ url('admin/eventos') }}/" + eventId,
+                                url: "{{ url('admin/cronogramas') }}/" + eventId,
                                 type: 'DELETE',
                                 data: {
                                     "_token": csrfToken

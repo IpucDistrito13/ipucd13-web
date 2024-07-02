@@ -24,7 +24,26 @@
 @stop
 
 @section('content')
-<p><b>Congregación: </b> {{ $usuario->congregacion ? $usuario->congregacion->direccion : 'Sin congregación' }}</p>
+    <p><b>Congregación: </b> {{ $usuario->congregacion ? $usuario->congregacion->direccion : 'Sin congregación' }}</p>
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <!-- Default box -->
     <div class="card card-solid">
         <div class="card-body pb-0">
@@ -52,12 +71,43 @@
                                 <div class="card-footer">
                                     @can('admin.galeria.destroy')
                                         <div class="text-right">
-                                            <form action="{{ route('admin.galeria.destroy', $galeria->id) }}" method="POST"
-                                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta foto?');">
+
+                                            <!-- Delete Button -->
+                                            <form id="deleteForm{{ $galeria->id }}"
+                                                action="{{ route('admin.galeria.destroy', $galeria) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    onclick="confirmDelete({{ $galeria->id }})">Eliminar</button>
                                             </form>
+
+                                            <script>
+                                                function confirmDelete(itemId) {
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    });
+
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: '¿Estás seguro?',
+                                                        text: '¡No podrás revertir esto!',
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Eliminar',
+                                                        confirmButtonColor: '#a5161d',
+                                                        denyButtonColor: '#270a0a',
+                                                        cancelButtonText: 'Cancelar',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            document.getElementById('deleteForm' + itemId).submit();
+                                                        }
+                                                    });
+                                                }
+                                            </script>
                                         </div>
                                     @endcan
 
@@ -148,6 +198,7 @@
 
 @section('css')
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <link rel="stylesheet" href="{{ asset('plugins/ekko-lightbox/ekko-lightbox.css') }}">
 
@@ -165,6 +216,8 @@
 @section('js')
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
+    <!-- sweetalert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Muestra imagen al hacer click
         $(function() {

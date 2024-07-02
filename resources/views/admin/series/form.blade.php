@@ -1,6 +1,6 @@
 <div class="row">
 
-    
+
     <div class="col-sm-3">
         <!-- select input -->
         <div class="form-group">
@@ -9,7 +9,7 @@
                 <option value="" selected disabled>Selecciona</option>
                 @foreach ($comites as $comite)
                     <option value="{{ $comite->id }}"
-                        {{ isset($serie) && $serie->comite_id == $comite->id ? 'selected' : '' }}>
+                        {{ old('comite') == $comite->id || (isset($serie) && $serie->comite_id == $comite->id) ? 'selected' : '' }}>
                         {{ $comite->nombre }}
                     </option>
                 @endforeach
@@ -20,6 +20,7 @@
         </div>
     </div>
 
+
     <div class="col-sm-3">
         <!-- select input -->
         <div class="form-group">
@@ -28,7 +29,7 @@
                 <option value="" selected disabled>Selecciona</option>
                 @foreach ($categorias as $categoria)
                     <option value="{{ $categoria->id }}"
-                        {{ isset($serie) && $serie->categoria_id == $categoria->id ? 'selected' : '' }}>
+                        {{ old('categoria') == $categoria->id || (isset($serie) && $serie->categoria_id == $categoria->id) ? 'selected' : '' }}>
                         {{ $categoria->nombre }}
                     </option>
                 @endforeach
@@ -38,6 +39,7 @@
             @enderror
         </div>
     </div>
+
 
     <div class="col-sm-3">
         <!-- text input -->
@@ -75,6 +77,7 @@
         </div>
     </div>
 
+
     <div class="col-sm-12">
         <div class="form-group">
             <label>Contenido</label>
@@ -102,7 +105,7 @@
             <label>Imagen banner (1920x500) *</label>
             <input class="form-control-file" type="file" class="custom-file-input" name="imagen_banner"
                 id="imagen_banner_input" accept="image/*" onchange="cambiarImagenBanner(event)">
-    
+
             @error('imagen_banner')
                 <div class="text-danger">{{ $message }}</div>
             @enderror

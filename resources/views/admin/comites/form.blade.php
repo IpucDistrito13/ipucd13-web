@@ -62,13 +62,13 @@
     <div class="col-sm-6">
         <div class="form-group">
             @if (isset($comite) && $comite->imagen)
-                <img id="imagen" src="{{ Storage::url($comite->imagen->url) }}" alt="" class="img-thumbnail">
+                <img id="imagen" src="{{ Storage::url($comite->imagen->url) }}" alt="" class="img-thumbnail" style="max-width: 100%; height: auto;">
             @else
-                <img id="imagen" src="https://i.ibb.co/LxLbXg6/480x640-gris.png" alt="480x600"
-                    class="img-thumbnail">
+                <img id="imagen" src="https://i.ibb.co/LxLbXg6/480x640-gris.png" alt="480x600" class="img-thumbnail" style="max-width: 100%; height: auto;">
             @endif
         </div>
     </div>
+    
 
     {{-- IMAGEN APLICACION APPBAR --}}
     <div class="col-sm-6">

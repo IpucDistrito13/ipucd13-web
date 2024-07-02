@@ -44,7 +44,7 @@ class SolicitudTipoRequest extends FormRequest
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre no debe tener más de :max caracteres.',
             'slug.required' => 'El campo slug es obligatorio.',
-            'slug.unique' => 'El valor ingresado en el campo slug ya está en uso.',
+            'slug.unique' => 'El slug ya está en uso.',
             'slug.alpha_dash' => 'El campo slug solo puede contener letras, números, guiones y guiones bajos.',
 
             'descripcion.max' => 'El campo descripción no debe tener más de :max caracteres.',

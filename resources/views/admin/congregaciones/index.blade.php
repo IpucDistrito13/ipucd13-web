@@ -50,6 +50,7 @@
                         <th>Departamento</th>
                         <th>Municipio</th>
                         <th>Dirección</th>
+                        <th>Congregación</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -63,6 +64,7 @@
                             <td>{{ $item->municipio->departamento->nombre }}</td>
                             <td>{{ $item->municipio->nombre }}</td>
                             <td>{{ $item->direccion }}</td>
+                            <td>{{ $item->nombre }}</td>
                             <td>
                                 <!-- Grupo de botones -->
                                 <div class="btn-group" role="group" aria-label="Acciones">
@@ -82,35 +84,38 @@
                                             <button type="button" class="btn btn-danger btn-sm"
                                                 onclick="confirmDelete({{ $item->id }})">Eliminar</button>
                                         </form>
+
+                                        <script>
+                                            function confirmDelete(itemId) {
+                                                const swalWithBootstrapButtons = Swal.mixin({
+                                                    customClass: {
+                                                        confirmButton: 'btn btn-success',
+                                                        cancelButton: 'btn btn-danger'
+                                                    },
+                                                    buttonsStyling: false
+                                                });
+    
+                                                swalWithBootstrapButtons.fire({
+                                                    title: '¿Estás seguro?',
+                                                    text: '¡No podrás revertir esto!',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Eliminar',
+                                                    confirmButtonColor: '#a5161d',
+                                                    denyButtonColor: '#270a0a',
+                                                    cancelButtonText: 'Cancelar',
+                                                    reverseButtons: true
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        document.getElementById('deleteForm' + itemId).submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                        
                                     @endcan
 
-                                    <script>
-                                        function confirmDelete(itemId) {
-                                            const swalWithBootstrapButtons = Swal.mixin({
-                                                customClass: {
-                                                    confirmButton: 'btn btn-success',
-                                                    cancelButton: 'btn btn-danger'
-                                                },
-                                                buttonsStyling: false
-                                            });
-
-                                            swalWithBootstrapButtons.fire({
-                                                title: '¿Estás seguro?',
-                                                text: '¡No podrás revertir esto!',
-                                                icon: 'warning',
-                                                showCancelButton: true,
-                                                confirmButtonText: 'Eliminar',
-                                                confirmButtonColor: '#a5161d',
-                                                denyButtonColor: '#270a0a',
-                                                cancelButtonText: 'Cancelar',
-                                                reverseButtons: true
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    document.getElementById('deleteForm' + itemId).submit();
-                                                }
-                                            });
-                                        }
-                                    </script>
+                                    
 
                                 </div>
 

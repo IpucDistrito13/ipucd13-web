@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Cronograma distrital')
+@section('title', 'Cronograma distrital | IPUC D13')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">

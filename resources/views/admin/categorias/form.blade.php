@@ -47,7 +47,7 @@
 
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Imagen banner (1920x500) *</label>
+            <label>Imagen banner (1920x500) </label>
             <input class="form-control-file" type="file" class="custom-file-input" name="imagen_banner"
                 id="imagen_banner_input" accept="image/*" onchange="cambiarImagenBanner(event)">
 
@@ -60,25 +60,25 @@
     <div class="col-sm-6">
         <div class="form-group">
             @if (isset($categoria) && $categoria->imagen)
-                <img id="imagen" src="{{ Storage::url($categoria->imagen->url) }}" alt=""
-                    class="img-thumbnail">
+                <img id="imagen" src="{{ Storage::url($categoria->imagen->url) }}" alt="" class="img-thumbnail"
+                    style="max-width: 100%; height: auto;">
             @else
-                <img id="imagen" src="https://i.ibb.co/LxLbXg6/480x640-gris.png" alt="480x600"
-                    class="img-thumbnail">
+                <img id="imagen" src="https://i.ibb.co/LxLbXg6/480x640-gris.png" alt="480x600" class="img-thumbnail"
+                    style="max-width: 100%; height: auto;">
             @endif
         </div>
     </div>
 
-        {{-- IMAGEN APLICACION APPBAR --}}
-        <div class="col-sm-6">
-            <div class="form-group">
-                @if (isset($categoria) && $categoria->imagen_banner)
-                    <img id="imagen_banner" src="{{ Storage::url($categoria->imagen_banner) }}" alt=""
-                        class="img-thumbnail">
-                @else
-                    <img id="imagen_banner" src="https://via.placeholder.com/1920x500" alt="1920x500" class="img-thumbnail">
-                @endif
-            </div>
+    {{-- IMAGEN APLICACION APPBAR --}}
+    <div class="col-sm-6">
+        <div class="form-group">
+            @if (isset($categoria) && $categoria->imagen_banner)
+                <img id="imagen_banner" src="{{ Storage::url($categoria->imagen_banner) }}" alt=""
+                    class="img-thumbnail">
+            @else
+                <img id="imagen_banner" src="https://via.placeholder.com/1920x500" alt="1920x500" class="img-thumbnail">
+            @endif
         </div>
+    </div>
 
 </div>

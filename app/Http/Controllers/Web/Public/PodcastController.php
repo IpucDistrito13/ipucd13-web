@@ -69,13 +69,26 @@ class PodcastController extends Controller
         ]);
     }
 
+    /*
     public function show(Podcast $podcast)
     {
-        return $podcast;
+        //return $podcast;
+        $comites = Comite::all();
+        $episodios = Episodio::ListarEpisodioPodcast($podcast->id)->get();
+
+        $metaData = [
+            'title' => 'Serie | IPUC D13',
+            'author' => 'IPUC D13',
+            'description' => 'Distrito 13 | Cronograma',
+        ];
+
+        return view('public.videos.show', compact('serie', 'videos', 'comites', 'metaData'));
     }
+    */
 
     public function episodios(Podcast $podcast)
     {
+        //return 'episodios';
         //$videos = Video::where('serie_id', $podcast->id)->get();
         $episodios = Episodio::where('podcast_id', $podcast->id)->get();
         //return $episodios;

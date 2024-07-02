@@ -8,7 +8,7 @@
                 <option disabled selected>Seleccionar</option>
                 @foreach ($comites as $comite)
                     <option value="{{ $comite->id }}"
-                        {{ isset($publicacion) && $publicacion->comite_id == $comite->id ? 'selected' : '' }}>
+                        {{ old('comite', isset($publicacion) ? $publicacion->comite_id : '') == $comite->id ? 'selected' : '' }}>
                         {{ $comite->nombre }}
                     </option>
                 @endforeach
@@ -18,7 +18,7 @@
             @enderror
         </div>
     </div>
-
+    
     <div class="col-sm-3">
         <!-- select input -->
         <div class="form-group">
@@ -27,7 +27,7 @@
                 <option disabled selected>Seleccionar</option>
                 @foreach ($categorias as $categoria)
                     <option value="{{ $categoria->id }}"
-                        {{ isset($publicacion) && $publicacion->categoria_id == $categoria->id ? 'selected' : '' }}>
+                        {{ old('categoria', isset($publicacion) ? $publicacion->categoria_id : '') == $categoria->id ? 'selected' : '' }}>
                         {{ $categoria->nombre }}
                     </option>
                 @endforeach
@@ -37,6 +37,7 @@
             @enderror
         </div>
     </div>
+    
 
     <div class="col-sm-6">
         <!-- text input -->
@@ -64,7 +65,7 @@
 
     <div class="col-sm-6">
         <div class="form-group">
-            <label>Descripción</label>
+            <label>Descripción *</label>
             <textarea class="form-control" rows="1" placeholder="" id="descripcion" name="descripcion">{{ old('descripcion', $publicacion->descripcion ?? '') }}</textarea>
             @error('descripcion')
                 <div class="text-danger">{{ $message }}</div>
@@ -74,7 +75,7 @@
 
     <div class="col-sm-12">
         <div class="form-group">
-            <label>Contenido</label>
+            <label>Contenido *</label>
             <textarea class="form-control" rows="3" placeholder="" id="contenido" name="contenido">{{ old('contenido', $publicacion->contenido ?? '') }}</textarea>
             @error('contenido')
                 <div class="text-danger">{{ $message }}</div>
@@ -85,11 +86,10 @@
     <div class="col-sm-3">
         <!-- select -->
         <div class="form-group">
-            <label>Estado</label>
+            <label>Estado *</label>
             <select class="form-control" id="estado" name="estado">
-                <option value="" {{ (old('estado', $publicacion->estado ?? '') === '') ? 'selected' : '' }} disabled>Seleccionar</option>
-                <option value="Borrador" {{ old('estado', $publicacion->estado ?? '') === 'Borrador' ? 'selected' : '' }}>Borrador</option>
                 <option value="Publicado" {{ old('estado', $publicacion->estado ?? '') === 'Publicado' ? 'selected' : '' }}>Publicado</option>
+                <option value="Borrador" {{ old('estado', $publicacion->estado ?? '') === 'Borrador' ? 'selected' : '' }}>Borrador</option>
             </select>
         </div>
     </div>

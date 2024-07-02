@@ -9,7 +9,7 @@
                 @foreach ($municipios as $municipio)
                     <option value="{{ $municipio->id }}"
                         {{ isset($congregacion) && $congregacion->municipio_id == $municipio->id ? 'selected' : '' }}>
-                        {{ $municipio->nombre .' - '. $municipio->departamento->nombre }}
+                        {{ $municipio->nombre . ' - ' . $municipio->departamento->nombre }}
                     </option>
                 @endforeach
             </select>
@@ -43,16 +43,28 @@
         </div>
     </div>
 
-    <div class="col-sm-12">
+    <div class="col-sm-7">
         <div class="form-group">
             <label>Dirección congregación * </label>
-            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Cl. 10 #12 - 40, Nombre Barrio "
+            <input type="text" class="form-control" id="direccion" name="direccion"
+                placeholder="Cl. 10 #12 - 40, Barrio Llano"
                 value="{{ old('direccion', $congregacion->direccion ?? '') }}"> @error('direccion')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
     </div>
 
-   
+    <div class="col-sm-5">
+        <div class="form-group">
+            <label>Nombre congregación * </label>
+            <input type="text" class="form-control" id="nombre" name="nombre"
+                placeholder="IPUC CENTRAL, IPUC LAS AMÉRICAS, IPUC MOTILONES"
+                value="{{ old('nombre', $congregacion->nombre ?? '') }}"> @error('nombre')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+
 
 </div>

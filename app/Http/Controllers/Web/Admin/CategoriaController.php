@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoriaRequest;
 use App\Models\Categoria;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class CategoriaController extends Controller
 {
@@ -173,13 +173,47 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        $categoria->delete();
-        $data = [
-            'message' => 'Categoría eliminada exitosamente.',
-        ];
+        DB::beginTransaction();
+    
+        try {
+            // Eliminar el banner de la categoría, si existe
+            if ($categoria->imagen_banner) {
+                $this->deleteFile($categoria->imagen_banner);
+            }
+    
+            // Eliminar todas las imágenes de portada asociadas a la categoría, si las hay
+            if ($categoria->imagen()->exists()) {
+                foreach ($categoria->imagen()->get() as $imagen) {
+                    $this->deleteFile($imagen->url);
+                    $imagen->delete(); // Eliminar la entrada de la base de datos
+                }
+            }
+    
+            // Eliminar la categoría
+            $categoria->delete();
+    
+            DB::commit();
+    
+            Cache::flush();
+    
+            // Redireccionar con un mensaje de éxito
+            return redirect()->route('admin.categorias.index')->with('success', 'Categoría eliminada exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+    
+            // Redireccionar con un mensaje de error
+            return redirect()->back()->with('error', 'No se pudo eliminar la categoría, debido a una restricción de integridad.');
+        }
+    }
 
-        Cache::flush();
-
-        return redirect()->route('admin.categorias.index')->with('success', $data['message']);
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
+        }
     }
 }

@@ -88,9 +88,6 @@
 @section('js')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-    <script src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 
     <script>
@@ -104,10 +101,7 @@
                 theme: "monokai"
             });
         })
-    </script>
 
-
-    <script>
         // Generate slug
         function generateSlug(inputText) {
             var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -151,16 +145,6 @@
             reader.readAsDataURL(file);
         }
         //end mostrar imagen
-    </script>
-
-    <script>
-        /*
-            ClassicEditor
-                .create(document.querySelector('#contenido'))
-                .catch(error => {
-                    console.error(error);
-                });
-            */
     </script>
 
 

@@ -52,16 +52,16 @@ Route::resource('congregaciones', CongregacionController::class)->names('admin.c
 Route::resource('comites', ComiteController::class)->names('admin.comites');
 Route::resource('categorias', CategoriaController::class)->names('admin.categorias');
 
+Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpisodio'])->name('admin.podcasts.listEpisodio');
 Route::resource('podcasts', PodcastController::class)->names('admin.podcasts');
 // LISTAR LOS EPISODIOS SEGUN EL PODCAST
-Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpisodio'])->name('admin.podcasts.listEpisodio');
 
 Route::resource('episodios', EpisodioController::class)->names('admin.episodios');
 Route::post('episodios/uploadUrl', [EpisodioController::class, 'uploadUrl'])->name('admin.episodios.upload');
 Route::get('episodios/apigetAudio/{episodioid}', [EpisodioController::class, 'apigetAudio'])->name('admin.episodio.apigetAudio');
 
 
-//Route::get('series', [SerieController::class, 'index'])->name('admin.series.index');
+//Route::post('series/storeaux', [SerieController::class, 'storeaux'])->name('admin.series.store');
 Route::resource('series', SerieController::class)->names('admin.series')->parameters([
     'series' => 'serie', // Cambia el nombre del parámetro de la ruta
 ]);

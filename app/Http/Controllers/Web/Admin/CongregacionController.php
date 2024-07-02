@@ -37,7 +37,6 @@ class CongregacionController extends Controller
      */
     public function create()
     {
-        //$departamentos = Departamento::all();
         $municipios = Municipio::selectList();
         return view('admin.congregaciones.create', compact('municipios'));
     }
@@ -47,23 +46,18 @@ class CongregacionController extends Controller
      */
     public function store(CongregacionRequest $request)
     {
-        //return $request;
         Congregacion::create([
             'municipio_id' => $request->municipio,
             'longitud' => $request->longitud,
             'latitud' => $request->latitud,
             'direccion' => $request->direccion,
+            'nombre' => $request->nombre,
         ]);
 
-        $data = [
-            'message' => 'Congregación creada exitosamente.',
-        ];
-
-        //Elimina la variables almacenada en cache
         Cache::flush();
-        //Cache
 
-        return redirect()->route('admin.congregaciones.index')->with('success', $data['message']);
+        return redirect()->route('admin.congregaciones.index')
+            ->with('success', 'Congregación creada exitosamente.');
     }
 
     /**
@@ -93,18 +87,13 @@ class CongregacionController extends Controller
             'longitud' => $request->longitud,
             'latitud' => $request->latitud,
             'direccion' => $request->direccion,
+            'nombre' => $request->nombre
         ]);
 
-
-        $data = [
-            'message' => 'Congregación actualizada exitosamente.',
-        ];
-
-        //Elimina la variables almacenada en cache
         Cache::flush();
-        //Cache
 
-        return redirect()->route('admin.congregaciones.edit', $congregacion)->with('success', $data['message']);
+        return redirect()->route('admin.congregaciones.edit', $congregacion)
+            ->with('success', 'Congregación actualizada exitosamente.');
     }
 
     /**
@@ -115,19 +104,11 @@ class CongregacionController extends Controller
         try {
             $congregacion->delete();
 
-            //Elimina la variables almacenada en cache
             Cache::flush();
-            //Cache
 
-            $data = [
-                'message' => 'Congregación eliminada exitosamente.',
-            ];
-
-            //Elimina la variables almacenada en cache
-            Cache::flush();
-            //Cache
-
-            return redirect()->route('admin.congregaciones.index')->with('success', $data['message']);
+            return redirect()->route('admin.congregaciones.index')
+                ->with('success', 'Congregación eliminada exitosamente.');
+                
         } catch (\Exception $e) {
             $data = [
                 'message' => 'No se pudo eliminar la congregación, debido a restricción de integridad.',

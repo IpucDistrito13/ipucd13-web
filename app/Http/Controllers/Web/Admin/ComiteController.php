@@ -30,14 +30,6 @@ class ComiteController extends Controller
         return view('admin.comites.index', compact('comites'));
     }
 
-    private function storeFile($file, $ubicacion)
-    {
-        if (env('APP_ENV') === 'local') {
-            return Storage::put($ubicacion, $file);
-        } else {
-            return Storage::disk('s3')->put($ubicacion, $file);
-        }
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -46,6 +38,15 @@ class ComiteController extends Controller
     {
 
         return view('admin.comites.create');
+    }
+
+    private function storeFile($file, $ubicacion)
+    {
+        if (env('APP_ENV') === 'local') {
+            return Storage::put($ubicacion, $file);
+        } else {
+            return Storage::disk('s3')->put($ubicacion, $file);
+        }
     }
 
     /**
@@ -130,39 +131,39 @@ class ComiteController extends Controller
         try {
             // Iniciar una transacción de base de datos
             DB::beginTransaction();
-    
+
             $url_banner = $comite->imagen_banner;
-    
+
             // Verificar si se cargó un nuevo banner
             if ($request->hasFile('imagen_banner')) {
                 $fileBanner = $request->file('imagen_banner');
                 $ubicacionBanner = 'public/comites/banner';
                 $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
-    
+
                 // Eliminar el banner anterior si existe
                 if ($comite->imagen_banner) {
                     Storage::delete($comite->imagen_banner);
                 }
             }
-    
+
             $data = [
                 'nombre' => $request->nombre,
                 'slug' => $request->slug,
                 'descripcion' => $request->descripcion,
                 'imagen_banner' => $url_banner,
             ];
-    
+
             $comite->update($data);
-    
+
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
                 $filePortada = $request->file('file');
                 $ubicacionPortada = 'public/comites/portadas';
                 $url = $this->storeFile($filePortada, $ubicacionPortada);
-    
+
                 if ($comite->imagen) {
                     Storage::delete($comite->imagen->url);
-    
+
                     // Actualizar la relación de imagen con la nueva URL del archivo
                     $comite->imagen()->update([
                         'url' => $url,
@@ -176,19 +177,19 @@ class ComiteController extends Controller
                     ]);
                 }
             }
-    
+
             // Commit si no hay errores
             DB::commit();
-    
+
             // Eliminar datos almacenados en cache
             Cache::flush();
-    
+
             // Redireccionar con un mensaje de éxito
             return back()->with('success', 'Comité actualizado exitosamente.');
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
-    
+
             // Redireccionar con un mensaje de error
             return back()->with('error', 'Error al actualizar el comité: ' . $e->getMessage())->withInput();
         }
@@ -199,26 +200,54 @@ class ComiteController extends Controller
      *       <img src="{{ !empty($serie->imagen->url) ? Storage::url($serie->imagen->url) : 'https://i.ibb.co/YcvYfpx/640x480.png' }}" alt="" />
 
      */
-    public function destroy(Comite $Comite)
+
+     public function destroy(Comite $comite)
+     {
+         DB::beginTransaction();
+     
+         try {
+             // Eliminar el banner del comité, si existe
+             if ($comite->imagen_banner) {
+                 $this->deleteFile($comite->imagen_banner);
+             }
+     
+             // Eliminar todas las imágenes de portada asociadas al comité, si las hay
+             if ($comite->imagen()->exists()) {
+                 foreach ($comite->imagen()->get() as $imagen) {
+                     $this->deleteFile($imagen->url);
+                     $imagen->delete(); // Eliminar la entrada de la base de datos
+                 }
+             }
+     
+             // Eliminar el comité
+             $comite->delete();
+     
+             DB::commit();
+
+             Cache::flush();
+
+     
+             // Redireccionar con un mensaje de éxito
+             return redirect()->route('admin.comites.index')
+                 ->with('success', 'Comité eliminado exitosamente.');
+         } catch (\Exception $e) {
+             DB::rollBack();
+
+     
+             // Redireccionar con un mensaje de error
+             return redirect()->back()->with('error', 'No se pudo eliminar el comité, debido a restricción de integridad.');
+         }
+     }
+
+    private function deleteFile($url)
     {
-        try {
-            $Comite->delete();
-
-            //Elimina la variables almacenada en cache
-            Cache::flush();
-            //Cache
-
-            $data = [
-                'message' => 'Comité eliminado exitosamente.',
-            ];
-
-            return redirect()->route('admin.comites.index')->with('success', $data['message']);
-        } catch (\Exception $e) {
-            $data = [
-                'message' => 'No se pudo eliminar el comité, debido a restricción de integridad.',
-            ];
-
-            return redirect()->route('admin.comites.index')->with('error', $data['message']);
+        //dd($url);
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
         }
     }
 }
