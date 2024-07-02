@@ -48,6 +48,8 @@ class ComiteController extends Controller
             'description' => 'Comité | IPUC Distrito 13',
         ];
 
+        //return $comite;
+
         return view('public.comites.show', [
             'comites' => $comitesMenu,
             'comite' => $comite,

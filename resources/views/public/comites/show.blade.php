@@ -31,10 +31,11 @@
 
     @include('public.layouts.menu')
 
-    <!-- start banner  -->
+    <!-- start banner          style="background-image: url(https://via.placeholder.com/1920x560)">
+  -->
     <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography"
-    style="background-image: url({{ Storage::url($comite->imagen_banner) }} )">
-    <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
+        @if ($comite->imagen_banner) style="background-image: url({{ Storage::url($comite->imagen_banner) }} )" @endif>
+        <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
             style="background-image: url('images/vertical-line-bg-small.svg')"></div>
         <div id="particles-style-01" class="h-100 position-absolute left-0px top-0 w-100" data-particle="true"
             data-particle-options='{"particles": {"number": {"value": 8,"density": {"enable": true,"value_area": 2000}},"color": {"value": ["#d5d52b", "#d5d52b", "#d5d52b", "#d5d52b", "#d5d52b"]},"shape": {"type": "circle","stroke":{"width":0,"color":"#000000"}},"opacity": {"value": 1,"random": false,"anim": {"enable": false,"speed": 1,"sync": false}},"size": {"value": 8,"random": true,"anim": {"enable": false,"sync": true}},"line_linked":{"enable":false,"distance":0,"color":"#ffffff","opacity":1,"width":1},"move": {"enable": true,"speed":1,"direction": "right","random": false,"straight": false}},"interactivity": {"detect_on": "canvas","events": {"onhover": {"enable": false,"mode": "repulse"},"onclick": {"enable": false,"mode": "push"},"resize": true}},"retina_detect": false}'>
@@ -48,6 +49,7 @@
             </div>
         </div>
     </section>
+    </section>
     <!-- end banner -->
 
     <!-- start footer -->
@@ -57,8 +59,7 @@
     <!-- start scroll progress -->
     <div class="scroll-progress d-none d-xxl-block">
         <a href="#" class="scroll-top" aria-label="scroll">
-            <span class="scroll-text">Scroll</span><span class="scroll-line"><span
-                    class="scroll-point"></span></span>
+            <span class="scroll-text">Scroll</span><span class="scroll-line"><span class="scroll-point"></span></span>
         </a>
     </div>
     <!-- end scroll progress -->
