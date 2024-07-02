@@ -49,8 +49,239 @@
             </div>
         </div>
     </section>
-    </section>
     <!-- end banner -->
+
+    <!-- start descripcion comite -->
+    <section class="bg-very-light-gray">
+        <div class="container">
+            <!-- start dropcaps item -->
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 col-md-6 sm-mb-30px">
+                    <img class="w-100 border-radius-6px"
+                        src="{{ !empty($comite->imagen->url) ? Storage::url($comite->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
+                        alt="" />
+                </div>
+                <div class="col-12 col-lg-5 col-md-6 offset-lg-1 dropcap-style-01 last-paragraph-no-margin">
+                    <p><span
+                            class="first-letter text-dark-gray fw-700">{{ strtoupper(substr($comite->descripcion, 0, 1)) }}</span>{{ substr($comite->descripcion, 1) }}
+                    </p>
+
+                </div>
+            </div>
+            <!-- end dropcaps item -->
+        </div>
+    </section>
+    <!-- end descripcion comite -->
+
+
+    <!-- start section publicaciones -->
+    @if ($publicaciones->isNotEmpty())
+        <section
+            class="bg-gradient-tranquil-white overflow-hidden position-relative overlap-height pb-5 md-pb-7 xs-pb-50px">
+            <div class="container overlap-gap-section">
+                <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
+                    <div class="col-xxl-8 col-md-7 sm-mb-10px">
+                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimas publicaciones</h2>
+                    </div>
+                    <div class="col-xxl-4 col-md-5 text-center text-md-end"
+                        data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        <a href="{{ route('public.publicaciones.index') }}"
+                            class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
+                            <span>
+                                <span class="btn-text">Explora todas las publicaciones</span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- start row -->
+                <div class="row">
+                    <div class="col-12">
+                        <ul
+                            class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
+                            <li class="grid-sizer"></li>
+
+                            @foreach ($publicaciones as $publicacion)
+                                <!-- start blog item -->
+                                <li class="grid-item">
+                                    <div class="card bg-transparent border-0 h-100">
+                                        <div class="blog-image position-relative overflow-hidden border-radius-4px">
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}">
+                                                <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
+                                                    alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="card-body px-0 pt-30px pb-30px">
+                                            <span class="fs-13 text-uppercase mb-5px d-block"><a href="#"
+                                                    class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $publicacion->comite->nombre }}</a>
+                                                    <br>
+                                                <a href="#" class="blog-date text-dark-gray-hover">{{ $publicacion->created_at->format('Y-m-d h:i a') }}</a>
+                                            </span>
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                                class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $publicacion->titulo }}</a>
+                                            <p class="mb-10px w-95">{{ $publicacion->descripcion }}</p>
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                                class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver
+                                                más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- end blog item -->
+                            @endforeach
+
+
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- end row -->
+
+            </div>
+        </section>
+
+    @endif
+    <!-- end section publicaciones -->
+
+    <!-- start section show serie -->
+    @if ($series->isNotEmpty())
+        <section class="background-repeat overflow-hidden">
+            <div class="container">
+                <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
+                    <div class="col-xxl-8 col-md-7 sm-mb-10px">
+                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimos series</h2>
+                    </div>
+                    <div class="col-xxl-4 col-md-5 text-center text-md-end"
+                        data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        <a href="{{ route('public.series.index') }}"
+                            class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
+                            <span>
+                                <span class="btn-text">Explora todas las series</span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- start row -->
+                <div class="row">
+                    <div class="col-12">
+                        <ul
+                            class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
+                            <li class="grid-sizer"></li>
+
+                            @foreach ($series as $serie)
+                                <!-- start blog item -->
+                                <li class="grid-item">
+                                    <div class="card bg-transparent border-0 h-100">
+                                        <div class="blog-image position-relative overflow-hidden border-radius-4px">
+                                            <a href="{{ route('public.series.show', $serie) }} ">
+                                                <img src="{{ !empty($serie->imagen->url) ? Storage::url($serie->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
+                                                    alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="card-body px-0 pt-30px pb-30px">
+                                            <span class="fs-13 text-uppercase mb-5px d-block"><a href="#"
+                                                    class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $serie->comite->nombre }}</a>
+                                                <br>
+                                                <a href="{{ route('public.series.show', $serie) }}"
+                                                    class="blog-date text-dark-gray-hover">{{ $serie->created_at->format('Y-m-d h:i a') }}</a>
+                                            </span>
+                                            <a href="{{ route('public.series.show', $serie) }} "
+                                                class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $serie->titulo }}</a>
+                                            <p class="mb-10px w-95">{{ $serie->descripcion }}</p>
+                                            <a href="{{ route('public.series.show', $serie) }} "
+                                                class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver
+                                                más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- end blog item -->
+                            @endforeach
+
+
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- end row -->
+
+            </div>
+        </section>
+    @endif
+    <!-- end section show serie-->
+
+    <!-- start section show podcasts -->
+
+    @if (!$podcasts->isEmpty())
+        <section class="background-repeat overflow-hidden">
+            <div class="container">
+                <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
+                    <div class="col-xxl-8 col-md-7 sm-mb-10px">
+                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimos podcasts</h2>
+                    </div>
+                    <div class="col-xxl-4 col-md-5 text-center text-md-end"
+                        data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        <a href="#"
+                            class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
+                            <span>
+                                <span class="btn-text">Explora todas los podcasts</span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- start row -->
+                <div class="row">
+                    <div class="col-12">
+                        <ul
+                            class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
+                            <li class="grid-sizer"></li>
+
+                            @foreach ($podcasts as $podcast)
+                                <!-- start blog item -->
+                                <li class="grid-item">
+                                    <div class="card bg-transparent border-0 h-100">
+                                        <div class="blog-image position-relative overflow-hidden border-radius-4px">
+                                            <a href="{{ route('public.podcasts.episodios', $podcast) }}">
+                                                <img src="{{ !empty($podcast->imagen->url) ? Storage::url($podcast->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
+                                                    alt="" />
+                                            </a>
+                                        </div>
+                                        <div class="card-body px-0 pt-30px pb-30px">
+                                            <span class="fs-13 text-uppercase mb-5px d-block"><a href="#"
+                                                    class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $podcast->comite->nombre }}</a>
+                                                    <br>
+                                                <a href="#"
+                                                    class="blog-date text-dark-gray-hover">{{ $podcast->created_at->format('Y-m-d h:i a') }}</a>
+                                            </span>
+                                            <a href="{{ route('public.podcasts.episodios', $podcast) }}"
+                                                class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $podcast->titulo }}</a>
+                                            <p class="mb-10px w-95">{{ $podcast->descripcion }}</p>
+                                            <a href="{{ route('public.podcasts.episodios', $podcast) }}"
+                                                class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver
+                                                más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- end blog item -->
+                            @endforeach
+
+
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- end row -->
+
+            </div>
+        </section>
+    @endif
+    <!-- end section show podcasts -->
 
     <!-- start footer -->
     @include('public.layouts.footer')
