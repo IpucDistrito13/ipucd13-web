@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\Admin\CronogramaController;
 use App\Http\Controllers\Web\Admin\DatatableController;
 use App\Http\Controllers\Web\Admin\EpisodioController;
 use App\Http\Controllers\Web\Admin\EventoController;
+use App\Http\Controllers\Web\Admin\FileUploadController;
 use App\Http\Controllers\Web\Admin\GaleriaController;
 use App\Http\Controllers\Web\Admin\HomeController;
 use App\Http\Controllers\Web\Admin\PodcastController;
@@ -25,6 +26,9 @@ use App\Http\Controllers\Web\Admin\VideoController;
 use App\Models\Carpetaaux;
 use App\Models\GaleriaTipo;
 use Illuminate\Support\Facades\Route;
+
+Route::get('file-upload', [FileUploadController::class, 'index'])->name('files.index');
+Route::post('file-upload/upload-large-files', [FileUploadController::class, 'uploadLargeFiles'])->name('files.upload.large');
 
 Route::get('/', [HomeController::class, 'index'])->name('admin.dashboard');
 Route::get('transmision', [HomeController::class, 'transmision']);
