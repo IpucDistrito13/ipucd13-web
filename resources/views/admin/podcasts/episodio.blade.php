@@ -4,6 +4,7 @@
 
 @section('content_header')
 
+
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
             <i class="fas fa-volume-up"></i> Podcast: {{ $podcast->titulo }}
@@ -96,9 +97,9 @@
                             <td>{{ $item->titulo }}</td>
                             <td>{{ $item->descripcion }}</td>
                             <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
+                            <!-- Botón para abrir el modal -->
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
-
                                     @if ($item->url)
                                         <button class="btn btn-info btn-sm reproducir" data-id="{{ $item->id }}"
                                             onclick="reproducirBtn({{ $item->id }})">Reproducir</button>
@@ -110,7 +111,6 @@
                                     @endif
 
                                     @can('admin.episodios.destroy')
-                                        <!-- Delete Button -->
                                         <form id="deleteForm{{ $item->id }}"
                                             action="{{ route('admin.episodios.destroy', $item) }}" method="POST">
                                             @csrf
@@ -118,70 +118,103 @@
                                             <button type="button" class="btn btn-danger btn-sm"
                                                 onclick="confirmDelete({{ $item->id }})">Eliminar</button>
                                         </form>
-
-
-                                        <script>
-                                            function confirmDelete(itemId) {
-                                                const swalWithBootstrapButtons = Swal.mixin({
-                                                    customClass: {
-                                                        confirmButton: 'btn btn-success',
-                                                        cancelButton: 'btn btn-danger'
-                                                    },
-                                                    buttonsStyling: false
-                                                });
-
-                                                swalWithBootstrapButtons.fire({
-                                                    title: '¿Estás seguro?',
-                                                    text: '¡No podrás revertir esto!',
-                                                    icon: 'warning',
-                                                    showCancelButton: true,
-                                                    confirmButtonText: 'Eliminar',
-                                                    confirmButtonColor: '#a5161d',
-                                                    denyButtonColor: '#270a0a',
-                                                    cancelButtonText: 'Cancelar',
-                                                    reverseButtons: true
-                                                }).then((result) => {
-                                                    if (result.isConfirmed) {
-                                                        document.getElementById('deleteForm' + itemId).submit();
-                                                    }
-                                                });
-                                            }
-                                        </script>
                                     @endcan
+                                </div>
 
+                                <!-- Modal -->
+                                <div class="modal fade" id="modal_upload_{{ $item->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="modal_upload_label_{{ $item->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Subir audio</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('admin.episodios.upload') }}" method="POST"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <input type="text" name="podcast_id" value="{{ $item->id }}">
+                                                    <div class="container pt-4">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-12">
+                                                                <div class="card">
+                                                                    <div class="card-header text-center">
+                                                                        <h5>Subir Archivo</h5>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div id="upload-container" class="text-center">
+                                                                            <button id="browseFile"
+                                                                                class="btn btn-primary"
+                                                                                type="button">Buscar Archivo</button>
+                                                                            <input type="file"
+                                                                                id="fileInput_{{ $item->id }}"
+                                                                                name="file" style="display: none;">
+                                                                        </div>
+                                                                        <div class="progress mt-3" style="height: 25px">
+                                                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                                                role="progressbar" aria-valuenow="75"
+                                                                                aria-valuemin="0" aria-valuemax="100"
+                                                                                style="width: 75%; height: 100%">75%</div>
+                                                                        </div>
+                                                                    </div>
 
-                                    </form>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modal_upload_{{ $item->id }}" tabindex="-1"
-                                        role="dialog" aria-labelledby="modal_upload_label_{{ $item->id }}"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Subir audio</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="{{ route('admin.episodios.upload') }}" method="POST"
-                                                    enctype="multipart/form-data" class="dropzone"
-                                                    id="myDropzone_{{ $item->id }}">
-                                                    @csrf
-                                                    <div class="modal-body">
-                                                        <input type="text" value="{{ $item->id }}"
-                                                            id="podcast_{{ $item->id }}" name="podcast">
-                                                        <div class="fallback">
-                                                            <input type="file" name="file" multiple>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Guardar
+                                                        cambios</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </td>
+
+                            <script>
+                                function confirmDelete(itemId) {
+                                    const swalWithBootstrapButtons = Swal.mixin({
+                                        customClass: {
+                                            confirmButton: 'btn btn-success',
+                                            cancelButton: 'btn btn-danger'
+                                        },
+                                        buttonsStyling: false
+                                    });
+
+                                    swalWithBootstrapButtons.fire({
+                                        title: '¿Estás seguro?',
+                                        text: '¡No podrás revertir esto!',
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Eliminar',
+                                        confirmButtonColor: '#a5161d',
+                                        denyButtonColor: '#270a0a',
+                                        cancelButtonText: 'Cancelar',
+                                        reverseButtons: true
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            document.getElementById('deleteForm' + itemId).submit();
+                                        }
+                                    });
+                                }
+
+                                document.querySelectorAll('[id^=browseFile]').forEach(button => {
+                                    button.addEventListener('click', () => {
+                                        const fileInputId = button.id.replace('browseFile', 'fileInput');
+                                        document.getElementById(fileInputId).click();
+                                    });
+                                });
+                            </script>
+
+
                         </tr>
                     @endforeach
 
@@ -277,6 +310,57 @@
     <!-- /.modal data -->
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Subir Archivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal -->
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header text-center">
+                                        <h5>Subir archivo</h5>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div id="upload-container" class="text-center mb-4">
+                                            <button id="browseFile" class="btn btn-primary btn-lg">
+                                                <i class="fas fa-cloud-upload-alt me-2"></i>Buscar archivo
+                                            </button>
+                                        </div>
+
+                                        <div class="progress">
+                                            <div class="progress-bar bg-primary progress-bar-striped" role="progressbar"
+                                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                                style="width: 100%">
+                                                <span class="sr-only">40% Completado (success)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer p-4" style="display: none;">
+                                        <video id="videoPreview" src="" controls
+                                            style="width: 100%; height: auto"></video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('css')
@@ -285,6 +369,29 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
 
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        #browseFile {
+            transition: all 0.3s;
+        }
+        #browseFile:hover {
+            transform: scale(1.05);
+        }
+        .progress {
+            height: 25px;
+            margin-top: 20px;
+        }
+    </style>
 
 
     <style>
@@ -416,6 +523,35 @@
             /* Blue icon color */
         }
     </style>
+
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #browseFile {
+            transition: all 0.3s;
+        }
+
+        #browseFile:hover {
+            transform: scale(1.05);
+        }
+
+        .progress {
+            height: 25px;
+            margin-top: 20px;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -438,6 +574,7 @@
 
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js"></script>
 
     <script>
         $(function() {
@@ -591,6 +728,63 @@
 
             audioPlayer.currentTime = seekTime;
             updateProgress();
+        }
+    </script>
+
+    <script type="text/javascript">
+        let browseFile = $('#browseFile');
+        let resumable = new Resumable({
+            target: '{{ route('files.upload.large') }}',
+            query: {
+                _token: '{{ csrf_token() }}'
+            },
+            fileType: ['mp3'],
+            headers: {
+                'Accept': 'application/json'
+            },
+            testChunks: false,
+            throttleProgressCallbacks: 1,
+        });
+
+        resumable.assignBrowse(browseFile[0]);
+
+        resumable.on('fileAdded', function(file) {
+            showProgress();
+            resumable.upload()
+        });
+
+        resumable.on('fileProgress', function(file) {
+            updateProgress(Math.floor(file.progress() * 100));
+        });
+
+        resumable.on('fileSuccess', function(file, response) {
+            response = JSON.parse(response)
+            //$('#videoPreview').attr('src', response.path);
+            $('.card-footer').show();
+
+            console.log('Archivo subido exitosamente.')
+        });
+
+        resumable.on('fileError', function(file, response) {
+            alert('File uploading error.')
+        });
+
+        let progress = $('.progress');
+
+        function showProgress() {
+            progress.find('.progress-bar').css('width', '0%');
+            progress.find('.progress-bar').html('0%');
+            progress.find('.progress-bar').removeClass('bg-success');
+            progress.show();
+        }
+
+        function updateProgress(value) {
+            progress.find('.progress-bar').css('width', `${value}%`)
+            progress.find('.progress-bar').html(`${value}%`)
+        }
+
+        function hideProgress() {
+            progress.hide();
         }
     </script>
 

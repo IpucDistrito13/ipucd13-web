@@ -1,117 +1,122 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
-
-
     <title>{{ config('app.name') }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        #browseFile {
+            transition: all 0.3s;
+        }
+        #browseFile:hover {
+            transform: scale(1.05);
+        }
+        .progress {
+            height: 25px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
-<style>
-    .card-footer, .progress {
-        display: none;
-    }
-</style>
-
 <body>
-
-<div class="container pt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h5>Upload File</h5>
-                </div>
-
-                <div class="card-body">
-                    <div id="upload-container" class="text-center">
-                        <button id="browseFile" class="btn btn-primary">Brows File</button>
+    <div class="container pt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-center py-3">
+                        <h5 class="mb-0">Upload File</h5>
                     </div>
-                    <div class="progress mt-3" style="height: 25px">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%; height: 100%">75%</div>
-                    </div>
-                </div>
 
-                <div class="card-footer p-4" >
-                    <video id="videoPreview" src="" controls style="width: 100%; height: auto"></video>
+                    <div class="card-body">
+                        <div id="upload-container" class="text-center mb-4">
+                            <button id="browseFile" class="btn btn-primary btn-lg">
+                                <i class="fas fa-cloud-upload-alt me-2"></i> Browse File
+                            </button>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer p-4" style="display: none;">
+                        <video id="videoPreview" src="" controls style="width: 100%; height: auto"></video>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script type="text/javascript">
+        let browseFile = $('#browseFile');
+        let resumable = new Resumable({
+            target: '{{ route('files.upload.large') }}',
+            query: {_token: '{{ csrf_token() }}'},
+            fileType: ['mp3', 'mp4'],
+            headers: {'Accept': 'application/json'},
+            testChunks: false,
+            throttleProgressCallbacks: 1,
+        });
 
+        resumable.assignBrowse(browseFile[0]);
 
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap4.js"></script>
-<!-- DataTables Responsive JS -->
-<script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
-<!-- Resumable JS -->
-<script src="https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js"></script>
+        resumable.on('fileAdded', function(file) {
+            showProgress();
+            resumable.upload()
+        });
 
-<script type="text/javascript">
-    let browseFile = $('#browseFile');
-    let resumable = new Resumable({
-        target: '{{ route('files.upload.large') }}',
-        query:{_token:'{{ csrf_token() }}'} ,// CSRF token
-        fileType: ['mp3'],
-        headers: {
-            'Accept' : 'application/json'
-        },
-        testChunks: false,
-        throttleProgressCallbacks: 1,
-    });
+        resumable.on('fileProgress', function(file) {
+            updateProgress(Math.floor(file.progress() * 100));
+        });
 
-    resumable.assignBrowse(browseFile[0]);
+        resumable.on('fileSuccess', function(file, response) {
+            response = JSON.parse(response)
+            $('#videoPreview').attr('src', response.path);
+            $('.card-footer').show();
+            alert('Archivo subido exitosamente.')
+            console.log(response);
 
-    resumable.on('fileAdded', function (file) { // trigger when file picked
-        showProgress();
-        resumable.upload() // to actually start uploading.
-    });
+        });
 
-    resumable.on('fileProgress', function (file) { // trigger when file progress update
-        updateProgress(Math.floor(file.progress() * 100));
-    });
+        resumable.on('fileError', function(file, response) {
+            alert('File uploading error.')
+        });
 
-    resumable.on('fileSuccess', function (file, response) { // trigger when file upload complete
-        response = JSON.parse(response)
-        $('#videoPreview').attr('src', response.path);
-        $('.card-footer').show();
-    });
+        let progress = $('.progress');
 
-    resumable.on('fileError', function (file, response) { // trigger when there is any error
-        alert('file uploading error.')
-    });
+        function showProgress() {
+            progress.find('.progress-bar').css('width', '0%');
+            progress.find('.progress-bar').html('0%');
+            progress.find('.progress-bar').removeClass('bg-success');
+            progress.show();
+        }
 
+        function updateProgress(value) {
+            progress.find('.progress-bar').css('width', `${value}%`)
+            progress.find('.progress-bar').html(`${value}%`)
+        }
 
-    let progress = $('.progress');
-    function showProgress() {
-        progress.find('.progress-bar').css('width', '0%');
-        progress.find('.progress-bar').html('0%');
-        progress.find('.progress-bar').removeClass('bg-success');
-        progress.show();
-    }
-
-    function updateProgress(value) {
-        progress.find('.progress-bar').css('width', `${value}%`)
-        progress.find('.progress-bar').html(`${value}%`)
-    }
-
-    function hideProgress() {
-        progress.hide();
-    }
-</script>
+        function hideProgress() {
+            progress.hide();
+        }
+    </script>
 </body>
+
 </html>

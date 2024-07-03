@@ -30,6 +30,7 @@ class FileUploadController extends Controller
 
     public function uploadLargeFiles(Request $request)
     {
+        // return $request;
         //$recibe = new Archivo(
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
@@ -49,9 +50,10 @@ class FileUploadController extends Controller
             $disk = Storage::disk(config('filesystems.default'));
             //$path = $disk->putFileAs('videos', $file, $fileName);
             //$path =  $file->storeAs('public/descargables/test', $fileName); // Almacenamiento privado
-            $path =  $file->storeAs('public/podcasts/episodios', $fileName); // Almacenamiento privado
+            $ubicacion = $file->storeAs('public/podcasts/episodios', $fileName); // Almacenamiento en carpeta pública
+            $path = str_replace('public/', '', $ubicacion);
 
-
+            // $path ahora contendrá la ubicación sin 'public/'
 
             // delete chunked file
             unlink($file->getPathname());
