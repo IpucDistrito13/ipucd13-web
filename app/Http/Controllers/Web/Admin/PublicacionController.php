@@ -44,77 +44,15 @@ class PublicacionController extends Controller
         return view('admin.publicaciones.create', compact('comites', 'categorias'));
     }
 
-    public function store(Request $request)
+    public function store(PublicacionRequest $request)
     {
         try {
             $contenido = $request->contenido;
-
-            // Configurar la entrada como UTF-8 para asegurar el manejo adecuado de caracteres especiales
-            $dom = new \DOMDocument('1.0', 'UTF-8');
-            libxml_use_internal_errors(true);
-            $dom->loadHTML(mb_convert_encoding($contenido, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-            libxml_clear_errors();
-            $contenido = $dom->saveHTML();
+            $dom = new DOMDocument('1.0', 'UTF-8');
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . $contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
             // Procesar el contenido HTML para manejar imágenes base64, si es necesario
-            $contenido = $this->processBase64Images($contenido);
-
-            // Crear la nueva publicación con los datos proporcionados
-            $publicacion = Publicacion::create([
-                'titulo' => $request->titulo,
-                'slug' => $request->slug,
-                'descripcion' => $request->descripcion,
-                'contenido' => $contenido,
-                'comite_id' => $request->comite,
-                'categoria_id' => $request->categoria,
-                'estado' => $request->estado,
-                'user_id' => auth()->user()->id,
-            ]);
-
-            // Manejar la imagen asociada, si se proporciona
-            if ($request->file('file')) {
-                $filePortada = $request->file('file');
-                $ubicacionPortada = 'public/publicaciones/portadas';
-                $url = $this->storeFile($filePortada, $ubicacionPortada);
-                $publicacion->imagen()->create([
-                    'url' => $url,
-                    'imageable_type' => Publicacion::class,
-                ]);
-            }
-
-            // Limpiar la cache
-            Cache::flush();
-
-            // Redireccionar con mensaje de éxito
-            return redirect()->route('admin.publicaciones.index')
-                ->with('success', 'Publicación creada exitosamente.');
-        } catch (\Exception $e) {
-            // Log del error para revisión posterior
-            \Log::error('Error al crear la publicación: ' . $e->getMessage());
-
-            // Redireccionar con mensaje de error
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Ha ocurrido un error al crear la publicación. Por favor, inténtelo de nuevo.');
-            //->with('error', $e->getMessage());
-        }
-    }
-
-
-
-
-    public function store22(PublicacionRequest $request)
-    {
-        try {
-            $contenido = $request->contenido;
-            $dom = new DOMDocument();
-            libxml_use_internal_errors(true);
-            $dom->loadHTML($contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-            libxml_clear_errors();
-            $contenido = $dom->saveHTML();
-
-            // Procesar el contenido HTML para manejar imágenes base64, si es necesario
-            $contenido = $this->processBase64Images($contenido);
+            $contenido = $this->processBase64Images($dom->saveHTML());
 
             // Crear la publicación con los datos proporcionados
             $publicacion = Publicacion::create([
@@ -151,8 +89,7 @@ class PublicacionController extends Controller
             // Redireccionar con mensaje de error
             return redirect()->back()
                 ->withInput()
-                //->with('error', 'Ha ocurrido un error al crear la publicación. Por favor, inténtelo de nuevo.');
-                ->with('error', $e->getMessage());
+                ->with('error', 'Ha ocurrido un error al crear la publicación. Por favor, inténtelo de nuevo.');
         }
     }
 
@@ -191,11 +128,11 @@ class PublicacionController extends Controller
     {
         try {
             $contenido = $request->contenido;
-            $dom = new DOMDocument();
-            libxml_use_internal_errors(true);
-            $dom->loadHTML($contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-            libxml_clear_errors();
-            $contenido = $dom->saveHTML();
+            $dom = new DOMDocument('1.0', 'UTF-8');
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . $contenido, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+            // Procesar el contenido HTML para manejar imágenes base64, si es necesario
+            $contenido = $this->processBase64Images($dom->saveHTML());
 
             // Procesar el contenido HTML para manejar imágenes base64, si es necesario
             $contenido = $this->processBase64Images($contenido);
