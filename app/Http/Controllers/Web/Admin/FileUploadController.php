@@ -51,6 +51,8 @@ class FileUploadController extends Controller
 
             // delete chunked file
             unlink($file->getPathname());
+
+            return $path;
             return [
                 'path' => asset('storage/' . str_replace('public/', '', $path)),
                 'filename' => $fileName
