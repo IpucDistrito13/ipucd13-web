@@ -45,7 +45,7 @@ class FileUploadController extends Controller
             $fileName .= '_' . md5(time()) . '.' . $extension; // a unique file name
 
             $ubicacion = 'public/podcasts/episodios'; // Define the storage path
-            $path = $this->storeFile($file, $ubicacion); // Use the storeFile method to save the file
+            $path = $this->storeFile($file, $fileName); // Use the storeFile method to save the file
 
             // $path ahora contendrá la ubicación sin 'public/'
 
