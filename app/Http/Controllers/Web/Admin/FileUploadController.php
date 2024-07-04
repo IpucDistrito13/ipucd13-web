@@ -30,12 +30,11 @@ class FileUploadController extends Controller
 
     public function uploadLargeFiles(Request $request)
     {
-        // return $request;
-        //$recibe = new Archivo(
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
         if (!$receiver->isUploaded()) {
             // file not uploaded
+            return response()->json(['error' => 'File not uploaded'], 400);
         }
 
         $fileReceived = $receiver->receive(); // receive file
@@ -45,20 +44,15 @@ class FileUploadController extends Controller
             $fileName = str_replace('.' . $extension, '', $file->getClientOriginalName()); //file name without extenstion
             $fileName .= '_' . md5(time()) . '.' . $extension; // a unique file name
 
-            //$url =  $file->storeAs('public/descargables/' . $carpeta, $fileName); // Almacenamiento privado
-
-            $disk = Storage::disk(config('filesystems.default'));
-            //$path = $disk->putFileAs('videos', $file, $fileName);
-            //$path =  $file->storeAs('public/descargables/test', $fileName); // Almacenamiento privado
-            $ubicacion = $file->storeAs('public/podcasts/episodios', $fileName); // Almacenamiento en carpeta pública
-            $path = str_replace('public/', '', $ubicacion);
+            $ubicacion = 'public/podcasts/episodios/' . $fileName; // Define the storage path
+            $path = $this->storeFile($file, $ubicacion); // Use the storeFile method to save the file
 
             // $path ahora contendrá la ubicación sin 'public/'
 
             // delete chunked file
             unlink($file->getPathname());
             return [
-                'path' => asset('storage/' . $path),
+                'path' => asset('storage/' . str_replace('public/', '', $path)),
                 'filename' => $fileName
             ];
         }
