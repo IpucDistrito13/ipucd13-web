@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
-
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 class EpisodioController extends Controller
 {
@@ -177,5 +178,79 @@ class EpisodioController extends Controller
             // Manejar el caso en el que no se presente ningún archivo en la solicitud
             return response()->json(['error' => 'No se ha cargado ningún archivo'], 400);
         }
+    }
+
+
+    private function storeFile($file, $ubicacion)
+    {
+        $contents = file_get_contents($file->getRealPath());
+
+        if (env('APP_ENV') === 'local') {
+            return Storage::put($ubicacion, $contents);
+        } else {
+            return Storage::disk('s3')->put($ubicacion, $contents);
+        }
+    }
+
+    public function uploadLargeFiles(Request $request)
+    {
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+
+        if (!$receiver->isUploaded()) {
+            return response()->json(['error' => 'File not uploaded'], 400);
+        }
+
+        $fileReceived = $receiver->receive();
+        if ($fileReceived->isFinished()) {
+            $file = $fileReceived->getFile();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = str_replace('.' . $extension, '', $file->getClientOriginalName());
+            $fileName .= '_' . md5(time()) . '.' . $extension;
+
+            $ubicacion = 'public/podcasts/episodios/' . $fileName;
+            $this->storeFile($file, $ubicacion);
+
+            unlink($file->getPathname());
+
+            $storagePath = '';
+
+            if (env('APP_ENV') === 'local') {
+                $storagePath = asset('storage/podcasts/episodios/' . $fileName);
+            } else {
+
+                $storagePath = 'https://ipucd13.nyc3.digitaloceanspaces.com/' . $ubicacion;
+            }
+
+            $data = [
+                'url' => $storagePath,
+            ];
+
+            /*
+             $data = [
+                'url' => $url,
+            ];
+
+            // Actualizar la URL del episodio
+            $episodio->url = Storage::url($url);
+            $episodio->save($data);
+            */
+
+            $podcast = '1';
+            $episodio = Episodio::find($podcast);
+            $episodio->url = $storagePath;
+
+            $episodio->save($data);
+
+            return [
+                'path' => $storagePath,
+                'filename' => $fileName
+            ];
+        }
+
+        $handler = $fileReceived->handler();
+        return [
+            'done' => $handler->getPercentageDone(),
+            'status' => true
+        ];
     }
 }

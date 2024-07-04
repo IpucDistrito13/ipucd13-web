@@ -67,7 +67,7 @@
     <script type="text/javascript">
         let browseFile = $('#browseFile');
         let resumable = new Resumable({
-            target: '{{ route('files.upload.large') }}',
+            target: '{{ route('admin.episodios.upload_large') }}',
             query: {_token: '{{ csrf_token() }}'},
             fileType: ['mp3', 'mp4'],
             headers: {'Accept': 'application/json'},
@@ -90,9 +90,6 @@
             response = JSON.parse(response)
             $('#videoPreview').attr('src', response.path);
             $('.card-footer').show();
-            alert('Archivo subido exitosamente.')
-            console.log(response);
-
         });
 
         resumable.on('fileError', function(file, response) {

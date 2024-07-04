@@ -133,3 +133,7 @@ REDES
 
 # CREAR PUBLICACION
 Para las imagenes que se suban en el mismo contenido se guardara de forma interna en el servidor VPS en store y update
+
+# CODEADO DIFGITALOCEANS
+$storagePath = 'https://ipucd13.nyc3.digitaloceanspaces.com/' . $ubicacion;
+-EpisodioController
