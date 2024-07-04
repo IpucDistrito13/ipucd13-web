@@ -34,7 +34,7 @@ class FileUploadController extends Controller
 
         if (!$receiver->isUploaded()) {
             // file not uploaded
-            return response()->json(['error' => 'File not uploaded'], 400);
+            return response()->json(['error' => 'Archivo no subido'], 400);
         }
 
         $fileReceived = $receiver->receive(); // receive file
@@ -52,7 +52,7 @@ class FileUploadController extends Controller
             // delete chunked file
             unlink($file->getPathname());
 
-            return $path;
+            //return $path;
             return [
                 'path' => asset('storage/' . str_replace('public/', '', $path)),
                 'filename' => $fileName
