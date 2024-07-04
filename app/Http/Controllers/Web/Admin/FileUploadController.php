@@ -55,10 +55,8 @@ public function uploadLargeFiles(Request $request)
         } else {
             //$storagePath = env('AWS_URL') . '/' . env('AWS_BUCKET') . '/' . $ubicacion;
             //$storagePath = env('AWS_URL') . $ubicacion;
-             // Construir la URL de S3 correctamente
-             $s3Url = rtrim(env('AWS_ENDPOINT'), '/');
-             $s3Bucket = env('AWS_BUCKET');
-             $storagePath = "{$s3Bucket}/{$s3Url}/" . ltrim($ubicacion, '/');
+            $storagePath = config('filesystems.disks.s3.url') . $ubicacion;
+
         }
 
         return [
