@@ -54,7 +54,7 @@ public function uploadLargeFiles(Request $request)
             $storagePath = asset('storage/podcasts/episodios/' . $fileName);
         } else {
             //$storagePath = env('AWS_URL') . '/' . env('AWS_BUCKET') . '/' . $ubicacion;
-            $storagePath = env('AWS_BUCKET') . '/' . env('AWS_ENDPOINT') . '/' . $ubicacion;
+            $storagePath =  'https://ipucd13.nyc3.digitaloceanspaces.com/' . $ubicacion;
         }
 
         return [
