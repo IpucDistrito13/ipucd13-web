@@ -39,7 +39,7 @@ class ComiteController extends Controller
         // REDES
 
         $series = Serie::GetUltimasSeries($comite->id)->get();
-      return  $podcasts = Podcast::all();
+      //return  $podcasts = Podcast::all();
       return  $podcasts = Podcast::GetUltimosPodcastComite($comite->id)->get();
 
         $publicaciones = Publicacion::GetUltimasPublicaciones($comite->id)->get();
