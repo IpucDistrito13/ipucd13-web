@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             'apellidos' => 'D13',
             'email' => 'desarrollo@ipucdistrito13.org',
             'isbloqueo' => true,
+            'estado' => 'Activo',
 
         ])->assignRole('Administrador');
 
@@ -39,6 +40,7 @@ class DatabaseSeeder extends Seeder
             'apellidos' => 'D13',
             'email' => 'admin@ipucdistrito13.org',
             'isbloqueo' => true,
+            'estado' => 'Activo',
         ])->assignRole('Administrador');
 
         User::factory()->create([
@@ -47,6 +49,7 @@ class DatabaseSeeder extends Seeder
             'apellidos' => 'D13',
             'email' => 'decom@ipucdistrito13.org',
             'isbloqueo' => true,
+            'estado' => 'Activo',
         ])->assignRole('Administrador');
 
         User::factory(3700)->create(); //3700
@@ -58,13 +61,13 @@ class DatabaseSeeder extends Seeder
         $this->call([ComiteSeeder::class]);
         $this->call([CategoriaSeeder::class]);
 
-        \App\Models\Podcast::factory(3)->create();
-        \App\Models\Episodio::factory(3)->create();
-        \App\Models\Serie::factory(3)->create();
-        \App\Models\Video::factory(3)->create();
+        \App\Models\Podcast::factory(0)->create();
+        \App\Models\Episodio::factory(0)->create();
+        \App\Models\Serie::factory(0)->create();
+        \App\Models\Video::factory(0)->create();
 
         \App\Models\Publicacion::factory(3)->create();
-        \App\Models\Carpetaaux::factory(3)->create();
+        \App\Models\Carpetaaux::factory(0)->create();
 
         $this->call([GaleriaTipoSeeder::class]);
 
