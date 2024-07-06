@@ -41,9 +41,7 @@
                         <div class="text-center">
                             @if (isset($usuario) && $usuario->imagen)
                                 <img id="imagen" src="{{ Storage::url($usuario->imagen->url) }}" alt="" class="img-thumbnail small-image img-fluid mb-2">
-                            @elseif (!empty($usuario->profile_photo_url))
-                                <img id="imagen" src="{{ $usuario->profile_photo_url }}" alt="">
-                            @endif
+                            
                         </div>
                         
                         
