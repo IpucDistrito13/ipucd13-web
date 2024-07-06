@@ -137,6 +137,7 @@ class ArchivoController extends Controller
 
                 // Commit de la transacción si no hay errores
                 DB::commit();
+                Cache::flush();
 
                 // Devolver una respuesta de éxito
                 return response()->json(['message' => 'Archivo cargado exitosamente', 'archivo' => $archivo], 200);
