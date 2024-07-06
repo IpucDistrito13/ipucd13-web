@@ -41,7 +41,7 @@
                         <div class="text-center">
                             @if (isset($usuario) && $usuario->imagen)
                                 <img id="imagen" src="{{ Storage::url($usuario->imagen->url) }}" alt="" class="img-thumbnail small-image img-fluid mb-2">
-                            
+                            @endif
                         </div>
                         
                         
