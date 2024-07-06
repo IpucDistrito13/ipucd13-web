@@ -59,7 +59,7 @@
 
     </div>
 
-    <div class="col-sm-9">
+    <div class="col-sm-7">
         <!-- text input -->
         <div class="form-group">
             <label>Correo electrónico *</label>
@@ -80,6 +80,17 @@
             @if ($errors->has('codigo'))
                 <span class="text-danger">{{ $errors->first('codigo') }}</span>
             @endif
+        </div>
+    </div>
+
+    <div class="col-sm-2">
+        <!-- select -->
+        <div class="form-group">
+            <label>Estado *</label>
+            <select class="form-control" id="estado" name="estado">
+                <option value="Activo" {{ old('estado', $usuario->estado ?? '') === 'Activo' ? 'selected' : '' }}>Activo</option>
+                <option value="Inactivo" {{ old('estado', $usuario->estado ?? '') === 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
+            </select>
         </div>
     </div>
 
@@ -121,6 +132,8 @@
             <img id="imagen" src="{{ $imageUrl }}" alt="Imagen del usuario" class="img-thumbnail">
         </div>
     </div>
+
+    
     
 
 

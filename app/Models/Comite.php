@@ -22,6 +22,12 @@ class Comite extends Model
     {
         return $query->select('id', 'nombre' , 'slug');
     }
+
+    public function scopeGetComite($query, $comiteId)
+    {
+        return $query->select('id', 'nombre' , 'slug')->where('id', $comiteId);
+
+    }
     //END WEB
 
     public function scopeApiV1($query)

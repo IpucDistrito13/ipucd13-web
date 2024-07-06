@@ -38,7 +38,6 @@ class RolSeeder extends Seeder
 
         $permission = Permission::create(['name' => 'admin.solicitudes.download', 'descripcion' => 'Descargar archivo solicitud'])->syncRoles([$rol1, $rol2]);
 
-        
         $permission = Permission::create(['name' => 'admin.congregaciones.index', 'descripcion' => 'Ver listado de congregaciones'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.congregaciones.create', 'descripcion' => 'Crear congregación'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.congregaciones.store', 'descripcion' => 'Guardar congregación'])->syncRoles([$rol1]);
@@ -77,7 +76,7 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.series.destroy', 'descripcion' => 'Eliminar serie'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.series.listVideos', 'descripcion' => 'Ver listado de videos'])->syncRoles([$rol1]);
 
-        $permission = Permission::create(['name' => 'admin.videos.store', 'descripcion' => 'Guardar video'])->syncRoles([$rol1]); 
+        $permission = Permission::create(['name' => 'admin.videos.store', 'descripcion' => 'Guardar video'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.videos.destroy', 'descripcion' => 'Eliminar video'])->syncRoles([$rol1]);
 
         $permission = Permission::create(['name' => 'admin.usuarios.index', 'descripcion' => 'Ver listado de usuarios'])->syncRoles([$rol1]);
@@ -94,9 +93,9 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.eventos.edit', 'descripcion' => 'Editar evento'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.eventos.destroy', 'descripcion' => 'Eliminar evento'])->syncRoles([$rol1]);
 
-        
+
         $permission = Permission::create(['name' => 'admin.cronogramas.index', 'descripcion' => 'Ver listado de cronogramas'])->syncRoles([$rol1, $rol2, $rol3]);
-        $permission = Permission::create(['name' => 'admin.cronogramas.store', 'descripcion' => 'Guardar cronograma' ])->syncRoles([$rol1]);     
+        $permission = Permission::create(['name' => 'admin.cronogramas.store', 'descripcion' => 'Guardar cronograma'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.cronogramas.create', 'descripcion' => 'Crear cronograma'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.cronogramas.edit', 'descripcion' => 'Editar cronograma'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.cronogramas.destroy', 'descripcion' => 'Eliminar cronograma'])->syncRoles([$rol1]);
@@ -105,7 +104,7 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.publicaciones.create', 'descripcion' => 'Crear publicación'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.publicaciones.edit', 'descripcion' => 'Editar publicación'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.publicaciones.destroy', 'descripcion' => 'Eliminar publicación'])->syncRoles([$rol1]);
-        
+
         $permission = Permission::create(['name' => 'admin.galeria_tipos.index', 'descripcion' => 'Ver listado tipo galerias'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galeria_tipos.create', 'descripcion' => 'Crear tipo galería'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galeria_tipos.edit', 'descripcion' => 'Editar tipo galería'])->syncRoles([$rol1]);
@@ -129,11 +128,13 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.carpetas.edit', 'descripcion' => 'Editar carpeta'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.carpetas.destroy', 'descripcion' => 'Eliminar carpeta'])->syncRoles([$rol1]);
 
+
         //$permission = Permission::create(['name' => '', 'descripcion' => 'Descargable privado'])->syncRoles([$rol1, $rol2, $rol3]);
 
         $permission = Permission::create(['name' => 'admin.carpetas.listComitePrivado', 'descripcion' => 'Descargable privado'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.carpetas.listComitePublico', 'descripcion' => 'Descargable publico'])->syncRoles([$rol1, $rol2, $rol3]);
 
+        $permission = Permission::create(['name' => 'admin.archivos.index', 'descripcion' => 'Listar archivos'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.archivos.upload', 'descripcion' => 'Subir archivo'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.archivos.download', 'descripcion' => 'Descargar archivo'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.archivos.destroy', 'descripcion' => 'Eliminar archivo'])->syncRoles([$rol1]);
@@ -143,11 +144,5 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.carpetas.publico.crearCarpetaPublico', 'descripcion' => 'Crear carpeta tipo publico'])->syncRoles([$rol1]);
 
         $permission = Permission::create(['name' => 'admin.carpetas.storeCarpetaPublico', 'descripcion' => 'Guardar carpeta tipo publico'])->syncRoles([$rol1]);
-
-
-
-        
-
-
     }
 }

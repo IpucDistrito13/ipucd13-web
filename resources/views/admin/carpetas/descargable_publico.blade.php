@@ -17,7 +17,7 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>

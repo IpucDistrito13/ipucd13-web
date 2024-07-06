@@ -6,7 +6,7 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            <i class="fas fa-images"></i> Galería general 2: {{ $usuario->nombre . ' ' . $usuario->apellidos }}
+            <i class="fas fa-images"></i> Galería: {{ $usuario->nombre . ' ' . $usuario->apellidos }}
         </h1>
         <div>
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.galerias.list') }}">

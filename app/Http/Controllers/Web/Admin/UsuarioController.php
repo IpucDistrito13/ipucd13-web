@@ -41,14 +41,14 @@ class UsuarioController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $editUrl = route('admin.usuarios.editar', $row->id);
+                    $deleteUrl = route('admin.usuarios.destroy', $row->id);
 
                     $btn = '<a href="' . $editUrl . '" class="edit btn btn-primary btn-sm">Editar</a>';
-                    $btn .= '<form id="deleteForm_' . $row->id . '" action="' . $editUrl . '" method="POST" class="d-inline">';
+                    $btn .= '<form id="deleteForm_' . $row->id . '" action="' . $deleteUrl . '" method="POST" class="d-inline">';
                     $btn .= csrf_field(); // Agregar token CSRF
                     $btn .= '<input type="hidden" name="_method" value="DELETE">';
                     $btn .= '<button type="button" onclick="confirmDelete(' . $row->id . ', \'' . $row->nombre . '\', \'' . $row->apellidos . '\')" class="delete btn btn-danger btn-sm">Eliminar</button>';
                     $btn .= '</form>';
-
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -318,6 +318,7 @@ class UsuarioController extends Controller
             'celular' => $request->celular,
             'email' => $request->email,
             'profile_photo_path' => $request->file,
+            'estado' => $request->estado,
         ];
 
         $usuario->update($data);
@@ -350,8 +351,10 @@ class UsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $usuario)
+    public function destroy($id)
     {
+        $usuario = User::findOrFail($id);
+
         try {
             $usuario->delete();
 
@@ -361,7 +364,7 @@ class UsuarioController extends Controller
             ];
             Cache::flush();
 
-            return redirect()->route('admin.usuarios.index')->with('success', $data['message']);
+            return redirect()->route('admin.usuarios.index')->with('success', 'Usuario eliminado exitosamente.');
         } catch (\Exception $e) {
 
             \Log::error('Error al eliminar usuario: ' . $e->getMessage());
@@ -370,7 +373,7 @@ class UsuarioController extends Controller
                 $message = 'No se pudo eliminar el usuario, debido a restricción de integridad.',
             ];
 
-            return redirect()->route('admin.usuarios.index')->with('error', $data['message']);
+            return redirect()->route('admin.usuarios.index')->with('error', 'No se pudo eliminar el usuario, debido a restricción de integridad.');
         }
     }
 

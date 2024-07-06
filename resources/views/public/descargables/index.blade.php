@@ -376,133 +376,36 @@
     </section>
     <!-- end section seccion 2 -->
 
-
-    <!-- start section 3 -->
-    <section class="py-0">
+    <!-- start section  3 --> 
+    <section class="bg-very-light-gray">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-xl-5 col-lg-6 md-mb-50px"
-                    data-anime='{ "el": "childs", "translateY": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                    <span class="fs-15 text-uppercase text-base-color fw-600 mb-15px d-block ls-1px">-</span>
-                    <h3 class="fw-700 text-dark-gray ls-minus-1px">DESCARGABLES COMITÉS.</h3>
-                    <div class="row row-cols-1 mt-40px">
-                        <!-- start process step item -->
-                        <div class="col-12 process-step-style-05 position-relative hover-box">
-                            <div class="process-step-item d-flex">
-                                <div class="process-step-icon-wrap position-relative">
-                                    <div
-                                        class="process-step-icon d-flex justify-content-center align-items-center mx-auto rounded-circle h-60px w-60px bg-light-red-grey fs-14 fw-600 position-relative">
-                                        <span class="number position-relative z-index-1 text-dark-gray">01</span>
-                                        <div class="box-overlay bg-base-color rounded-circle"></div>
-                                    </div>
-                                    <span class="progress-step-separator bg-extra-medium-gray"></span>
-                                </div>
-                                <div class="process-content ps-30px last-paragraph-no-margin mb-40px">
-                                    <span class="d-block fw-600 text-dark-gray mb-5px fs-18 ls-minus-05px">CANVA</span>
-                                    <p class="w-85 lg-w-100">Lorem ipsum simply dummy printing typesetting industry's
-                                        standard.</p>
-                                    <a href="https://www.canva.com/es_es/"
-                                        class="btn btn-color btn-very-small btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow me-30px sm-me-20px">
-                                        <span>
-                                            <span class="btn-text">Acceder</span>
-                                            <span class="btn-icon"><i
-                                                    class="feather icon-feather-arrow-right"></i></span>
-                                            <span class="btn-icon"><i
-                                                    class="feather icon-feather-arrow-right"></i></span>
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end process step item -->
-                        <!-- start process step item -->
-                        <div class="col-12 process-step-style-05 position-relative hover-box">
-                            <div class="process-step-item d-flex">
-                                <div class="process-step-icon-wrap position-relative">
-                                    <div
-                                        class="process-step-icon d-flex justify-content-center align-items-center mx-auto rounded-circle h-60px w-60px bg-light-red-grey fs-14 fw-600 fw-600 position-relative">
-                                        <span class="number position-relative z-index-1 text-dark-gray">02</span>
-                                        <div class="box-overlay bg-base-color rounded-circle"></div>
-                                    </div>
-                                </div>
-                                <div class="process-content ps-30px last-paragraph-no-margin mb-40px">
-                                    <span class="d-block fw-600 text-dark-gray mb-5px fs-18 ls-minus-05px">PIXLR</span>
-                                    <p class="w-85 lg-w-100">Lorem ipsum simply dummy printing typesetting industry's
-                                        standard.</p>
-                                    <a href="https://pixlr.com/es/express/"
-                                        class="btn btn-color btn-very-small btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow me-30px sm-me-20px">
-                                        <span>
-                                            <span class="btn-text">Acceder</span>
-                                            <span class="btn-icon"><i
-                                                    class="feather icon-feather-arrow-right"></i></span>
-                                            <span class="btn-icon"><i
-                                                    class="feather icon-feather-arrow-right"></i></span>
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end process step item -->
-
-                        <!-- start process step item -->
-                        <div class="col-12 process-step-style-05 position-relative hover-box">
-                            <div class="process-step-item d-flex">
-                                <div class="process-step-icon-wrap position-relative">
-                                    <div
-                                        class="process-step-icon d-flex justify-content-center align-items-center mx-auto rounded-circle h-60px w-60px bg-light-red-grey fs-14 fw-600 fw-600 position-relative">
-                                        <span class="number position-relative z-index-1 text-dark-gray">03</span>
-                                        <div class="box-overlay bg-base-color rounded-circle"></div>
-                                    </div>
-                                </div>
-                                <div class="process-content ps-30px last-paragraph-no-margin mb-40px">
-                                    <span
-                                        class="d-block fw-600 text-dark-gray mb-5px fs-18 ls-minus-05px">CAPCUT</span>
-                                    <p class="w-85 lg-w-100">Lorem ipsum simply dummy printing typesetting industry's
-                                        standard.</p>
-                                    <a href="https://www.capcut.com/es-es/"
-                                        class="btn btn-color btn-very-small btn-dark-gray btn-hover-animation-switch btn-round-edge btn-box-shadow me-30px sm-me-20px">
-                                        <span>
-                                            <span class="btn-text">Acceder</span>
-                                            <span class="btn-icon"><i
-                                                    class="feather icon-feather-arrow-right"></i></span>
-                                            <span class="btn-icon"><i
-                                                    class="feather icon-feather-arrow-right"></i></span>
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end process step item -->
-                        
-                    </div>
-
-                </div>
-
-
-                
-                <div class="col-lg-6 col-md-11 position-relative offset-xl-1">
-                    <figure class="position-relative m-0 text-center"
-                        data-anime='{ "effect": "slide", "color": "#fff2ef", "direction":"rl", "easing": "easeOutQuad", "delay":50}'>
-                        <img src="https://via.placeholder.com/525x741" alt="">
-                    </figure>
+            <div class="row justify-content-center mb-2">
+                <div class="col-md-10 text-center">
+                    <span class="text-base-color fw-600 text-uppercase">Descargables</span>
+                    <h2 class="fw-700 mb-15px alt-font text-dark-gray ls-minus-2px">Comités</h2> 
                 </div>
             </div>
-            <div class="row justify-content-center mt-6"
-                data-anime='{ "translateY": [50, 0], "opacity": [0,1], "duration": 1200, "delay": 0, "staggervalue": 150, "easing": "easeOutQuad" }'>
-                <div class="col-auto text-center">
-                    <div class="icon-with-text-style-06">
-                        <div class="feature-box feature-box-left-icon-middle">
-                            <div class="feature-box-icon me-10px">
-                                <i class="bi bi-patch-check icon-very-medium text-base-color"></i>
-                            </div>
-                            <div class="feature-box-content last-paragraph-no-margin">
+            <div class="row">
+                @foreach ($comites as $comite)
+                    <div class="col-lg-6 col-md-6 col-12 mb-6">
+                        <!-- start pricing table -->
+                        <div class="pricing-table text-center pt-7 pb-7 bg-white box-shadow-quadruple-large border-radius-6px">
+                            <div class="pricing-header ps-2 pe-2">
+                                <h2 class="text-dark-gray fw-400 mb-3">{{ $comite->nombre }}</h2>
+                                <p class="mb-3 lh-1.8">{{ $comite->descripcion }}</p>
+                                <a href="{{ route('public.descargables.comite', $comite->id) }}" class="btn btn-medium btn-dark-gray btn-round-edge btn-switch-text btn-box-shadow">
+                                    <span>
+                                        <span class="btn-double-text" data-text="Acceder">Acceder</span>
+                                    </span>
+                                </a>
                             </div>
                         </div>
+                        <!-- end pricing table -->
                     </div>
-                </div>
+                @endforeach
+
             </div>
-
-
+            
             <!-- seecin redes -->
             <div class="row justify-content-center mt-5">
 
@@ -557,12 +460,11 @@
             </div>
             <!-- end seccion redes -->
 
-
         </div>
 
         
-    </section>
-    <!-- end section 3 -->
+    </section>  
+    <!-- end section 3-->
 
 
     <br>

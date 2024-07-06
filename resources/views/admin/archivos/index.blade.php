@@ -13,7 +13,6 @@
             </a>
         @endcan
 
-
     </div>
 @stop
 
@@ -47,11 +46,12 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Nombre</th>
+                        <th>Fecha</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -61,6 +61,8 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ basename($item->url) }}</td>
+                            <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
+
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
                                     @can('admin.archivos.download')
@@ -69,11 +71,42 @@
                                     @endcan
 
                                     @can('admin.archivos.destroy')
-                                        <form action="{{ route('admin.archivos.destroy', $item) }}" method="POST">
+                                        <!-- Delete Button -->
+                                        <form id="deleteForm{{ $item->id }}"
+                                            action="{{ route('admin.archivos.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete({{ $item->id }})">Eliminar</button>
                                         </form>
+
+                                        <script>
+                                            function confirmDelete(itemId) {
+                                                const swalWithBootstrapButtons = Swal.mixin({
+                                                    customClass: {
+                                                        confirmButton: 'btn btn-success',
+                                                        cancelButton: 'btn btn-danger'
+                                                    },
+                                                    buttonsStyling: false
+                                                });
+
+                                                swalWithBootstrapButtons.fire({
+                                                    title: '¿Estás seguro?',
+                                                    text: '¡No podrás revertir esto!',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Eliminar',
+                                                    confirmButtonColor: '#a5161d',
+                                                    denyButtonColor: '#270a0a',
+                                                    cancelButtonText: 'Cancelar',
+                                                    reverseButtons: true
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        document.getElementById('deleteForm' + itemId).submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
                                     @endcan
 
                                 </div>
@@ -97,7 +130,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Subir fotos</h4>
+                    <h4 class="modal-title">Subir archivos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -169,7 +202,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             location
-                        .reload(); // Recarga la página cuando el usuario acepta el mensaje
+                                .reload(); // Recarga la página cuando el usuario acepta el mensaje
                         }
                     });
 

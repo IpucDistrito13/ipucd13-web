@@ -18,6 +18,8 @@ return new class extends Migration
 
             $table->foreignId('carpeta_id')
                 ->constrained('carpetas');
+            
+            $table->text('nombre_original')->nullable()->comment('Nombre original del archivo');
 
             $table->foreignId('user_id')
                 ->constrained('users');

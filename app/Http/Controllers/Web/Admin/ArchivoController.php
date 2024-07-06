@@ -19,8 +19,13 @@ class ArchivoController extends Controller
      */
     public function index(Carpeta $carpeta)
     {
-        $archivos = Archivo::all();
-        return view('admin.archivos.index', compact('carpeta', 'archivos'));
+
+        $archivos = Archivo::CarpetaPrivadaxArchivo($carpeta->id)->get();
+
+        return view('admin.archivos.index', [
+            'carpeta' => $carpeta,
+            'archivos' => $archivos,
+        ]);
     }
 
     /**
@@ -113,10 +118,11 @@ class ArchivoController extends Controller
                 $originalName = $file->getClientOriginalName();
 
                 // Crear la ruta completa incluyendo el nombre original del archivo
-                $fullPath = 'descargables/' . $carpeta . '/' . $originalName;
+                $fullPath = 'public/descargables/' . $carpeta;
 
                 // Almacenar el archivo utilizando la función storeFile
-                $url = $this->storeFile($file, $fullPath);
+                // Guardar el archivo con su nombre original
+                $url = $file->storeAs($fullPath, $originalName);
 
                 // Crear una entrada en la base de datos para el archivo cargado
                 $data = [
@@ -151,17 +157,18 @@ class ArchivoController extends Controller
     }
 
 
+
     public function download($uuid)
     {
         try {
             // Buscar el archivo en la base de datos usando el UUID
             $archivo = Archivo::where('uuid', $uuid)->first();
-    
+
             // Verificar si se encontró el archivo
             if ($archivo) {
                 // Obtener la URL del archivo
                 $filePath = $archivo->url;
-    
+
                 // Verificar si el archivo existe en el sistema de archivos
                 if (Storage::exists($filePath)) {
                     // Descargar el archivo
@@ -179,7 +186,4 @@ class ArchivoController extends Controller
             return response()->json(['error' => 'Error al descargar el archivo: ' . $e->getMessage()], 500);
         }
     }
-    
-    
-    
 }

@@ -33,6 +33,8 @@ Route::get('public/apiGetEventos', [EventoController::class, 'apiGetEventos'])->
 
 Route::get('comites/{comite}', [ComiteController::class, 'show'])->name('comite.show');
 Route::get('descargables', [DescargableController::class, 'index'])->name('public.descargables.index');
+Route::get('descargables/{comiteId}', [DescargableController::class, 'comite'])->name('public.descargables.comite');
+
 Route::get('post', [PublicacionController::class, 'index'])->name('public.publicaciones.index');
 Route::get('contacto', [ContactoController::class, 'index'])->name('public.contacto.index');
 Route::get('publicaciones/{publicacion}', [PublicacionController::class, 'show'])->name('public.publicaciones.show');
@@ -43,4 +45,7 @@ Route::get('podcasts/episodios/{serie}', [SerieController::class, 'show'])->name
 
 Route::get('politicas-tratamiento-datos', [PoliticaController::class, 'index'])->name('public.politicas_datos');
 Route::get('series', [SerieController::class, 'index'])->name('public.series.index');
+
+Route::get('archivos/download/{archivoId}', [DescargableController::class, 'download'])->name('public.archivos.download');
+
 

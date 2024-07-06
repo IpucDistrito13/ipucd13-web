@@ -86,6 +86,9 @@
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
 
+    <!-- sweetalert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         .acciones-column {
             width: 150px;
@@ -153,6 +156,23 @@
                 ]
             });
         });
+
+        function confirmDelete(id, nombre, apellidos) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: `¿Quieres eliminar a ${nombre} ${apellidos}?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteForm_' + id).submit();
+                }
+            });
+        }
     </script>
 
 @stop

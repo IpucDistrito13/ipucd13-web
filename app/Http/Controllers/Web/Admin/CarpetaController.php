@@ -7,6 +7,8 @@ use App\Http\Requests\CarpetaRequest;
 use App\Models\Carpeta;
 use App\Models\Comite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 
 class CarpetaController extends Controller
 {
@@ -107,5 +109,37 @@ class CarpetaController extends Controller
         ];
 
         return back()->with('success', $data['message']);
+    }
+
+    public function destroy($carpetaId)
+    {
+        try {
+            $carpeta = Carpeta::findOrFail($carpetaId);
+            $carpeta->delete();
+
+            $data = [
+                'message' => 'Carpeta eliminada exitosamente.',
+            ];
+
+            //Elimina la variables almacenada en cache
+            Cache::flush();
+            //Cache
+
+            return back()->with('success', $data['message']);
+
+           // return redirect()->route('admin.podcasts.index')->with('success', $data['message']);
+        } catch (\Exception $e) {
+            $data = [
+                'message' => 'No se pudo eliminar el podcast, debido a restricción de integridad.',
+            ];
+
+            //Elimina la variables almacenada en cache
+            Cache::flush();
+            //Cache
+
+            return back()->with('error', $data['message']);
+
+            //return redirect()->route('admin.podcasts.index')->with('error', $data['message']);
+        }
     }
 }
