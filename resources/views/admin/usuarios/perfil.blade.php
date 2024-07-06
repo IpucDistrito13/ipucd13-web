@@ -77,20 +77,21 @@
                                 <div class="form-group">
                                     <label>Departamento</label>
                                     <input type="text" class="form-control"
-                                        value="{{ optional($usuario->congregacion)->municipio ? (optional($usuario->congregacion->municipio)->departamento ? optional($usuario->congregacion->municipio->departamento)->nombre : 'Sin información') : 'Sin información' }}"
+                                        value="{{ optional($usuario->congregacion->municipio->departamento)->nombre ?? 'Sin información' }}"
                                         disabled>
                                 </div>
                             </div>
-
+                            
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>Departamento</label>
+                                    <label>Municipio</label>
                                     <input type="text" class="form-control"
-                                        value="{{ $usuario->congregacion && $usuario->congregacion->municipio && $usuario->congregacion->municipio->departamento ? $usuario->congregacion->municipio->departamento->nombre : 'Sin información' }}"
+                                        value="{{ optional($usuario->congregacion->municipio)->nombre ?? 'Sin información' }}"
                                         disabled>
                                 </div>
                             </div>
+                            
 
 
 
@@ -101,6 +102,19 @@
                             @csrf
 
                             <div class="row">
+
+                                <div class="col-sm-3">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Celular</label>
+                                        <input type="text" class="form-control" id="celular" name="celular" value="{{ old('celular', $usuario->celular) }}" >
+                                        @if ($errors->has('celular'))
+                                            <span class="text-danger">{{ $errors->first('celular') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Correo electrónico</label>

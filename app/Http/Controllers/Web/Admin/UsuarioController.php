@@ -250,12 +250,14 @@ class UsuarioController extends Controller
                 Rule::unique('users')->ignore($usuario->id),
             ],
             'password' => 'nullable|string|min:8|confirmed',
+            'celular' => 'required|regex:/^[0-9]{10}$/',
             // usar confirmed en lugar de password_confirmation
         ]);
 
         // Preparar los datos para la actualización
         $data = [
             'email' => $request->email,
+            'celular' => $request->celular,
         ];
 
         // Validar y actualizar el correo electrónico si se proporciona
