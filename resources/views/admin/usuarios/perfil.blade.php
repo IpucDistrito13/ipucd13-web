@@ -39,17 +39,23 @@
                         <p class="text-muted text-center">{{ $usuario->uuid }}</p>
 
                         <div class="text-center">
-                            @if (isset($usuario) && $usuario->imagen)
-                                <img id="imagen" src="{{ Storage::url($usuario->imagen->url) }}" alt="" class="img-thumbnail small-image img-fluid mb-2">
+                            @if (isset($usuario) && $usuario->imagen && $usuario->imagen->url)
+                                <img id="imagen" src="{{ Storage::url($usuario->imagen->url) }}" alt=""
+                                    class="img-thumbnail small-image img-fluid mb-2">
+                            @else
+                                <img id="imagen"
+                                    src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png"
+                                    alt="Imagen predeterminada" class="img-thumbnail small-image img-fluid mb-2">
                             @endif
+
                         </div>
-                        
-                        
+
+
 
                         <h3 class="profile-username text-center">
                             {{ $usuario->congregacion && $usuario->congregacion->direccion ? $usuario->congregacion->direccion : 'Sin congregación' }}
                         </h3>
-                        
+
                         <div class="row">
 
                             <div class="col-sm-3">
@@ -71,24 +77,27 @@
                                 <div class="form-group">
                                     <label>Departamento</label>
                                     <input type="text" class="form-control"
-                                        value="{{ optional($usuario->congregacion)->municipio ? optional($usuario->congregacion->municipio)->departamento ? optional($usuario->congregacion->municipio->departamento)->nombre : 'Sin información' : 'Sin información' }}" disabled>
+                                        value="{{ optional($usuario->congregacion)->municipio ? (optional($usuario->congregacion->municipio)->departamento ? optional($usuario->congregacion->municipio->departamento)->nombre : 'Sin información') : 'Sin información' }}"
+                                        disabled>
                                 </div>
                             </div>
-                            
+
                             <div class="col-sm-3">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Departamento</label>
                                     <input type="text" class="form-control"
-                                        value="{{ $usuario->congregacion && $usuario->congregacion->municipio && $usuario->congregacion->municipio->departamento ? $usuario->congregacion->municipio->departamento->nombre : 'Sin información' }}" disabled>
+                                        value="{{ $usuario->congregacion && $usuario->congregacion->municipio && $usuario->congregacion->municipio->departamento ? $usuario->congregacion->municipio->departamento->nombre : 'Sin información' }}"
+                                        disabled>
                                 </div>
                             </div>
-                            
+
 
 
                         </div>
 
-                        <form action="{{ route('admin.usuarios.updatePerfil', $usuario) }}" method="POST" enctype="multipart/form-data" >
+                        <form action="{{ route('admin.usuarios.updatePerfil', $usuario) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="row">
@@ -134,7 +143,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             <div class="modal-footer">
