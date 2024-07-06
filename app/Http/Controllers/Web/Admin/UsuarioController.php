@@ -351,7 +351,7 @@ class UsuarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroyUser($id)
     {
         $usuario = User::findOrFail($id);
 

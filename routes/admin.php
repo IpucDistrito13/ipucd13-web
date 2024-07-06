@@ -84,7 +84,7 @@ Route::get('series/videos/{serie}', [SerieController::class, 'listVideos'])->nam
 Route::resource('videos', VideoController::class)->names('admin.videos');
 
 Route::resource('usuarios', UsuarioController::class)->names('admin.usuarios');
-Route::delete('admin/users/{id}', [UsuarioController::class, 'destroy'])->name('admin.usuarios.destroy');
+Route::delete('admin/users/{id}', [UsuarioController::class, 'destroyUser'])->name('admin.usuarios.destroyUser');
 
 Route::get('user/directorio/pastores', [UsuarioController::class, 'directorioPastores'])->name('admin.usuarios.directorioPastores');
 Route::get('user/directorio/lideres', [UsuarioController::class, 'directorioLideres'])->name('admin.usuarios.directorioLideres');
