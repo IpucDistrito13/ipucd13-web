@@ -62,6 +62,8 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.podcasts.listEpisodio', 'descripcion' => 'Ver listado episodios'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.podcasts.createEpisodio', 'descripcion' => 'Crear episodio'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.episodio.apigetAudio', 'descripcion' => 'Api audio episodio'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.episodios.upload_audio', 'descripcion' => 'Guarda y reproduzca archivo de podcast'])->syncRoles([$rol1]);
+
 
         $permission = Permission::create(['name' => 'admin.episodios.index', 'descripcion' => 'Ver listado de episodios'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.episodios.create', 'descripcion' => 'Crear episodios'])->syncRoles([$rol1]);
@@ -143,6 +145,8 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.carpetas.storeCarpetaPublico', 'descripcion' => 'Guardar carpeta tipo publico'])->syncRoles([$rol1]);
 
 
+
+        
 
 
     }

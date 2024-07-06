@@ -62,9 +62,13 @@ Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpiso
 Route::resource('podcasts', PodcastController::class)->names('admin.podcasts');
 // LISTAR LOS EPISODIOS SEGUN EL PODCAST
 
+Route::get('episodios/testFile/{episodioId}', [EpisodioController::class, 'testFile'])->name('admin.episodios.testFile');//P
+
 Route::resource('episodios', EpisodioController::class)->names('admin.episodios');
-Route::get('episodios/file-upload', [EpisodioController::class, 'index'])->name('admin.episodios.file_upload');//P
-Route::post('episodios/file-upload/upload-large-files', [EpisodioController::class, 'uploadLargeFiles'])->name('admin.episodios.upload_large');//P
+Route::get('episodios/file-upload/{episodioId}', [EpisodioController::class, 'uploadFile'])->name('admin.episodios.file_upload');//P
+//Route::post('episodios/file-upload/upload-large-files', [EpisodioController::class, 'uploadLargeFiles'])->name('admin.episodios.upload_large');//P
+Route::post('admin/episodios/upload_large', [EpisodioController::class, 'uploadLargeFiles'])->name('admin.episodios.upload_audio');
+
 
 
 Route::post('episodios/uploadUrl', [EpisodioController::class, 'uploadUrl'])->name('admin.episodios.upload');

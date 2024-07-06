@@ -100,15 +100,17 @@
                             <!-- Botón para abrir el modal -->
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
-                                    @if ($item->url)
-                                        <button class="btn btn-info btn-sm reproducir" data-id="{{ $item->id }}"
-                                            onclick="reproducirBtn({{ $item->id }})">Reproducir</button>
-                                    @else
-                                        <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                            data-target="#modal_upload_{{ $item->id }}">
-                                            <i class="fas fa-upload"></i> Añadir audio
-                                        </a>
-                                    @endif
+                                    @can('admin.episodios.upload_audio')
+                                        @if ($item->url)
+                                            <button class="btn btn-info btn-sm reproducir" data-id="{{ $item->id }}"
+                                                onclick="reproducirBtn({{ $item->id }})">Reproducir</button>
+                                        @else
+                                            <a type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
+                                                data-target="#modal_upload_{{ $item->id }}">
+                                                <i class="fas fa-upload"></i> Añadir audio
+                                            </a>
+                                        @endif
+                                    @endcan
 
                                     @can('admin.episodios.destroy')
                                         <form id="deleteForm{{ $item->id }}"
@@ -137,30 +139,33 @@
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="modal-body">
-                                                    <input type="text" name="podcast_id" value="{{ $item->id }}">
+                                                    <input type="hidden" name="episodio_id" id="episodio_id"
+                                                        value="{{ $item->id }}">
                                                     <div class="container pt-4">
                                                         <div class="row justify-content-center">
                                                             <div class="col-md-12">
                                                                 <div class="card">
                                                                     <div class="card-header text-center">
-                                                                        <h5>Subir Archivo</h5>
+                                                                        <h5>Subir archivo</h5>
                                                                     </div>
                                                                     <div class="card-body">
                                                                         <div id="upload-container" class="text-center">
                                                                             <button id="browseFile"
                                                                                 class="btn btn-primary"
-                                                                                type="button">Buscar Archivo</button>
-                                                                            <input type="file"
-                                                                                id="fileInput_{{ $item->id }}"
+                                                                                type="button">Buscar archivo</button>
+                                                                            <input type="file" id="fileInput"
                                                                                 name="file" style="display: none;">
                                                                         </div>
                                                                         <div class="progress mt-3" style="height: 25px">
                                                                             <div class="progress-bar progress-bar-striped progress-bar-animated"
-                                                                                role="progressbar" aria-valuenow="75"
+                                                                                role="progressbar" aria-valuenow="0"
                                                                                 aria-valuemin="0" aria-valuemax="100"
-                                                                                style="width: 75%; height: 100%">75%</div>
+                                                                                style="width: 0%; background-color: #00338D;">
+                                                                                0%</div>
                                                                         </div>
                                                                     </div>
+
+
 
                                                                 </div>
                                                             </div>
@@ -170,8 +175,7 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary">Guardar
-                                                        cambios</button>
+
                                                 </div>
                                             </form>
                                         </div>
@@ -205,13 +209,6 @@
                                         }
                                     });
                                 }
-
-                                document.querySelectorAll('[id^=browseFile]').forEach(button => {
-                                    button.addEventListener('click', () => {
-                                        const fileInputId = button.id.replace('browseFile', 'fileInput');
-                                        document.getElementById(fileInputId).click();
-                                    });
-                                });
                             </script>
 
 
@@ -309,58 +306,6 @@
     </div>
     <!-- /.modal data -->
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="uploadModalLabel">Subir Archivo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Contenido del modal -->
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header text-center">
-                                        <h5>Subir archivo</h5>
-                                    </div>
-
-                                    <div class="card-body">
-                                        <div id="upload-container" class="text-center mb-4">
-                                            <button id="browseFile" class="btn btn-primary btn-lg">
-                                                <i class="fas fa-cloud-upload-alt me-2"></i>Buscar archivo
-                                            </button>
-                                        </div>
-
-                                        <div class="progress">
-                                            <div class="progress-bar bg-primary progress-bar-striped" role="progressbar"
-                                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                                                style="width: 100%">
-                                                <span class="sr-only">40% Completado (success)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-footer p-4" style="display: none;">
-                                        <video id="videoPreview" src="" controls
-                                            style="width: 100%; height: auto"></video>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @stop
 
 @section('css')
@@ -374,19 +319,24 @@
         body {
             background-color: #f8f9fa;
         }
+
         .card {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .card-header {
             background-color: #007bff;
             color: white;
         }
+
         #browseFile {
             transition: all 0.3s;
         }
+
         #browseFile:hover {
             transform: scale(1.05);
         }
+
         .progress {
             height: 25px;
             margin-top: 20px;
@@ -575,6 +525,8 @@
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/resumablejs@1.1.0/resumable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script>
         $(function() {
@@ -732,18 +684,23 @@
     </script>
 
     <script type="text/javascript">
+        // Obtener el valor del campo de texto
+        var episodioId = document.getElementById("episodio_id").value;
+
         let browseFile = $('#browseFile');
         let resumable = new Resumable({
-            target: '{{ route('files.upload.large') }}',
+            target: '{{ route('admin.episodios.upload_audio') }}',
             query: {
-                _token: '{{ csrf_token() }}'
+                _token: '{{ csrf_token() }}',
+                episodioId: episodioId,
             },
-            fileType: ['mp3'],
+            fileType: ['mp3', 'mp4'],
             headers: {
                 'Accept': 'application/json'
             },
             testChunks: false,
             throttleProgressCallbacks: 1,
+            maxFiles: 1,
         });
 
         resumable.assignBrowse(browseFile[0]);
@@ -762,7 +719,16 @@
             //$('#videoPreview').attr('src', response.path);
             $('.card-footer').show();
 
-            console.log('Archivo subido exitosamente.')
+            Swal.fire({
+                title: 'Archivo subido exitosamente',
+                text: 'Debes actualizar la página para ver los cambios.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload(); // Recarga la página cuando el usuario acepta el mensaje
+                }
+            });
         });
 
         resumable.on('fileError', function(file, response) {
@@ -787,6 +753,5 @@
             progress.hide();
         }
     </script>
-
 
 @stop

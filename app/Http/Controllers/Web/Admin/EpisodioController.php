@@ -180,6 +180,20 @@ class EpisodioController extends Controller
         }
     }
 
+    public function uploadFile()
+    {
+        return 'Hola';
+        return view('admin.podcasts.upload');
+
+    }
+
+    public function testFile(Request $request, $episodioId)
+    {
+        //return $episodioId;
+        return view('admin.podcasts.upload');
+
+    }
+
 
     private function storeFile($file, $ubicacion)
     {
@@ -194,59 +208,102 @@ class EpisodioController extends Controller
 
     public function uploadLargeFiles(Request $request)
     {
-        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+      $episodioId = $request->episodioId;
+      //return  $episodio = Episodio::findOrFail($episodioId);
 
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+    
         if (!$receiver->isUploaded()) {
             return response()->json(['error' => 'File not uploaded'], 400);
         }
-
+    
         $fileReceived = $receiver->receive();
         if ($fileReceived->isFinished()) {
             $file = $fileReceived->getFile();
             $extension = $file->getClientOriginalExtension();
             $fileName = str_replace('.' . $extension, '', $file->getClientOriginalName());
             $fileName .= '_' . md5(time()) . '.' . $extension;
-
+    
             $ubicacion = 'public/podcasts/episodios/' . $fileName;
             $this->storeFile($file, $ubicacion);
-
+    
             unlink($file->getPathname());
-
+    
             $storagePath = '';
-
+    
             if (env('APP_ENV') === 'local') {
                 $storagePath = asset('storage/podcasts/episodios/' . $fileName);
             } else {
-
                 $storagePath = 'https://ipucd13.nyc3.digitaloceanspaces.com/' . $ubicacion;
             }
-
+    
             $data = [
                 'url' => $storagePath,
             ];
 
-            /*
-             $data = [
-                'url' => $url,
-            ];
-
-            // Actualizar la URL del episodio
-            $episodio->url = Storage::url($url);
-            $episodio->save($data);
-            */
-
-            $podcast = '1';
-            $episodio = Episodio::find($podcast);
+            $episodio = Episodio::find($episodioId);
             $episodio->url = $storagePath;
-
             $episodio->save($data);
 
+            Cache::flush();
+    
             return [
                 'path' => $storagePath,
                 'filename' => $fileName
             ];
         }
+    
+        $handler = $fileReceived->handler();
+        return [
+            'done' => $handler->getPercentageDone(),
+            'status' => true
+        ];
+    }
 
+    public function uploadLargeFilesAux(Request $request)
+    {
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+    
+        if (!$receiver->isUploaded()) {
+            return response()->json(['error' => 'File not uploaded'], 400);
+        }
+    
+        $fileReceived = $receiver->receive();
+        if ($fileReceived->isFinished()) {
+            $file = $fileReceived->getFile();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = str_replace('.' . $extension, '', $file->getClientOriginalName());
+            $fileName .= '_' . md5(time()) . '.' . $extension;
+    
+            $ubicacion = 'public/podcasts/episodios/' . $fileName;
+            $this->storeFile($file, $ubicacion);
+    
+            unlink($file->getPathname());
+    
+            $storagePath = '';
+    
+            if (env('APP_ENV') === 'local') {
+                $storagePath = asset('storage/podcasts/episodios/' . $fileName);
+            } else {
+                $storagePath = 'https://ipucd13.nyc3.digitaloceanspaces.com/' . $ubicacion;
+            }
+    
+            $data = [
+                'url' => $storagePath,
+            ];
+
+            $episodioId = 1;
+            $episodio = Episodio::find($episodioId);
+            $episodio->url = $storagePath;
+    
+            $episodio->save($data);
+    
+            return [
+                'path' => $storagePath,
+                'filename' => $fileName
+            ];
+        }
+    
         $handler = $fileReceived->handler();
         return [
             'done' => $handler->getPercentageDone(),

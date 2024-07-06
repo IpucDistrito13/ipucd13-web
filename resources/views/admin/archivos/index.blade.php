@@ -59,7 +59,7 @@
 
                     @foreach ($archivos as $item)
                         <tr>
-                            <td>{{ $item->id }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ basename($item->url) }}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
@@ -146,6 +146,7 @@
 @section('js')
 
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         Dropzone.options.myDropzone = {
@@ -154,18 +155,24 @@
             //addRemoveLinks: true,
             dictRemoveFile: 'Eliminar',
             dictDefaultMessage: "Arrastra y suelta las fotos aquí o haz clic para seleccionar las fotos de forma masiva. Maximo 20 archivos masivo, y tamaño 200 Mb",
-            maxFilesize: 200, // Tamaño máximo de archivo 100 Mb
+            maxFilesize: 200, // Tamaño máximo de archivo 200 Mb
             maxFiles: 20,
             init: function() {
                 var myDropzone = this;
                 this.on("queuecomplete", function() {
-                    // Mostrar mensaje de carga completa
-                    alert("Se han completado todas las cargas de archivos.");
-                    // Preguntar al usuario si desea actualizar la página
-                    if (confirm("¿Desea actualizar la página para ver los cambios?")) {
-                        // Actualizar la página
-                        window.location.reload();
-                    }
+
+                    Swal.fire({
+                        title: 'Archivo subido exitosamente',
+                        text: 'Debes actualizar la página para ver los cambios.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location
+                        .reload(); // Recarga la página cuando el usuario acepta el mensaje
+                        }
+                    });
+
                 });
             }
         };

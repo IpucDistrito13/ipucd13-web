@@ -17,7 +17,6 @@ class ArchivoController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     public function index(Carpeta $carpeta)
     {
         $archivos = Archivo::all();
@@ -110,8 +109,14 @@ class ArchivoController extends Controller
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
 
-                // Almacenar el archivo utilizando la función storeFile según el entorno
-                $url = $this->storeFile($file, 'public/descargables/' . $carpeta);
+                // Obtener el nombre original del archivo
+                $originalName = $file->getClientOriginalName();
+
+                // Crear la ruta completa incluyendo el nombre original del archivo
+                $fullPath = 'descargables/' . $carpeta . '/' . $originalName;
+
+                // Almacenar el archivo utilizando la función storeFile
+                $url = $this->storeFile($file, $fullPath);
 
                 // Crear una entrada en la base de datos para el archivo cargado
                 $data = [
@@ -119,6 +124,7 @@ class ArchivoController extends Controller
                     'url' => $url,
                     'carpeta_id' => $carpeta,
                     'user_id' => auth()->user()->id,
+                    'nombre_original' => $originalName,
                 ];
 
                 $archivo = Archivo::create($data);
@@ -148,24 +154,32 @@ class ArchivoController extends Controller
     public function download($uuid)
     {
         try {
-            // Busca el archivo en la base de datos usando el UUID
-            $archivo = Archivo::where('uuid', $uuid)->firstOrFail();
-
-            // Obtiene la URL del archivo almacenado
-            $filePath = storage_path("app/{$archivo->url}");
-
-            // Verifica si el archivo existe
-            if (!file_exists($filePath)) {
-                return redirect()->back()->with('error', 'El archivo solicitado no existe.');
+            // Buscar el archivo en la base de datos usando el UUID
+            $archivo = Archivo::where('uuid', $uuid)->first();
+    
+            // Verificar si se encontró el archivo
+            if ($archivo) {
+                // Obtener la URL del archivo
+                $filePath = $archivo->url;
+    
+                // Verificar si el archivo existe en el sistema de archivos
+                if (Storage::exists($filePath)) {
+                    // Descargar el archivo
+                    return Storage::download($filePath, $archivo->nombre_original);
+                } else {
+                    // Manejar el caso en el que el archivo no existe en el sistema de archivos
+                    return response()->json(['error' => 'El archivo no existe en el sistema de archivos'], 404);
+                }
+            } else {
+                // Manejar el caso en el que no se encuentre el archivo en la base de datos
+                return response()->json(['error' => 'Archivo no encontrado'], 404);
             }
-
-            // Devuelve el archivo como respuesta de descarga
-            return response()->download($filePath, basename($filePath), [
-                'Content-Type' => mime_content_type($filePath),
-            ]);
         } catch (\Exception $e) {
-            // En caso de error al buscar el archivo
-            return redirect()->back()->with('error', 'El archivo solicitado no fue encontrado.');
+            // Manejar errores generales y devolver una respuesta con el mensaje de error
+            return response()->json(['error' => 'Error al descargar el archivo: ' . $e->getMessage()], 500);
         }
     }
+    
+    
+    
 }
