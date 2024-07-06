@@ -46,16 +46,16 @@
     <div class="card" id="seccion_musica" style="display: none;">
         <div class="card-body">
             <audio></audio>
-
+    
             <div id="info-cancion"></div> <!-- Elemento para mostrar información de la canción -->
-
+    
             <div id="current_time">0:00</div>
             <div id="total_duration">Duración: --:--</div> <!-- Nuevo elemento para mostrar la duración total -->
             <div class="progress-bar" id="progress-bar" onclick="seek(event)">
                 <div class="progress-fill"></div>
                 <div class="progress-circle"></div> <!-- Círculo indicador -->
             </div>
-
+    
             <div class="section-pause">
                 <div class="buttons">
                     <button class="pause" id="pause" onclick="togglePlayPause()">
@@ -63,7 +63,7 @@
                     </button>
                 </div>
             </div>
-
+    
         </div>
     </div>
 
@@ -354,124 +354,64 @@
         }
 
         .progress-bar {
-            width: 100%;
-            background-color: #f3f3f3;
-            border-radius: 5px;
-            overflow: hidden;
-        }
+        width: 100%;
+        background-color: #f3f3f3;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-top: 10px;
+        cursor: pointer;
+        position: relative; /* Necesario para posicionar el círculo */
+    }
 
-        .progress-fill {
-            height: 10px;
-            background-color: #007bff;
-            width: 0%;
-        }
+    .progress-fill {
+        height: 10px;
+        background-color: #007bff;
+        width: 0%;
+    }
 
+    .progress-circle {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        background-color: #F0AB00;
+        border-radius: 50%;
+        pointer-events: none; /* Para que el círculo no interfiera con los eventos de clic */
+    }
 
-        /* Audio Element */
-        audio {
-            width: 300px;
-            /* Adjust as needed */
-            height: 40px;
-            /* Adjust as needed */
-            border-radius: 5px;
-            /* Rounded corners */
-            border: 1px solid #ccc;
-            /* Border */
-            margin-bottom: 10px;
-        }
+    /* Audio Element */
+    audio {
+        width: 300px; /* Ajusta según sea necesario */
+        height: 40px; /* Ajusta según sea necesario */
+        border-radius: 5px; /* Esquinas redondeadas */
+        border: 1px solid #ccc; /* Borde */
+        margin-bottom: 10px;
+    }
 
-        /* Song Information */
-        #info-cancion {
-            flex-grow: 1;
-            /* Allow to expand */
-            font-size: 16px;
-            text-align: center;
-        }
+    /* Pause Button */
+    .pause {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px; /* Esquinas redondeadas */
+        cursor: pointer;
+        transition: background-color 0.3s; /* Transición suave */
+        outline: none;
+    }
 
-        /* Current Time and Duration */
-        #current_time,
-        #total_duration {
-            font-size: 14px;
-            margin-right: 10px;
-        }
+    /* Hover effect for Pause Button */
+    .pause:hover {
+        background-color: #e9e9e9; /* Fondo más claro al pasar el mouse */
+    }
 
-        .progress-bar {
-            width: 100%;
-            background-color: #f3f3f3;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 10px;
-            cursor: pointer;
-            /* Make the progress bar clickable */
-            position: relative;
-            /* Necesario para posicionar el círculo */
-        }
-
-        .progress-fill {
-            height: 10px;
-            background-color: #007bff;
-            width: 0%;
-        }
-
-        .progress-circle {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px;
-            height: 10px;
-            background-color: #F0AB00;
-            border-radius: 50%;
-            pointer-events: none;
-            /* Para que el círculo no interfiera con los eventos de clic */
-        }
-
-        .section-pause .buttons {
-            display: flex;
-            align-items: center;
-            /* Centra verticalmente */
-            justify-content: center;
-            /* Centra horizontalmente */
-            height: 100%;
-            /* Ajusta la altura para centrar */
-        }
-
-        .section-pause .pause {
-            background: none;
-            border: none;
-            color: #007bff;
-            font-size: 24px;
-            cursor: pointer;
-            outline: none;
-        }
-
-        /* Pause Button */
-        .pause {
-            display: flex;
-            align-items: center;
-            padding: 10px 15px;
-            /* Adjust padding */
-            border: 1px solid #ccc;
-            /* Border */
-            border-radius: 5px;
-            /* Rounded corners */
-            cursor: pointer;
-            transition: background-color 0.3s;
-            /* Smooth transition */
-        }
-
-        /* Hover effect for Pause Button */
-        .pause:hover {
-            background-color: #e9e9e9;
-            /* Lighter background on hover */
-        }
-
-        /* Icon styles (assuming you're using Font Awesome icons) */
-        .pause i {
-            font-size: 20px;
-            margin-right: 5px;
-            color: #007bff;
-            /* Blue icon color */
-        }
+    /* Icon styles (assuming you're using Font Awesome icons) */
+    .pause i {
+        font-size: 20px;
+        margin-right: 5px;
+        color: #007bff; /* Color del ícono azul */
+    }
     </style>
 
 
@@ -580,108 +520,109 @@
         // End generate slug
     </script>
 
-    <script>
-        let audioPlayer;
-        let isPlaying = false;
+<script>
+    let audioPlayer;
+    let isPlaying = false;
 
-        function reproducirBtn(episodioId) {
-            console.log('Audio: ' + episodioId);
+    function reproducirBtn(episodioId) {
+        console.log('Audio: ' + episodioId);
 
-            axios.get('/api/v1/getAudioEpisodio/' + episodioId)
-                .then(function(response) {
-                    console.log(response.data);
-                    // Verifica que la respuesta contenga la URL del audio
-                    if (!response.data.url) {
-                        console.error('No se encontró la URL del audio en la respuesta');
-                        return;
-                    }
+        axios.get('/api/v1/getAudioEpisodio/' + episodioId)
+            .then(function(response) {
+                console.log(response.data);
+                // Verifica que la respuesta contenga la URL del audio
+                if (!response.data.url) {
+                    console.error('No se encontró la URL del audio en la respuesta');
+                    return;
+                }
 
-                    // Obtén la URL del audio desde la respuesta
-                    const audioUrl = response.data.url;
+                // Obtén la URL del audio desde la respuesta
+                const audioUrl = response.data.url;
 
-                    // Obtén el elemento de audio
-                    audioPlayer = document.querySelector('#seccion_musica audio');
-                    if (!audioPlayer) {
-                        console.error('No se encontró el elemento de audio');
-                        return;
-                    }
+                // Obtén el elemento de audio
+                audioPlayer = document.querySelector('#seccion_musica audio');
+                if (!audioPlayer) {
+                    console.error('No se encontró el elemento de audio');
+                    return;
+                }
 
-                    // Establece la fuente del elemento de audio
-                    audioPlayer.src = audioUrl;
+                // Establece la fuente del elemento de audio
+                audioPlayer.src = audioUrl;
 
-                    // Actualiza la información de la canción
-                    document.getElementById('info-cancion').innerText = response.data.titulo;
+                // Actualiza la información de la canción
+                document.getElementById('info-cancion').innerText = response.data.titulo;
 
-                    // Mostrar la sección de música una vez que se haya cargado el audio
-                    document.getElementById('seccion_musica').style.display = 'block';
+                // Mostrar la sección de música una vez que se haya cargado el audio
+                document.getElementById('seccion_musica').style.display = 'block';
 
-                    // Reproduce el audio
-                    audioPlayer.play().then(() => {
-                        console.log('Reproducción iniciada');
-                        isPlaying = true;
-                        document.getElementById('pause-icon').className = 'fas fa-pause';
-                    }).catch((error) => {
-                        console.error('Error al reproducir el audio:', error);
-                    });
-
-                    // Actualiza el tiempo actual y la duración total
-                    audioPlayer.addEventListener('timeupdate', updateProgress);
-                    audioPlayer.addEventListener('loadedmetadata', () => {
-                        document.getElementById('total_duration').innerText = 'Duración: ' + formatTime(
-                            audioPlayer.duration);
-                    });
-
-                })
-                .catch(function(error) {
-                    console.error('Error al obtener el audio:', error);
-                });
-        }
-
-        function togglePlayPause() {
-            if (isPlaying) {
-                audioPlayer.pause();
-                isPlaying = false;
-                document.getElementById('pause-icon').className = 'fas fa-play';
-            } else {
+                // Reproduce el audio
                 audioPlayer.play().then(() => {
+                    console.log('Reproducción iniciada');
                     isPlaying = true;
                     document.getElementById('pause-icon').className = 'fas fa-pause';
                 }).catch((error) => {
                     console.error('Error al reproducir el audio:', error);
                 });
-            }
+
+                // Actualiza el tiempo actual y la duración total
+                audioPlayer.addEventListener('timeupdate', updateProgress);
+                audioPlayer.addEventListener('loadedmetadata', () => {
+                    document.getElementById('total_duration').innerText = 'Duración: ' + formatTime(
+                        audioPlayer.duration);
+                });
+
+            })
+            .catch(function(error) {
+                console.error('Error al obtener el audio:', error);
+            });
+    }
+
+    function togglePlayPause() {
+        if (isPlaying) {
+            audioPlayer.pause();
+            isPlaying = false;
+            document.getElementById('pause-icon').className = 'fas fa-play';
+        } else {
+            audioPlayer.play().then(() => {
+                isPlaying = true;
+                document.getElementById('pause-icon').className = 'fas fa-pause';
+            }).catch((error) => {
+                console.error('Error al reproducir el audio:', error);
+            });
         }
+    }
 
-        function updateProgress() {
-            const progressFill = document.querySelector('.progress-fill');
-            const progressCircle = document.querySelector('.progress-circle');
-            const currentTime = document.getElementById('current_time');
+    function updateProgress() {
+        const progressFill = document.querySelector('.progress-fill');
+        const progressCircle = document.querySelector('.progress-circle');
+        const currentTime = document.getElementById('current_time');
 
-            const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-            progressFill.style.width = progressPercent + '%';
-            progressCircle.style.left = `calc(${progressPercent}% - 5px)`; // Centrar el círculo
+        const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressFill.style.width = progressPercent + '%';
+        progressCircle.style.left = `calc(${progressPercent}% - 5px)`; // Centrar el círculo
 
-            currentTime.innerText = formatTime(audioPlayer.currentTime);
-        }
+        currentTime.innerText = formatTime(audioPlayer.currentTime);
+    }
 
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-        }
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    }
 
-        function seek(event) {
-            const progressBar = document.getElementById('progress-bar');
-            const rect = progressBar.getBoundingClientRect();
-            const offsetX = event.clientX - rect.left;
-            const totalWidth = rect.width;
-            const percentage = offsetX / totalWidth;
-            const seekTime = percentage * audioPlayer.duration;
+    function seek(event) {
+        const progressBar = document.getElementById('progress-bar');
+        const rect = progressBar.getBoundingClientRect();
+        const offsetX = event.clientX - rect.left;
+        const totalWidth = rect.width;
+        const percentage = offsetX / totalWidth;
+        const seekTime = percentage * audioPlayer.duration;
 
-            audioPlayer.currentTime = seekTime;
-            updateProgress();
-        }
-    </script>
+        audioPlayer.currentTime = seekTime;
+        updateProgress();
+    }
+</script>
+
 
     <script type="text/javascript">
         // Obtener el valor del campo de texto
