@@ -415,33 +415,7 @@
     </style>
 
 
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            background-color: #007bff;
-            color: white;
-        }
-
-        #browseFile {
-            transition: all 0.3s;
-        }
-
-        #browseFile:hover {
-            transform: scale(1.05);
-        }
-
-        .progress {
-            height: 25px;
-            margin-top: 20px;
-        }
-    </style>
+    
 @stop
 
 @section('js')
