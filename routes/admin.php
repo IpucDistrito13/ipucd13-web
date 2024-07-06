@@ -137,7 +137,7 @@ Route::post('file/delete', [GaleriaController::class, 'delete'])->name('file.del
 
 Route::post('users/listJson', [DatatableController::class, 'listJson'])->name('users.listJson');
 
-Route::delete('carpetas/publico/{carpetaId}', [CarpetaController::class, 'destroy'])->name('admin.carpetas.destroy');
+Route::delete('carpetas/publico/{carpetaId}', [CarpetaController::class, 'destroyCarpeta'])->name('admin.carpetas.destroyCarpeta');
 
 Route::get('carpetas/privado', [CarpetaController::class, 'listComitePrivado'])->name('admin.carpetas.listComitePrivado');
 Route::get('carpetas/publico', [CarpetaController::class, 'listComitePublico'])->name('admin.carpetas.listComitePublico');

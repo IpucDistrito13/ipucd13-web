@@ -111,7 +111,7 @@ class CarpetaController extends Controller
         return back()->with('success', $data['message']);
     }
 
-    public function destroy($carpetaId)
+    public function destroyCarpeta($carpetaId)
     {
         try {
             $carpeta = Carpeta::findOrFail($carpetaId);

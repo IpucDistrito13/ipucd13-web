@@ -79,10 +79,10 @@
                                         más</a>
                                 @endcan
 
-                                @can('admin.carpetas.destroy')
+                                @can('admin.carpetas.destroyCarpeta')
                                     <!-- Delete Button -->
                                 <form id="deleteForm{{ $item->id }}"
-                                    action="{{ route('admin.carpetas.destroy', $item->id) }}" method="POST">
+                                    action="{{ route('admin.carpetas.destroyCarpeta', $item->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button" class="btn btn-danger btn-sm"

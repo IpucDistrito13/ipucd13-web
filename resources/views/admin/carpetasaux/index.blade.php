@@ -75,7 +75,7 @@
 
                                     @can('admin.comites.destroy')
                                         <!-- Delete Button -->
-                                        <form action="{{ route('admin.carpetas.destroy', $item) }}" method="POST">
+                                        <form action="{{ route('admin.carpetas.destroyCarpeta', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

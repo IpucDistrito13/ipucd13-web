@@ -41,7 +41,7 @@ class UsuarioController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $editUrl = route('admin.usuarios.editar', $row->id);
-                    $deleteUrl = route('admin.usuarios.destroy', $row->id);
+                    $deleteUrl = route('admin.usuarios.destroyUser', $row->id);
 
                     $btn = '<a href="' . $editUrl . '" class="edit btn btn-primary btn-sm">Editar</a>';
                     $btn .= '<form id="deleteForm_' . $row->id . '" action="' . $deleteUrl . '" method="POST" class="d-inline">';
