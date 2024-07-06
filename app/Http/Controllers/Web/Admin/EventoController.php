@@ -9,6 +9,7 @@ use App\Http\Resources\V1\EventoResource;
 use App\Models\Comite;
 use App\Models\Evento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class EventoController extends Controller
 {
@@ -34,6 +35,8 @@ class EventoController extends Controller
     public function store(EventoRequest $request)
     {
         $evento = Evento::create($request->all());
+
+        Cache::flush();
         $data = [
             'message' => 'Evento creado exitosamente.',
         ];
@@ -71,6 +74,8 @@ class EventoController extends Controller
     public function destroy(Evento $evento)
     {
         $evento->delete();
+        Cache::flush();
+        
         $data = [
            'message' => 'Evento eliminado exitosamente.',
         ];

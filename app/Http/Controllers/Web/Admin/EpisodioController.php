@@ -103,7 +103,6 @@ class EpisodioController extends Controller
 
         Cache::flush();
 
-
         return redirect()->route('admin.episodios.edit', $episodio)->with('success', $data['message']);
     }
 
@@ -297,6 +296,7 @@ class EpisodioController extends Controller
             $episodio->url = $storagePath;
     
             $episodio->save($data);
+            Cache::flush();
     
             return [
                 'path' => $storagePath,

@@ -103,6 +103,7 @@ class CarpetaController extends Controller
         ];
 
         $carpeta = Carpeta::create($data);
+        Cache::flush();
 
         $data = [
             'message' => 'Carpeta creada exitosamente.',

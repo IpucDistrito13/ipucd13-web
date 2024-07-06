@@ -7,6 +7,8 @@ use App\Http\Requests\CronogramaRequest;
 use App\Models\Comite;
 use App\Models\Cronograma;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 
 class CronogramaController extends Controller
 {
@@ -33,6 +35,8 @@ class CronogramaController extends Controller
     {
         //return $request;
         $cronograma = Cronograma::create($request->all());
+
+        Cache::flush();
 
         $data = [
             'message' => 'Cronograma creado exitosamente.',
@@ -72,6 +76,8 @@ class CronogramaController extends Controller
     public function destroy(Cronograma $cronograma)
     {
         $cronograma->delete();
+
+        Cache::flush();
 
         $data = [
             'message' => 'Fecha eliminada exitosamente.',

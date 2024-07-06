@@ -69,6 +69,7 @@ class SolicitudController extends Controller
         ];
 
         $solicitud = Solicitud::create($data);
+        Cache::flush();
 
         $data = [
             'message' => 'Solicitud creada exitosamente.',
@@ -164,6 +165,7 @@ class SolicitudController extends Controller
     {
         try {
             $solicitud->delete();
+            Cache::flush();
 
             $data = [
                 'message' => 'Solicitud eliminada exitosamente.',

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+
 
 class GaleriaController extends Controller
 {
@@ -88,6 +90,7 @@ class GaleriaController extends Controller
             $url = $galeria->url;
             Storage::delete($url);
             $galeria->delete();
+            Cache::flush();
 
             $data = [
                 'message' => 'Galería eliminada exitosamente.',
@@ -157,6 +160,7 @@ class GaleriaController extends Controller
             $galeria = Galeria::create($data);
 
             DB::commit();
+            Cache::flush();
 
             return response()->json(['message' => 'Se cargaron las fotos exitosamente.', 'uuid' => $uuid], 200);
         } else {
@@ -233,6 +237,7 @@ class GaleriaController extends Controller
                 Storage::delete($file->url);
                 // Eliminar el registro de la base de datos
                 $file->delete();
+                Cache::flush();
 
                 return response()->json(['success' => true]);
             } else {
