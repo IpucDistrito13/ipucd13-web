@@ -129,11 +129,12 @@ class GaleriaController extends Controller
     private function storeFile($file, $ubicacion, $fileName)
     {
         if (env('APP_ENV') === 'local') {
-            return $file->storeAs('public/' . $ubicacion, $fileName);
+            return $file->storeAs( $ubicacion, $fileName);
         } else {
             return Storage::disk('s3')->put($ubicacion, $file);
         }
     }
+    
 
     //Subir imagenes de galeria
     public function upload(Request $request)
@@ -158,7 +159,10 @@ class GaleriaController extends Controller
             $fileName = time() . '-' . $file->getClientOriginalName();
 
             // Determinar la ubicación de almacenamiento según el entorno
-            $ubicacion = 'galeria/' . $usuario;
+            $ubicacion = 'public/galeria/' . $usuario;
+            //$ubicacion = env('APP_ENV') === 'local' ? 'galeria/' . $usuario : 'public/galeria/' . $usuario;
+            
+
             //$ubicacion = (env('APP_ENV') === 'local') ? 'galeria/' . $usuario : 'galeria/' . $usuario;
 
             // Almacenar el archivo en el sistema de archivos utilizando storeFile
