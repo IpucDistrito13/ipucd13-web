@@ -8,7 +8,7 @@
                 <option value="" selected disabled>Selecciona</option>
                 @foreach ($comites as $comite)
                     <option value="{{ $comite->id }}"
-                        {{ isset($podcast) && $podcast->comite_id == $comite->id ? 'selected' : '' }}>
+                        {{ old('comite') == $comite->id || (isset($serie) && $serie->comite_id == $comite->id) ? 'selected' : '' }}>
                         {{ $comite->nombre }}
                     </option>
                 @endforeach
@@ -19,15 +19,16 @@
         </div>
     </div>
 
+
     <div class="col-sm-2">
         <!-- select input -->
         <div class="form-group">
-            <label>Categoría *</label>
+            <label>Categorías *</label>
             <select id="categoria" name="categoria" class="form-control">
                 <option value="" selected disabled>Selecciona</option>
                 @foreach ($categorias as $categoria)
                     <option value="{{ $categoria->id }}"
-                        {{ isset($podcast) && $podcast->categoria_id == $categoria->id ? 'selected' : '' }}>
+                        {{ old('categoria') == $categoria->id || (isset($serie) && $serie->categoria_id == $categoria->id) ? 'selected' : '' }}>
                         {{ $categoria->nombre }}
                     </option>
                 @endforeach

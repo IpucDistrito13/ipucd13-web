@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use DOMDocument;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class PublicacionController extends Controller
 {
@@ -84,7 +85,7 @@ class PublicacionController extends Controller
                 ->with('success', 'Publicación creada exitosamente.');
         } catch (\Exception $e) {
             // Log del error para revisión posterior
-            \Log::error('Error al crear la publicación: ' . $e->getMessage());
+            Log::error('Error store - Publicación: ' . $e->getMessage());
 
             // Redireccionar con mensaje de error
             return redirect()->back()
@@ -175,7 +176,7 @@ class PublicacionController extends Controller
                 ->with('success', 'Publicación actualizada exitosamente.');
         } catch (\Exception $e) {
             // Log del error para revisión posterior
-            \Log::error('Error al actualizar la publicación: ' . $e->getMessage());
+            Log::error('Error update | Publicación: ' . $e->getMessage());
 
             // Redireccionar con mensaje de error
             return redirect()->back()
@@ -227,28 +228,44 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
+        DB::beginTransaction();
+
         try {
+            // Eliminar todas las imágenes asociadas a la publicación, si las hay
+            if ($publicacion->imagenes()->exists()) {
+                foreach ($publicacion->imagenes()->get() as $imagen) {
+                    $this->deleteFile($imagen->url);
+                    $imagen->delete(); // Eliminar la entrada de la base de datos
+                }
+            }
+
+            // Eliminar la publicación
             $publicacion->delete();
-
-            $data = [
-                'message' => 'Publicación eliminada exitosamente.',
-            ];
-
-            //Elimina la variables almacenada en cache
+            DB::commit();
             Cache::flush();
-            //Cache
 
-            return redirect()->route('admin.publicaciones.index')->with('success', $data['message']);
+            // Redireccionar con un mensaje de éxito
+            return redirect()
+                ->route('admin.publicaciones.index')
+                ->with('success', 'Publicación eliminada exitosamente.');
         } catch (\Exception $e) {
-            $data = [
-                'message' => 'No se pudo eliminar la publicación, debido a restricción de integridad.',
-            ];
+            DB::rollBack();
 
-            //Elimina la variables almacenada en cache
-            Cache::flush();
-            //Cache
+            // Redireccionar con un mensaje de error
+            return redirect()
+                ->route('admin.publicaciones.index')
+                ->with('error', 'No se pudo eliminar la publicación.');
+        }
+    }
 
-            return redirect()->route('admin.publicaciones.index')->with('error', $data['message']);
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
         }
     }
 }

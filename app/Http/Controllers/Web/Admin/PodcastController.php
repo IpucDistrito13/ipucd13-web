@@ -11,7 +11,7 @@ use App\Models\Podcast;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 class PodcastController extends Controller
 {
@@ -59,19 +59,19 @@ class PodcastController extends Controller
      */
     public function store(PodcastRequest $request)
     {
-        try {
-            // Iniciar una transacción de base de datos
-            DB::beginTransaction();
+        DB::beginTransaction();
 
+        try {
             $url_banner = '';
 
-            // Verificar si se cargó un nuevo banner
+            // Verificar y almacenar el nuevo banner si se proporciona
             if ($request->hasFile('imagen_banner')) {
                 $fileBanner = $request->file('imagen_banner');
                 $ubicacionBanner = 'public/podcasts/banner';
                 $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
             }
 
+            // Crear el podcast con los datos proporcionados
             $podcast = Podcast::create([
                 'titulo' => $request->titulo,
                 'slug' => $request->slug,
@@ -84,7 +84,7 @@ class PodcastController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
 
-            // Verificar si se cargó un nuevo archivo
+            // Verificar y almacenar el archivo de portada si se proporciona
             if ($request->hasFile('file')) {
                 $filePortada = $request->file('file');
                 $ubicacionPortada = 'public/podcasts/portadas';
@@ -96,20 +96,23 @@ class PodcastController extends Controller
                 ]);
             }
 
-            // Commit si no hay errores
             DB::commit();
-
-            // Eliminar datos almacenados en cache
             Cache::flush();
 
             // Redireccionar con un mensaje de éxito
-            return redirect()->route('admin.podcasts.index')->with('success', 'Podcast creado exitosamente.');
+            return redirect()
+                ->route('admin.podcasts.index')
+                ->with('success', 'Podcast creado exitosamente.');
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
+            Log::error('Error al store - Podcast: ' . $e->getMessage());
 
-            // Redireccionar con un mensaje de error
-            return redirect()->back()->with('error', 'Error al crear el podcast: ' . $e->getMessage())->withInput();
+            // Redireccionar con un mensaje de error y mantener los datos de entrada
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Error al crear el Podcast: ' . $e->getMessage());
         }
     }
 
@@ -193,20 +196,22 @@ class PodcastController extends Controller
                 }
             }
 
-            // Commit si no hay errores
             DB::commit();
-
-            // Eliminar datos almacenados en cache
             Cache::flush();
 
             // Redireccionar con un mensaje de éxito
-            return redirect()->route('admin.podcasts.edit', $podcast)->with('success', 'Podcast actualizado exitosamente.');
+            return redirect()
+                ->route('admin.podcasts.edit', $podcast)
+                ->with('success', 'Podcast actualizado exitosamente.');
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
+            Log::error('Error  update - Podcast: ' . $e->getMessage());
 
             // Redireccionar con un mensaje de error
-            return redirect()->back()->with('error', 'Error al actualizar el podcast: ' . $e->getMessage())->withInput();
+            return redirect()
+                ->back()
+                ->with('error', 'Error al actualizar el Podcast: ' . $e->getMessage())->withInput();
         }
     }
 
@@ -216,28 +221,49 @@ class PodcastController extends Controller
      */
     public function destroy(Podcast $podcast)
     {
+        DB::beginTransaction();
+
         try {
+            // Eliminar el banner del podcast, si existe
+            if ($podcast->imagen_banner) {
+                $this->deleteFile($podcast->imagen_banner);
+            }
+
+            // Eliminar todas las imágenes de portada asociadas al podcast, si las hay
+            if ($podcast->imagen()->exists()) {
+                foreach ($podcast->imagen()->get() as $imagen) {
+                    $this->deleteFile($imagen->url);
+                    $imagen->delete(); // Eliminar la entrada de la base de datos
+                }
+            }
+
+            // Eliminar el podcast
             $podcast->delete();
-
-            $data = [
-                'message' => 'Podcast eliminado exitosamente.',
-            ];
-
-            //Elimina la variables almacenada en cache
+            DB::commit();
             Cache::flush();
-            //Cache
 
-            return redirect()->route('admin.podcasts.index')->with('success', $data['message']);
+            // Redireccionar con un mensaje de éxito
+            return redirect()
+                ->route('admin.podcasts.index')
+                ->with('success', 'Podcast eliminado exitosamente.');
         } catch (\Exception $e) {
-            $data = [
-                'message' => 'No se pudo eliminar el podcast, debido a restricción de integridad.',
-            ];
+            DB::rollBack();
 
-            //Elimina la variables almacenada en cache
-            Cache::flush();
-            //Cache
+            // Redireccionar con un mensaje de error
+            return redirect()
+                ->back()
+                ->with('error', 'No se pudo eliminar el Podcast.');
+        }
+    }
 
-            return redirect()->route('admin.podcasts.index')->with('error', $data['message']);
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
         }
     }
 
@@ -265,8 +291,6 @@ class PodcastController extends Controller
 
     public function createEpisodio(Podcast $podcast)
     {
-        // return $podcast;
-        //$episodios = Episodio::where('podcast_id', $podcast->id)->get();
         return view('admin.episodios.create', [
             'podcast' => $podcast,
         ]);

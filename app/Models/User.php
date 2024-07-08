@@ -133,11 +133,13 @@ class User extends Authenticatable
 
     //Lista segun el rol
     public function scopeListarPorRol($query, $roleId)
-    {
-        return $query->whereHas('roles', function ($query) use ($roleId) {
+{
+    return $query->whereHas('roles', function ($query) use ($roleId) {
             $query->where('id', $roleId);
-        });
-    }
+        })
+        ->where('estado', 'Activo');
+}
+
 
     /*
 
@@ -150,6 +152,8 @@ SELECT
     users.nombre,
     users.apellidos,
     users.celular,
+    users.visible_celular,
+    users.estado,
     congregaciones.direccion AS direccion_congregacion,
     municipios.nombre AS nombre_municipio,
     (

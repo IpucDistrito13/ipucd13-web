@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
-
+use Illuminate\Support\Facades\Log;
 
 class GaleriaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    // Muestra lista de  Pastores con el estado Activo
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -85,20 +86,43 @@ class GaleriaController extends Controller
      */
     public function destroy(Galeria $galeria)
     {
-        try {
+        DB::beginTransaction();
 
-            $url = $galeria->url;
-            Storage::delete($url);
+        try {
+            // Eliminar el archivo de la galería, si existe
+            if ($galeria->url) {
+                $this->deleteFile($galeria->url);
+            }
+
+            // Eliminar la galería
             $galeria->delete();
+
             Cache::flush();
+            DB::commit();
 
             $data = [
                 'message' => 'Galería eliminada exitosamente.',
             ];
-            return back()->with('success', $data['message']);
 
-            //return redirect()->route('admin.galerias.privadoadmin', $galeria->user->uuid)->with('success', $data['message']);
+            // Redireccionar con un mensaje de éxito
+            return back()->with('success', $data['message']);
         } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error destroy - Galeria: ' . $e->getMessage());
+
+            // Manejo de excepciones si ocurre algún error
+            return back()->with('error', 'No se pudo eliminar la galería.');
+        }
+    }
+
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
         }
     }
 
@@ -111,30 +135,31 @@ class GaleriaController extends Controller
         }
     }
 
+    //Subir imagenes de galeria
     public function upload(Request $request)
-{
-    DB::beginTransaction();
+    {
+        DB::beginTransaction();
 
-    try {
-        // Validar la solicitud
-        $request->validate([
-            'file' => 'required|file',
-            'usuario' => 'required',
-            'type' => 'required',
-        ]);
+        try {
+            // Validar la solicitud
+            $validatedData = $request->validate([
+                'file' => 'required|file',
+                'usuario' => 'required',
+                'type' => 'required|numeric',
+            ]);
 
-        // Obtener datos de la solicitud
-        $usuario = $request->input('usuario');
-        $tipo = $request->input('type');
-        $file = $request->file('file');
+            // Obtener datos de la solicitud
+            $usuario = $validatedData['usuario'];
+            $tipo = $validatedData['type'];
+            $file = $validatedData['file'];
 
-        // Verificar si el archivo existe en la solicitud
-        if ($file) {
+            // Verificar si el archivo existe en la solicitud (ya validado)
             // Generar un nombre de archivo único
             $fileName = time() . '-' . $file->getClientOriginalName();
 
             // Determinar la ubicación de almacenamiento según el entorno
-            $ubicacion = (env('APP_ENV') === 'local') ? 'public/galeria/' . $usuario : 'galeria/' . $usuario;
+            $ubicacion = 'galeria/' . $usuario;
+            //$ubicacion = (env('APP_ENV') === 'local') ? 'galeria/' . $usuario : 'galeria/' . $usuario;
 
             // Almacenar el archivo en el sistema de archivos utilizando storeFile
             $url = $this->storeFile($file, $ubicacion, $fileName);
@@ -163,17 +188,13 @@ class GaleriaController extends Controller
             Cache::flush();
 
             return response()->json(['message' => 'Se cargaron las fotos exitosamente.', 'uuid' => $uuid], 200);
-        } else {
+        } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['error' => 'No se ha cargado ningún archivo.'], 400);
+            Log::error('Error upload - Publicación: ' . $e->getMessage());
+
+            return response()->json(['error' => 'Error en la carga de fotos: ' . $e->getMessage()], 500);
         }
-    } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json(['error' => 'Error en la carga de fotos: ' . $e->getMessage()], 500);
     }
-}
-
-
 
     public function privadoAdmin($uuid)
     {
@@ -191,6 +212,7 @@ class GaleriaController extends Controller
     }
 
     //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES PASTORES
+    /*
     public function generalLider($uuid)
     {
         // 1 = GALERIA GENERAL
@@ -205,6 +227,7 @@ class GaleriaController extends Controller
 
         return view('admin.galerias.upload_general_lider', compact('usuario', 'galerias'));
     }
+    */
 
 
 
@@ -244,11 +267,12 @@ class GaleriaController extends Controller
                 return response()->json(['success' => false, 'message' => 'Archivo no encontrado.']);
             }
         } catch (\Exception $e) {
-            Log::error('Error al eliminar el archivo: ' . $e->getMessage());
+            Log::error('Error destroy - Galeria: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'Error al eliminar el archivo.']);
         }
     }
 
+    
     public function lideres(Request $request)
     {
 
@@ -271,8 +295,7 @@ class GaleriaController extends Controller
 
         return view('admin.galerias.lideres');
     }
-
-
+    
     public function galeriaPastores($uuid)
     {
 

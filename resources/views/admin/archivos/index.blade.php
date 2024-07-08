@@ -60,7 +60,7 @@
                     @foreach ($archivos as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ basename($item->url) }}</td>
+                            <td>{{ $item->nombre_original }}</td>
                             <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
 
                             <td>

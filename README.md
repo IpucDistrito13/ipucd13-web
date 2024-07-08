@@ -137,3 +137,68 @@ Para las imagenes que se suban en el mismo contenido se guardara de forma intern
 # CODEADO DIFGITALOCEANS
 $storagePath = 'https://ipucd13.nyc3.digitaloceanspaces.com/' . $ubicacion;
 -EpisodioController
+
+
+# ALMACENAMIENTO DE ARCHIVOS
+
+## COMITES
+- public/comites/banner/##.png
+- public/comites/portadas/##.png
+
+## CATEGORIAS
+- public/categorias/banner/##.png
+- public/categorias/portadas/##.png
+
+## PODCASTS
+- public/podcasts/banner/##.png
+- public/podcasts/portadas/##.png
+- public/podcasts/episodios/##.png
+
+
+## SERIES
+- public/series/banner/##.png
+- public/series/portadas/##.png
+
+## PUBLICACIONES
+- public/publicaciones/portadas/##.png
+- imagen editor 
+
+## DESCARGABLES
+- public/descargables/fileId/##.pdf
+
+## GALERIA PUBLICA | PRIVADA
+- public/galeria/serId/##.png
+
+
+
+Log and try
+
+# COMITE
+- store
+- update
+- destroy
+
+# CATEGORIA
+- store
+- update
+- destroy
+
+# PODCAST
+- store
+- upload
+- destroy
+
+# SERIE
+- store
+- update
+- destroy
+
+# PUBLICACION
+- destroy
+
+# ARCHIVOS
+- destroy
+- upload
+- download
+
+# GALERIA

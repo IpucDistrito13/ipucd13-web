@@ -8,6 +8,7 @@ use App\Models\Categoria;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class CategoriaController extends Controller
 {
@@ -52,42 +53,59 @@ class CategoriaController extends Controller
      */
     public function store(CategoriaRequest $request)
     {
-        $url_banner = '';
+        // Iniciar una transacción de base de datos
+        DB::beginTransaction();
 
-        // Verificar si se cargó un nuevo banner
-        if ($request->hasFile('imagen_banner')) {
-            $fileBanner = $request->file('imagen_banner');
-            $ubicacionBanner = 'public/categorias/banner';
-            $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
-        }
+        try {
+            $url_banner = '';
 
-        $data = [
-            'nombre' => $request->nombre,
-            'slug' => $request->slug,
-            'descripcion' => $request->descripcion,
-            'imagen_banner' => $url_banner,
-        ];
+            // Verificar y almacenar el nuevo banner si se proporciona
+            if ($request->hasFile('imagen_banner')) {
+                $fileBanner = $request->file('imagen_banner');
+                $ubicacionBanner = 'public/categorias/banner';
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
+            }
 
-        $categoria = Categoria::create($data);
-
-        // Verificar si se cargó un nuevo archivo
-        if ($request->hasFile('file')) {
-            $filePortada = $request->file('file');
-            $ubicacionPortada = 'public/categorias/portadas';
-            $url = $this->storeFile($filePortada, $ubicacionPortada);
-
-            $categoria->imagen()->create([
-                'url' => $url,
-                'imageable_type' => Categoria::class,
+            // Crear la categoría con los datos proporcionados
+            $categoria = Categoria::create([
+                'nombre' => $request->nombre,
+                'slug' => $request->slug,
+                'descripcion' => $request->descripcion,
+                'imagen_banner' => $url_banner,
             ]);
+
+            // Verificar y almacenar el archivo de portada si se proporciona
+            if ($request->hasFile('file')) {
+                $filePortada = $request->file('file');
+                $ubicacionPortada = 'public/categorias/portadas';
+                $url = $this->storeFile($filePortada, $ubicacionPortada);
+
+                $categoria->imagen()->create([
+                    'url' => $url,
+                    'imageable_type' => Categoria::class,
+                ]);
+            }
+
+            DB::commit();
+            Cache::flush();
+
+            // Redireccionar con un mensaje de éxito
+            return redirect()
+                ->route('admin.categorias.index')
+                ->with('success', 'Categoría creada exitosamente.');
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+            Log::error('Error store - Categoría: ' . $e->getMessage());
+
+            // Redireccionar con un mensaje de error y mantener los datos de entrada
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Error al crear la Categoría: ' . $e->getMessage());
         }
-
-        // Elimina datos cache
-        Cache::flush();
-
-        // Redireccionar con un mensaje de éxito
-        return redirect()->route('admin.categorias.index')->with('success', 'Categoría creada exitosamente.');
     }
+
 
     /**
      * Display the specified resource.
@@ -162,11 +180,10 @@ class CategoriaController extends Controller
 
         Cache::flush();
 
-        return redirect()->route('admin.categorias.edit', $categoria)->with('success', 'Categoría actualizada exitosamente.');
+        return redirect()
+            ->route('admin.categorias.edit', $categoria)
+            ->with('success', 'Categoría actualizada exitosamente.');
     }
-
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -174,13 +191,13 @@ class CategoriaController extends Controller
     public function destroy(Categoria $categoria)
     {
         DB::beginTransaction();
-    
+
         try {
             // Eliminar el banner de la categoría, si existe
             if ($categoria->imagen_banner) {
                 $this->deleteFile($categoria->imagen_banner);
             }
-    
+
             // Eliminar todas las imágenes de portada asociadas a la categoría, si las hay
             if ($categoria->imagen()->exists()) {
                 foreach ($categoria->imagen()->get() as $imagen) {
@@ -188,21 +205,22 @@ class CategoriaController extends Controller
                     $imagen->delete(); // Eliminar la entrada de la base de datos
                 }
             }
-    
-            // Eliminar la categoría
+
             $categoria->delete();
-    
-            DB::commit();
-    
             Cache::flush();
-    
+
             // Redireccionar con un mensaje de éxito
-            return redirect()->route('admin.categorias.index')->with('success', 'Categoría eliminada exitosamente.');
+            return redirect()
+                ->route('admin.categorias.index')
+                ->with('success', 'Categoría eliminada exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
-    
+            Log::error('Error destroy - Categoría: ' . $e->getMessage());
+
             // Redireccionar con un mensaje de error
-            return redirect()->back()->with('error', 'No se pudo eliminar la categoría, debido a una restricción de integridad.');
+            return redirect()
+                ->back()
+                ->with('error', 'No se pudo eliminar la categoría, debido a una restricción de integridad.');
         }
     }
 

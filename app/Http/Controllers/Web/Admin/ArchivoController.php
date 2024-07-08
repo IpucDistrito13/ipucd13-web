@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-
-
+use Illuminate\Support\Facades\Log;
 
 class ArchivoController extends Controller
 {
@@ -28,13 +27,60 @@ class ArchivoController extends Controller
         ]);
     }
 
+
+
     /**
-     * Show the form for creating a new resource.
+     * Remove the specified resource from storage.
      */
-    public function create()
+    public function destroy(Archivo $archivo)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            // Eliminar el banner del podcast, si existe
+            if ($archivo->url) {
+                $this->deleteFile($archivo->url);
+            }
+
+            // Eliminar el archivo
+            $archivo->delete();
+            Cache::flush();
+            DB::commit();
+
+            // Mensaje de éxito
+            $data = [
+                'message' => 'Archivo eliminado exitosamente.',
+            ];
+
+            return back()->with('success', $data['message']);
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+
+            // Registrar el error en los logs
+            Log::error('Error en destroy - Archivo: ' . $e->getMessage());
+
+            // Mensaje de error
+            $data = [
+                'message' => 'No se pudo eliminar el archivo, debido a restricción de integridad.',
+            ];
+
+            return back()->with('error', $data['message']);
+        }
     }
+
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
+        }
+    }
+
 
     private function storeFile($file, $ubicacion)
     {
@@ -45,119 +91,61 @@ class ArchivoController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Archivo $archivo)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Archivo $archivo)
-    {
-        try {
-            $archivo->delete();
-
-            Cache::flush();
-
-            $data = [
-                'message' => 'Archivo eliminado exitosamente.',
-            ];
-
-            return back()->with('success', $data['message']);
-        } catch (\Exception $e) {
-            $data = [
-                'message' => 'No se pudo eliminar el comité, debido a restricción de integridad.',
-            ];
-
-            return back()->with('error', $data['message']);
-        }
-    }
-
     public function upload(Request $request)
     {
-        try {
-            // Iniciar transacción de base de datos
-            DB::beginTransaction();
+        // Validar la solicitud antes de procesarla
+        $request->validate([
+            'carpeta' => 'required|integer',
+            'file' => 'required|file|max:204800' // Máximo 200 MB
+        ]);
 
+        // Iniciar transacción de base de datos
+        DB::beginTransaction();
+
+        try {
             // Obtener la carpeta desde la solicitud
             $carpeta = $request->carpeta;
 
-            // Verificar si el archivo existe en la solicitud
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
+            // Obtener el archivo de la solicitud
+            $file = $request->file('file');
+            $originalName = $file->getClientOriginalName();
 
-                // Obtener el nombre original del archivo
-                $originalName = $file->getClientOriginalName();
+            // Determinar la ubicación de almacenamiento según el entorno
+            $ubicacion = 'public/descargables/' . $carpeta;
 
-                // Crear la ruta completa incluyendo el nombre original del archivo
-                $fullPath = 'public/descargables/' . $carpeta;
-
-                // Almacenar el archivo utilizando la función storeFile
-                // Guardar el archivo con su nombre original
-                $url = $file->storeAs($fullPath, $originalName);
-
-                // Crear una entrada en la base de datos para el archivo cargado
-                $data = [
-                    'uuid' => time(), // Puedes usar esto o generar un UUID único según tu lógica
-                    'url' => $url,
-                    'carpeta_id' => $carpeta,
-                    'user_id' => auth()->user()->id,
-                    'nombre_original' => $originalName,
-                ];
-
-                $archivo = Archivo::create($data);
-
-                // Commit de la transacción si no hay errores
-                DB::commit();
-                Cache::flush();
-
-                // Devolver una respuesta de éxito
-                return response()->json(['message' => 'Archivo cargado exitosamente', 'archivo' => $archivo], 200);
+            // Almacenar el archivo utilizando storeFile
+            if (env('APP_ENV') === 'local') {
+                $url = $this->storeFile($file, $ubicacion);
             } else {
-                // Rollback de la transacción si no se proporciona ningún archivo
-                DB::rollBack();
-
-                // Manejar el caso en el que no se presente ningún archivo en la solicitud
-                return response()->json(['error' => 'No se ha cargado ningún archivo'], 400);
+                $url = Storage::disk('s3')->put($ubicacion, $file);
             }
+
+            // Crear una entrada en la base de datos para el archivo cargado
+            $archivo = Archivo::create([
+                'uuid' => time(), // Puedes usar esto o generar un UUID único según tu lógica
+                'url' => $url,
+                'carpeta_id' => $carpeta,
+                'user_id' => auth()->id(),
+                'nombre_original' => $originalName,
+            ]);
+
+            // Commit de la transacción si no hay errores
+            DB::commit();
+            Cache::flush();
+
+            // Devolver una respuesta de éxito
+            return response()
+                ->json(['message' => 'Archivo cargado exitosamente', 'archivo' => $archivo], 200);
         } catch (\Exception $e) {
             // Rollback de la transacción en caso de error
             DB::rollBack();
+            Log::error('Error en upload - Archivo: ' . $e->getMessage());
 
             // En caso de error, devolver una respuesta con el mensaje de error
-            return response()->json(['error' => 'Error al cargar el archivo: ' . $e->getMessage()], 500);
+            return response()
+                ->json(['error' => 'Error al cargar el archivo: ' . $e->getMessage()], 500);
         }
     }
-
-
 
     public function download($uuid)
     {
@@ -184,6 +172,9 @@ class ArchivoController extends Controller
             }
         } catch (\Exception $e) {
             // Manejar errores generales y devolver una respuesta con el mensaje de error
+
+            Log::error('Error en download - Archivo: ' . $e->getMessage());
+
             return response()->json(['error' => 'Error al descargar el archivo: ' . $e->getMessage()], 500);
         }
     }

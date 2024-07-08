@@ -12,23 +12,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use Illuminate\Support\Facades\DB;
+
 
 class EpisodioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    /*
-    public function index()
-    {
-        return  $episodios = Episodio::with('podcast:id,titulo')
-            ->select('id', 'titulo', 'slug', 'descripcion', 'podcast_id')->get();
-
-        return view('admin.episodios.index', [
-            'episodios' => $episodios,
-        ]);
-    }
-    */
 
     /**
      * Show the form for creating a new resource.
@@ -45,11 +33,9 @@ class EpisodioController extends Controller
     {
 
         $request->validate([
-            //'file.*' => 'required|mimes:mp3,ogg,wav', // Asegúrate de validar el tipo de archivo correcto
             'titulo' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
-            //'podcast' => 'required|exists:podcasts,id', // Asegúrate de que el podcast exista en la base de datos
         ]);
 
         $episodio = Episodio::create([
@@ -64,17 +50,7 @@ class EpisodioController extends Controller
 
         Cache::flush();
 
-
         return back()->with('success', $data['message']);
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Episodio $episodio)
-    {
-        //return view('admin.solicitud_types.show', compact('solicitud_type'));
     }
 
     /**
@@ -111,33 +87,54 @@ class EpisodioController extends Controller
      */
     public function destroy(Episodio $episodio)
     {
+        DB::beginTransaction();
+
         try {
+            // Eliminar el banner del podcast, si existe
+            if ($episodio->url) {
+                $this->deleteFile($episodio->url);
+            }
+
             $episodio->delete();
+
+            // Si llegamos hasta aquí, se ejecutan ambas operaciones de manera exitosa
+            DB::commit();
 
             $data = [
                 'message' => 'Episodio eliminado exitosamente.',
             ];
 
+            // Limpiar la caché
             Cache::flush();
-
 
             return back()->with('success', $data['message']);
         } catch (\Exception $e) {
+            // Si algo falla, revertir la transacción
+            DB::rollBack();
+
             $data = [
                 'message' => 'No se pudo eliminar el episodio, debido a restricción de integridad.',
             ];
 
-            return back()->with('error', $data['message']);
+            return back()
+                ->with('error', $data['message']);
+        }
+    }
 
-            // return redirect()->route('admin.episodio.index')->with('error', $data['message']);
-            //return back()->with('success', $data['message']);
 
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
         }
     }
 
     public function apigetAudio($episodioid)
     {
-        // return 'Hola'; // Elimina o comenta esta línea
         $audio = Episodio::select('id', 'url', 'titulo')->where('id', $episodioid)->first();
         return $audio;
     }
@@ -183,14 +180,12 @@ class EpisodioController extends Controller
     {
         return 'Hola';
         return view('admin.podcasts.upload');
-
     }
 
     public function testFile(Request $request, $episodioId)
     {
         //return $episodioId;
         return view('admin.podcasts.upload');
-
     }
 
 
@@ -207,35 +202,35 @@ class EpisodioController extends Controller
 
     public function uploadLargeFiles(Request $request)
     {
-      $episodioId = $request->episodioId;
-      //return  $episodio = Episodio::findOrFail($episodioId);
+        $episodioId = $request->episodioId;
+        //return  $episodio = Episodio::findOrFail($episodioId);
 
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
-    
+
         if (!$receiver->isUploaded()) {
             return response()->json(['error' => 'File not uploaded'], 400);
         }
-    
+
         $fileReceived = $receiver->receive();
         if ($fileReceived->isFinished()) {
             $file = $fileReceived->getFile();
             $extension = $file->getClientOriginalExtension();
             $fileName = str_replace('.' . $extension, '', $file->getClientOriginalName());
             $fileName .= '_' . md5(time()) . '.' . $extension;
-    
+
             $ubicacion = 'public/podcasts/episodios/' . $fileName;
             $this->storeFile($file, $ubicacion);
-    
+
             unlink($file->getPathname());
-    
+
             $storagePath = '';
-    
+
             if (env('APP_ENV') === 'local') {
                 $storagePath = asset('storage/podcasts/episodios/' . $fileName);
             } else {
                 $storagePath = 'https://ipucd13.nyc3.digitaloceanspaces.com/' . $ubicacion;
             }
-    
+
             $data = [
                 'url' => $storagePath,
             ];
@@ -245,13 +240,13 @@ class EpisodioController extends Controller
             $episodio->save($data);
 
             Cache::flush();
-    
+
             return [
                 'path' => $storagePath,
                 'filename' => $fileName
             ];
         }
-    
+
         $handler = $fileReceived->handler();
         return [
             'done' => $handler->getPercentageDone(),
@@ -262,31 +257,31 @@ class EpisodioController extends Controller
     public function uploadLargeFilesAux(Request $request)
     {
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
-    
+
         if (!$receiver->isUploaded()) {
             return response()->json(['error' => 'File not uploaded'], 400);
         }
-    
+
         $fileReceived = $receiver->receive();
         if ($fileReceived->isFinished()) {
             $file = $fileReceived->getFile();
             $extension = $file->getClientOriginalExtension();
             $fileName = str_replace('.' . $extension, '', $file->getClientOriginalName());
             $fileName .= '_' . md5(time()) . '.' . $extension;
-    
+
             $ubicacion = 'public/podcasts/episodios/' . $fileName;
             $this->storeFile($file, $ubicacion);
-    
+
             unlink($file->getPathname());
-    
+
             $storagePath = '';
-    
+
             if (env('APP_ENV') === 'local') {
                 $storagePath = asset('storage/podcasts/episodios/' . $fileName);
             } else {
                 $storagePath = 'https://ipucd13.nyc3.digitaloceanspaces.com/' . $ubicacion;
             }
-    
+
             $data = [
                 'url' => $storagePath,
             ];
@@ -294,16 +289,16 @@ class EpisodioController extends Controller
             $episodioId = 1;
             $episodio = Episodio::find($episodioId);
             $episodio->url = $storagePath;
-    
+
             $episodio->save($data);
             Cache::flush();
-    
+
             return [
                 'path' => $storagePath,
                 'filename' => $fileName
             ];
         }
-    
+
         $handler = $fileReceived->handler();
         return [
             'done' => $handler->getPercentageDone(),

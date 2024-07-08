@@ -92,9 +92,6 @@
                                 </div>
                             </div>
                             
-
-
-
                         </div>
 
                         <form action="{{ route('admin.usuarios.updatePerfil', $usuario) }}" method="POST"

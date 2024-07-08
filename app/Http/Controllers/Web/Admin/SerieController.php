@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 class SerieController extends Controller
 {
@@ -67,7 +67,7 @@ class SerieController extends Controller
      */
     public function store(SerieRequest $request)
     {
-        
+
 
         try {
             // Iniciar una transacción de base de datos
@@ -116,20 +116,12 @@ class SerieController extends Controller
                 ->with('success', 'Serie creada exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
-            \Log::error('Error al crear la serie: ' . $e->getMessage());
+            \Log::error('Error store - Serie: ' . $e->getMessage());
 
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Error al crear la serie. Por favor, inténtelo de nuevo.');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -207,13 +199,18 @@ class SerieController extends Controller
             Cache::flush();
 
             // Redireccionar con un mensaje de éxito
-            return redirect()->route('admin.series.edit', $serie)->with('success', 'Serie actualizada exitosamente.');
+            return redirect()
+                ->route('admin.series.edit', $serie)
+                ->with('success', 'Serie actualizada exitosamente.');
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
+            Log::error('Error  update - Serie: ' . $e->getMessage());
 
             // Redireccionar con un mensaje de error
-            return redirect()->back()->with('error', 'Error al actualizar la serie: ' . $e->getMessage())->withInput();
+            return redirect()
+                ->back()
+                ->with('error', 'Error al actualizar la serie: ' . $e->getMessage())->withInput();
         }
     }
 
@@ -222,28 +219,51 @@ class SerieController extends Controller
      */
     public function destroy(Serie $serie)
     {
+        DB::beginTransaction();
+
         try {
+            // Eliminar el banner de la serie, si existe
+            if ($serie->imagen_banner) {
+                $this->deleteFile($serie->imagen_banner);
+            }
+
+            // Eliminar todas las imágenes de portada asociadas a la serie, si las hay
+            if ($serie->imagen()->exists()) {
+                foreach ($serie->imagen()->get() as $imagen) {
+                    $this->deleteFile($imagen->url);
+                    $imagen->delete(); // Eliminar la entrada de la base de datos
+                }
+            }
+
+            // Eliminar la serie
             $serie->delete();
-
-            $data = [
-                'message' => 'Serie eliminada exitosamente.',
-            ];
-
-            //Elimina la variables almacenada en cache
+            DB::commit();
             Cache::flush();
-            //Cache
 
-            return redirect()->route('admin.series.index')->with('success', $data['message']);
+            // Redireccionar con un mensaje de éxito
+            return redirect()
+                ->route('admin.series.index')
+                ->with('success', 'Serie eliminada exitosamente.');
         } catch (\Exception $e) {
-            $data = [
-                'message' => 'No se pudo eliminar la serie, debido a restricción de integridad.',
-            ];
+            DB::rollBack();
+            Log::error('Error  destroy - Serie: ' . $e->getMessage());
 
-            //Elimina la variables almacenada en cache
-            Cache::flush();
-            //Cache
 
-            return redirect()->route('admin.series.index')->with('error', $data['message']);
+            // Redireccionar con un mensaje de error
+            return redirect()
+                ->back()
+                ->with('error', 'No se pudo eliminar la serie, debido a restricción de integridad.');
+        }
+    }
+
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
         }
     }
 

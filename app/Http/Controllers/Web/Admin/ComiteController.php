@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class ComiteController extends Controller
@@ -25,7 +26,6 @@ class ComiteController extends Controller
             $comites = Comite::ListarComites()->latest()->get();
             Cache::put('comites', $comites);
         }
-        //CACHE
 
         return view('admin.comites.index', compact('comites'));
     }
@@ -90,7 +90,6 @@ class ComiteController extends Controller
             }
 
             DB::commit();
-
             Cache::flush();
 
             // Redireccionar con un mensaje de éxito
@@ -99,18 +98,14 @@ class ComiteController extends Controller
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
+            Log::error('Error  store - Comite: ' . $e->getMessage());
 
             // Redireccionar con un mensaje de error
-            return redirect()->back()->with('error', 'Error al crear el comité: ' . $e->getMessage())->withInput();
+            return redirect()
+                ->back()
+                ->with('error', 'Error al crear el Comité: ' . $e->getMessage())
+                ->withInput();
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comite $Comite)
-    {
-        //return view('admin.comites.show');
     }
 
     /**
@@ -178,70 +173,63 @@ class ComiteController extends Controller
                 }
             }
 
-            // Commit si no hay errores
             DB::commit();
-
-            // Eliminar datos almacenados en cache
             Cache::flush();
 
             // Redireccionar con un mensaje de éxito
-            return back()->with('success', 'Comité actualizado exitosamente.');
+            return back()
+                ->with('success', 'Comité actualizado exitosamente.');
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();
+            Log::error('Error  update - Comite: ' . $e->getMessage());
 
             // Redireccionar con un mensaje de error
-            return back()->with('error', 'Error al actualizar el comité: ' . $e->getMessage())->withInput();
+            return back()
+                ->with('error', 'Error al actualizar el comité: ' . $e->getMessage())
+                ->withInput();
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *       <img src="{{ !empty($serie->imagen->url) ? Storage::url($serie->imagen->url) : 'https://i.ibb.co/YcvYfpx/640x480.png' }}" alt="" />
+    public function destroy(Comite $comite)
+    {
+        DB::beginTransaction();
 
-     */
+        try {
+            // Eliminar el banner del comité, si existe
+            if ($comite->imagen_banner) {
+                $this->deleteFile($comite->imagen_banner);
+            }
 
-     public function destroy(Comite $comite)
-     {
-         DB::beginTransaction();
-     
-         try {
-             // Eliminar el banner del comité, si existe
-             if ($comite->imagen_banner) {
-                 $this->deleteFile($comite->imagen_banner);
-             }
-     
-             // Eliminar todas las imágenes de portada asociadas al comité, si las hay
-             if ($comite->imagen()->exists()) {
-                 foreach ($comite->imagen()->get() as $imagen) {
-                     $this->deleteFile($imagen->url);
-                     $imagen->delete(); // Eliminar la entrada de la base de datos
-                 }
-             }
-     
-             // Eliminar el comité
-             $comite->delete();
-     
-             DB::commit();
+            // Eliminar todas las imágenes de portada asociadas al comité, si las hay
+            if ($comite->imagen()->exists()) {
+                foreach ($comite->imagen()->get() as $imagen) {
+                    $this->deleteFile($imagen->url);
+                    $imagen->delete(); // Eliminar la entrada de la base de datos
+                }
+            }
 
-             Cache::flush();
+            $comite->delete();
+            DB::commit();
+            Cache::flush();
 
-     
-             // Redireccionar con un mensaje de éxito
-             return redirect()->route('admin.comites.index')
-                 ->with('success', 'Comité eliminado exitosamente.');
-         } catch (\Exception $e) {
-             DB::rollBack();
+            // Redireccionar con un mensaje de éxito
+            return redirect()
+                ->route('admin.comites.index')
+                ->with('success', 'Comité eliminado exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error  destroy - Comite: ' . $e->getMessage());
 
-     
-             // Redireccionar con un mensaje de error
-             return redirect()->back()->with('error', 'No se pudo eliminar el comité, debido a restricción de integridad.');
-         }
-     }
+            // Redireccionar con un mensaje de error
+            return redirect()
+                ->back()
+                ->with('error', 'No se pudo eliminar el Comité.');
+        }
+    }
 
     private function deleteFile($url)
     {
-        //dd($url);
         // Lógica para eliminar el archivo físico dependiendo del entorno
         if (env('APP_ENV') === 'local') {
             Storage::delete($url); // Eliminar archivo localmente

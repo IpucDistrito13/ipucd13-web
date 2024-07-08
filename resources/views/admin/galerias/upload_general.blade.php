@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Galería | Pública')
 
 @section('content_header')
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            <i class="fas fa-images"></i> Galería publica: {{ $usuario->nombre . ' ' . $usuario->apellidos }}
+            <i class="fas fa-images"></i> Galería pública: {{ $usuario->nombre . ' ' . $usuario->apellidos }}
         </h1>
         <div>
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.galerias.index') }}">
