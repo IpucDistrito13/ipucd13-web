@@ -44,12 +44,12 @@ class GaleriaController extends Controller
                     // Mostrar botones según los roles
                     if (in_array('Administrador', $roles) || in_array('Pastor', $roles)) {
                         $buttons .= '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
-                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería Publica</a>';
+                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería Pública</a>';
                     } elseif (in_array('Pastor', $roles)) {
                         $buttons .= '<a href="' . route("admin.galerias.privadoadmin", $row->uuid) . '" class="btn btn-primary btn-sm">Galería Privada</a>';
-                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería Publica</a>';
+                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Galería Pública</a>';
                     } elseif (in_array('Lider', $roles)) {
-                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galería</a>';
+                        $buttons .= ' <a href="' . route("admin.galerias.generalAdmin", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver Galería</a>';
                     }
 
                     return $buttons;
