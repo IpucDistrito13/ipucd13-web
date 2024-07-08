@@ -25,7 +25,7 @@
 @stop
 
 @section('content')
-<p><b>Congregación: </b> {{ $usuario->congregacion ? $usuario->congregacion->direccion : 'Sin congregación' }}</p>
+    <p><b>Congregación: </b> {{ $usuario->congregacion ? $usuario->congregacion->direccion : 'Sin congregación' }}</p>
     <!-- Default box -->
     <div class="card card-solid">
         <div class="card-body pb-0">
@@ -43,7 +43,8 @@
                                     <div class="row">
                                         <div class="col-12 text-center">
                                             <a href="{{ Storage::url($galeria->url) }}" data-toggle="lightbox"
-                                                data-title="{{ $galeria->created_at->format('Y-m-d h:i a') }}" data-gallery="gallery">
+                                                data-title="{{ $galeria->created_at->format('Y-m-d h:i a') }}"
+                                                data-gallery="gallery">
                                                 <img src="{{ Storage::url($galeria->url) }}" alt="Error, al mostrar."
                                                     class="img-thumbnail small-image img-fluid mb-2">
                                             </a>
@@ -147,7 +148,7 @@
 
 @section('css')
 
-<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <link rel="stylesheet" href="{{ asset('plugins/ekko-lightbox/ekko-lightbox.css') }}">
 
     <style>
@@ -165,6 +166,8 @@
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
     <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         Dropzone.options.myDropzone = {
             paramName: "file",
@@ -179,12 +182,17 @@
                 var myDropzone = this;
                 this.on("queuecomplete", function() {
                     // Mostrar mensaje de carga completa
-                    alert("Se han completado todas las cargas de archivos.");
-                    // Preguntar al usuario si desea actualizar la página
-                    if (confirm("¿Desea actualizar la página para ver los cambios?")) {
-                        // Actualizar la página
-                        window.location.reload();
-                    }
+                    Swal.fire({
+                        title: 'Archivo subido exitosamente',
+                        text: 'Debes actualizar la página para ver los cambios.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location
+                        .reload(); // Recarga la página cuando el usuario acepta el mensaje
+                        }
+                    });
                 });
             }
         };

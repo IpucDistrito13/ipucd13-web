@@ -216,6 +216,8 @@
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         Dropzone.options.myDropzone = {
             paramName: "file",
@@ -230,12 +232,17 @@
                 var myDropzone = this;
                 this.on("queuecomplete", function() {
                     // Mostrar mensaje de carga completa
-                    alert("Se han completado todas las cargas de archivos.");
-                    // Preguntar al usuario si desea actualizar la página
-                    if (confirm("¿Desea actualizar la página para ver los cambios?")) {
-                        // Actualizar la página
-                        window.location.reload();
-                    }
+                    Swal.fire({
+                        title: 'Archivo subido exitosamente',
+                        text: 'Debes actualizar la página para ver los cambios.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location
+                        .reload(); // Recarga la página cuando el usuario acepta el mensaje
+                        }
+                    });
                 });
             }
         };

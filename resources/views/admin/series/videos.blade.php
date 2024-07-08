@@ -73,14 +73,43 @@
                             @can('admin.videos.destroy')
                                 <div class="card-footer">
                                     <div class="text-right">
-                                        <form action="{{ route('admin.videos.destroy', $video->id) }}" method="POST"
-                                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar este video?');">
+                                        <form id="deleteForm{{ $video->id }}"
+                                            action="{{ route('admin.videos.destroy', $video) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="confirmDelete({{ $video->id }})">Eliminar</button>
                                         </form>
                                     </div>
                                 </div>
+
+                                <script>
+                                    function confirmDelete(itemId) {
+                                        const swalWithBootstrapButtons = Swal.mixin({
+                                            customClass: {
+                                                confirmButton: 'btn btn-success',
+                                                cancelButton: 'btn btn-danger'
+                                            },
+                                            buttonsStyling: false
+                                        });
+
+                                        swalWithBootstrapButtons.fire({
+                                            title: '¿Estás seguro?',
+                                            text: '¡No podrás revertir esto!',
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonText: 'Eliminar',
+                                            confirmButtonColor: '#a5161d',
+                                            denyButtonColor: '#270a0a',
+                                            cancelButtonText: 'Cancelar',
+                                            reverseButtons: true
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                document.getElementById('deleteForm' + itemId).submit();
+                                            }
+                                        });
+                                    }
+                                </script>
                             @endcan
 
 
@@ -188,6 +217,7 @@
     <!-- DataTables Responsive JS -->
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <script>

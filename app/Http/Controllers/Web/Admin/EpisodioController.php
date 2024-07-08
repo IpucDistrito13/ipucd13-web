@@ -87,25 +87,29 @@ class EpisodioController extends Controller
      */
     public function destroy(Episodio $episodio)
     {
+
+       // return $episodio;
+        
         DB::beginTransaction();
 
         try {
             // Eliminar el banner del podcast, si existe
             if ($episodio->url) {
+                
                 $this->deleteFile($episodio->url);
+
             }
 
             $episodio->delete();
-
-            // Si llegamos hasta aquí, se ejecutan ambas operaciones de manera exitosa
             DB::commit();
+            // Limpiar la caché
+            Cache::flush();
 
             $data = [
                 'message' => 'Episodio eliminado exitosamente.',
             ];
 
-            // Limpiar la caché
-            Cache::flush();
+
 
             return back()->with('success', $data['message']);
         } catch (\Exception $e) {
@@ -119,19 +123,11 @@ class EpisodioController extends Controller
             return back()
                 ->with('error', $data['message']);
         }
+        
     }
 
 
-    private function deleteFile($url)
-    {
-        // Lógica para eliminar el archivo físico dependiendo del entorno
-        if (env('APP_ENV') === 'local') {
-            Storage::delete($url); // Eliminar archivo localmente
-        } else {
-            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
-            Storage::disk('s3')->delete($url);
-        }
-    }
+
 
     public function apigetAudio($episodioid)
     {
@@ -178,7 +174,7 @@ class EpisodioController extends Controller
 
     public function uploadFile()
     {
-        return 'Hola';
+        //return 'Hola';
         return view('admin.podcasts.upload');
     }
 
@@ -199,6 +195,17 @@ class EpisodioController extends Controller
             return Storage::disk('s3')->put($ubicacion, $contents);
         }
     }
+
+    
+
+    private function deleteFile($ubicacion)
+{
+    if (env('APP_ENV') === 'local') {
+        Storage::delete($ubicacion);
+    } else {
+        Storage::disk('s3')->delete($ubicacion);
+    }
+}
 
     public function uploadLargeFiles(Request $request)
     {
