@@ -232,8 +232,8 @@ class PublicacionController extends Controller
 
         try {
             // Eliminar todas las imágenes asociadas a la publicación, si las hay
-            if ($publicacion->imagenes()->exists()) {
-                foreach ($publicacion->imagenes()->get() as $imagen) {
+            if ($publicacion->imagen()->exists()) {
+                foreach ($publicacion->imagen()->get() as $imagen) {
                     $this->deleteFile($imagen->url);
                     $imagen->delete(); // Eliminar la entrada de la base de datos
                 }
