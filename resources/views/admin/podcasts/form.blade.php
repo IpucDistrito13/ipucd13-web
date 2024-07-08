@@ -8,7 +8,7 @@
                 <option value="" selected disabled>Selecciona</option>
                 @foreach ($comites as $comite)
                     <option value="{{ $comite->id }}"
-                        {{ old('comite') == $comite->id || (isset($serie) && $serie->comite_id == $comite->id) ? 'selected' : '' }}>
+                        {{ old('comite') == $comite->id || (isset($podcast) && $podcast->comite_id == $comite->id) ? 'selected' : '' }}>
                         {{ $comite->nombre }}
                     </option>
                 @endforeach
@@ -28,7 +28,7 @@
                 <option value="" selected disabled>Selecciona</option>
                 @foreach ($categorias as $categoria)
                     <option value="{{ $categoria->id }}"
-                        {{ old('categoria') == $categoria->id || (isset($serie) && $serie->categoria_id == $categoria->id) ? 'selected' : '' }}>
+                        {{ old('categoria') == $categoria->id || (isset($podcast) && $podcast->categoria_id == $categoria->id) ? 'selected' : '' }}>
                         {{ $categoria->nombre }}
                     </option>
                 @endforeach

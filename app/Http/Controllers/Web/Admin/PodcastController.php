@@ -130,6 +130,7 @@ class PodcastController extends Controller
      */
     public function edit(Podcast $podcast)
     {
+       // return $podcast;
         $comites = Comite::selectList()->get();
         $categorias = Categoria::selectList()->get();
         return view('admin.podcasts.edit', [
