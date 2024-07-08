@@ -102,14 +102,11 @@ class EpisodioController extends Controller
 
             $episodio->delete();
             DB::commit();
-            // Limpiar la caché
             Cache::flush();
 
             $data = [
                 'message' => 'Episodio eliminado exitosamente.',
             ];
-
-
 
             return back()->with('success', $data['message']);
         } catch (\Exception $e) {
