@@ -149,56 +149,76 @@ class UsuarioController extends Controller
         return view('admin.usuarios.create', compact('congregaciones', 'roles'));
     }
 
+    private function storeFile($file, $ubicacion)
+    {
+        if (env('APP_ENV') === 'local') {
+            return Storage::put($ubicacion, $file);
+        } else {
+            return Storage::disk('s3')->put($ubicacion, $file);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(UsuarioRequest $request)
     {
-        //  return $request;
-        $url = '';
-        if ($request->file('file')) {
-            $url = Storage::put('public/usuarios', $request->file('file'));
+        DB::beginTransaction();
+
+        try {
+            $url = '';
+            $codigo = in_array(2, $request->roles) ? $request->codigo : '';
+
+            $timeAndPassword = time();
+            $hashedPassword = Hash::make($timeAndPassword);
+
+            $usuario = User::create([
+                'name' => $request->nombre,
+                'congregacion_id' => $request->congregacion,
+                'uuid' => $timeAndPassword,
+                'codigo' => $codigo,
+                'nombre' => $request->nombre,
+                'apellidos' => $request->apellidos,
+                'celular' => $request->celular,
+                'visible_celular' => 1,
+                'email' => $request->email,
+                'profile_photo_path' => $url,
+                'password' => $hashedPassword,
+            ]);
+
+            if ($request->hasFile('file')) {
+                $imgPerfil = $request->file('file');
+                $ubicacionImgPerfil = 'public/usuarios/' . $usuario->uuid . '/' . 'perfil';
+                $url = $this->storeFile($imgPerfil, $ubicacionImgPerfil);
+
+                // Si el usuario no tiene una imagen, agregar una nueva imagen
+                $usuario->imagen()->create([
+                    'url' => $url,
+                    'imageable_type' => User::class,
+                ]);
+            }
+
+            $usuario->roles()->sync($request->roles);
+
+            $data = [
+                'message' => 'Usuario creado exitosamente.',
+            ];
+
+            // Elimina datos cache
+            Cache::flush();
+
+            // Enviar correo
+            Mail::to($usuario->email)->send(new NuevoUsuarioMail($usuario));
+
+            DB::commit();
+
+            return redirect()->route('admin.usuarios.index')->with('success', $data['message']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error  store - Usuario: ' . $e->getMessage());
+
+            return redirect()->back()->withErrors(['error' => 'Ocurrió un error al crear el usuario.']);
         }
-
-        $codigo = in_array(2, $request->roles) ? $request->codigo : '';
-
-        $timeAndPassword = time();
-        $hashedPassword = Hash::make($timeAndPassword);
-
-        $usuario = User::create([
-            'name' => $request->nombre,
-            'congregacion_id' => $request->congregacion,
-
-            'uuid' => $timeAndPassword,
-            'codigo' => $codigo,
-            'nombre' => $request->nombre,
-            'apellidos' => $request->apellidos,
-            'celular' => $request->celular,
-            'visible_celular' => 1,
-            'email' => $request->email,
-            'profile_photo_path' => $url,
-            'password' => $hashedPassword,
-        ]);
-
-        $usuario->roles()->sync($request->roles);
-
-        $usuario->imagen()->create([
-            'url' => $url,
-            'imageable_type' => User::class,
-        ]);
-
-        $data = [
-            'message' => 'Usuario creado exitosamente.',
-        ];
-
-        //Elimina datos cache
-        Cache::flush();
-        //Cache
-
-        Mail::to($usuario->email)->send(new NuevoUsuarioMail($usuario));
-
-
-        return redirect()->route('admin.usuarios.index')->with('success', $data['message']);
     }
 
     /**
@@ -273,12 +293,9 @@ class UsuarioController extends Controller
         // Manejar la imagen de perfil si se proporciona
         if ($request->file('file')) {
             //$url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
-            $ubicacion = 'public/usuarios/perfil';
-            if (env('APP_ENV') === 'local') {
-                $url = Storage::put($ubicacion, $request->file('file'));
-            } else {
-                $url = Storage::disk('s3')->put($ubicacion, $request->file('file'));
-            }
+            $imgPerfil = $request->file('file');
+            $ubicacionImgPerfil = 'public/usuarios/' . $usuario->uuid . '/' . 'perfil';
+            $url = $this->storeFile($imgPerfil, $ubicacionImgPerfil);
 
             // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
             if ($usuario->imagen) {
@@ -304,7 +321,6 @@ class UsuarioController extends Controller
         return redirect()->route('admin.usuario.perfil')->with('success', 'Perfil actualizado exitosamente.');
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -326,7 +342,9 @@ class UsuarioController extends Controller
         $usuario->update($data);
 
         if ($request->file('file')) {
-            $url = Storage::put('public/usuarios/perfil', $request->file('file'));
+            $imgPerfil = $request->file('file');
+            $ubicacionImgPerfil = 'public/usuarios/' . $usuario->uuid . '/' . 'perfil';
+            $url = $this->storeFile($imgPerfil, $ubicacionImgPerfil);
 
             // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
             if ($usuario->imagen) {
@@ -350,6 +368,17 @@ class UsuarioController extends Controller
         return redirect()->route('admin.usuarios.edit', $usuario)->with('success', $message);
     }
 
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -364,6 +393,17 @@ class UsuarioController extends Controller
                 $message = 'Usuario eliminado exitosamente.',
 
             ];
+
+            // Eliminar todas las imágenes de portada asociadas al comité, si las hay
+            if ($usuario->imagen()->exists()) {
+                foreach ($usuario->imagen()->get() as $imagen) {
+                    $this->deleteFile($imagen->url);
+                    $imagen->delete(); // Eliminar la entrada de la base de datos
+                }
+            }
+
+            $usuario->delete();
+            DB::commit();
             Cache::flush();
 
             return redirect()->route('admin.usuarios.index')->with('success', 'Usuario eliminado exitosamente.');
@@ -378,7 +418,6 @@ class UsuarioController extends Controller
             return redirect()->route('admin.usuarios.index')->with('error', 'No se pudo eliminar el usuario, debido a restricción de integridad.');
         }
     }
-
 
     public function perfil()
     {

@@ -202,3 +202,8 @@ Log and try
 - download
 
 # GALERIA
+- upload
+- destroy
+
+# USUARIO
+- store
