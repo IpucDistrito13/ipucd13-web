@@ -248,6 +248,8 @@ class PodcastController extends Controller
                 ->with('success', 'Podcast eliminado exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Error destroy - Podcast: ' . $e->getMessage());
+
 
             // Redireccionar con un mensaje de error
             return redirect()

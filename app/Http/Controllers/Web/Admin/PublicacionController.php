@@ -250,6 +250,7 @@ class PublicacionController extends Controller
                 ->with('success', 'Publicación eliminada exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Error destroy - Publicacion: ' . $e->getMessage());
 
             // Redireccionar con un mensaje de error
             return redirect()
