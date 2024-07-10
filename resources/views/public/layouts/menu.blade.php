@@ -3,7 +3,7 @@
 <style>
     @font-face {
     font-family: 'MyriadProBold';
-    src: url('fonts/MYRIADPRO-BOLD.otf') format('opentype');
+    src: url('fonts/miriadpro_bold.otf') format('opentype');
 }
 
 .navbar-nav .nav-link {
