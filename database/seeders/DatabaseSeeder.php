@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'desarrollo@ipucdistrito13.org',
             'isbloqueo' => true,
             'estado' => 'Activo',
-
+            
         ])->assignRole('Administrador');
 
         User::factory()->create([

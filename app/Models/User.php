@@ -34,7 +34,8 @@ class User extends Authenticatable
         'estado',
         'visible_celular',
         'file',
-        'url'
+        'url',
+        'created_by',
     ];
 
     /**

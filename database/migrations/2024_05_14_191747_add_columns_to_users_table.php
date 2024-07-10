@@ -21,11 +21,13 @@ return new class extends Migration
             $table->boolean('visible_celular');
             $table->boolean('isbloqueo')->nullable();
 
-
             $table->string('telefono')->nullable();
 
             $table->foreignId('congregacion_id')->nullable()->constrained('congregaciones')->onDelete('set null');
             $table->enum('estado', ['Activo', 'Inactivo'])->default('Activo');
+
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+
         });
     }
 

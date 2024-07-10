@@ -12,7 +12,6 @@
     @include('public.layouts.iconos')
     <!-- <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" /> -->
 
-
     <style>
         /*
         @font-face {
@@ -102,7 +101,7 @@
 
     {{-- SECCION REPRODUCTOR --}}
     <div class="reproductor">
-        <h2 class="titulo">Radio IPUC - <span id="liveText"> Live</span></h2>
+        <h2 class="titulo">Radio IPUC } - <span id="liveText"> Live</span></h2>
         <div class="controles">
             <button class="btn btn-large btn-dark-gray btn-rounded btn-box-shadow btn-switch-text left-icon submit"
                 type="button" id="toggle">

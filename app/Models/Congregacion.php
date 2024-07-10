@@ -10,7 +10,7 @@ class Congregacion extends Model
     use HasFactory;
 
     protected $table = 'congregaciones';
-    protected $fillable = ['municipio_id', 'longitud', 'latitud', 'direccion', 'nombre', 'estado'];
+    protected $fillable = ['municipio_id', 'longitud', 'latitud', 'direccion', 'nombre', 'urlfacebook', 'estado'];
 
     public function scopeListarCongregaciones($query)
     {

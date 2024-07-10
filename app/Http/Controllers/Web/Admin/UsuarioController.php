@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequest;
 use App\Mail\NuevoUsuarioMail;
+use App\Models\Comite;
 use App\Models\Congregacion;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,8 +17,6 @@ use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
-
-
 
 class UsuarioController extends Controller
 {
@@ -184,6 +183,7 @@ class UsuarioController extends Controller
                 'email' => $request->email,
                 'profile_photo_path' => $url,
                 'password' => $hashedPassword,
+                'created_by' => auth()->id(),
             ]);
 
             if ($request->hasFile('file')) {
@@ -219,6 +219,12 @@ class UsuarioController extends Controller
 
             return redirect()->back()->withErrors(['error' => 'Ocurrió un error al crear el usuario.']);
         }
+    }
+
+
+    public function storeCongregacionPastor()
+    {
+
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CongregacionRequest;
+use App\Models\Comite;
 use App\Models\Congregacion;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
@@ -117,4 +118,20 @@ class CongregacionController extends Controller
             return redirect()->route('admin.congregaciones.index')->with('error', $data['message']);
         }
     }
+
+    public function registroCongregacion()
+    {
+        $comitesMenu = Comite::ComiteMenu()->get();
+        $municipios = Municipio::selectList();
+        $congregaciones = Congregacion::select('id', 'direccion', 'nombre')->where('estado', 'Activo')->get();
+
+        return view('public.registros.congregacion_pastor', [
+            'comites' => $comitesMenu,
+            'municipios' => $municipios,
+
+        ]);
+
+    }
+
+    
 }

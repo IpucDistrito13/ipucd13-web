@@ -56,6 +56,13 @@
                 <div class="row">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.0911846878093!2d-72.51413512415537!3d7.8855284058371415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e664582feffd535%3A0x5776304a35f8b058!2sIglesia%20Pentecostal%20Unida%20de%20Colombia%20-%20C%C3%BAcuta%20Central!5e0!3m2!1ses-419!2sco!4v1713067838572!5m2!1ses-419!2sco" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                    </div> 
 
+
+
+
+                    <iframe src="https://www.google.com/maps/d/embed?mid=1cihUFskhcEIxeJevtkWv1UXbgfl9iAk&ehbc=2E312F" width="640" height="480"></iframe>
+
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d31615.319505653057!2d-72.51825280000001!3d7.9039551999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sco!4v1720560927727!5m2!1ses!2sco" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
                 </div>
                 <div class="position-absolute bottom-130px z-index-minus-1 w-100 left-0px d-none d-lg-block">
                     <div class="row position-relative mt-50px">

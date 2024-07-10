@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('latitud')->nullable();
             $table->text('direccion');
             $table->string('nombre')->nullable()->comment('Nombre de congregación');
+            $table->string('urlfacebook')->nullable()->comment('Enlace de Facebook');
             $table->enum('estado', ['Activo', 'Inactivo'])->default('Activo');
             
             $table->timestamps();

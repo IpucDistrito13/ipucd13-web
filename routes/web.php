@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\Web\Admin\DatatableController;
+use App\Http\Controllers\Web\Admin\CongregacionController;
 use App\Http\Controllers\Web\Admin\PoliticaController;
-use App\Http\Controllers\Web\Admin\SerieController as AdminSerieController;
 use App\Http\Controllers\Web\InicioController;
 use App\Http\Controllers\Web\Public\ComiteController;
 use App\Http\Controllers\Web\Public\ContactoController;
@@ -12,7 +11,7 @@ use App\Http\Controllers\Web\Public\EventoController;
 use App\Http\Controllers\Web\Public\PodcastController;
 use App\Http\Controllers\Web\Public\PublicacionController;
 use App\Http\Controllers\Web\Public\SerieController;
-use App\Http\Controllers\Web\Public\VideoController;
+use App\Models\Congregacion;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -48,4 +47,5 @@ Route::get('series', [SerieController::class, 'index'])->name('public.series.ind
 
 Route::get('archivos/download/{archivoId}', [DescargableController::class, 'download'])->name('public.archivos.download');
 
+Route::get('registro/congregacion', [CongregacionController::class, 'registroCongregacion']);
 
