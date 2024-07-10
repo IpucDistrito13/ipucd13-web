@@ -2,15 +2,14 @@
 
 <style>
     @font-face {
-        font-family: 'MyriadProBold';
-        src: url('{{ asset('fonts/MYRIADPRO-BOLD.otf') }}') format('opentype');
+    font-family: 'MyriadProBold';
+    src: url('../fonts/fMYRIADPRO-BOLD.otf') format('opentype');
+}
 
-    }
+.navbar-nav .nav-link {
+    font-family: 'MyriadProBold', sans-serif;
+}
 
-    .navbar-nav .nav-link,
-    .navbar-nav .dropdown-menu .dropdown-item {
-        font-family: 'MyriadProBold', sans-serif;
-    }
 </style>
 
 <header>
@@ -44,16 +43,14 @@
                                 data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li>
-                                    <a href="{{ route('public.eventos.index') }}" class="dropdown-item"><i
-                                            class="bi bi-laptop"></i>
+                                    <a href="{{ route('public.eventos.index') }}"><i class="bi bi-laptop"></i>
                                         <div class="submenu-icon-content">
                                             <span>Eventos</span>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('public.cronogramas.index') }}" class="dropdown-item"><i
-                                            class="bi bi-briefcase"></i>
+                                    <a href="{{ route('public.cronogramas.index') }}"><i class="bi bi-briefcase"></i>
                                         <div class="submenu-icon-content">
                                             <span>Cronograma distrital</span>
                                         </div>
@@ -67,8 +64,8 @@
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
                                 @foreach ($comites as $comite)
-                                    <li class="dropdown"><a href="{{ route('comite.show', $comite) }}"
-                                            class="dropdown-item">{{ $comite->nombre }}</a></li>
+                                    <li class="dropdown"><a
+                                            href="{{ route('comite.show', $comite) }}">{{ $comite->nombre }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
@@ -78,13 +75,10 @@
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
                                 <li class="dropdown">
-                                    <a href="{{ route('public.publicaciones.index') }}"
-                                        class="dropdown-item">Publicaciones</a>
+                                    <a href="{{ route('public.publicaciones.index') }}">Publicaciones</a>
                                 </li>
-                                <li class="dropdown"><a href="{{ route('public.series.index') }}"
-                                        class="dropdown-item">Series</a></li>
-                                <li class="dropdown"><a href="{{ route('public.podcasts.index') }}"
-                                        class="dropdown-item">Podcasts</a></li>
+                                <li class="dropdown"><a href="{{ route('public.series.index') }}">Series</a></li>
+                                <li class="dropdown"><a href="{{ route('public.podcasts.index') }}">Podcasts</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a href="{{ route('public.descargables.index') }}"

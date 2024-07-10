@@ -27,7 +27,7 @@
 
     <!-- start banner -->
     <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography banner-section"
-        style="background-image: url('https://ipucd13.nyc3.digitaloceanspaces.com/public/comites/banner/OWWeeJ003fMsdqWpvgZMMHX563rfOTKyhKhThZWc.png');" >
+        style="background-image: url('https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/comites/banner/11GW1xxvSLcvdirzhJ9Ze7SUBBzjHMUur98TzzPh.png');" >
         <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
             style="background-image: url('images/vertical-line-bg-small.svg');">
         </div>
