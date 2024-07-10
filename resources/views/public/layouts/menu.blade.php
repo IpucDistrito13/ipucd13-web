@@ -1,11 +1,23 @@
 @yield('navbar_principal')
 
+<style>
+    @font-face {
+        font-family: 'MyriadProBold';
+        src: url({{ asset('fonts/MYRIADPRO-BOLD.otf') }}) format('opentype');
+    }
+
+    .navbar-nav .nav-link,
+    .navbar-nav .dropdown-menu .dropdown-item {
+        font-family: 'MyriadProBold', sans-serif;
+    }
+</style>
+
 <header>
     <!-- start navigation -->
     <nav class="navbar navbar-expand-lg header-light bg-white responsive-sticky">
         <div class="container-fluid">
             <div class="col-auto col-lg-2 me-lg-0 me-auto">
-                <a class="navbar-brand" href="{{ route('inicio.index') }} ">
+                <a class="navbar-brand" href="{{ route('inicio.index') }}">
                     <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png') }}"
                         alt="" class="default-logo">
                     <img src="{{ asset('img/logo-colors.png') }}" data-at2x="{{ asset('img/logo-colors@2x.png') }}"
@@ -23,7 +35,6 @@
                     <span class="navbar-toggler-line"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-
                     <ul class="navbar-nav alt-font">
                         <li class="nav-item"><a href="{{ route('inicio.index') }}" class="nav-link">Inicio</a></li>
                         <li class="nav-item dropdown dropdown-with-icon">
@@ -32,14 +43,16 @@
                                 data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li>
-                                    <a href="{{ route('public.eventos.index') }}"><i class="bi bi-laptop"></i>
+                                    <a href="{{ route('public.eventos.index') }}" class="dropdown-item"><i
+                                            class="bi bi-laptop"></i>
                                         <div class="submenu-icon-content">
                                             <span>Eventos</span>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('public.cronogramas.index') }}"><i class="bi bi-briefcase"></i>
+                                    <a href="{{ route('public.cronogramas.index') }}" class="dropdown-item"><i
+                                            class="bi bi-briefcase"></i>
                                         <div class="submenu-icon-content">
                                             <span>Cronograma distrital</span>
                                         </div>
@@ -47,49 +60,41 @@
                                 </li>
                             </ul>
                         </li>
-
                         <li class="nav-item dropdown simple-dropdown">
                             <a href="#" class="nav-link">Comités</a>
                             <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink5"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
                                 @foreach ($comites as $comite)
-                                    <li class="dropdown"><a
-                                            href="{{ route('comite.show', $comite) }}">{{ $comite->nombre }}</a></li>
+                                    <li class="dropdown"><a href="{{ route('comite.show', $comite) }}"
+                                            class="dropdown-item">{{ $comite->nombre }}</a></li>
                                 @endforeach
-                                
                             </ul>
                         </li>
-
-
                         <li class="nav-item dropdown simple-dropdown">
                             <a href="#" class="nav-link">Zona D13</a>
                             <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink5"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
                                 <li class="dropdown">
-                                    <a href="{{ route('public.publicaciones.index') }}">Publicaciones</a>
+                                    <a href="{{ route('public.publicaciones.index') }}"
+                                        class="dropdown-item">Publicaciones</a>
                                 </li>
-                                <li class="dropdown"><a href="{{ route('public.series.index') }}">Series</a></li>
-                                <li class="dropdown"><a href="{{ route('public.podcasts.index') }}">Podcasts</a></li>
+                                <li class="dropdown"><a href="{{ route('public.series.index') }}"
+                                        class="dropdown-item">Series</a></li>
+                                <li class="dropdown"><a href="{{ route('public.podcasts.index') }}"
+                                        class="dropdown-item">Podcasts</a></li>
                             </ul>
                         </li>
-
-
                         <li class="nav-item"><a href="{{ route('public.descargables.index') }}"
                                 class="nav-link">Descargables</a></li>
                         <li class="nav-item"><a href="{{ route('public.contacto.index') }}"
-                                class="nav-link">Contacto</a>
-                        </li>
-
-                        <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Iniciar sesión</a>
-                        </li>
+                                class="nav-link">Contacto</a></li>
+                        <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Iniciar sesión</a></li>
                     </ul>
-
                 </div>
             </div>
             <div class="col-auto col-lg-2 text-end d-none d-sm-flex">
-
             </div>
         </div>
     </nav>
