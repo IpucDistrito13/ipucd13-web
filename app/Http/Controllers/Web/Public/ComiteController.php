@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Carpeta;
 use App\Models\Comite;
 use App\Models\Podcast;
 use App\Models\Publicacion;
@@ -16,6 +17,7 @@ class ComiteController extends Controller
     {
 
         $comitesMenu = Comite::ComiteMenu()->get();
+        $carpetas = Carpeta::PorComitePublico($comite->id)->with('archivos')->get();
 
         //REDES
         $redes_sociales = Redes::Activo()->get();
@@ -56,6 +58,7 @@ class ComiteController extends Controller
             'comites' => $comitesMenu,
             'comite' => $comite,
             'publicaciones' => $publicaciones,
+            'carpetas' => $carpetas,
 
             'series' => $series,
             'podcasts' => $podcasts,
