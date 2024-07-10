@@ -57,7 +57,7 @@ class CongregacionController extends Controller
 
         Cache::flush();
 
-        return redirect()->route('admin.congregaciones.index')
+        return redirect()->route('admin.congregaciones.create')
             ->with('success', 'Congregación creada exitosamente.');
     }
 
