@@ -20,5 +20,9 @@ class DepartamentoSeeder extends Seeder
         Departamento::create([
             'nombre' => 'Arauca',
         ]);
+
+        Departamento::create([
+            'nombre' => 'Cesar',
+        ]);
     }
 }
