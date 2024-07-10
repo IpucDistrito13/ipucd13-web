@@ -317,7 +317,7 @@
                 <div class="col-xl-8 col-lg-10 text-center">
                     <h2 class="text-dark-gray fw-600 ls-minus-1px"
                         data-anime='{ "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                        Descargable Comite <br> {{ $comite->nombre }}
+                        Descargable Comité <br> {{ $comite->nombre }}
                     </h2>
                 </div>
             </div>
