@@ -16,7 +16,7 @@
         
         @font-face {
             font-family: 'Myriad Pro Bold';
-            src: url('{{ asset('fuentes/myriadpro_bold.otf') }}') format('opentype');
+            src: url('{{ asset('fonts/myriadpro_bold.otf') }}') format('opentype');
             font-weight: bold;
         }
         
