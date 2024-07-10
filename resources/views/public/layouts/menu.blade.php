@@ -3,7 +3,8 @@
 <style>
     @font-face {
         font-family: 'MyriadProBold';
-        src: url({{ asset('fonts/MYRIADPRO-BOLD.otf') }}) format('opentype');
+        src: url('{{ asset('fonts/MYRIADPRO-BOLD.otf') }}') format('opentype');
+
     }
 
     .navbar-nav .nav-link,
