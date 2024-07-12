@@ -20,6 +20,8 @@ class PublicacionController extends Controller
         $facebookLink = '';
         $youtubeLink = '';
         $instagramLink = '';
+        $transmision = Redes::GetTransmision()->first();
+
         // Itera sobre la lista para encontrar Facebook
         foreach ($redes_sociales as $redSocial) {
             switch ($redSocial["nombre"]) {
@@ -48,7 +50,6 @@ class PublicacionController extends Controller
         } else {
             $publicaciones = Publicacion::ListarPublicacionesPaginacion();
             Cache::put($key, $publicaciones);
-
         }
 
         $metaData = [
@@ -62,6 +63,7 @@ class PublicacionController extends Controller
             'publicaciones' => $publicaciones,
             'metaData' => $metaData,
 
+            'transmision' => $transmision,
             'facebook' => $facebookLink,
             'youtube' => $youtubeLink,
             'instagram' => $instagramLink,
@@ -75,6 +77,13 @@ class PublicacionController extends Controller
         $redes_sociales = Redes::Activo()->get();
         $similares = Publicacion::GetSimilaresCategoria($publicacion->categoria_id)->get();
 
+        //REDES
+        $redes_sociales = Redes::Activo()->get();
+        $facebookLink = '';
+        $youtubeLink = '';
+        $instagramLink = '';
+        $transmision = Redes::GetTransmision()->first();
+
         $metaData = [
             'title' => 'Publicaciones | IPUC D13',
             'author' => 'IPUC Distrito 13',
@@ -87,6 +96,11 @@ class PublicacionController extends Controller
             'comites' => $comites,
             'redes_sociales' => $redes_sociales,
             'metaData' => $metaData,
+
+            'transmision' => $transmision,
+            'facebook' => $facebookLink,
+            'youtube' => $youtubeLink,
+            'instagram' => $instagramLink,
         ]);
     }
 }

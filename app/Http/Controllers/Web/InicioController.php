@@ -25,6 +25,8 @@ class InicioController extends Controller
         $facebookLink = '';
         $youtubeLink = '';
         $instagramLink = '';
+        $transmision = Redes::GetTransmision()->first();
+
         // Itera sobre la lista para encontrar Facebook
         foreach ($redes_sociales as $redSocial) {
             switch ($redSocial["nombre"]) {
@@ -55,6 +57,7 @@ class InicioController extends Controller
 
             'publicaciones' => $publicaciones,
             
+            'transmision' => $transmision,
             'facebook' => $facebookLink,
             'youtube' => $youtubeLink,
             'instagram' => $instagramLink,

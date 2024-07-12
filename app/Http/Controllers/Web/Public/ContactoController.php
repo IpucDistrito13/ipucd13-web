@@ -24,6 +24,8 @@ class ContactoController extends Controller
         $facebookLink = '';
         $youtubeLink = '';
         $instagramLink = '';
+        $transmision = Redes::GetTransmision()->first();
+
         // Itera sobre la lista para encontrar Facebook
         foreach ($redes_sociales as $redSocial) {
             switch ($redSocial["nombre"]) {
@@ -44,6 +46,7 @@ class ContactoController extends Controller
             'comites' => $comitesMenu,
             'metaData' => $metaData,
 
+            'transmision' => $transmision,
             'facebook' => $facebookLink,
             'youtube' => $youtubeLink,
             'instagram' => $instagramLink,

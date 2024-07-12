@@ -22,6 +22,8 @@ class PodcastController extends Controller
         $facebookLink = '';
         $youtubeLink = '';
         $instagramLink = '';
+        $transmision = Redes::GetTransmision()->first();
+
         // Itera sobre la lista para encontrar Facebook
         foreach ($redes_sociales as $redSocial) {
             switch ($redSocial["nombre"]) {
@@ -63,6 +65,8 @@ class PodcastController extends Controller
             'comites' => $comitesMenu,
             'podcasts' => $podcasts,
             'metaData' => $metaData,
+            
+            'transmision' => $transmision,
             'facebook' => $facebookLink,
             'youtube' => $youtubeLink,
             'instagram' => $instagramLink,

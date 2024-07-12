@@ -51,11 +51,12 @@
                             <label>Url transmisión *</label>
                             <input id="id" name="id" value="4" hidden>
                             <input type="text" class="form-control" id="url" name="url"
-                                value="https://www.youtube.com/watch?v={{ old('url', $transmision->url ?? '') }}" >
+                                value="{{ old('url', $transmision->url ?? '') ? 'https://www.youtube.com/watch?v=' . old('url', $transmision->url ?? '') : '' }}">
                             @error('url')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        
                     </div>
 
                 </div>

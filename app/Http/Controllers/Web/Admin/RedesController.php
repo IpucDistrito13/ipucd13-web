@@ -67,6 +67,9 @@ class RedesController extends Controller
         if (!empty($validatedData['url'])) {
             $videoId = $this->extractYouTubeId($validatedData['url']);
             $validatedData['url'] = $videoId;
+        } else {
+            // If URL is empty, set it to null
+            $validatedData['url'] = null;
         }
 
         // Update the record with the validated data
@@ -80,6 +83,7 @@ class RedesController extends Controller
         // Redirect to the dashboard with a success message
         return redirect()->route('admin.dashboard')->with('success', 'Transmisión actualizada exitosamente.');
     }
+
 
     // Function to extract YouTube video ID from URL
     private function extractYouTubeId($url)
