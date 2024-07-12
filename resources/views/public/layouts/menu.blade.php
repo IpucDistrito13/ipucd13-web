@@ -54,7 +54,7 @@
                             <a href="#" class="nav-link">Zona D13</a>
                             <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink5" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
-                                <li class="dropdown"><a href="{{ route('public.publicaciones.index') }}" class="dropdown-item">Publicaciones</a></li>
+                                <li class="dropdown"><a href="{{ route('public.publicaciones.index') }}" class="dropdown-item">Informes</a></li>
                                 <li class="dropdown"><a href="{{ route('public.series.index') }}" class="dropdown-item">Series</a></li>
                                 <li class="dropdown"><a href="{{ route('public.podcasts.index') }}" class="dropdown-item">Podcasts</a></li>
                             </ul>
@@ -65,7 +65,14 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-auto col-lg-2 text-end d-none d-sm-flex">
+            <div class="col-auto col-lg-2 text-end">
+                <div class="header-icon"> 
+                    <div class="header-social-icon icon">
+                        <a href="{{ $facebook }}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="{{ $instagram }}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="{{ $youtube }}" target="_blank"><i class="fa-brands fa-youtube fs-18 me-10px"></i></a>
+                    </div>
+                </div>  
             </div>
         </div>
     </nav>
