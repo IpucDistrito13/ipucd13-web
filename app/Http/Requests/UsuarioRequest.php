@@ -34,6 +34,7 @@ class UsuarioRequest extends FormRequest
             'file' => 'nullable|image',
             'roles' => 'required|array|min:1',
             'roles.*' => 'exists:roles,id',
+            'documento' => 'required|max:250', //Solo pastores
             'codigo' => [
                 'nullable', // Por defecto es nullable
             ],

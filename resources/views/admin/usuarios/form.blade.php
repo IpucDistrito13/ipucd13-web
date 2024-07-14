@@ -20,12 +20,12 @@
         </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
         <!-- text input -->
         <div class="form-group">
             <label>Documento *</label>
             <input type="text" class="form-control" id="documento" name="documento"
-                value="{{ old('documento', $usuario->documento ?? '') }}">
+                value="{{ old('documento', $usuario->documento ?? '') }}" placeholder="1093000000 de Los Patios">
             @error('documento')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -37,7 +37,7 @@
         <!-- text input -->
         <div class="form-group">
             <label>Nombre *</label>
-            <input type="text" class="form-control" id="nombre" name="nombre"
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Jhon"
                 value="{{ old('nombre', $usuario->nombre ?? '') }}">
             @error('nombre')
                 <div class="text-danger">{{ $message }}</div>
@@ -50,7 +50,7 @@
         <!-- text input -->
         <div class="form-group">
             <label>Apellidos *</label>
-            <input type="text" class="form-control" id="apellidos" name="apellidos"
+            <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Doe Granados"
                 value="{{ old('apellidos', $usuario->apellidos ?? '') }}">
             @error('apellidos')
                 <div class="text-danger">{{ $message }}</div>
@@ -65,7 +65,7 @@
         <!-- text input -->
         <div class="form-group">
             <label>Celular *</label>
-            <input type="numeric" class="form-control" id="celular" name="celular"
+            <input type="numeric" class="form-control" id="celular" name="celular" placeholder="3100000000"
                 value="{{ old('celular', $usuario->celular ?? '') }}">
             @error('celular')
                 <div class="text-danger">{{ $message }}</div>
@@ -74,11 +74,11 @@
 
     </div>
 
-    <div class="col-sm-7">
+    <div class="col-sm-5">
         <!-- text input -->
         <div class="form-group">
             <label>Correo electrónico *</label>
-            <input type="text" class="form-control" id="email" name="email"
+            <input type="text" class="form-control" id="email" name="email" placeholder="jhondoe@gmail.com"
                 value="{{ old('email', $usuario->email ?? '') }}">
             @error('email')
                 <div class="text-danger">{{ $message }}</div>
@@ -90,7 +90,7 @@
     <div class="col-sm-3">
         <div class="form-group">
             <label for="codigo">Código *</label>
-            <input type="text" name="codigo" id="codigo" class="form-control"
+            <input type="text" name="codigo" id="codigo" class="form-control" placeholder="Código solo pastores"
                 value="{{ old('codigo', $usuario->codigo ?? '') }}">
             @if ($errors->has('codigo'))
                 <span class="text-danger">{{ $errors->first('codigo') }}</span>

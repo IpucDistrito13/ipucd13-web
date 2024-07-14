@@ -22,7 +22,7 @@ class NuevoUsuarioMail extends Mailable
     public function __construct($usuario)
     {
         $this->usuario = $usuario;
-        $this->loginUrl = env('APP_URL') . '/login';
+        $this->loginUrl = 'https://ipucdistrito13.org/login';
 
     }
 

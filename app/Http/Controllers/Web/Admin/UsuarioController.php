@@ -175,6 +175,7 @@ class UsuarioController extends Controller
                 'name' => $request->nombre,
                 'congregacion_id' => $request->congregacion,
                 'uuid' => $timeAndPassword,
+                'documento' => $request->documento,
                 'codigo' => $codigo,
                 'nombre' => $request->nombre,
                 'apellidos' => $request->apellidos,
@@ -336,6 +337,7 @@ class UsuarioController extends Controller
         $data = [
             'name' => $request->nombre,
             'congregacion_id' => $request->congregacion,
+            'documento' => $request->documento,
             'codigo' => $request->codigo,
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,

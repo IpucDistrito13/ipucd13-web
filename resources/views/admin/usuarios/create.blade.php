@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear etiqueta')
+@section('title', 'Crear usuario')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
