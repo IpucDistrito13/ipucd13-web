@@ -59,7 +59,7 @@
                     @foreach ($tipos as $tipo)
                         <tr>
                             <td>{{ $tipo->id }}</td>
-                            <td>{{ $tipo->usuario_id }}</td>
+                            <td>{{ $tipo->nombre }}</td>
                             <td>{{ $tipo->slug }}</td>
 
                             <td>
