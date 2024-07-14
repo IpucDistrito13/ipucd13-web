@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('isbloqueo')->nullable();
 
             $table->string('telefono')->nullable();
-            //Todos los usuarios asociados a esa congregación tendrán su congregacion_id establecido a NULL automáticamente.
+            //todos los usuarios asociados a esa congregación tendrán su congregacion_id establecido a NULL automáticamente.
             $table->foreignId('congregacion_id')
                 ->nullable()
                 ->constrained('congregaciones')
