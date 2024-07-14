@@ -67,6 +67,34 @@ class MunicipioSeeder extends Seeder
             'Tame',
         ];
 
+        $municipios_Cesar = [
+            'Aguachica',
+            'Agustín Codazzi',
+            'Astrea',
+            'Becerril',
+            'Bosconia',
+            'Chimichagua',
+            'Chiriguaná',
+            'Curumaní',
+            'El Copey',
+            'El Paso',
+            'Gamarra',
+            'González',
+            'La Gloria',
+            'La Jagua de Ibirico',
+            'La Paz',
+            'Manaure Balcón del Cesar',
+            'Pailitas',
+            'Pelaya',
+            'Pueblo Bello',
+            'Río de Oro',
+            'San Alberto',
+            'San Diego',
+            'San Martín',
+            'Tamalameque',
+            'Valledupar'
+        ];
+
         // Iteramos sobre cada municipio y los creamos en la base de datos
         foreach ($municipios_NorteDeSantander as $municipio) {
             Municipio::create([
@@ -80,6 +108,13 @@ class MunicipioSeeder extends Seeder
             Municipio::create([
                 'nombre' => $municipio,
                 'departamento_id' => 2, // Aquí asumimos que el ID del departamento de Arauca es 2
+            ]);
+        }
+
+        foreach ($municipios_Cesar as $municipio) {
+            Municipio::create([
+                'nombre' => $municipio,
+                'departamento_id' => 3, // Aquí asumimos que el ID del departamento de Arauca es 2
             ]);
         }
     }
