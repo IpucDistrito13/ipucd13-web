@@ -11,7 +11,6 @@ use App\Http\Controllers\Web\Public\EventoController;
 use App\Http\Controllers\Web\Public\PodcastController;
 use App\Http\Controllers\Web\Public\PublicacionController;
 use App\Http\Controllers\Web\Public\SerieController;
-use App\Models\Congregacion;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

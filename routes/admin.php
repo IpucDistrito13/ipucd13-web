@@ -23,11 +23,9 @@ use App\Http\Controllers\Web\Admin\RolController;
 use App\Http\Controllers\Web\Admin\SerieController;
 use App\Http\Controllers\Web\Admin\SolicitudController;
 use App\Http\Controllers\Web\Admin\SolicitudTipoController;
-use App\Http\Controllers\Web\Admin\TipoLiderController;
 use App\Http\Controllers\Web\Admin\UsuarioController;
 use App\Http\Controllers\Web\Admin\VideoController;
 use App\Models\GaleriaTipo;
-use App\Models\LiderTipo;
 use Illuminate\Support\Facades\Route;
 
 

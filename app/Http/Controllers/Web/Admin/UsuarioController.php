@@ -17,6 +17,8 @@ use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class UsuarioController extends Controller
 {
@@ -80,7 +82,6 @@ class UsuarioController extends Controller
     //LISTAR SOLO LOS LIDERES DESDE EL DIRECTORIO D13
     public function directorioLideres(Request $request)
     {
-        //$rolId = 3;
         $rol = 'Lider';
         if ($request->ajax()) {
             $data = User::VistaRolUsers($rol)->get();
@@ -101,7 +102,6 @@ class UsuarioController extends Controller
     //LISTAR SOLO LOS PASTORES DESDE EL DIRECTORIO D13
     public function directorioPastores(Request $request)
     {
-        //$rolId = 2;
         $rol = 'Pastor';
 
         if ($request->ajax()) {
@@ -208,7 +208,7 @@ class UsuarioController extends Controller
             Cache::flush();
 
             // Enviar correo
-            Mail::to($usuario->email)->send(new NuevoUsuarioMail($usuario));
+            //Mail::to($usuario->email)->send(new NuevoUsuarioMail($usuario));
 
             DB::commit();
 
