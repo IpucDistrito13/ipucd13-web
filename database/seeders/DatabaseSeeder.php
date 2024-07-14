@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         //Storage::deleteDirectory('public');
 
         $this->call([RolSeeder::class]);//REQUERIDO EN PRODUCCION
-        $this->call([RedesSeeder::class]);//REQUERIDO EN PRODUCCION
+        //$this->call([RedesSeeder::class]);//REQUERIDO EN PRODUCCION
 
         $this->call([DepartamentoSeeder::class]);//REQUERIDO EN PRODUCCION
         $this->call([MunicipioSeeder::class]);//REQUERIDO EN PRODUCCION
@@ -52,8 +52,8 @@ class DatabaseSeeder extends Seeder
             'estado' => 'Activo',
         ])->assignRole('Administrador');
 
-        User::factory(3700)->create(); //3700
-        
+        //User::factory(3700)->create(); //3700
+    
         \App\Models\Evento::factory(1)->create();
         \App\Models\Cronograma::factory(1)->create();
 

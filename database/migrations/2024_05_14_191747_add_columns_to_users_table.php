@@ -22,12 +22,14 @@ return new class extends Migration
             $table->boolean('isbloqueo')->nullable();
 
             $table->string('telefono')->nullable();
-
-            $table->foreignId('congregacion_id')->nullable()->constrained('congregaciones')->onDelete('set null');
+            //Todos los usuarios asociados a esa congregación tendrán su congregacion_id establecido a NULL automáticamente.
+            $table->foreignId('congregacion_id')
+                ->nullable()
+                ->constrained('congregaciones')
+                ->onDelete('cascade');
             $table->enum('estado', ['Activo', 'Inactivo'])->default('Activo');
 
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
-
         });
     }
 
