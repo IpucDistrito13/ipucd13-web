@@ -41,6 +41,7 @@ class UsuarioRequest extends FormRequest
         ];
     
         // Revisa si alguno de los roles seleccionados es 2 (pastor)
+        /*
         if (in_array(2, request()->input('roles', []))) {
             $rules['codigo'][] = 'required'; // Añade la regla de requerido
     
@@ -51,6 +52,7 @@ class UsuarioRequest extends FormRequest
             }
             $rules['codigo'][] = $codigoRule;
         }
+            */
     
         // Ajusta la regla de email para permitir duplicados en la actualización del usuario actual
         if ($usuario) {
