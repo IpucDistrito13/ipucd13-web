@@ -72,6 +72,6 @@ class DatabaseSeeder extends Seeder
         $this->call([GaleriaTipoSeeder::class]);
 
         $this->call([LiderTipoSeeder::class]);
-        \App\Models\Lider::factory(80)->create();
+        \App\Models\Lider::factory(1)->create();
     }
 }
