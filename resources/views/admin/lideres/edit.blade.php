@@ -1,11 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear comité')
+@section('title', 'Editar comité')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear comité</h1>
-        
+        <h1 style="margin: 0;">Editar líder: {{ $lider->nombre }}</h1>
+        <div>
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.lideres_tipos.index') }}">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
     </div>
 @stop
 
@@ -39,15 +43,16 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.comites.store') }}" autocomplete="off"
+            <form method="POST" action="{{ route('admin.lideres.update', $lider) }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
-
                 @csrf
-                @include('admin.comites.form')
+                @method('PUT') <!-- Establece el método PUT -->
+
+                @include('admin.lideres.form', $lider)
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.comites.index') }}">Volver</a>
-                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
+                    <a class="btn btn-secondary" href="{{ route('admin.lideres_tipos.index') }}">Volver</a>
+                    <button type="submit" class="btn btn-success float-right">Actualizar</button>
                 </div>
             </form>
 
@@ -57,9 +62,9 @@
 @stop
 
 @section('css')
-    
 
-    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
 
     <style>
         .image-wrapper {
@@ -74,12 +79,12 @@
             height: 100%;
         }
     </style>
+
 @stop
 
 @section('js')
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-   
 
     <script>
         // Generate slug
@@ -94,7 +99,7 @@
         }
 
         function updateSlug() {
-            var nombreInput = document.getElementById("nombre"); // Corregido aquí
+            var nombreInput = document.getElementById("nombre");
             var slugInput = document.getElementById("slug");
 
             if (nombreInput && slugInput) {
@@ -110,8 +115,11 @@
         // End generate slug
 
         // Mostrar imagen
-        document.getElementById("imagen").addEventListener("change", cambiarImagen);
+        function redirectUpdate(url) {
+            window.location.href = url;
+        }
 
+        //Mostrar imagen
         function cambiarImagen(evento) {
             var file = evento.target.files[0];
             var reader = new FileReader();
@@ -120,9 +128,10 @@
             }
             reader.readAsDataURL(file);
         }
+
         //end mostrar imagen
 
-        // Mostrar imagen banner
+        //Mostrar imagen banner
         function cambiarImagenBanner(evento) {
             var file = evento.target.files[0];
             var reader = new FileReader();
@@ -133,29 +142,4 @@
         }
         //end mostrar imagen banner
     </script>
-
-    <script>
-        // datatable
-        $("#datatable").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-
-            language: {
-                processing: "Procesando...",
-                lengthMenu: "Mostrar _MENU_ registros por página",
-                zeroRecords: "No se encontraron registros en el sistema...",
-                info: "Mostrando página _PAGE_ de _PAGES_",
-                infoEmpty: "No hay registros disponibles",
-                infoFiltered: "(filtrado de _MAX_ registros totales)",
-                search: "Buscar",
-                paginate: {
-                    next: "Siguiente",
-                    previous: "Anterior"
-                }
-            },
-        });
-        //end datatable
-    </script>
-
 @stop

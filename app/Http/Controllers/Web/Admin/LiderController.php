@@ -51,10 +51,37 @@ class LiderController extends Controller
         }
     }
 
+    public function store(LiderRequest $request)
+    {
+
+        $data = [
+            'uuid' => time(),
+            'lidertipo_id' => $request->tipo,
+            'comite_id' => $request->comite,
+            'usuario_id' => $request->usuario,
+            'user_created' => auth()->id(),
+            'estado' => 'Activo',
+        ];
+
+        // Creamos el registro dentro de la transacción
+        $lider = Lider::create($data);
+
+        if ($request->hasFile('file')) {
+            $filePortada = $request->file('file');
+            $ubicacionPortada = 'public/comites/lidderes';
+            return  $url = $this->storeFile($filePortada, $ubicacionPortada);
+
+            $lider->imagen()->create([
+                'url' => $url,
+                'imageable_type' => Comite::class,
+            ]);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LiderRequest $request)
+    public function store5(LiderRequest $request)
     {
         // Utilizamos DB::transaction() para iniciar una transacción en la base de datos
         DB::beginTransaction();
@@ -85,6 +112,8 @@ class LiderController extends Controller
                         'url' => $url,
                         'imageable_type' => Lider::class,
                     ]);
+                } else {
+                    throw new \Exception('Error al almacenar el archivo');
                 }
             }
 
@@ -98,8 +127,7 @@ class LiderController extends Controller
             Log::error('Error store - Lider: ' . $e->getMessage());
 
             // Aquí puedes manejar el error como desees, por ejemplo, redireccionar con un mensaje de error
-            return redirect()->back()
-                ->with('error', 'Ha ocurrido un error al crear el líder. Por favor, intenta de nuevo más tarde.');
+            return redirect()->back()->withInput()->with(['error' => 'Ha ocurrido un error al crear el líder. Por favor, intenta de nuevo más tarde.']);
         }
     }
 

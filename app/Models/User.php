@@ -64,7 +64,7 @@ class User extends Authenticatable
         return $query->from('vista_roles_usuario')
             ->where('roles', 'LIKE', '%' . $rol . '%');
     }
-    
+
     //END WEB
 
     //RELACION UNO A MUCHOS
@@ -108,6 +108,18 @@ class User extends Authenticatable
         return $this->hasMany(Solicitud::class, 'user_response');
     }
 
+    // Relación con Lideres (Usuarios que son líderes)
+    public function lideres()
+    {
+        return $this->hasMany(Lider::class, 'usuario_id');
+    }
+
+    // Relación con Lideres creados por este usuario
+    public function createdLiders()
+    {
+        return $this->hasMany(Lider::class, 'user_created');
+    }
+
     //RELACION UNO A UNO POLIMORFICA
     public function imagen()
     {
@@ -132,14 +144,16 @@ class User extends Authenticatable
         return $usuario->name;
     }
 
+
+
     //Lista segun el rol
     public function scopeListarPorRol($query, $roleId)
-{
-    return $query->whereHas('roles', function ($query) use ($roleId) {
+    {
+        return $query->whereHas('roles', function ($query) use ($roleId) {
             $query->where('id', $roleId);
         })
-        ->where('estado', 'Activo');
-}
+            ->where('estado', 'Activo');
+    }
 
 
     /*

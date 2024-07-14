@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear comité')
+@section('title', 'Crear tipo')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear comité</h1>
+        <h1 style="margin: 0;">Crear tipo</h1>
         
     </div>
 @stop
@@ -33,20 +33,20 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos comité
+                Datos tipo lider
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.comites.store') }}" autocomplete="off"
+            <form method="POST" action="{{ route('admin.lideres_tipos.store') }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
 
                 @csrf
-                @include('admin.comites.form')
+                @include('admin.lidertipos.form')
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.comites.index') }}">Volver</a>
+                    <a class="btn btn-secondary" href="{{ route('admin.lideres_tipos.index') }}">Volver</a>
                     <button type="submit" class="btn btn-primary float-right">Guardar</button>
                 </div>
             </form>
@@ -110,6 +110,10 @@
         // End generate slug
 
         // Mostrar imagen
+        function redirectUpdate(url) {
+            window.location.href = url;
+        }
+
         document.getElementById("imagen").addEventListener("change", cambiarImagen);
 
         function cambiarImagen(evento) {

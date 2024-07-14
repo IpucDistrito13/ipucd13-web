@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         //Storage::deleteDirectory('public');
 
-        $this->call([RolSeeder::class]);
-        $this->call([RedesSeeder::class]);
+        $this->call([RolSeeder::class]);//REQUERIDO EN PRODUCCION
+        $this->call([RedesSeeder::class]);//REQUERIDO EN PRODUCCION
 
-        $this->call([DepartamentoSeeder::class]);
-        $this->call([MunicipioSeeder::class]);
+        $this->call([DepartamentoSeeder::class]);//REQUERIDO EN PRODUCCION
+        $this->call([MunicipioSeeder::class]);//REQUERIDO EN PRODUCCION
         \App\Models\Congregacion::factory(1)->create();
 
         User::factory()->create([
@@ -71,5 +71,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([GaleriaTipoSeeder::class]);
 
+        $this->call([LiderTipoSeeder::class]);
+        \App\Models\Lider::factory(80)->create();
     }
 }

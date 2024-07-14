@@ -101,6 +101,48 @@
     <!-- end descripcion comite -->
 
 
+<!-- start section lideres -->
+@if ($lideres->isNotEmpty())
+<section class="background-repeat position-relative overflow-hidden" style="background-image:url('images/demo-spa-salon-home-bg-01.jpg');">
+    <div class="container">
+        <div class="row justify-content-center mb-2">
+            <div class="col-lg-6 text-center" data-anime='{ "el": "childs", "translateY": [15, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 100, "easing": "easeOutQuad" }'>
+                <span class="fs-15 mb-5px text-tussock-yellow fw-600 d-block text-uppercase ls-1px">{{ $comite->nombre }}</span>
+                <h3 class="fw-600 ls-minus-1px text-dark-gray">Líderes</h3>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-lg-4 row-cols-sm-2" data-anime='{ "el": "childs", "translateY": [30, 0], "translateX": [-30, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 100, "easing": "easeOutQuad" }'>
+            @foreach ($lideres as $lider)
+            <!-- start team member item --> 
+            <div class="col text-center team-style-05 md-mb-20px">
+                <div class="position-relative mb-30px border-radius-4px last-paragraph-no-margin overflow-hidden">
+                    <img src="{{ !empty($lider->imagen->url) ? Storage::url($lider->imagen->url) : 'https://via.placeholder.com/600x755' }}" class="border-radius-4px" alt="" />
+                    <div class="w-100 h-100 d-flex flex-column justify-content-end align-items-center p-40px lg-p-20px team-content bg-gradient-gray-light-dark-transparent">
+                        <div class="social-icon fs-19">
+                            <!-- Enlace para WhatsApp -->
+                            <a href="https://wa.me/{{ $lider->usuario->celular }}" target="_blank" class="text-white">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+
+                            <!-- Enlace para Llamar -->
+                            <a href="tel:{{ $lider->usuario->celular }}" class="text-white">
+                                <i class="fas fa-phone-volume"></i>
+                            </a>
+
+                        </div>                                
+                    </div>
+                </div>
+                <div class="text-dark-gray lh-24 fs-18 fw-600">{{ $lider->usuario->nombre }}</div>
+                <p class="mb-0">{{ $lider->liderTipo->nombre }}</p>
+            </div>
+            <!-- end team member item -->   
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+<!-- end section lideres -->
+
     <!-- start section publicaciones -->
     @if ($publicaciones->isNotEmpty())
         <section

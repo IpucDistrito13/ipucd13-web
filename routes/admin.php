@@ -14,6 +14,8 @@ use App\Http\Controllers\Web\Admin\EventoController;
 use App\Http\Controllers\Web\Admin\FileUploadController;
 use App\Http\Controllers\Web\Admin\GaleriaController;
 use App\Http\Controllers\Web\Admin\HomeController;
+use App\Http\Controllers\Web\Admin\LiderController;
+use App\Http\Controllers\Web\Admin\LiderTipoController;
 use App\Http\Controllers\Web\Admin\PodcastController;
 use App\Http\Controllers\Web\Admin\PublicacionController;
 use App\Http\Controllers\Web\Admin\RedesController;
@@ -21,9 +23,11 @@ use App\Http\Controllers\Web\Admin\RolController;
 use App\Http\Controllers\Web\Admin\SerieController;
 use App\Http\Controllers\Web\Admin\SolicitudController;
 use App\Http\Controllers\Web\Admin\SolicitudTipoController;
+use App\Http\Controllers\Web\Admin\TipoLiderController;
 use App\Http\Controllers\Web\Admin\UsuarioController;
 use App\Http\Controllers\Web\Admin\VideoController;
 use App\Models\GaleriaTipo;
+use App\Models\LiderTipo;
 use Illuminate\Support\Facades\Route;
 
 
@@ -62,10 +66,10 @@ Route::get('podcasts/episodios/{podcast}', [PodcastController::class, 'listEpiso
 Route::resource('podcasts', PodcastController::class)->names('admin.podcasts');
 // LISTAR LOS EPISODIOS SEGUN EL PODCAST
 
-Route::get('episodios/testFile/{episodioId}', [EpisodioController::class, 'testFile'])->name('admin.episodios.testFile');//P
+Route::get('episodios/testFile/{episodioId}', [EpisodioController::class, 'testFile'])->name('admin.episodios.testFile'); //P
 
 Route::resource('episodios', EpisodioController::class)->names('admin.episodios');
-Route::get('episodios/file-upload/{episodioId}', [EpisodioController::class, 'uploadFile'])->name('admin.episodios.file_upload');//P
+Route::get('episodios/file-upload/{episodioId}', [EpisodioController::class, 'uploadFile'])->name('admin.episodios.file_upload'); //P
 //Route::post('episodios/file-upload/upload-large-files', [EpisodioController::class, 'uploadLargeFiles'])->name('admin.episodios.upload_large');//P
 Route::post('admin/episodios/upload_large', [EpisodioController::class, 'uploadLargeFiles'])->name('admin.episodios.upload_audio');
 
@@ -170,3 +174,10 @@ Route::post('archivos/carpetas', [ArchivoController::class, 'upload'])->name('ad
 Route::resource('carpetas', CarpetaauxController::class)->names('admin.carpetas');
 
 Route::get('archivos/download/{archivoId}', [ArchivoController::class, 'download'])->name('admin.archivos.download');
+
+
+//Route::resource('lideres_tipos', LiderTipo::class)->names('admin.lideres_tipos');
+Route::resource('lideres_tipos', LiderTipoController::class)->names('admin.lideres_tipos');
+Route::resource('lideres', LiderController::class)
+    ->names('admin.lideres')
+    ->parameter('lideres', 'lider');

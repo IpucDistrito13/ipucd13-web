@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear comité')
+@section('title', 'Crear tipo')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear comité</h1>
+        <h1 style="margin: 0;">Crear líder</h1>
         
     </div>
 @stop
@@ -33,20 +33,20 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos comité
+                Datos líder
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.comites.store') }}" autocomplete="off"
+            <form method="POST" action="{{ route('admin.lideres.store') }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
 
                 @csrf
-                @include('admin.comites.form')
+                @include('admin.lideres.form')
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.comites.index') }}">Volver</a>
+                    <a class="btn btn-secondary" href="{{ route('admin.lideres.index') }}">Volver</a>
                     <button type="submit" class="btn btn-primary float-right">Guardar</button>
                 </div>
             </form>
@@ -110,6 +110,7 @@
         // End generate slug
 
         // Mostrar imagen
+        
         document.getElementById("imagen").addEventListener("change", cambiarImagen);
 
         function cambiarImagen(evento) {
@@ -121,17 +122,6 @@
             reader.readAsDataURL(file);
         }
         //end mostrar imagen
-
-        // Mostrar imagen banner
-        function cambiarImagenBanner(evento) {
-            var file = evento.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function(evento) {
-                document.getElementById("imagen_banner").src = evento.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-        //end mostrar imagen banner
     </script>
 
     <script>

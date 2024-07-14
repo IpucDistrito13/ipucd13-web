@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Carpeta;
 use App\Models\Comite;
+use App\Models\Lider;
 use App\Models\Podcast;
 use App\Models\Publicacion;
 use App\Models\Redes;
@@ -18,6 +19,7 @@ class ComiteController extends Controller
 
         $comitesMenu = Comite::ComiteMenu()->get();
         $carpetas = Carpeta::PorComitePublico($comite->id)->with('archivos')->get();
+        $lideres = Lider::LideresPorComite($comite->id)->get();
 
         //REDES
         $redes_sociales = Redes::Activo()->get();
@@ -43,9 +45,7 @@ class ComiteController extends Controller
         // REDES
 
         $series = Serie::GetUltimasSeries($comite->id)->get();
-      //return  $podcasts = Podcast::all();
         $podcasts = Podcast::GetUltimosPodcastComite($comite->id)->get();
-
         $publicaciones = Publicacion::GetUltimasPublicaciones($comite->id)->get();
 
         $metaData = [
@@ -54,13 +54,12 @@ class ComiteController extends Controller
             'description' => 'Comité | IPUC Distrito 13',
         ];
 
-        //return $comite;
-
         return view('public.comites.show', [
             'comites' => $comitesMenu,
             'comite' => $comite,
             'publicaciones' => $publicaciones,
             'carpetas' => $carpetas,
+            'lideres' => $lideres,
 
             'series' => $series,
             'podcasts' => $podcasts,

@@ -367,6 +367,25 @@ return [
         ],
 
         [
+            'text' => 'Líder Distrito 13',
+            'icon' => 'fas fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Tipos Líder',
+                    'route' => 'admin.lideres_tipos.index',
+                    'can' => 'admin.lideres_tipos.index'
+                ],
+
+                [
+                    'text' => 'Lider',
+                    'route' => 'admin.lideres.index',
+                    'can' => 'admin.lideres.index'
+                ],
+
+            ],
+        ],
+
+        [
             'text' => 'Galeria',
             'route' => 'admin.galerias.index',
             'icon' => 'fas fa-file-image',

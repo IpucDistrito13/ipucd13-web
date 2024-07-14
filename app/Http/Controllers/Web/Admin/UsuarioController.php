@@ -217,7 +217,7 @@ class UsuarioController extends Controller
             DB::rollBack();
             Log::error('Error  store - Usuario: ' . $e->getMessage());
 
-            return redirect()->back()->withErrors(['error' => 'Ocurrió un error al crear el usuario.']);
+            return redirect()->back()->with(['error' => 'Ocurrió un error al crear el usuario.']);
         }
     }
 

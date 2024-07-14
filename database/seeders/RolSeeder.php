@@ -144,5 +144,20 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.carpetas.publico.crearCarpetaPublico', 'descripcion' => 'Crear carpeta tipo publico'])->syncRoles([$rol1]);
 
         $permission = Permission::create(['name' => 'admin.carpetas.storeCarpetaPublico', 'descripcion' => 'Guardar carpeta tipo publico'])->syncRoles([$rol1]);
+    
+        $permission = Permission::create(['name' => 'admin.lideres_tipos.index', 'descripcion' => 'Ver listado de líder tipo'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.lideres_tipos.create', 'descripcion' => 'Crear líder tipo'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.lideres_tipos.store', 'descripcion' => 'Guardar líder tipo'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.lideres_tipos.edit', 'descripcion' => 'Editar líder tipo'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.lideres_tipos.destroy', 'descripcion' => 'Eliminar líder tipo'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'admin.lideres.index', 'descripcion' => 'Ver listado de líder'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.lideres.create', 'descripcion' => 'Crear líder'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.lideres.store', 'descripcion' => 'Guardar líder'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.lideres.edit', 'descripcion' => 'Editar líder'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.lideres.destroy', 'descripcion' => 'Eliminar líder'])->syncRoles([$rol1]);
+    
     }
+
+
 }
