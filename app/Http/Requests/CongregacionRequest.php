@@ -29,7 +29,8 @@ class CongregacionRequest extends FormRequest
             'longitud' => 'nullable|max:15',
             'latitud' => 'nullable|max:15',
             'direccion' => 'required|max:250',
-            'nombre' => 'required|max:250'
+            'nombre' => 'required|max:250',
+            'urlfacebook' => 'nullable',
         ];
 
         return $rules;

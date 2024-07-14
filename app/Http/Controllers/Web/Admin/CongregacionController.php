@@ -4,18 +4,11 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CongregacionRequest;
-use App\Http\Requests\LiderRequest;
-use App\Http\Resources\CongregacionResource;
-use App\Models\Comite;
 use App\Models\Congregacion;
-use App\Models\Lider;
-use App\Models\LiderTipo;
 use App\Models\Municipio;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 
 class CongregacionController extends Controller
@@ -57,6 +50,9 @@ class CongregacionController extends Controller
                 'longitud' => $request->longitud,
                 'latitud' => $request->latitud,
                 'direccion' => $request->direccion,
+                'nombre' => $request->nombre,
+                'urlfacebook' => $request->urlfacebook,
+                'estado' => 'Activo',
             ]);
     
             // Elimina las variables almacenadas en cache
@@ -106,6 +102,8 @@ class CongregacionController extends Controller
                 'longitud' => $request->longitud,
                 'latitud' => $request->latitud,
                 'direccion' => $request->direccion,
+                'nombre' => $request->nombre,
+                'urlfacebook' => $request->urlfacebook,
             ]);
     
             // Elimina las variables almacenadas en cache

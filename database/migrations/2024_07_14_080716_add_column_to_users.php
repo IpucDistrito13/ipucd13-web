@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('cedula')->nullable();
+            $table->string('documento')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->date('fecha_bautismo')->nullable();
             $table->date('fecha_membresia')->nullable();

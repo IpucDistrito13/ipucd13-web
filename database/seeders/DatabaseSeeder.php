@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         //Storage::deleteDirectory('public');
 
         $this->call([RolSeeder::class]);//REQUERIDO EN PRODUCCION
-        //$this->call([RedesSeeder::class]);//REQUERIDO EN PRODUCCION
+        $this->call([RedesSeeder::class]);//REQUERIDO EN PRODUCCION
 
         $this->call([DepartamentoSeeder::class]);//REQUERIDO EN PRODUCCION
         $this->call([MunicipioSeeder::class]);//REQUERIDO EN PRODUCCION

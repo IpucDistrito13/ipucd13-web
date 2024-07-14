@@ -23,6 +23,19 @@
     <div class="col-sm-3">
         <!-- text input -->
         <div class="form-group">
+            <label>Documento *</label>
+            <input type="text" class="form-control" id="documento" name="documento"
+                value="{{ old('documento', $usuario->documento ?? '') }}">
+            @error('documento')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+    </div>
+
+    <div class="col-sm-3">
+        <!-- text input -->
+        <div class="form-group">
             <label>Nombre *</label>
             <input type="text" class="form-control" id="nombre" name="nombre"
                 value="{{ old('nombre', $usuario->nombre ?? '') }}">
@@ -45,6 +58,8 @@
         </div>
 
     </div>
+
+
 
     <div class="col-sm-2">
         <!-- text input -->

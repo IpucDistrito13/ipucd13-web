@@ -20,7 +20,7 @@
     </div>
 
     <div class="col-sm-3">
-        <!-- text input -->
+        <!-- text input 7°53'07"N 72°30'41"W -->
         <div class="form-group">
             <label>Longitud</label>
             <input type="text" class="form-control" id="longitud" name="longitud" placeholder="Opcional"
@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div class="col-sm-7">
+    <div class="col-sm-6">
         <div class="form-group">
             <label>Dirección congregación * </label>
             <input type="text" class="form-control" id="direccion" name="direccion"
@@ -54,12 +54,23 @@
         </div>
     </div>
 
-    <div class="col-sm-5">
+    <div class="col-sm-2">
         <div class="form-group">
             <label>Nombre congregación * </label>
             <input type="text" class="form-control" id="nombre" name="nombre"
-                placeholder="IPUC CENTRAL, IPUC LAS AMÉRICAS, IPUC MOTILONES"
+                placeholder="IPUC CENTRAL"
                 value="{{ old('nombre', $congregacion->nombre ?? '') }}"> @error('nombre')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="form-group">
+            <label>Url facebook </label>
+            <input type="text" class="form-control" id="urlfacebook" name="urlfacebook"
+                placeholder="https://www.facebook.com/profile.php?id=100064279976082"
+                value="{{ old('urlfacebook', $congregacion->urlfacebook ?? '') }}"> @error('urlfacebook')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
