@@ -175,14 +175,13 @@ class UsuarioController extends Controller
                 'name' => $request->nombre,
                 'congregacion_id' => $request->congregacion,
                 'uuid' => $timeAndPassword,
-                'documento' => $request->documento,
-                'codigo' => $codigo,
-                'nombre' => $request->nombre,
-                'apellidos' => $request->apellidos,
+                'documento' => trim($request->documento),
+                'codigo' => trim($codigo),
+                'nombre' => trim($request->nombre),
+                'apellidos' => trim($request->apellidos),
                 'celular' => $request->celular,
                 'visible_celular' => 1,
                 'email' => strtolower(trim($request->email)),
-
                 'profile_photo_path' => $url,
                 'password' => $hashedPassword,
                 'created_by' => auth()->id(),
@@ -226,7 +225,6 @@ class UsuarioController extends Controller
 
     public function storeCongregacionPastor()
     {
-
     }
 
     /**
@@ -338,12 +336,12 @@ class UsuarioController extends Controller
         $data = [
             'name' => $request->nombre,
             'congregacion_id' => $request->congregacion,
-            'documento' => $request->documento,
-            'codigo' => $request->codigo,
-            'nombre' => $request->nombre,
-            'apellidos' => $request->apellidos,
-            'celular' => $request->celular,
-            'email' => $request->email,
+            'documento' => trim($request->documento),
+            'codigo' => trim($request->codigo),
+            'nombre' => trim($request->nombre),
+            'apellidos' => trim($request->apellidos),
+            'celular' => trim($request->celular),
+            'email' => strtolower(trim($request->email)),
             'profile_photo_path' => $request->file,
             'estado' => $request->estado,
         ];
