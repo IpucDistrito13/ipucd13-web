@@ -181,7 +181,8 @@ class UsuarioController extends Controller
                 'apellidos' => $request->apellidos,
                 'celular' => $request->celular,
                 'visible_celular' => 1,
-                'email' => $request->email,
+                'email' => strtolower(trim($request->email)),
+
                 'profile_photo_path' => $url,
                 'password' => $hashedPassword,
                 'created_by' => auth()->id(),
