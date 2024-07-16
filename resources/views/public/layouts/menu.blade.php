@@ -74,7 +74,7 @@
                                         class="dropdown-item">Series</a></li>
                                 <li class="dropdown"><a href="{{ route('public.podcasts.index') }}"
                                         class="dropdown-item">Podcasts</a></li>
-                                <li class="dropdown"><a href="{{ route('public.congregaciones.index') }}"
+                                <li class="dropdown"><a href="{{ route('congregaciones.index') }}"
                                             class="dropdown-item">Congregaciones</a></li>
                             </ul>
                         </li>

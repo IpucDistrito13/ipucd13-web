@@ -47,5 +47,5 @@ Route::get('series', [SerieController::class, 'index'])->name('public.series.ind
 Route::get('archivos/download/{archivoId}', [DescargableController::class, 'download'])->name('public.archivos.download');
 
 //Route::get('registro/congregacion', [CongregacionController::class, 'registroCongregacion']);
-Route::get('congregaciones', [CongregacionController::class, 'index']);
+Route::get('congregaciones', [CongregacionController::class, 'index'])->name('public.congregaciones');
 
