@@ -64,7 +64,7 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown simple-dropdown">
-                            <a href="#" class="nav-link">Zona D13</a>
+                            <a href="#" class="nav-link">Zona Decom D13</a>
                             <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink5"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
@@ -74,6 +74,8 @@
                                         class="dropdown-item">Series</a></li>
                                 <li class="dropdown"><a href="{{ route('public.podcasts.index') }}"
                                         class="dropdown-item">Podcasts</a></li>
+                                <li class="dropdown"><a href="{{ route('public.congregaciones.index') }}"
+                                            class="dropdown-item">Congregaciones</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a href="{{ route('public.descargables.index') }}"
