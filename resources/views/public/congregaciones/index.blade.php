@@ -51,7 +51,7 @@
                 
                 <div class="row">
                     <div class="col-12"
-                        data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 200, "easing": "easeOutQuad" }'>
                         @php
                             $counter = 1;
                         @endphp
@@ -73,8 +73,8 @@
                                     @if (!empty($congregacion->urlfacebook))
                                         <a href="{{ $congregacion->urlfacebook }}" target="_blank">Página Facebook</a><br>
                                     @endif
-                                    @if (!empty($congregacion->longitud && $congregacion->latitud ))
-                                        <a href="https://www.google.com/maps/@.{{ $congregacion->longitud }},{{ $congregacion->latitud }} " target="_blank">Ver en mapa</a><br>
+                                    @if (!empty($congregacion->googlemaps ))
+                                        <a href="{{ $congregacion->googlemaps }}" target="_blank">Ver en mapa</a><br>
                                     @endif
                                 </div>
                                 <div

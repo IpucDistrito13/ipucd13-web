@@ -26,11 +26,12 @@ class CongregacionRequest extends FormRequest
         // Reglas de validación por defecto
         $rules = [
             'municipio' => 'required|numeric',
-            'longitud' => 'nullable|max:15',
-            'latitud' => 'nullable|max:15',
+            'longitud' => 'required|max:15',
+            'latitud' => 'required|max:15',
             'direccion' => 'required|max:250',
             'nombre' => 'required|max:250',
-            'urlfacebook' => 'nullable',
+            'urlfacebook' => 'nullable|regex:/^(https?:\/\/)?(www\.)?facebook.com\/.+$/',
+            'googlemaps' => 'required|regex:/^https:\/\/www\.google\.com\/maps.+$/',
         ];
 
         return $rules;
@@ -47,6 +48,10 @@ class CongregacionRequest extends FormRequest
             'direccion.max' => 'El campo dirección no puede tener más de :max caracteres.',
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre no puede tener más de :max caracteres.',
+
+            'urlfacebook.regex' => 'El campo url de Facebook debe ser una URL válida de Facebook.',
+            'googlemaps.required' => 'El campo Google Maps es obligatorio.',
+            'googlemaps.regex' => 'El campo Google Maps debe ser una URL válida de Google Maps.',
         ];
     }
 }

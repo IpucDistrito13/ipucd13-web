@@ -11,6 +11,7 @@ php artisan r:l
 
 // MIGRACIONES
 
+php artisan migrate
 php artisan migrate:refresh --seed
 php artisan migrate:fresh --seed
 

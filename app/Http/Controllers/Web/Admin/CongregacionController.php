@@ -52,6 +52,7 @@ class CongregacionController extends Controller
                 'direccion' => $request->direccion,
                 'nombre' => $request->nombre,
                 'urlfacebook' => $request->urlfacebook,
+                'googlemaps' => $request->googlemaps,
                 'estado' => 'Activo',
             ]);
     
@@ -104,6 +105,7 @@ class CongregacionController extends Controller
                 'direccion' => $request->direccion,
                 'nombre' => $request->nombre,
                 'urlfacebook' => $request->urlfacebook,
+                'googlemaps' => $request->googlemaps,
             ]);
     
             // Elimina las variables almacenadas en cache
