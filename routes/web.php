@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Web\Admin\CongregacionController;
 use App\Http\Controllers\Web\Admin\PoliticaController;
 use App\Http\Controllers\Web\InicioController;
 use App\Http\Controllers\Web\Public\ComiteController;
+use App\Http\Controllers\Web\Public\CongregacionController;
 use App\Http\Controllers\Web\Public\ContactoController;
 use App\Http\Controllers\Web\Public\CronogramaController;
 use App\Http\Controllers\Web\Public\DescargableController;
@@ -46,5 +46,6 @@ Route::get('series', [SerieController::class, 'index'])->name('public.series.ind
 
 Route::get('archivos/download/{archivoId}', [DescargableController::class, 'download'])->name('public.archivos.download');
 
-Route::get('registro/congregacion', [CongregacionController::class, 'registroCongregacion']);
+//Route::get('registro/congregacion', [CongregacionController::class, 'registroCongregacion']);
+Route::get('congregaciones', [CongregacionController::class, 'index']);
 

@@ -20,6 +20,18 @@
     </div>
 
     <div class="col-sm-3">
+        <!-- text input -->
+        <div class="form-group">
+            <label>Latitud </label>
+            <input type="text" class="form-control" id="latitud" name="latitud" placeholder="Opcional"
+                value="{{ old('latitud', $congregacion->latitud ?? '') }}">
+            @error('latitud')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+    <div class="col-sm-3">
         <!-- text input 7°53'07"N 72°30'41"W -->
         <div class="form-group">
             <label>Longitud</label>
@@ -31,17 +43,7 @@
         </div>
     </div>
 
-    <div class="col-sm-3">
-        <!-- text input -->
-        <div class="form-group">
-            <label>Latitud </label>
-            <input type="text" class="form-control" id="latitud" name="latitud" placeholder="Opcional"
-                value="{{ old('latitud', $congregacion->latitud ?? '') }}">
-            @error('latitud')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
+    
 
     <div class="col-sm-6">
         <div class="form-group">
