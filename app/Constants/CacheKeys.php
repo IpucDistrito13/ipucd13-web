@@ -21,6 +21,9 @@ class CacheKeys
     public const PUBLIC_PODCASTS = 'public.podcasts.';
     public const PUBLIC_COMITE = 'public.comite.';
 
+    public const PUBLIC_PODCASTS_PAGE = 'public.podcasts.page.';
+
+
     public const PUBLIC_SERIES_PAGE = 'seriesPage';
     public const PUBLIC_VIDEOS_SERIE = 'public_videos_serie.';
 
@@ -38,5 +41,9 @@ class CacheKeys
     $series = Cache::remember(CacheKeys::PUBLIC_SERIES . $comite->id, null, function () use ($comite) {
             return Serie::GetUltimasSeries($comite->id)->get();
         });
+
+        for ($i = 1; $i <= $totalPages; $i++) {
+    Cache::forget(CacheKeys::PUBLIC_PUBLICACIONES . $i);
+}
     */
 }

@@ -16,16 +16,17 @@ class SerieController extends Controller
 {
     public function index()
     {
+        // Cache comites menu
         $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
             return Comite::ComiteMenu()->get();
         });
 
-        // Redes Sociales
+        // Cache social media data
         $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
             $redes_sociales = Redes::Activo()->get();
             $data = [
                 'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
-                'transmision' => Redes::GetTransmision()->first(),
+                'transmision' => Redes::GetTransmision()->first()
             ];
 
             foreach ($redes_sociales as $redSocial) {
@@ -45,11 +46,11 @@ class SerieController extends Controller
             return $data;
         });
 
-        // Paginación por Caché
-        $page = request()->page ?? 1;
-        $key = CacheKeys::PUBLIC_SERIES_PAGE . $page;
+        // Cache series with pagination
+        $page = request()->get('page', 1);
+        $seriesKey = CacheKeys::PUBLIC_SERIES_PAGE . $page;
 
-        $series = Cache::remember($key, null, function () {
+        $series = Cache::remember($seriesKey, now()->addHours(6), function () {
             return Serie::ListarSeriesPaginacion();
         });
 
@@ -72,10 +73,12 @@ class SerieController extends Controller
 
     public function show(Serie $serie)
     {
-        $comites = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
+        // Cache comites
+        $comites = Cache::remember(CacheKeys::PUBLIC_COMITES, null, function () {
             return Comite::all();
         });
 
+        // Cache videos for this series
         $videos = Cache::remember(CacheKeys::PUBLIC_VIDEOS_SERIE . $serie->id, null, function () use ($serie) {
             return Video::where('serie_id', $serie->id)->get();
         });
@@ -86,11 +89,6 @@ class SerieController extends Controller
             'description' => 'Distrito 13 | Cronograma',
         ];
 
-        return view('public.videos.show', [
-            'serie' => $serie,
-            'videos' => $videos,
-            'comites' => $comites,
-            'metaData' => $metaData,
-        ]);
+        return view('public.videos.show', compact('serie', 'videos', 'comites', 'metaData'));
     }
 }

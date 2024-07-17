@@ -15,16 +15,21 @@ class PodcastController extends Controller
 {
     public function index()
     {
+        $metaData = [
+            'title' => 'Series | IPUC D13',
+            'author' => 'IPUC Distrito 13',
+            'description' => 'Series | IPUC D13',
+        ];
+
         $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
             return Comite::ComiteMenu()->get();
         });
 
-        //REDES
         $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
             $redes_sociales = Redes::Activo()->get();
             $data = [
                 'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
-                'transmision' => Redes::GetTransmision()->first(),
+                'transmision' => Redes::GetTransmision()->first()
             ];
 
             foreach ($redes_sociales as $redSocial) {
@@ -44,159 +49,78 @@ class PodcastController extends Controller
             return $data;
         });
 
-        // REDES
-
-        //PAGINACION POR CACHE
-        if (request()->page) {
-            $key = 'podcastsPage' . request()->page;
-        } else {
-            $key = 'podcastsPage';
-        }
-
-        if (Cache::has('podcastsPage')) {
-            $podcasts = Cache::get('podcastsPage');
-        } else {
-            $podcasts = Podcast::ListarPodcastsPaginacion();
-            Cache::put($key, $podcasts);
-        }
-
-        $metaData = [
-            'title' => 'Series | IPUC D13',
-            'author' => 'IPUC Distrito 13',
-            'description' => 'Series | IPUC D13',
-        ];
+        $page = request()->get('page', 1);
+        $podcasts = Cache::remember(CacheKeys::PUBLIC_PODCASTS_PAGE . $page, null, function () {
+            return Podcast::ListarPodcastsPaginacion();
+        });
 
         return view('public.podcasts.index', [
             'comites' => $comitesMenu,
             'podcasts' => $podcasts,
+            'metaData' => $metaData,
             'transmision' => $socialData['transmision'],
             'facebook' => $socialData['links']['facebook'],
             'youtube' => $socialData['links']['youtube'],
             'instagram' => $socialData['links']['instagram'],
-            'metaData' => $metaData,
-
         ]);
     }
-
-    /*
-    public function show(Podcast $podcast)
-    {
-        //return $podcast;
-        $comites = Comite::all();
-        $episodios = Episodio::ListarEpisodioPodcast($podcast->id)->get();
-
-        $metaData = [
-            'title' => 'Serie | IPUC D13',
-            'author' => 'IPUC D13',
-            'description' => 'Distrito 13 | Cronograma',
-        ];
-
-        return view('public.videos.show', compact('serie', 'videos', 'comites', 'metaData'));
-    }
-    */
 
     public function episodios(Podcast $podcast)
     {
-        //return 'episodios';
-        //$videos = Video::where('serie_id', $podcast->id)->get();
-        $episodios = Episodio::where('podcast_id', $podcast->id)->get();
-        //return $episodios;
+        $cacheKey = CacheKeys::PUBLIC_PODCASTS . $podcast->id;
 
-        $metaData = [
-            'title' => 'Podcasts | IPUC D13',
-            'author' => 'IPUC Distrito 13',
-            'description' => 'Podcasts | IPUC D13',
-        ];
+        return Cache::remember($cacheKey, null, function () use ($podcast) {
+            $episodios = Episodio::where('podcast_id', $podcast->id)->get();
 
-        //REDES
-        $redes_sociales = Redes::Activo()->get();
-        $facebookLink = '';
-        $youtubeLink = '';
-        $instagramLink = '';
-        // Itera sobre la lista para encontrar Facebook
-        foreach ($redes_sociales as $redSocial) {
-            switch ($redSocial["nombre"]) {
-                case "Facebook":
-                    $facebookLink = $redSocial["url"];
-                    break;
-                case "YouTube":
-                    $youtubeLink = $redSocial["url"];
-                    break;
-                case "Instagram":
-                    $instagramLink = $redSocial["url"];
-                    break;
-            }
-        }
-        // REDES
+            $metaData = [
+                'title' => 'Podcasts | IPUC D13',
+                'author' => 'IPUC Distrito 13',
+                'description' => 'Podcasts | IPUC D13',
+            ];
 
-        $comites = Comite::all();
+            // REDES
+            $socialDataKey = CacheKeys::PUBLIC_SOCIAL_DATA;
+            $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
+                $redes_sociales = Redes::Activo()->get();
+                $data = [
+                    'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
+                    'transmision' => Redes::GetTransmision()->first()
+                ];
 
-        return view('public.podcasts.episodios', [
-            'comites' => $comites,
-            'podcast' => $podcast,
-            'metaData' => $metaData,
-            'episodios' => $episodios,
-            'facebook' => $facebookLink,
-            'youtube' => $youtubeLink,
-            'instagram' => $instagramLink,
+                foreach ($redes_sociales as $redSocial) {
+                    switch ($redSocial["nombre"]) {
+                        case "Facebook":
+                            $data['links']['facebook'] = $redSocial["url"];
+                            break;
+                        case "YouTube":
+                            $data['links']['youtube'] = $redSocial["url"];
+                            break;
+                        case "Instagram":
+                            $data['links']['instagram'] = $redSocial["url"];
+                            break;
+                    }
+                }
 
-        ]);
+                return $data;
+            });
+
+            $comitesKey = CacheKeys::PUBLIC_COMITES;
+            $comites = Cache::remember($comitesKey, null, function () {
+                return Comite::all();
+            });
+
+            return view('public.podcasts.episodios', [
+                'comites' => $comites,
+                'podcast' => $podcast,
+                'metaData' => $metaData,
+                'episodios' => $episodios,
+                'transmision' => $socialData['transmision'],
+                'facebook' => $socialData['links']['facebook'],
+                'youtube' => $socialData['links']['youtube'],
+                'instagram' => $socialData['links']['instagram'],
+            ]);
+        });
     }
-
-    /*
-        public function episodios(Podcast $podcast)
-    {
-        // return $podcast;
-        $metaData = [
-            'title' => 'Cronogramas | IPUC D13',
-            'author' => 'IPUC Distrito 13',
-            'description' => 'Cronogramas | IPUC D13',
-        ];
-
-        //REDES
-        $redes_sociales = Redes::Activo()->get();
-        $facebookLink = '';
-        $youtubeLink = '';
-        $instagramLink = '';
-        // Itera sobre la lista para encontrar Facebook
-        foreach ($redes_sociales as $redSocial) {
-            switch ($redSocial["nombre"]) {
-                case "Facebook":
-                    $facebookLink = $redSocial["url"];
-                    break;
-                case "YouTube":
-                    $youtubeLink = $redSocial["url"];
-                    break;
-                case "Instagram":
-                    $instagramLink = $redSocial["url"];
-                    break;
-            }
-        }
-        // REDES
-
-        $comites = Comite::all();
-
-        return view('public.podcasts.episodios', [
-            'comites' => $comites,
-            'podcast' => $podcast,
-            'metaData' => $metaData,
-
-            'facebook' => $facebookLink,
-            'youtube' => $youtubeLink,
-            'instagram' => $instagramLink,
-
-        ]);
-    }
-        */
-
-    /*
-    public function listEpisodio(Podcast $podcast)
-    {
-        return view('public.podcasts.episodios', [
-            'podcast' => $podcast,
-        ]);
-    }
-    */
 
     public function apigetAudio($episodioid)
     {
