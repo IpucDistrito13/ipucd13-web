@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Public;
 
+use App\Constants\CacheKeys;
 use App\Http\Controllers\Controller;
 use App\Models\Comite;
 use App\Models\Redes;
@@ -15,44 +16,42 @@ class SerieController extends Controller
 {
     public function index()
     {
-        $comitesMenu = Comite::ComiteMenu()->get();
+        $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
+            return Comite::ComiteMenu()->get();
+        });
 
-        //REDES
-        $redes_sociales = Redes::Activo()->get();
-        $facebookLink = '';
-        $youtubeLink = '';
-        $instagramLink = '';
-        $transmision = Redes::GetTransmision()->first();
+        // Redes Sociales
+        $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
+            $redes_sociales = Redes::Activo()->get();
+            $data = [
+                'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
+                'transmision' => Redes::GetTransmision()->first(),
+            ];
 
-        // Itera sobre la lista para encontrar Facebook
-        foreach ($redes_sociales as $redSocial) {
-            switch ($redSocial["nombre"]) {
-                case "Facebook":
-                    $facebookLink = $redSocial["url"];
-                    break;
-                case "YouTube":
-                    $youtubeLink = $redSocial["url"];
-                    break;
-                case "Instagram":
-                    $instagramLink = $redSocial["url"];
-                    break;
+            foreach ($redes_sociales as $redSocial) {
+                switch ($redSocial["nombre"]) {
+                    case "Facebook":
+                        $data['links']['facebook'] = $redSocial["url"];
+                        break;
+                    case "YouTube":
+                        $data['links']['youtube'] = $redSocial["url"];
+                        break;
+                    case "Instagram":
+                        $data['links']['instagram'] = $redSocial["url"];
+                        break;
+                }
             }
-        }
-        // REDES
 
-        //PAGINACION POR CACHE
-        if (request()->page) {
-            $key = 'seriesPage' . request()->page;
-        } else {
-            $key = 'seriesPage';
-        }
+            return $data;
+        });
 
-        if (Cache::has('seriesPage')) {
-            $series = Cache::get('seriesPage');
-        } else {
-            $series = Serie::ListarSeriesPaginacion();
-            Cache::put($key, $series);
-        }
+        // Paginación por Caché
+        $page = request()->page ?? 1;
+        $key = CacheKeys::PUBLIC_SERIES_PAGE . $page;
+
+        $series = Cache::remember($key, null, function () {
+            return Serie::ListarSeriesPaginacion();
+        });
 
         $metaData = [
             'title' => 'Series | IPUC D13',
@@ -64,20 +63,22 @@ class SerieController extends Controller
             'comites' => $comitesMenu,
             'series' => $series,
             'metaData' => $metaData,
-
-            'transmision' => $transmision,
-            'facebook' => $facebookLink,
-            'youtube' => $youtubeLink,
-            'instagram' => $instagramLink,
+            'transmision' => $socialData['transmision'],
+            'facebook' => $socialData['links']['facebook'],
+            'youtube' => $socialData['links']['youtube'],
+            'instagram' => $socialData['links']['instagram'],
         ]);
     }
 
     public function show(Serie $serie)
     {
-        //return 'Hola';
+        $comites = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
+            return Comite::all();
+        });
 
-        $comites = Comite::all();
-        $videos = Video::where('serie_id', $serie->id)->get();
+        $videos = Cache::remember(CacheKeys::PUBLIC_VIDEOS_SERIE . $serie->id, null, function () use ($serie) {
+            return Video::where('serie_id', $serie->id)->get();
+        });
 
         $metaData = [
             'title' => 'Serie | IPUC D13',
@@ -85,6 +86,11 @@ class SerieController extends Controller
             'description' => 'Distrito 13 | Cronograma',
         ];
 
-        return view('public.videos.show', compact('serie', 'videos', 'comites', 'metaData'));
+        return view('public.videos.show', [
+            'serie' => $serie,
+            'videos' => $videos,
+            'comites' => $comites,
+            'metaData' => $metaData,
+        ]);
     }
 }

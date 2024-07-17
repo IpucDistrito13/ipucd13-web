@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Web\Public;
 
+use App\Constants\CacheKeys;
 use App\Http\Controllers\Controller;
 use App\Models\Comite;
 use App\Models\Redes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ContactoController extends Controller
 {
@@ -17,39 +19,41 @@ class ContactoController extends Controller
             'description' => 'Contacto | IPUC Distrito 13',
         ];
 
-        $comitesMenu = Comite::ComiteMenu()->get();
+        $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
+            return Comite::ComiteMenu()->get();
+        });
 
-        //REDES
-        $redes_sociales = Redes::Activo()->get();
-        $facebookLink = '';
-        $youtubeLink = '';
-        $instagramLink = '';
-        $transmision = Redes::GetTransmision()->first();
+        $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
+            $redes_sociales = Redes::Activo()->get();
+            $data = [
+                'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
+                'transmision' => Redes::GetTransmision()->first()
+            ];
 
-        // Itera sobre la lista para encontrar Facebook
-        foreach ($redes_sociales as $redSocial) {
-            switch ($redSocial["nombre"]) {
-                case "Facebook":
-                    $facebookLink = $redSocial["url"];
-                    break;
-                case "YouTube":
-                    $youtubeLink = $redSocial["url"];
-                    break;
-                case "Instagram":
-                    $instagramLink = $redSocial["url"];
-                    break;
+            foreach ($redes_sociales as $redSocial) {
+                switch ($redSocial["nombre"]) {
+                    case "Facebook":
+                        $data['links']['facebook'] = $redSocial["url"];
+                        break;
+                    case "YouTube":
+                        $data['links']['youtube'] = $redSocial["url"];
+                        break;
+                    case "Instagram":
+                        $data['links']['instagram'] = $redSocial["url"];
+                        break;
+                }
             }
-        }
-        // REDES
+
+            return $data;
+        });
 
         return view('public.contacto.index', [
             'comites' => $comitesMenu,
             'metaData' => $metaData,
-
-            'transmision' => $transmision,
-            'facebook' => $facebookLink,
-            'youtube' => $youtubeLink,
-            'instagram' => $instagramLink,
+            'transmision' => $socialData['transmision'],
+            'facebook' => $socialData['links']['facebook'],
+            'youtube' => $socialData['links']['youtube'],
+            'instagram' => $socialData['links']['instagram'],
         ]);
     }
 }

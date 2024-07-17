@@ -2,100 +2,115 @@
 
 namespace App\Http\Controllers\Web\Public;
 
+use App\Constants\CacheKeys;
 use App\Http\Controllers\Controller;
 use App\Models\Archivo;
 use App\Models\Carpeta;
 use App\Models\Comite;
 use App\Models\Redes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class DescargableController extends Controller
 {
     public function index()
     {
-        $comitesMenu = Comite::ComiteMenu()->get();
         $metaData = [
             'titulo' => 'Descargable | IPUC Distrito 13',
             'autor' => 'IPUC Distrito 13',
             'description' => 'Descargable | IPUC Distrito 13',
         ];
 
-        //REDES
-        $redes_sociales = Redes::Activo()->get();
-        $facebookLink = '';
-        $youtubeLink = '';
-        $instagramLink = '';
-        $transmision = Redes::GetTransmision()->first();
-        
-        // Itera sobre la lista para encontrar Facebook
-        foreach ($redes_sociales as $redSocial) {
-            switch ($redSocial["nombre"]) {
-                case "Facebook":
-                    $facebookLink = $redSocial["url"];
-                    break;
-                case "YouTube":
-                    $youtubeLink = $redSocial["url"];
-                    break;
-                case "Instagram":
-                    $instagramLink = $redSocial["url"];
-                    break;
+        $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
+            return Comite::ComiteMenu()->get();
+        });
+
+        $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
+            $redes_sociales = Redes::Activo()->get();
+            $data = [
+                'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
+                'transmision' => Redes::GetTransmision()->first()
+            ];
+
+            foreach ($redes_sociales as $redSocial) {
+                switch ($redSocial["nombre"]) {
+                    case "Facebook":
+                        $data['links']['facebook'] = $redSocial["url"];
+                        break;
+                    case "YouTube":
+                        $data['links']['youtube'] = $redSocial["url"];
+                        break;
+                    case "Instagram":
+                        $data['links']['instagram'] = $redSocial["url"];
+                        break;
+                }
             }
-        }
-        // REDES
+
+            return $data;
+        });
 
         return view('public.descargables.index', [
             'comites' => $comitesMenu,
             'metaData' => $metaData,
-
-            'transmision' => $transmision,
-            'facebook' => $facebookLink,
-            'youtube' => $youtubeLink,
-            'instagram' => $instagramLink,
+            'transmision' => $socialData['transmision'],
+            'facebook' => $socialData['links']['facebook'],
+            'youtube' => $socialData['links']['youtube'],
+            'instagram' => $socialData['links']['instagram'],
         ]);
     }
 
     public function comite($comiteId)
     {
-        $comite = Comite::GetComite($comiteId)->first();
-        $carpetas = Carpeta::PorComitePublico($comiteId)->with('archivos')->get();
-        $comitesMenu = Comite::ComiteMenu()->get();
         $metaData = [
             'titulo' => 'Descargable | IPUC Distrito 13',
             'autor' => 'IPUC Distrito 13',
             'description' => 'Descargable | IPUC Distrito 13',
         ];
 
-        //REDES
-        $redes_sociales = Redes::Activo()->get();
-        $facebookLink = '';
-        $youtubeLink = '';
-        $instagramLink = '';
-        // Itera sobre la lista para encontrar Facebook
-        foreach ($redes_sociales as $redSocial) {
-            switch ($redSocial["nombre"]) {
-                case "Facebook":
-                    $facebookLink = $redSocial["url"];
-                    break;
-                case "YouTube":
-                    $youtubeLink = $redSocial["url"];
-                    break;
-                case "Instagram":
-                    $instagramLink = $redSocial["url"];
-                    break;
+        $comite = Cache::remember(CacheKeys::PUBLIC_COMITE . $comiteId, null, function () use ($comiteId) {
+            return Comite::GetComite($comiteId)->first();
+        });
+
+        $carpetas = Cache::remember(CacheKeys::PUBLIC_CARPETAS . $comiteId, null, function () use ($comiteId) {
+            return Carpeta::PorComitePublico($comiteId)->with('archivos')->get();
+        });
+
+        $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
+            return Comite::ComiteMenu()->get();
+        });
+
+        $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
+            $redes_sociales = Redes::Activo()->get();
+            $data = [
+                'links' => ['facebook' => '', 'youtube' => '', 'instagram' => '']
+            ];
+
+            foreach ($redes_sociales as $redSocial) {
+                switch ($redSocial["nombre"]) {
+                    case "Facebook":
+                        $data['links']['facebook'] = $redSocial["url"];
+                        break;
+                    case "YouTube":
+                        $data['links']['youtube'] = $redSocial["url"];
+                        break;
+                    case "Instagram":
+                        $data['links']['instagram'] = $redSocial["url"];
+                        break;
+                }
             }
-        }
-        // REDES
+
+            return $data;
+        });
 
         return view('public.descargables.comite', [
             'comites' => $comitesMenu,
             'comite' => $comite,
             'carpetas' => $carpetas,
             'metaData' => $metaData,
-
-            'facebook' => $facebookLink,
-            'youtube' => $youtubeLink,
-            'instagram' => $instagramLink,
+            'facebook' => $socialData['links']['facebook'],
+            'youtube' => $socialData['links']['youtube'],
+            'instagram' => $socialData['links']['instagram'],
         ]);
     }
 
@@ -128,5 +143,4 @@ class DescargableController extends Controller
             return response()->json(['error' => 'Error al descargar el archivo: ' . $e->getMessage()], 500);
         }
     }
-
 }

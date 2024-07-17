@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Public;
 
+use App\Constants\CacheKeys;
 use App\Http\Controllers\Controller;
 use App\Models\Comite;
 use App\Models\Episodio;
@@ -14,30 +15,34 @@ class PodcastController extends Controller
 {
     public function index()
     {
-        //return 'Hola';
-        $comitesMenu = Comite::ComiteMenu()->get();
+        $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
+            return Comite::ComiteMenu()->get();
+        });
 
         //REDES
-        $redes_sociales = Redes::Activo()->get();
-        $facebookLink = '';
-        $youtubeLink = '';
-        $instagramLink = '';
-        $transmision = Redes::GetTransmision()->first();
+        $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
+            $redes_sociales = Redes::Activo()->get();
+            $data = [
+                'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
+                'transmision' => Redes::GetTransmision()->first(),
+            ];
 
-        // Itera sobre la lista para encontrar Facebook
-        foreach ($redes_sociales as $redSocial) {
-            switch ($redSocial["nombre"]) {
-                case "Facebook":
-                    $facebookLink = $redSocial["url"];
-                    break;
-                case "YouTube":
-                    $youtubeLink = $redSocial["url"];
-                    break;
-                case "Instagram":
-                    $instagramLink = $redSocial["url"];
-                    break;
+            foreach ($redes_sociales as $redSocial) {
+                switch ($redSocial["nombre"]) {
+                    case "Facebook":
+                        $data['links']['facebook'] = $redSocial["url"];
+                        break;
+                    case "YouTube":
+                        $data['links']['youtube'] = $redSocial["url"];
+                        break;
+                    case "Instagram":
+                        $data['links']['instagram'] = $redSocial["url"];
+                        break;
+                }
             }
-        }
+
+            return $data;
+        });
 
         // REDES
 
@@ -64,12 +69,12 @@ class PodcastController extends Controller
         return view('public.podcasts.index', [
             'comites' => $comitesMenu,
             'podcasts' => $podcasts,
+            'transmision' => $socialData['transmision'],
+            'facebook' => $socialData['links']['facebook'],
+            'youtube' => $socialData['links']['youtube'],
+            'instagram' => $socialData['links']['instagram'],
             'metaData' => $metaData,
-            
-            'transmision' => $transmision,
-            'facebook' => $facebookLink,
-            'youtube' => $youtubeLink,
-            'instagram' => $instagramLink,
+
         ]);
     }
 
