@@ -15,14 +15,9 @@ class ComiteController extends Controller
      */
     public function index()
     {
-        // Obtener los últimos registros ordenados de manera descendente y paginarlos
-        $comites = Comite::orderBy('created_at', 'desc')->paginate(30);
-
-        // Devolver los registros en una colección
+        $comites = Comite::orderBy('id', 'asc')->paginate(30);
         return new ComiteCollection($comites);
 
-        //return ComiteResource::collection($comites);
-        //return view('admin.comites.index', compact('comites'));
     }
 
     /**
