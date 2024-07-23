@@ -16,9 +16,9 @@ class PodcastController extends Controller
     public function index()
     {
         $metaData = [
-            'title' => 'Series | IPUC D13',
+            'title' => 'Podcasts | IPUC D13',
             'author' => 'IPUC Distrito 13',
-            'description' => 'Series | IPUC D13',
+            'description' => 'Podcasts | IPUC D13',
         ];
 
         $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
