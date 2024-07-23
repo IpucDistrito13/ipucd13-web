@@ -45,7 +45,6 @@ class Comite extends Model
         return $this->hasMany(Serie::class, 'comite_id');
     }
 
-
     public function podcasts()
     {
         return $this->hasMany(Podcast::class);

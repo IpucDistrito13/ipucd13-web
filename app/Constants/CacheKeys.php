@@ -18,7 +18,7 @@ class CacheKeys
     public const PUBLIC_CARPETAS = 'public.carpetas';
     public const PUBLIC_LIDERES = 'public.lideres.';
     public const PUBLIC_SERIES = 'public.series.';
-    public const PUBLIC_PODCASTS = 'public.podcasts.';
+    public const PUBLIC_PODCAST = 'public.podcasts.';
     public const PUBLIC_COMITE = 'public.comite.';
 
     public const PUBLIC_PODCASTS_PAGE = 'public.podcasts.page.';

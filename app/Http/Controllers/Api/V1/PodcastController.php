@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PodcastCollection;
 use App\Http\Resources\PodcastResource;
 use App\Models\Podcast;
 use Illuminate\Http\Request;
@@ -14,9 +15,19 @@ class PodcastController extends Controller
      */
     public function index()
     {
-        //$podcats = Podcast::paginate(10);
-        $podcasts = Podcast::with('imagen')->paginate(10);
-        return PodcastResource::collection($podcasts);
+
+        $podcasts = Podcast::ListarPodcastsPaginacion();
+        //$podcastData = PodcastResource::collection($podcasts->items());
+         $podcastData = new  PodcastCollection($podcasts);
+
+        // Crear la respuesta personalizada sin los campos 'links' y'meta'
+        $response = [
+            'data' => $podcastData,
+            'total' => $podcasts->total(),
+            'per_page' => $podcasts->perPage(),
+            'current_page' => $podcasts->currentPage(),
+        ];
+        return response()->json($response);
     }
 
     /**
@@ -38,9 +49,18 @@ class PodcastController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($podcastId)
     {
-        //
+        $podcast = Podcast::with('comite', 'categoria')->find($podcastId);
+
+        if (!$podcast) {
+            return response()->json([
+                'message' => 'Podcast no encontrado.'
+            ], 404);
+        }
+
+        // Return the comite data as JSON
+        return new PodcastResource($podcast);
     }
 
     /**

@@ -23,7 +23,8 @@ class Podcast extends Model
     public function scopeListarPodcastsPaginacion($query)
     {
         return $query->where('estado', 'Publicado')
-            ->latest('id')
+            ->with('comite', 'categoria')
+            ->latest()
             ->paginate(8);
     }
 

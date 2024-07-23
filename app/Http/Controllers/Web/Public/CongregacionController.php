@@ -65,5 +65,4 @@ class CongregacionController extends Controller
             'instagram' => $socialData['links']['instagram'],
         ]);
     }
-
 }

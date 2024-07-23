@@ -35,7 +35,7 @@ class ComiteController extends Controller
             return Serie::GetUltimasSeries($comite->id)->get();
         });
 
-        $podcasts = Cache::remember(CacheKeys::PUBLIC_PODCASTS . $comite->id, null, function () use ($comite) {
+        $podcasts = Cache::remember(CacheKeys::PUBLIC_PODCAST . $comite->id, null, function () use ($comite) {
             return Podcast::GetUltimosPodcastComite($comite->id)->get();
         });
 

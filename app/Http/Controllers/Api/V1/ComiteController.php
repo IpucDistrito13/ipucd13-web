@@ -15,7 +15,7 @@ class ComiteController extends Controller
      */
     public function index()
     {
-        $comites = Comite::orderBy('id', 'asc')->paginate(30);
+        $comites = Comite::orderBy('id', 'asc')->paginate(10);
         return new ComiteCollection($comites);
 
     }
@@ -41,8 +41,7 @@ class ComiteController extends Controller
      */
     public function show($comiteId)
     {
-        // Find the comite by ID
-        //$comite = Comite::find($comiteId);
+
         $comite = Comite::with('podcasts', 'series')->find($comiteId);
 
         if (!$comite) {

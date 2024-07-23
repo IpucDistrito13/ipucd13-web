@@ -14,37 +14,26 @@ class PodcastResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /*
-        return [
-            'id' => $this->id,
-            'type' => 'Podcasts',
-            'attributes' => [
-                'titulo' => $this->titulo,
-                'slug' => $this->slug,
-                //'descripcion' => $this->descripcion,
-                //'contenido' => $this->contenido,
-                'imagenbanner' => $this->imagen_banner,
-            ],
-
-            'relations' => [
-                'imagen' => [
-                    'imagen' => $this->imagen ? $this->imagen->url : null,
-                ]
-            ]
-        ];
-        */
 
         return [
             'id' => $this->id,
             'type' => 'Podcasts',
+
             'titulo' => $this->titulo,
             'slug' => $this->slug,
-            //'descripcion' => $this->descripcion,
-            //'contenido' => $this->contenido,
-            //'comite_id' => $this->comite->nombre,
-            //'categoria_id' => $this->categoria->nombre,
+            'descripcion' => $this->descripcion,
+            'contenido' => $this->contenido,
             'imagenbanner' => $this->imagen_banner,
             'imagen' => $this->imagen ? $this->imagen->url : null,
+
+            'comite' => [
+                'id' => $this->comite->id,
+                //'nombre' => $this->comite->nombre,
+            ],
+            'categoria' => [
+                'id' => $this->categoria->id,
+                //'nombre' => $this->categoria->nombre,
+            ]
 
         ];
     }

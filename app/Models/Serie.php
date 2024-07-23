@@ -11,16 +11,10 @@ class Serie extends Model
     protected $fillable = ['titulo', 'slug', 'descripcion', 'contenido', 'imagen_banner', 'estado', 'comite_id', 'categoria_id', 'user_id'];
 
     //WEB
-    public function scopeListarSeries($query)
-    {
-        return $query->select('id', 'titulo', 'comite_id', 'categoria_id', 'estado', 'created_at')
-           // ->where('estado', 'Publicado')
-            ->latest();
-    }
+
     //MUESTRA LAS ULTIMAS SERIES SEGUN EL COMITE
     public function scopeGetUltimasSeries($query,  $comiteId)
     {
-        //return $query->where('comite_id', $comiteId);
         $query->select('id', 'titulo', 'slug', 'descripcion', 'comite_id', 'created_at')
             ->where('estado', 'Publicado')
             ->where('comite_id', $comiteId)
@@ -28,18 +22,14 @@ class Serie extends Model
             ->limit(8);
     }
 
-    public function scopePublicShowSerie($query,  $comiteId)
-    {
-        return $query->where('comite_id', $comiteId);
-    }
-
     public function scopeListarSeriesPaginacion($query)
     {
         return $query->where('estado', 'Publicado')
-            ->latest('id')
+            ->with('comite', 'categoria')
             ->paginate(8);
     }
-    
+
+
     //END WEB
     public function comite()
     {

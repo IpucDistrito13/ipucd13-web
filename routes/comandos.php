@@ -9,6 +9,9 @@ php artisan route:clear
 
 php artisan r:l
 
+php artisan make:resource PodcastCollection
+
+
 // MIGRACIONES
 
 php artisan migrate

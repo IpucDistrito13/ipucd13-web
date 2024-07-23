@@ -12,7 +12,7 @@ class SerieController extends Controller
     public function index()
     {
 
-        $series = Serie::with('comite', 'categoria')->paginate(10);
+        $series = Serie::ListarSeriesPaginacion();
         $serieData = SerieResource::collection($series->items());
 
         // Crear la respuesta personalizada sin los campos 'links' y'meta'
@@ -21,11 +21,8 @@ class SerieController extends Controller
             'total' => $series->total(),
             'per_page' => $series->perPage(),
             'current_page' => $series->currentPage(),
-            'last_page' => $series->lastPage(),
         ];
         return response()->json($response);
-
-
 
         /*
         $serie = Serie::paginate(10);
