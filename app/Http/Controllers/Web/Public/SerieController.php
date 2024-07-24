@@ -74,13 +74,38 @@ class SerieController extends Controller
     public function show(Serie $serie)
     {
         // Cache comites
-        $comites = Cache::remember(CacheKeys::PUBLIC_COMITES, null, function () {
-            return Comite::all();
+        $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
+            return Comite::ComiteMenu()->get();
         });
 
         // Cache videos for this series
         $videos = Cache::remember(CacheKeys::PUBLIC_VIDEOS_SERIE . $serie->id, null, function () use ($serie) {
             return Video::where('serie_id', $serie->id)->get();
+        });
+
+        // Cache social media data
+        $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
+            $redes_sociales = Redes::Activo()->get();
+            $data = [
+                'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
+                'transmision' => Redes::GetTransmision()->first()
+            ];
+
+            foreach ($redes_sociales as $redSocial) {
+                switch ($redSocial["nombre"]) {
+                    case "Facebook":
+                        $data['links']['facebook'] = $redSocial["url"];
+                        break;
+                    case "YouTube":
+                        $data['links']['youtube'] = $redSocial["url"];
+                        break;
+                    case "Instagram":
+                        $data['links']['instagram'] = $redSocial["url"];
+                        break;
+                }
+            }
+
+            return $data;
         });
 
         $metaData = [
@@ -89,6 +114,18 @@ class SerieController extends Controller
             'description' => 'Distrito 13 | Cronograma',
         ];
 
-        return view('public.videos.show', compact('serie', 'videos', 'comites', 'metaData'));
+        return view(
+            'public.videos.show',
+            [
+                'comites' => $comitesMenu,
+                'serie' => $serie,
+                'videos' => $videos,
+                'metaData' => $metaData,
+                'transmision' => $socialData['transmision'],
+                'facebook' => $socialData['links']['facebook'],
+                'youtube' => $socialData['links']['youtube'],
+                'instagram' => $socialData['links']['instagram'],
+            ]
+        );
     }
 }
