@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SerieCollection;
 use App\Http\Resources\SerieResource;
 use App\Models\Serie;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class SerieController extends Controller
     {
 
         $series = Serie::ListarSeriesPaginacion();
-        $serieData = SerieResource::collection($series->items());
+        $serieData = new SerieCollection($series);
 
         // Crear la respuesta personalizada sin los campos 'links' y'meta'
         $response = [

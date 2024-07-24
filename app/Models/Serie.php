@@ -26,6 +26,7 @@ class Serie extends Model
     {
         return $query->where('estado', 'Publicado')
             ->with('comite', 'categoria')
+            ->latest()
             ->paginate(8);
     }
 

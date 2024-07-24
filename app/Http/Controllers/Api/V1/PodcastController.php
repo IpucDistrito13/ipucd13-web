@@ -17,10 +17,8 @@ class PodcastController extends Controller
     {
 
         $podcasts = Podcast::ListarPodcastsPaginacion();
-        //$podcastData = PodcastResource::collection($podcasts->items());
-         $podcastData = new  PodcastCollection($podcasts);
+        $podcastData = new  PodcastCollection($podcasts);
 
-        // Crear la respuesta personalizada sin los campos 'links' y'meta'
         $response = [
             'data' => $podcastData,
             'total' => $podcasts->total(),

@@ -10,7 +10,6 @@ use App\Models\Podcast;
 use App\Models\Redes;
 use Illuminate\Support\Facades\Cache;
 
-
 class PodcastController extends Controller
 {
     public function index()

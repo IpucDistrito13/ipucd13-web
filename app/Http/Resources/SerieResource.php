@@ -16,13 +16,9 @@ class SerieResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'serie',
             'titulo' => $this->titulo,
-            'slug' => $this->slug,
-            'descripcion' => $this->descripcion,
-            'contenido' => $this->contenido,
             'imagenbanner' => $this->imagen_banner,
-            'imagen' => $this->imagen ? $this->imagen->url : null,
+            'imagenportada' => $this->imagen ? $this->imagen->url : null,
 
             'comite' => [
                 'id' => $this->comite->id,
