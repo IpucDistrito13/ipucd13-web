@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Editar publicación: {{ $publicacion->titulo }}</h1>
+        <h1 style="margin: 0;">Editar informe: {{ $publicacion->titulo }}</h1>
         <a class="btn btn-secondary btn-sm" href="{{ route('admin.publicaciones.index') }}">
             <i class="fas fa-arrow-left"></i> Volver
         </a>

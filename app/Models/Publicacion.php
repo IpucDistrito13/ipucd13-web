@@ -12,6 +12,14 @@ class Publicacion extends Model
     protected $table = 'publicaciones';
     protected $fillable = ['titulo', 'slug', 'descripcion', 'contenido', 'estado', 'comite_id', 'categoria_id', 'user_id'];
 
+    public function scopeListarInformesPaginacion($query)
+    {
+        return $query->where('estado', 'Publicado')
+            ->with('comite', 'categoria')
+            ->latest()
+            ->paginate(8);
+    }
+
     //WEB
     //MUESTRA LAS PUBLICACONES SIMILARES SEGUN LA CATEGORIA
     public function scopeGetSimilaresCategoria($query, $categoria_id)
@@ -39,6 +47,8 @@ class Publicacion extends Model
             ->latest('id')
             ->paginate(8);
     }
+
+
 
     public function scopeListarPublicaciones($query)
     {

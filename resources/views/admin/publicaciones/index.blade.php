@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Lista publicaciones</h1>
+        <h1 style="margin: 0;">Lista informes</h1>
         <a class="btn btn-primary btn-sm" href="{{ route('admin.publicaciones.create') }}">
             Crear Nuevo
         </a>
@@ -35,7 +35,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de publicaciones
+                Lista de informes
             </span>
         </div>
         <!-- /.card-header -->

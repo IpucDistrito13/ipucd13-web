@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class SerieCollection extends ResourceCollection
+class InformeCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,11 +14,13 @@ class SerieCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return $this->collection->map(function ($serie) {
+        return $this->collection->map(function ($informe) {
             return [
-                'id' => $serie->id,
-                'nombre' => $serie->titulo,
-                'imagenportada' => $serie->imagen?  $serie->imagen->url : null,   
+                'id' => $informe->id,
+                'titulo' => $informe->titulo,
+                'imagenportada' => $informe->imagen?  $informe->imagen->url : null,
+                'imagenbanner' => $informe->imagen_banner,
+
             ];
         })->toArray();
         

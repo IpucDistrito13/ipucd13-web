@@ -436,7 +436,7 @@ return [
         ],
 
         [
-            'text' => 'Publicaciones',
+            'text' => 'Informes',
             'route' => 'admin.publicaciones.index',
             'icon' => 'fas fa-clipboard',
             'active' => ['admin/publicaciones*'],
