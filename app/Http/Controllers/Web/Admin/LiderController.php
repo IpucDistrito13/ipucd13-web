@@ -56,7 +56,7 @@ class LiderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store5(LiderRequest $request)
+    public function store(LiderRequest $request)
     {
         // Utilizamos DB::transaction() para iniciar una transacción en la base de datos
         DB::beginTransaction();
