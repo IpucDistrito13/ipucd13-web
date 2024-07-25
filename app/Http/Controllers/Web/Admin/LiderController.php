@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class LiderController extends Controller
 {
@@ -92,6 +93,7 @@ class LiderController extends Controller
 
             // Commit para confirmar la transacción si todo va bien
             DB::commit();
+            Cache::flush();
 
             return redirect()->route('admin.lideres.index')->with('success', 'Líder creado exitosamente.');
         } catch (\Exception $e) {
@@ -174,6 +176,7 @@ class LiderController extends Controller
 
             // Commit para confirmar la transacción si todo va bien
             DB::commit();
+            Cache::flush();
 
             return redirect()->route('admin.lideres.index')->with('success', 'Líder actualizado exitosamente.');
         } catch (\Exception $e) {
@@ -201,6 +204,7 @@ class LiderController extends Controller
 
             // Commit para confirmar la transacción si todo va bien
             DB::commit();
+            Cache::flush();
 
             return redirect()->route('admin.lideres.index')->with('success', 'Líder eliminado exitosamente.');
         } catch (\Exception $e) {

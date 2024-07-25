@@ -117,7 +117,7 @@
                             <div class="w-100 h-100 d-flex flex-column justify-content-end align-items-center p-40px lg-p-20px team-content bg-gradient-gray-light-dark-transparent">
                                 <div class="social-icon fs-19">
                                     <!-- Enlace para WhatsApp -->
-                                    <a href="https://wa.me/{{ $lider->usuario->celular }}" target="_blank" class="text-white">
+                                    <a href="https://wa.me/+57{{ $lider->usuario->celular }}" target="_blank" class="text-white">
                                         <i class="fab fa-whatsapp"></i>
                                     </a>
 
@@ -129,7 +129,7 @@
                                 </div>                                
                             </div>
                         </div>
-                        <div class="text-dark-gray lh-24 fs-18 fw-600">{{ $lider->usuario->nombre }}</div>
+                        <div class="text-dark-gray lh-24 fs-18 fw-600">{{ $lider->usuario->nombre. ' ' .$lider->usuario->apellidos }}</div>
                         <p class="mb-0">{{ $lider->liderTipo->nombre }}</p>
                     </div>
                     <!-- end team member item -->   

@@ -1,7 +1,7 @@
 <div class="row">
 
 
-    <div class="col-sm-4">
+    <div class="col-sm-5">
         <!-- select input -->
         <div class="form-group">
             <label>Usuario *</label>
@@ -10,7 +10,7 @@
                 @foreach ($usuarios as $usuario)
                     <option value="{{ $usuario->id }}"
                         {{ old('usuario') == $usuario->id || (isset($lider) && $lider->usuario_id == $usuario->id) ? 'selected' : '' }}>
-                        {{ $usuario->nombre }}
+                        {{ $usuario->nombre. ' ' .$usuario->apellidos. ' - ' .$usuario->congregacion->nombre }}
                     </option>
                 @endforeach
             </select>
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <!-- select input -->
         <div class="form-group">
             <label>Tipo líder *</label>
@@ -67,6 +67,16 @@
             @error('file')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="form-group">
+            @if (isset($lider) && $lider->imagen)
+                <img id="imagen" src="{{ Storage::url($lider->imagen->url) }}" alt="" class="img-thumbnail" style="max-width: 100%; height: auto;">
+            @else
+                <img id="imagen" src="https://i.ibb.co/LxLbXg6/480x640-gris.png" alt="480x600" class="img-thumbnail" style="max-width: 100%; height: auto;">
+            @endif
         </div>
     </div>
 

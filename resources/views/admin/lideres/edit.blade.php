@@ -6,7 +6,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">Editar líder: {{ $lider->nombre }}</h1>
         <div>
-            <a class="btn btn-secondary btn-sm" href="{{ route('admin.lideres_tipos.index') }}">
+            <a class="btn btn-secondary btn-sm" href="{{ route('admin.lideres.index') }}">
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
         </div>
