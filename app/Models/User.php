@@ -59,19 +59,14 @@ class User extends Authenticatable
     ];
 
     //WEB
+    public function scopeSelectList($query)
+{
+    return $query->select('nombre', 'apellidos', 'celular', 'estado', 'congregacion_id')
+        ->where('estado', 'Activo')
+        ->with('congregacion:id,nombre')
+        ->orderBy('nombre', 'asc'); // Ordenar por nombre de manera ascendente
+}
 
-    public static function selectList()
-    {
-        return User::select('nombre', 'apellidos', 'celular', 'estado', 'congregacion_id')
-        ->where('estado', 'Activo')->with('congregacion:id,nombre');
-    }
-
-
-    public function scopeListarUsuariosSelect($query)
-    {
-        return $query->where('estado', 'Publicado')
-            ->with('congregacion');
-    }
 
     public function scopeVistaRolUsers($query, $rol)
     {
