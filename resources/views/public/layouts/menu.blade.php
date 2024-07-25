@@ -37,21 +37,18 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav alt-font">
                         <li class="nav-item"><a href="{{ route('inicio.index') }}" class="nav-link">Inicio</a></li>
-                        <li class="nav-item dropdown dropdown-with-icon">
+                        <li class="nav-item dropdown simple-dropdown">
                             <a href="#" class="nav-link">Calendario</a>
-                            <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false"></i>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a href="{{ route('public.eventos.index') }}" class="dropdown-item"><i
-                                            class="bi bi-laptop"></i>
-                                        <div class="submenu-icon-content"><span>Eventos</span></div>
-                                    </a></li>
-                                <li><a href="{{ route('public.cronogramas.index') }}" class="dropdown-item"><i
-                                            class="bi bi-briefcase"></i>
-                                        <div class="submenu-icon-content"><span>Cronograma distrital</span></div>
-                                    </a></li>
+                            <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink5"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
+                                <li class="dropdown"><a href="{{ route('public.eventos.index') }}"
+                                        class="dropdown-item">Eventos</a></li>
+                                <li class="dropdown"><a href="{{ route('public.cronogramas.index') }}"
+                                        class="dropdown-item">Cronograma distrital</a></li>
                             </ul>
                         </li>
+                        
                         <li class="nav-item dropdown simple-dropdown">
                             <a href="#" class="nav-link">Comités</a>
                             <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink5"

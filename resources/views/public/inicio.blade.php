@@ -8,112 +8,127 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <meta name="author" content="Distrito 13">
     <meta name="description" content="Iglesia Pentecostal Unida de Colombia - Distrito 13">
-    <!-- favicon icon -->
-    @include('public.layouts.iconos')
-    <!-- <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css') }}" /> -->
     
-    <style>
-        
-        @font-face {
-            font-family: 'Myriad Pro Bold';
-            src: url('{{ asset('fonts/myriadpro_bold.otf') }}') format('opentype');
-            font-weight: bold;
-        }
-    
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-    
-        .reproductor {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 250px;
-            border: 1px solid #fff;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #00338D;
-            z-index: 999;
-            color: #fff;
-            text-align: center;
-            font-family: 'Myriad Pro Bold', Arial, sans-serif;
-        }
-    
-        .titulo {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-    
-        .controles {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    
-        .btn {
-            margin: 0 10px;
-        }
-    
-        .icono {
-            margin-right: 8px;
-        }
-    
-        .bg-base-color {
-            background-color: #f0ab00;
-        }
-    
-        .liveText,
-        .text_secccion1,
-        .playText {
-            font-family: 'Myriad Pro Bold', Arial, sans-serif;
-        }
-    
-        #liveText {
-            color: white;
-            background-color: red;
-            padding: 2px 5px;
-            border-radius: 5px;
-        }
-    
-        .btn.btn-base-color {
-            background-color: #f00;
-            color: var(--white);
-            border: 2px solid #f00;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-    
-        .btn.btn-base-color:hover {
-            background-color: #f00;
-            color: var(--white);
-            border-color: #f00;
-        }
-    
-        @media only screen and (max-width: 600px) {
-            .reproductor {
-                width: 90%;
-                left: 5%;
+        <!-- favicon icon -->
+        @include('public.layouts.iconos')
+
+        <!-- slider revolution CSS files -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('revolution/css/settings.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('revolution/css/layers.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('revolution/css/navigation.css') }}">
+        <!-- style sheets and font icons  -->
+       <link rel="stylesheet" href="{{ asset('css/vendors.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/icon.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/responsive.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('demos/corporate/corporate.css') }}" />
+
+        <style>
+
+            .navbar .navbar-nav .dropdown .dropdown-menu {
+                background-color: #00338D;
             }
-        }
-    </style>
+            
+        
+            @font-face {
+                font-family: 'Myriad Pro Bold';
+                src: url('{{ asset('fonts/myriadpro_bold.otf') }}') format('opentype');
+                font-weight: bold;
+            }
+        
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+            }
+        
+            .reproductor {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                width: 250px;
+                border: 1px solid #fff;
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #00338D;
+                z-index: 999;
+                color: #fff;
+                text-align: center;
+                font-family: 'Myriad Pro Bold', Arial, sans-serif;
+            }
+        
+            .titulo {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+        
+            .controles {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        
+            .btn {
+                margin: 0 10px;
+            }
+        
+            .icono {
+                margin-right: 8px;
+            }
+        
+            .bg-base-color {
+                background-color: #f0ab00;
+            }
+        
+            .liveText,
+            .text_secccion1,
+            .playText {
+                font-family: 'Myriad Pro Bold', Arial, sans-serif;
+            }
+        
+            #liveText {
+                color: white;
+                background-color: red;
+                padding: 2px 5px;
+                border-radius: 5px;
+            }
+        
+            .btn.btn-base-color {
+                background-color: #f00;
+                color: var(--white);
+                border: 2px solid #f00;
+                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            }
+        
+            .btn.btn-base-color:hover {
+                background-color: #f00;
+                color: var(--white);
+                border-color: #f00;
+            }
+        
+            @media only screen and (max-width: 600px) {
+                .reproductor {
+                    width: 90%;
+                    left: 5%;
+                }
+            }
+        </style>
 
-    {{-- SECCION REPRODUCTOR --}}
-    <div class="reproductor">
-        <h2 class="titulo">Radio IPUC - <span id="liveText"> Live</span></h2>
-        <div class="controles">
-            <button class="btn btn-large btn-dark-gray btn-rounded btn-box-shadow btn-switch-text left-icon submit"
-                type="button" id="toggle">
-                <span>
-                    <span id="playIcon" class="icono"><i class="fas fa-play"></i></span>
-                    <span id="playText">Play</span>
-                </span>
-            </button>
+        {{-- SECCION REPRODUCTOR --}}
+        <div class="reproductor">
+            <h2 class="titulo">Radio IPUC - <span id="liveText"> Live</span></h2>
+            <div class="controles">
+                <button class="btn btn-large btn-dark-gray btn-rounded btn-box-shadow btn-switch-text left-icon submit"
+                    type="button" id="toggle">
+                    <span>
+                        <span id="playIcon" class="icono"><i class="fas fa-play"></i></span>
+                        <span id="playText">Play</span>
+                    </span>
+                </button>
+            </div>
         </div>
-    </div>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script>
         const audio = document.createElement("audio");
         audio.controls = false;
@@ -135,10 +150,12 @@
             }
         });
     </script>
-</head>
+        
+    </head>
 
-<body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+    <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
     class="custom-cursor">
+
     <!-- start cursor -->
     <div class="cursor-page-inner">
         <div class="circle-cursor circle-cursor-inner"></div>
@@ -146,95 +163,466 @@
     </div>
     <!-- end cursor -->
 
-    <!-- start header -->
-    @include('public.layouts.menu')
-    <!-- end header -->
-
-    <!-- start section principal -->
-    <section
-        class="p-0 overflow-hidden bg-dark-gray full-screen ipad-top-space-margin md-h-auto position-relative md-pb-70px sm-pb-40px cover-background"
-        style="background-image: url('{{ asset('img/fondo_azul_principal.png') }}')">
-        <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
-            style="background-image: url('images/vertical-line-bg-small.svg')"></div>
-        <div id="particles-style-01" class="h-100 position-absolute left-0px top-0 w-100" data-particle="true"
-            data-particle-options='{"particles": {"number": {"value": 50,"density": {"enable": true,"value_area": 2000}},"color": {"value": ["#00338D", "#009FDA", "#F0AB00"]},"shape": {"type": "circle","stroke":{"width":0,"color":"#000000"}},"opacity": {"value": 1,"random": false,"anim": {"enable": false,"speed": 1,"sync": false}},"size": {"value": 8,"random": true,"anim": {"enable": false,"sync": true}},"line_linked":{"enable":false,"distance":0,"color":"#ffffff","opacity":1,"width":1},"move": {"enable": true,"speed":1,"direction": "right","random": false,"straight": false}},"interactivity": {"detect_on": "canvas","events": {"onhover": {"enable": false,"mode": "repulse"},"onclick": {"enable": false,"mode": "push"},"resize": true}},"retina_detect": false}'>
-        </div>
-        <div class="position-absolute left-minus-80px top-25" data-bottom-top="transform: translateY(-80px)"
-            data-top-bottom="transform: translateY(80px)">
-            <img src="{{ asset('img/circulo_azul_principal.png') }}" alt="">
-        </div>
-        <div class="container h-100">
-            <div class="row align-items-center justify-content-center h-100">
-                <div class="col-xl-5 col-lg-6 col-md-12 text-white text-center text-lg-start position-relative z-index-1 d-flex flex-column justify-content-center h-100 md-mt-50px md-mb-20px xs-mb-10px"
-                    data-anime='{ "el": "childs", "opacity": [0, 1], "rotateY": [90, 0], "rotateZ": [-10, 0], "translateY": [80, 0], "translateZ": [50, 0], "staggervalue": 200, "duration": 600, "delay": 100, "easing": "easeOutCirc" }'>
-                    <span id="text_secccion1" name="text_secccion1" class="alt-font fs-75 lh-80 sm-fs-60 fw-500 mb-25px ls-minus-2px">Iglesia Pentecostal Unida de Colombia</span>
-                    <div class="mb-30px w-80 md-w-60 sm-w-100 d-block mx-auto mx-lg-0 overflow-hidden">
-                        <span class="fs-45 lh-65 fw-500 opacity-5 d-inline-block">DISTRITO 13</span>
-                    </div>
-                    <div class="overflow-hidden">
-                        @if(!empty($transmision->url))
-                            <a href="https://www.youtube.com/watch?v={{ $transmision->url }}"
-                                class="btn btn-extra-large btn-base-color btn-rounded btn-switch-text fw-600 d-inline-block me-25px sm-me-10px align-middle left-icon popup-youtube">
-                                <span>
-                                    <span><i class="feather icon-feather-youtube"></i></span>
-                                    <span class="btn-double-text ls-minus-05px" data-text="Ver ahora">Estamos en vivo</span>
-                                </span>
-                            </a>
-                        @endif
-                    </div>
-                    
-                    <div
-                        class="row row-cols-3 justify-content-center counter-style-04 w-100 md-w-auto position-absolute lg-position-relative bottom-80px lg-bottom-0px lg-mt-50px">
-                        <!-- start counter item -->
-                        <div class="col text-center text-lg-start">
-                            <h5 class="vertical-counter d-inline-flex alt-font text-white fw-600 mb-10px" data-text=""
-                                data-to="{{ $cantidadDepartamentos }}"></h5>
-                            <div
-                                class="divider-style-03 divider-style-03-01 border-2 border-color-base-color mb-5px w-80 xs-w-90 md-mx-auto">
-                            </div>
-                            <span class="fw-300 text-white opacity-5">Departamentos</span>
-                        </div>
-                        <!-- end counter item -->
-                        <!-- start counter item -->
-                        <div class="col text-center text-lg-start">
-                            <h5 class="vertical-counter d-inline-flex alt-font text-white fw-600 mb-10px" data-text=""
-                                data-to="{{ $cantidadMunicipios }}"></h5>
-                            <div
-                                class="divider-style-03 divider-style-03-01 border-2 border-color-base-color mb-5px w-80 xs-w-90 md-mx-auto">
-                            </div>
-                            <span class="fw-300 text-white opacity-5">Municipios</span>
-                        </div>
-                        <!-- end counter item -->
-                        <!-- start counter item -->
-                        <div class="col text-center text-lg-start">
-                            <h5 class="vertical-counter d-inline-flex alt-font text-white fw-600 mb-10px" data-text=""
-                                data-to="{{ $cantidadCongregaciones }}"></h5>
-                            <div
-                                class="divider-style-03 divider-style-03-01 border-2 border-color-base-color mb-5px w-80 xs-w-90 md-mx-auto">
-                            </div>
-                            <span class="fw-300 text-white opacity-5">Congregaciones</span>
-                        </div>
-                        <!-- end counter item -->
-                    </div>
-                </div>
-                <div class="col-xl-7 col-lg-6 pt-30px lg-pt-0">
-                    <div class="position-relative outside-box-right-10 md-outside-box-right-0 atropos" data-atropos>
-                        <div class="atropos-scale">
-                            <div class="atropos-rotate">
-                                <div class="atropos-inner text-center w-100">
-                                    <img src="https://via.placeholder.com/975x990" alt="">
-
+        <div class="box-layout">
+            <!-- start header -->
+            <header>
+                <!-- start menu -->
+                @include('public.layouts.menu')
+                <!-- end menu -->
+                
+            </header>
+            <!-- end header -->
+            <!-- start slider -->
+            <section id="slider" class="p-0 top-space-margin ">
+                <div class="demo-corporate-slider_wrapper fullscreen-container" data-alias="portfolio-viewer" data-source="gallery" style="background-color:transparent;padding:0px;">
+                    <div id="demo-corporate-slider" class="rev_slider bg-regal-blue fullscreenbanner" style="display:none;" data-version="5.3.1.6">
+                        <!-- begin slides list -->
+                        <ul>
+                            <!-- minimum slide structure -->
+                            <!-- slider 1 -->
+                            <li data-index="rs-01" data-transition="parallaxleft" data-slotamount="default"
+                                data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default"
+                                data-easeout="default" data-masterspeed="1500" data-rotate="0" data-saveperformance="off"
+                                data-title="Crossfit" data-param1="" data-param2="" data-param3="" data-param4=""
+                                data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10=""
+                                data-description="">
+                                <!-- slide's main background image -->
+                                <img src="https://via.placeholder.com/1920x1200" alt="Image"
+                                     data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
+                                     class="rev-slidebg" data-no-retina>
+                                <!-- start overlay layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper " id="slide-1-layer-01"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
+                                     data-width="full" data-height="full" data-whitespace="nowrap" data-type="shape"
+                                     data-basealign="slide" data-responsive_offset="off" data-responsive="off"
+                                     data-frames='[{"delay":0,"speed":1000,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},
+                                     {"delay":"wait","speed":1000,"frame":"999","to":"opacity:0;","ease":"Power4.easeInOut"}]' style="background:rgba(22,35,63,0.1); z-index: 0;">
                                 </div>
-                            </div>
-                        </div>
+                                <!-- end overlay layer -->
+                                <!-- start shape layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper tp-resizeme bg-regal-blue border-radius-50"
+                                     id="slide-1-layer-02" data-x="['center','center','center','center']"
+                                     data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                     data-voffset="['0','0','0','0']" data-width="['900','700','700','600']"
+                                     data-height="['900','700','700','600']" data-whitespace="nowrap" data-type="shape"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":1000,"speed":1000,"frame":"0","from":"x:0px;y:50px;rX:0deg;rY:0deg;rZ:0deg;sX:0.5;sY:0.5;opacity:0;","to":"o:0.5;","ease":"Back.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                     data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]" style="z-index: 0;">
+                                </div>
+                                <!-- end shape layer -->
+                                <!-- start shape layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper tp-resizeme bg-regal-blue border-radius-50"
+                                     id="slide-1-layer-03" data-x="['center','center','center','center']"
+                                     data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                     data-voffset="['0','0','0','0']" data-width="['1200','1000','900','800']"
+                                     data-height="['1200','1000','900','800']" data-whitespace="nowrap" data-type="shape"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":1300,"speed":1000,"frame":"0","from":"x:0px;y:50px;rX:0deg;rY:0deg;rZ:0deg;sX:0.5;sY:0.5;opacity:0;","to":"o:0.3;","ease":"Back.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                     data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]" style="z-index: 0;">
+                                </div>
+                                <!-- end shape layer -->
+                                <!-- start row zone layer -->
+                                <div id="rrzm_638" class="rev_row_zone rev_row_zone_middle">
+                                    <!-- start row layer -->
+                                    <div class="tp-caption  " id="slide-1-layer-04" data-x="['left','left','left','left']"
+                                         data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                         data-voffset="['-426','-426','-426','-426']" data-width="none" data-height="none"
+                                         data-whitespace="nowrap" data-type="row" data-columnbreak="3"
+                                         data-responsive_offset="on" data-responsive="off"
+                                         data-frames='[{"delay":10,"speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                         data-textAlign="['inherit','inherit','inherit','inherit']"
+                                         data-paddingtop="[0,0,0,0]" data-paddingright="[100,75,50,30]"
+                                         data-paddingbottom="[0,0,0,0]" data-paddingleft="[100,75,50,30]">
+                                        <!-- start column layer -->
+                                        <div class="tp-caption" id="slide-1-layer-05" data-x="['left','left','left','left']"
+                                             data-hoffset="['100','100','100','100']" data-y="['top','top','top','top']"
+                                             data-voffset="['100','100','100','100']" data-width="none" data-height="none"
+                                             data-whitespace="nowrap" data-type="column" data-responsive_offset="on"
+                                             data-responsive="off"
+                                             data-frames='[{"delay":"+0","speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                             data-columnwidth="100%" data-verticalalign="top"
+                                             data-textAlign="['center','center','center','center']">
+                                            
+                                            <!-- start title layer -->
+                                            <div class="tp-caption mx-auto" id="slide-1-layer-07"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']"
+                                                 data-y="['middle','middle','middle','middle']"
+                                                 data-voffset="['0','0','0','0']" data-fontsize="['75','60','70','50']"
+                                                 data-lineheight="['70','65','75','55']"
+                                                 data-fontweight="['700','700','700','700']"
+                                                 data-letterspacing="['-2','-2','-2','0']"
+                                                 data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
+                                                 data-width="['700','600','600','auto']" data-height="auto"
+                                                 data-whitespace="normal" data-basealign="grid" data-type="text"
+                                                 data-responsive_offset="off" data-verticalalign="middle"
+                                                 data-responsive="on"
+                                                 data-frames='[{"delay":"1500","split":"chars","splitdelay":0.03,"speed":800,"split_direction":"middletoedge","frame":"0","from":"x:50px;opacity:0;fb:10px;","to":"o:1;fb:0;","ease":"Power4.easeOut"},{"delay":"wait","speed":100,"frame":"999","to":"opacity:0;fb:0;","ease":"Power4.easeOut"}]'
+                                                 data-textAlign="['center','center','center','center']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
+                                                 data-paddingbottom="[33,28,35,25]" data-paddingleft="[0,0,0,0]"
+                                                 style="word-break: initial; text-shadow: #0b1236 3px 3px 15px;">
+                                                Title slider 1
+                                            </div>
+                                            <!-- end title layer -->
+                                            <!-- start text layer -->
+                                            <div class="tp-caption mx-auto" id="slide-1-layer-08"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']"
+                                                 data-y="['middle','middle','middle','middle']"
+                                                 data-voffset="['0','0','0','0']" data-fontsize="['20','20','24','20']"
+                                                 data-lineheight="['36','36','40','30']"
+                                                 data-fontweight="['300','300','300','300']"
+                                                 data-letterspacing="['0','0','0','0']"
+                                                 data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
+                                                 data-width="['500','500','auto','auto']" data-height="auto"
+                                                 data-whitespace="normal" data-basealign="grid" data-type="text"
+                                                 data-responsive_offset="off" data-verticalalign="middle"
+                                                 data-responsive="on"
+                                                 data-frames='[{"delay":2500,"speed":800,"frame":"0","from":"y:50px;opacity:0;fb:20px;","to":"o:0.6;fb:0;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
+                                                 data-textAlign="['center','center','center','center']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
+                                                 data-paddingbottom="[36,36,60,40]" data-paddingleft="[0,0,0,0]">
+                                                Subtitle slider 1
+                                            </div>
+                                            <!-- end text layer -->
+                                            <!-- start button layer -->
+                                            <div class="tp-caption tp-resizeme" id="slide-1-layer-09"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']" data-y="['top','top','top','top']"
+                                                 data-voffset="['0','0','0','0']" data-width="auto" data-height="none"
+                                                 data-whitespace="nowrap" data-fontsize="['18','16','16','16']"
+                                                 data-lineheight="['70','55','55','55']" data-type="text"
+                                                 data-responsive_offset="off" data-responsive="off"
+                                                 data-frames='[{"delay":3000,"speed":1000,"frame":"0","from":"y:100px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                                 data-textAlign="['inherit','inherit','inherit','inherit']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
+                                                 data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
+                                                <a href="#"
+                                                   class="btn btn-extra-large get-started-btn btn-rounded with-rounded btn-gradient-flamingo-amethyst-green btn-box-shadow">Text button 1<span class="bg-white text-base-color"><i
+                                                            class="fa-solid fa-arrow-right"></i></span></a>
+                                            </div>
+                                            <!-- end button layer -->
+                                        </div>
+                                        <!-- end column layer -->
+                                    </div>
+                                    <!-- end row layer -->
+                                </div>
+                                <!-- end row zone layer -->
+
+                            </li>
+                            <!-- end slider 1 -->
+
+                            <!-- slider 2 -->
+                            <li data-index="rs-02" data-transition="parallaxleft" data-slotamount="default"
+                                data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default"
+                                data-easeout="default" data-masterspeed="1500" data-rotate="0" data-saveperformance="off"
+                                data-title="Crossfit" data-param1="" data-param2="" data-param3="" data-param4=""
+                                data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10=""
+                                data-description="">
+                                <!-- slide's main background image -->
+                                <img src="https://via.placeholder.com/1920x1200" alt="Image"
+                                     data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
+                                     class="rev-slidebg" data-no-retina>
+                                <!-- start overlay layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper " id="slide-2-layer-01"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
+                                     data-width="full" data-height="full" data-whitespace="nowrap" data-type="shape"
+                                     data-basealign="slide" data-responsive_offset="off" data-responsive="off"
+                                     data-frames='[{"delay":0,"speed":1000,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},
+                                     {"delay":"wait","speed":1000,"frame":"999","to":"opacity:0;","ease":"Power4.easeInOut"}]' style="background:rgba(22,35,63,0.1); z-index: 0;">
+                                </div>
+                                <!-- end overlay layer -->
+                                <!-- start shape layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper tp-resizeme bg-regal-blue border-radius-50"
+                                     id="slide-2-layer-02" data-x="['center','center','center','center']"
+                                     data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                     data-voffset="['0','0','0','0']" data-width="['900','700','700','600']"
+                                     data-height="['900','700','700','600']" data-whitespace="nowrap" data-type="shape"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":1000,"speed":1000,"frame":"0","from":"x:0px;y:50px;rX:0deg;rY:0deg;rZ:0deg;sX:0.5;sY:0.5;opacity:0;","to":"o:0.5;","ease":"Back.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                     data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]" style="z-index: 0;">
+                                </div>
+                                <!-- end shape layer -->
+                                <!-- start shape layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper tp-resizeme bg-regal-blue border-radius-50"
+                                     id="slide-2-layer-03" data-x="['center','center','center','center']"
+                                     data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                     data-voffset="['0','0','0','0']" data-width="['1200','1000','900','800']"
+                                     data-height="['1200','1000','900','800']" data-whitespace="nowrap" data-type="shape"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":1300,"speed":1000,"frame":"0","from":"x:0px;y:50px;rX:0deg;rY:0deg;rZ:0deg;sX:0.5;sY:0.5;opacity:0;","to":"o:0.3;","ease":"Back.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                     data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]" style="z-index: 0;">
+                                </div>
+                                <!-- end shape layer -->
+                                <!-- start row zone layer -->
+                                <div id="rrzm_639" class="rev_row_zone rev_row_zone_middle">
+                                    <!-- start row layer -->
+                                    <div class="tp-caption  " id="slide-2-layer-04" data-x="['left','left','left','left']"
+                                         data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                         data-voffset="['-426','-426','-426','-426']" data-width="none" data-height="none"
+                                         data-whitespace="nowrap" data-type="row" data-columnbreak="3"
+                                         data-responsive_offset="on" data-responsive="off"
+                                         data-frames='[{"delay":10,"speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                         data-textAlign="['inherit','inherit','inherit','inherit']"
+                                         data-paddingtop="[0,0,0,0]" data-paddingright="[100,75,50,30]"
+                                         data-paddingbottom="[0,0,0,0]" data-paddingleft="[100,75,50,30]">
+                                        <!-- start column layer -->
+                                        <div class="tp-caption" id="slide-2-layer-05" data-x="['left','left','left','left']"
+                                             data-hoffset="['100','100','100','100']" data-y="['top','top','top','top']"
+                                             data-voffset="['100','100','100','100']" data-width="none" data-height="none"
+                                             data-whitespace="nowrap" data-type="column" data-responsive_offset="on"
+                                             data-responsive="off"
+                                             data-frames='[{"delay":"+0","speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                             data-columnwidth="100%" data-verticalalign="top"
+                                             data-textAlign="['center','center','center','center']">
+                                           
+                                            <!-- end subtitle layer -->
+                                            <!-- start title layer -->
+                                            <div class="tp-caption mx-auto" id="slide-2-layer-07"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']"
+                                                 data-y="['middle','middle','middle','middle']"
+                                                 data-voffset="['0','0','0','0']" data-fontsize="['75','60','70','50']"
+                                                 data-lineheight="['70','65','75','55']"
+                                                 data-fontweight="['700','700','700','700']"
+                                                 data-letterspacing="['-2','-2','-2','0']"
+                                                 data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
+                                                 data-width="['700','600','600','auto']" data-height="auto"
+                                                 data-whitespace="normal" data-basealign="grid" data-type="text"
+                                                 data-responsive_offset="off" data-verticalalign="middle"
+                                                 data-responsive="on"
+                                                 data-frames='[{"delay":"1500","split":"chars","splitdelay":0.03,"speed":800,"split_direction":"middletoedge","frame":"0","from":"x:50px;opacity:0;fb:10px;","to":"o:1;fb:0;","ease":"Power4.easeOut"},{"delay":"wait","speed":100,"frame":"999","to":"opacity:0;fb:0;","ease":"Power4.easeOut"}]'
+                                                 data-textAlign="['center','center','center','center']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
+                                                 data-paddingbottom="[33,28,35,25]" data-paddingleft="[0,0,0,0]"
+                                                 style="word-break: initial; text-shadow: #0b1236 3px 3px 15px;">
+                                                Title slider 2
+                                            </div>
+                                            <!-- end title layer -->
+                                            <!-- start text layer -->
+                                            <div class="tp-caption mx-auto" id="slide-2-layer-08"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']"
+                                                 data-y="['middle','middle','middle','middle']"
+                                                 data-voffset="['0','0','0','0']" data-fontsize="['20','20','24','20']"
+                                                 data-lineheight="['36','36','40','30']"
+                                                 data-fontweight="['300','300','300','300']"
+                                                 data-letterspacing="['0','0','0','0']"
+                                                 data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
+                                                 data-width="['500','500','auto','auto']" data-height="auto"
+                                                 data-whitespace="normal" data-basealign="grid" data-type="text"
+                                                 data-responsive_offset="off" data-verticalalign="middle"
+                                                 data-responsive="on"
+                                                 data-frames='[{"delay":2500,"speed":800,"frame":"0","from":"y:50px;opacity:0;fb:20px;","to":"o:0.6;fb:0;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
+                                                 data-textAlign="['center','center','center','center']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
+                                                 data-paddingbottom="[36,36,60,40]" data-paddingleft="[0,0,0,0]">
+                                                Subtitle slider 2
+                                            </div>
+                                            <!-- end text layer -->
+                                            <!-- start button layer -->
+                                            <div class="tp-caption tp-resizeme" id="slide-2-layer-09"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']" data-y="['top','top','top','top']"
+                                                 data-voffset="['0','0','0','0']" data-width="auto" data-height="none"
+                                                 data-whitespace="nowrap" data-fontsize="['18','16','16','16']"
+                                                 data-lineheight="['70','55','55','55']" data-type="text"
+                                                 data-responsive_offset="off" data-responsive="off"
+                                                 data-frames='[{"delay":3000,"speed":1000,"frame":"0","from":"y:100px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                                 data-textAlign="['inherit','inherit','inherit','inherit']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
+                                                 data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
+                                                <a href="#"
+                                                   class="btn btn-extra-large get-started-btn btn-rounded with-rounded btn-gradient-flamingo-amethyst-green btn-box-shadow">
+                                                   Text button 2<span class="bg-white text-base-color"><i
+                                                            class="fa-solid fa-arrow-right"></i></span></a>
+                                            </div>
+                                            <!-- end button layer -->
+                                        </div>
+                                        <!-- end column layer -->
+                                    </div>
+                                    <!-- end row layer -->
+                                </div>
+                                <!-- end row zone layer -->
+                                <!-- start beige background layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper tp-resizeme bg-base-color border-radius-50"
+                                     id="slide-2-layer-10" data-x="['center','center','center','center']"
+                                     data-hoffset="['510','410','310','0']" data-y="['middle','middle','middle','middle']"
+                                     data-voffset="['-320','-250','-250','0']" data-width="['122','122','120','120']"
+                                     data-height="['122','122','120','120']" data-visibility="['on','on','off','off']"
+                                     data-whitespace="nowrap" data-basealign="grid" data-type="shape"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":3500,"speed":1000,"frame":"0","from":"x:0px;y:50px;rX:0deg;rY:0deg;rZ:0deg;sX:0.5;sY:0.5;opacity:0;","to":"o:1;","ease":"Back.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                     data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]" style="z-index: 0;">
+                                </div>
+                                <!-- end beige background layer -->
+                                
+                                
+                            </li>
+                            <!-- end slider 2 -->
+
+                            <!-- slider 3 -->
+                            <li data-index="rs-03" data-transition="parallaxleft" data-slotamount="default"
+                                data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default"
+                                data-easeout="default" data-masterspeed="1500" data-rotate="0" data-saveperformance="off"
+                                data-title="Crossfit" data-param1="" data-param2="" data-param3="" data-param4=""
+                                data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10=""
+                                data-description="">
+                                <!-- slide's main background image -->
+                                <img src="https://via.placeholder.com/1920x1200" alt="Image"
+                                     data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
+                                     class="rev-slidebg" data-no-retina>
+                                <!-- start overlay layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper " id="slide-3-layer-01"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
+                                     data-width="full" data-height="full" data-whitespace="nowrap" data-type="shape"
+                                     data-basealign="slide" data-responsive_offset="off" data-responsive="off"
+                                     data-frames='[{"delay":0,"speed":1000,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},
+                                     {"delay":"wait","speed":1000,"frame":"999","to":"opacity:0;","ease":"Power4.easeInOut"}]' style="background:rgba(22,35,63,0.1); z-index: 0;">
+                                </div>
+                                <!-- end overlay layer -->
+                                <!-- start shape layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper tp-resizeme bg-regal-blue border-radius-50"
+                                     id="slide-3-layer-02" data-x="['center','center','center','center']"
+                                     data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                     data-voffset="['0','0','0','0']" data-width="['900','700','700','600']"
+                                     data-height="['900','700','700','600']" data-whitespace="nowrap" data-type="shape"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":1000,"speed":1000,"frame":"0","from":"x:0px;y:50px;rX:0deg;rY:0deg;rZ:0deg;sX:0.5;sY:0.5;opacity:0;","to":"o:0.5;","ease":"Back.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                     data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]" style="z-index: 0;">
+                                </div>
+                                <!-- end shape layer -->
+                                <!-- start shape layer -->
+                                <div class="tp-caption tp-shape tp-shapewrapper tp-resizeme bg-regal-blue border-radius-50"
+                                     id="slide-3-layer-03" data-x="['center','center','center','center']"
+                                     data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                     data-voffset="['0','0','0','0']" data-width="['1200','1000','900','800']"
+                                     data-height="['1200','1000','900','800']" data-whitespace="nowrap" data-type="shape"
+                                     data-responsive_offset="on"
+                                     data-frames='[{"delay":1300,"speed":1000,"frame":"0","from":"x:0px;y:50px;rX:0deg;rY:0deg;rZ:0deg;sX:0.5;sY:0.5;opacity:0;","to":"o:0.3;","ease":"Back.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                     data-textAlign="['inherit','inherit','inherit','inherit']" data-paddingtop="[0,0,0,0]"
+                                     data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]"
+                                     data-paddingleft="[0,0,0,0]" style="z-index: 0;">
+                                </div>
+                                <!-- end shape layer -->
+                                <!-- start row zone layer -->
+                                <div id="rrzm_640" class="rev_row_zone rev_row_zone_middle">
+                                    <!-- start row layer -->
+                                    <div class="tp-caption  " id="slide-3-layer-04" data-x="['left','left','left','left']"
+                                         data-hoffset="['0','0','0','0']" data-y="['middle','middle','middle','middle']"
+                                         data-voffset="['-426','-426','-426','-426']" data-width="none" data-height="none"
+                                         data-whitespace="nowrap" data-type="row" data-columnbreak="3"
+                                         data-responsive_offset="on" data-responsive="off"
+                                         data-frames='[{"delay":10,"speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                         data-textAlign="['inherit','inherit','inherit','inherit']"
+                                         data-paddingtop="[0,0,0,0]" data-paddingright="[100,75,50,30]"
+                                         data-paddingbottom="[0,0,0,0]" data-paddingleft="[100,75,50,30]">
+                                        <!-- start column layer -->
+                                        <div class="tp-caption" id="slide-3-layer-05" data-x="['left','left','left','left']"
+                                             data-hoffset="['100','100','100','100']" data-y="['top','top','top','top']"
+                                             data-voffset="['100','100','100','100']" data-width="none" data-height="none"
+                                             data-whitespace="nowrap" data-type="column" data-responsive_offset="on"
+                                             data-responsive="off"
+                                             data-frames='[{"delay":"+0","speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                             data-columnwidth="100%" data-verticalalign="top"
+                                             data-textAlign="['center','center','center','center']">
+                                            
+                                            <!-- start title layer -->
+                                            <div class="tp-caption mx-auto" id="slide-3-layer-07"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']"
+                                                 data-y="['middle','middle','middle','middle']"
+                                                 data-voffset="['0','0','0','0']" data-fontsize="['75','60','70','50']"
+                                                 data-lineheight="['70','65','75','55']"
+                                                 data-fontweight="['700','700','700','700']"
+                                                 data-letterspacing="['-2','-2','-2','0']"
+                                                 data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
+                                                 data-width="['700','600','600','auto']" data-height="auto"
+                                                 data-whitespace="normal" data-basealign="grid" data-type="text"
+                                                 data-responsive_offset="off" data-verticalalign="middle"
+                                                 data-responsive="on"
+                                                 data-frames='[{"delay":"1500","split":"chars","splitdelay":0.03,"speed":800,"split_direction":"middletoedge","frame":"0","from":"x:50px;opacity:0;fb:10px;","to":"o:1;fb:0;","ease":"Power4.easeOut"},{"delay":"wait","speed":100,"frame":"999","to":"opacity:0;fb:0;","ease":"Power4.easeOut"}]'
+                                                 data-textAlign="['center','center','center','center']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
+                                                 data-paddingbottom="[33,28,35,25]" data-paddingleft="[0,0,0,0]"
+                                                 style="word-break: initial; text-shadow: #0b1236 3px 3px 15px;">
+                                                Title  slider 3
+                                            </div>
+                                            <!-- end title layer -->
+                                            <!-- start text layer -->
+                                            <div class="tp-caption mx-auto" id="slide-3-layer-08"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']"
+                                                 data-y="['middle','middle','middle','middle']"
+                                                 data-voffset="['0','0','0','0']" data-fontsize="['20','20','24','20']"
+                                                 data-lineheight="['36','36','40','30']"
+                                                 data-fontweight="['300','300','300','300']"
+                                                 data-letterspacing="['0','0','0','0']"
+                                                 data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
+                                                 data-width="['500','500','auto','auto']" data-height="auto"
+                                                 data-whitespace="normal" data-basealign="grid" data-type="text"
+                                                 data-responsive_offset="off" data-verticalalign="middle"
+                                                 data-responsive="on"
+                                                 data-frames='[{"delay":2500,"speed":800,"frame":"0","from":"y:50px;opacity:0;fb:20px;","to":"o:0.6;fb:0;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
+                                                 data-textAlign="['center','center','center','center']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
+                                                 data-paddingbottom="[36,36,60,40]" data-paddingleft="[0,0,0,0]">
+                                                Subtitle slider 3
+                                            </div>
+                                            <!-- end text layer -->
+                                            <!-- start button layer -->
+                                            <div class="tp-caption tp-resizeme" id="slide-3-layer-09"
+                                                 data-x="['center','center','center','center']"
+                                                 data-hoffset="['0','0','0','0']" data-y="['top','top','top','top']"
+                                                 data-voffset="['0','0','0','0']" data-width="auto" data-height="none"
+                                                 data-whitespace="nowrap" data-fontsize="['18','16','16','16']"
+                                                 data-lineheight="['70','55','55','55']" data-type="text"
+                                                 data-responsive_offset="off" data-responsive="off"
+                                                 data-frames='[{"delay":3000,"speed":1000,"frame":"0","from":"y:100px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                                                 data-textAlign="['inherit','inherit','inherit','inherit']"
+                                                 data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
+                                                 data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
+                                                <a href="#"
+                                                   class="btn btn-extra-large get-started-btn btn-rounded with-rounded btn-gradient-flamingo-amethyst-green btn-box-shadow">Text button 3
+                                                   <span class="bg-white text-base-color"><i
+                                                            class="fa-solid fa-arrow-right"></i></span></a>
+                                            </div>
+                                            <!-- end button layer -->
+                                        </div>
+                                        <!-- end column layer -->
+                                    </div>
+                                    <!-- end row layer -->
+                                </div>
+                                <!-- end row zone layer -->
+                                
+                               
+                            </li>
+                        </ul>
+                        <div class="tp-bannertimer"
+                             style="height: 10px; background-color: rgba(0, 0, 0, 0.10); z-index: 98"></div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <!-- end section principal -->
+            </section>
+            <!-- end slider -->
 
-    <!-- start section  applicacion -->
+
+            <!-- start section  applicacion -->
     <section class="overflow-hidden">
         <div class="container">
             <div class="row justify-content-center align-items-center">
@@ -452,28 +840,158 @@
                 <!-- end features box item -->
             </div>
             <!-- end seccion redes -->
-
-
             
             </section>
             <!-- end section ultimas publicaciones -->
 
-    <!-- start footer -->
+           
+           
+            <!-- start footer -->
     @include('public.layouts.footer')
     <!-- end footer -->
+            <!-- start scroll progress -->
+            <div class="scroll-progress d-none d-xxl-block">
+                <a href="#" class="scroll-top" aria-label="scroll">
+                    <span class="scroll-text">Scroll</span><span class="scroll-line"><span class="scroll-point"></span></span>
+                </a>
+            </div>
+            <!-- end scroll progress -->
+        </div>
+        <!-- javascript libraries -->
+        <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/vendors.min.js') }}"></script>
+        <!-- slider revolution core javaScript files -->
+        <script type="text/javascript" src="{{ asset('revolution/js/jquery.themepunch.tools.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
+        <!-- slider revolution extension scripts. ONLY NEEDED FOR LOCAL TESTING -->
+        <!-- <script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script> -->
 
-    <!-- start scroll progress -->
-    <div class="scroll-progress d-none d-xxl-block">
-        <a href="#" class="scroll-top" aria-label="scroll">
-            <span class="scroll-text">Scroll</span><span class="scroll-line"><span
-                    class="scroll-point"></span></span>
-        </a>
-    </div>
-    <!-- end scroll progress -->
-    <!-- javascript libraries -->
-    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/vendors.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
-</body>
+        <!-- Slider's main "init" script -->
+        <script>
+            var tpj = jQuery;
+            var revapi7;
+            var $ = jQuery.noConflict();
+            tpj(document).ready(function () {
+                if (tpj("#demo-corporate-slider").revolution == undefined) {
+                    revslider_showDoubleJqueryError("#demo-corporate-slider");
+                } else {
+                    revapi7 = tpj("#demo-corporate-slider").show().revolution({
+                        sliderType: "standard",
+                        /* sets the Slider's default timeline */
+                        delay: 9000,
+                        /* options are 'auto', 'fullwidth' or 'fullscreen' */
+                        sliderLayout: 'fullscreen',
+                        /* RESPECT ASPECT RATIO */
+                        autoHeight: 'off',
+                        /* options that disable autoplay */
+                        stopLoop: "off",
+                        stopAfterLoops: -1,
+                        stopAtSlide: -1,
+                        navigation: {
+                            keyboardNavigation: 'on',
+                            keyboard_direction: 'horizontal',
+                            mouseScrollNavigation: 'off',
+                            mouseScrollReverse: 'reverse',
+                            onHoverStop: 'off',
+                            arrows: {
+                                enable: true,
+                                style: 'hesperiden',
+                                rtl: false,
+                                hide_onleave: false,
+                                hide_onmobile: true,
+                                hide_under: 500,
+                                hide_over: 9999,
+                                hide_delay: 200,
+                                hide_delay_mobile: 1200,
+                                left: {
+                                    container: 'slider',
+                                    h_align: 'left',
+                                    v_align: 'center',
+                                    h_offset: 50,
+                                    v_offset: 0
+                                },
+                                right: {
+                                    container: 'slider',
+                                    h_align: 'right',
+                                    v_align: 'center',
+                                    h_offset: 50,
+                                    v_offset: 0
+                                }
+                            },
+                            bullets: {
+
+                                enable: true,
+                                style: 'hermes',
+                                tmp: '',
+                                direction: 'horizontal',
+                                rtl: false,
+
+                                container: 'layergrid',
+                                h_align: 'center',
+                                v_align: 'bottom',
+                                h_offset: 0,
+                                v_offset: 30,
+                                space: 12,
+
+                                hide_onleave: false,
+                                hide_onmobile: true,
+                                hide_under: 0,
+                                hide_over: 500,
+                                hide_delay: true,
+                                hide_delay_mobile: 500
+
+                            },
+                            touch: {
+                                touchenabled: 'on',
+                                touchOnDesktop: "on",
+                                swipe_threshold: 75,
+                                swipe_min_touches: 1,
+                                swipe_direction: 'horizontal',
+                                drag_block_vertical: true
+                            }
+                        },
+                        responsiveLevels: [1240, 1024, 768, 480],
+                        visibilityLevels: [1240, 1024, 768, 480],
+                        gridwidth: [1240, 1024, 768, 480],
+                        gridheight: [930, 850, 900, 850],
+                        /* Lazy Load options are "all", "smart", "single" and "none" */
+                        lazyType: "smart",
+                        spinner: "spinner0",
+                        parallax: {
+                            type: "scroll",
+                            origo: "slidercenter",
+                            speed: 400,
+                            levels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 46, 47, 48, 49, 50, 51, 5],
+                        },
+                        shadow: 0,
+                        shuffle: "off",
+                        fullScreenAutoWidth: "on",
+                        fullScreenAlignForce: "on",
+                        fullScreenOffsetContainer: "nav",
+                        fullScreenOffset: "",
+                        hideThumbsOnMobile: "off",
+                        hideSliderAtLimit: 0,
+                        hideCaptionAtLimit: 0,
+                        hideAllCaptionAtLilmit: 0,
+                        debugMode: false,
+                        fallbacks: {
+                            simplifyAll: "off",
+                            nextSlideOnWindowFocus: "off",
+                            disableFocusListener: false,
+                        }
+                    });
+                }
+            }); /*ready*/
+        </script>
+        <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+    </body>
 
 </html>
