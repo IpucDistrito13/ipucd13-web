@@ -41,7 +41,8 @@ class EventoController extends Controller
             'message' => 'Evento creado exitosamente.',
         ];
 
-        return redirect()->route('admin.eventos.create')->with('success', $data['message']);
+        return redirect()->route('admin.eventos.create')
+            ->with('success', $data['message']);
     }
 
     /**
@@ -75,16 +76,15 @@ class EventoController extends Controller
     {
         $evento->delete();
         Cache::flush();
-        
-        $data = [
-           'message' => 'Evento eliminado exitosamente.',
-        ];
 
+        $data = [
+            'message' => 'Evento eliminado exitosamente.',
+        ];
     }
 
     public function apiGetEventos()
     {
-        $eventos = Evento::select('id','title', 'start', 'end', 'backgroundColor', 'borderColor','lugar' )->get();
+        $eventos = Evento::select('id', 'title', 'start', 'end', 'backgroundColor', 'borderColor', 'lugar')->get();
         return response()->json($eventos);
     }
 
@@ -106,6 +106,4 @@ class EventoController extends Controller
     {
         return view('admin.eventos.users');
     }
-
-    
 }

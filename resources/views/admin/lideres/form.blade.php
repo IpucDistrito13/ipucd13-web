@@ -68,6 +68,22 @@
             @enderror
         </div>
     </div>
+    
+    <div class="col-sm-6">
+        
+    </div>
+
+    <div class="col-sm-4">
+        <div class="form-group">
+            @if (isset($lider) && $lider->imagen)
+                <img id="imagen" src="{{ Storage::url($lider->imagen->url) }}" alt=""
+                    class="img-thumbnail">
+            @else
+                <img id="imagen" src="https://i.ibb.co/LxLbXg6/480x640-gris.png" alt="480x600"
+                    class="img-thumbnail">
+            @endif
+        </div>
+    </div>
 
 
 </div>
