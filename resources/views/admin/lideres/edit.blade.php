@@ -51,7 +51,7 @@
                 @include('admin.lideres.form', $lider)
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.lideres_tipos.index') }}">Volver</a>
+                    <a class="btn btn-secondary" href="{{ route('admin.lideres.index') }}">Volver</a>
                     <button type="submit" class="btn btn-success float-right">Actualizar</button>
                 </div>
             </form>

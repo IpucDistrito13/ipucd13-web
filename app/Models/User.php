@@ -60,12 +60,11 @@ class User extends Authenticatable
 
     //WEB
     public function scopeSelectList($query)
-{
-    return $query->select('nombre', 'apellidos', 'celular', 'estado', 'congregacion_id')
-        ->where('estado', 'Activo')
-        ->with('congregacion:id,nombre')
-        ->orderBy('nombre', 'asc'); // Ordenar por nombre de manera ascendente
-}
+    {
+        return $query->where('estado', 'Activo')
+            ->with('congregacion:id,nombre')
+            ->orderBy('nombre', 'asc'); // Ordenar por nombre de manera ascendente
+    }
 
 
     public function scopeVistaRolUsers($query, $rol)
