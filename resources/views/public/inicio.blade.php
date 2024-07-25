@@ -25,6 +25,11 @@
 
         <style>
 
+            .btn.btn-dark-gray {
+                background-color: #333333;
+                color: var(--white);
+            }
+
             .navbar .navbar-nav .dropdown .dropdown-menu {
                 background-color: #00338D;
             }
@@ -304,7 +309,7 @@
                                                  data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
                                                  data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
                                                 <a href="#"
-                                                   class="btn btn-extra-large get-started-btn btn-rounded with-rounded btn-gradient-flamingo-amethyst-green btn-box-shadow">Text button 1<span class="bg-white text-base-color"><i
+                                                   class="btn btn-extra-large btn-rounded with-rounded btn-dark-gray d-table d-lg-inline-block lg-mb-15px md-mx-auto">Text button 1<span class="bg-white text-base-color"><i
                                                             class="fa-solid fa-arrow-right"></i></span></a>
                                             </div>
                                             <!-- end button layer -->
@@ -444,7 +449,7 @@
                                                  data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
                                                  data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
                                                 <a href="#"
-                                                   class="btn btn-extra-large get-started-btn btn-rounded with-rounded btn-gradient-flamingo-amethyst-green btn-box-shadow">
+                                                   class="btn btn-extra-large btn-rounded with-rounded btn-dark-gray d-table d-lg-inline-block lg-mb-15px md-mx-auto">
                                                    Text button 2<span class="bg-white text-base-color"><i
                                                             class="fa-solid fa-arrow-right"></i></span></a>
                                             </div>
@@ -599,7 +604,7 @@
                                                  data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
                                                  data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
                                                 <a href="#"
-                                                   class="btn btn-extra-large get-started-btn btn-rounded with-rounded btn-gradient-flamingo-amethyst-green btn-box-shadow">Text button 3
+                                                   class="btn btn-extra-large btn-rounded with-rounded btn-dark-gray d-table d-lg-inline-block lg-mb-15px md-mx-auto">Text button 3
                                                    <span class="bg-white text-base-color"><i
                                                             class="fa-solid fa-arrow-right"></i></span></a>
                                             </div>
