@@ -34,7 +34,7 @@ class LiderController extends Controller
     {
         $tipos = LiderTipo::selectList()->get();
         $comites = Comite::selectList()->get();
-        $usuarios = User::all();
+        $usuarios = User::selectList()->get();
 
         return view('admin.lideres.create', [
             'tipos' => $tipos,
