@@ -79,7 +79,7 @@
                 <img id="imagen" src="{{ Storage::url($lider->imagen->url) }}" alt=""
                     class="img-thumbnail">
             @else
-                <img id="imagen" src="https://i.ibb.co/LxLbXg6/480x640-gris.png" alt="480x600"
+                <img id="imagen" src="" alt="600x755"
                     class="img-thumbnail">
             @endif
         </div>
