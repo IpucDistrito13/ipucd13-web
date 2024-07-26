@@ -46,7 +46,7 @@ class InicioController extends Controller
             $redes_sociales = Redes::Activo()->get();
             $data = [
                 'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
-                'transmision' => null
+                'transmision' => Redes::GetTransmision()->first()
             ];
 
             foreach ($redes_sociales as $redSocial) {

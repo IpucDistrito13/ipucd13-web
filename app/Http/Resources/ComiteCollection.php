@@ -18,8 +18,8 @@ class ComiteCollection extends ResourceCollection
             return [
                 'id' => $comite->id,
                 'nombre' => $comite->nombre,
-                'imagen' => $comite->imagen?  $comite->imagen->url : null,
-                //'imagenbanner' => $comite->imagen_banner,
+                'imagenportada' => $comite->imagen?  $comite->imagen->url : null,
+                'imagenbanner' => $comite->imagen_banner,
             
             ];
         })->toArray();

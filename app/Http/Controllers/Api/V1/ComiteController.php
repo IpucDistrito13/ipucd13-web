@@ -42,7 +42,7 @@ class ComiteController extends Controller
     public function show($comiteId)
     {
 
-        $comite = Comite::with('podcasts', 'series')->find($comiteId);
+        $comite = Comite::with('series', 'podcasts', 'publicaciones')->find($comiteId);
 
         if (!$comite) {
             return response()->json([

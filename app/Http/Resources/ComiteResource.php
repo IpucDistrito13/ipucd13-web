@@ -16,25 +16,17 @@ class ComiteResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'type' => 'comite',
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
-            'imagen' => $this->imagen ? $this->imagen->url : null,
+            'imagenportada' => $this->imagen ? $this->imagen->url : null,
             'imagenbanner' => $this->imagen_banner,
 
-            /*
             'relationships' => [
-                'series' => [
-                    'id' => $this->series->id,
-                    'nombre' => $this->series->titulo,
-                ],
+                'podcasts' => PodcastSimpleResource::collection($this->whenLoaded('podcasts')),
+                'series' => SerieSimpleResource::collection($this->whenLoaded('series')),
+            ],
 
-                'podcasts' => [
-                    'id' => $this->podcasts->id,
-                    'nombre' => $this->podcasts->titulo,
-                ]
-            ]
-            */
-            
         ];
     }
 }

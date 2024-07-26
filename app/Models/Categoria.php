@@ -20,6 +20,11 @@ class Categoria extends Model
         return $this->hasMany(Podcast::class);
     }
 
+    public function publicaciones()
+    {
+        return $this->hasMany(Publicacion::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

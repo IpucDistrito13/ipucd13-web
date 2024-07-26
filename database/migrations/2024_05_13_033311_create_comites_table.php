@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string('nombre');
             $table->text('descripcion')->nullable();
             $table->string('slug');
-            $table->string('imagen_banner')->comment('imagen para mostrar appbar y banner pagina 1920x500')->nullable();
-            $table->string('banner_little')->nullable()->comment('Banner pequeño, muestra en publicaciones');
+            $table->string('imagen_banner')
+                ->comment('imagen para mostrar appbar y banner pagina 1920x500')
+                ->nullable();
+            $table->string('banner_little')
+                ->nullable()
+                ->comment('Banner pequeño, muestra en publicaciones');
 
             $table->timestamps();
         });
