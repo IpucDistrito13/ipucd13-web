@@ -20,6 +20,7 @@ class InformeCollection extends ResourceCollection
                 'titulo' => $informe->titulo,
                 'imagenportada' => $informe->imagen?  $informe->imagen->url : null,
                 'imagenbanner' => $informe->imagen_banner,
+                'contenido' => $informe->contenido
 
             ];
         })->toArray();

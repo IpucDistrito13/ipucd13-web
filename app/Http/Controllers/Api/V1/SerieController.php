@@ -25,22 +25,19 @@ class SerieController extends Controller
         ];
         return response()->json($response);
 
-        /*
-        $serie = Serie::paginate(10);
+    }
 
-        // Transformar la colección usando el Resource
-        $serieData = SerieResource::collection($serie->items());
+    public function show($serieId)
+    {
+        $serie = Serie::with(['comite', 'categoria', 'videos'])
+        ->findOrFail($serieId);
+        
+        if (!$serie) {
+            return response()->json([
+                'message' => 'Serie no encontrado.'
+            ], 404);
+        }
 
-        // Crear la respuesta personalizada sin los campos 'links' y'meta'
-        $response = [
-            'data' => $serieData,
-            'total' => $serie->total(),
-            'per_page' => $serie->perPage(),
-            'current_page' => $serie->currentPage(),
-            'last_page' => $serie->lastPage(),
-        ];
-
-        return response()->json($response);
-        */
+        return new SerieResource($serie);
     }
 }

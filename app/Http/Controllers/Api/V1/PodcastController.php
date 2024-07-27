@@ -58,7 +58,6 @@ class PodcastController extends Controller
             ], 404);
         }
 
-        // Return the comite data as JSON
         return new PodcastResource($podcast);
     }
 

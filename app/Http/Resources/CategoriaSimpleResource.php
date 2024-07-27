@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SerieResource extends JsonResource
+class CategoriaSimpleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,17 +16,9 @@ class SerieResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'serie',
-            'nombre' => $this->titulo,
-            'imagenbanner' => $this->imagen_banner,
+            'type' => 'comite',
+            'nombre' => $this->nombre,
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
-            'contenido' => $this->contenido,
-
-            'relationships' => [
-                'videos' => VideoSimpleResource::collection($this->whenLoaded('videos')),
-            ],
-
-
         ];
     }
 }

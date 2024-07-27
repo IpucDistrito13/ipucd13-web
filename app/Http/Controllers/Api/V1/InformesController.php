@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\InformeCollection;
+use App\Http\Resources\InformeResource;
 use App\Models\Publicacion;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class InformesController extends Controller
      */
     public function index()
     {
-        $informes = Publicacion::ListarInformesPaginacion();
+         $informes = Publicacion::ListarInformesPaginacion();
         $informeData = new  InformeCollection($informes);
 
         // Crear la respuesta personalizada sin los campos 'links' y'meta'
@@ -46,11 +47,19 @@ class InformesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($informeId)
     {
-        //
-    }
+        $informe = Publicacion::with(['comite', 'categoria'])
+            ->findOrFail($informeId);
 
+        if (!$informe) {
+            return response()->json([
+                'message' => 'Informe no encontrado.'
+            ], 404);
+        }
+
+        return new InformeResource($informe);
+    }
     /**
      * Show the form for editing the specified resource.
      */
