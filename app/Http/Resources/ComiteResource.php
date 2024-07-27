@@ -25,6 +25,7 @@ class ComiteResource extends JsonResource
             'relationships' => [
                 'podcasts' => PodcastSimpleResource::collection($this->whenLoaded('podcasts')),
                 'series' => SerieSimpleResource::collection($this->whenLoaded('series')),
+                'informes' => InformeSimpleResource::collection($this->whenLoaded('publicaciones')),
             ],
 
         ];

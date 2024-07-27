@@ -49,8 +49,9 @@ class PodcastController extends Controller
      */
     public function show($podcastId)
     {
-        $podcast = Podcast::with('comite', 'categoria')->find($podcastId);
-
+        $podcast = Podcast::with(['comite', 'categoria', 'episodios'])
+        ->findOrFail($podcastId);
+        
         if (!$podcast) {
             return response()->json([
                 'message' => 'Podcast no encontrado.'

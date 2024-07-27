@@ -52,14 +52,14 @@ class Podcast extends Model
         return $this->belongsTo(Categoria::class);
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function episodios()
     {
         return $this->hasMany(Episodio::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function scopeListarPodcast($query)
