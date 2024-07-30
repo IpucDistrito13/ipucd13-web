@@ -17,7 +17,6 @@ class ComiteController extends Controller
     {
         $comites = Comite::orderBy('id', 'asc')->paginate(10);
         return new ComiteCollection($comites);
-
     }
 
     /**
@@ -42,7 +41,8 @@ class ComiteController extends Controller
     public function show($comiteId)
     {
 
-        $comite = Comite::with('series', 'podcasts', 'publicaciones')->find($comiteId);
+      $comite = Comite::with('lideres', 'series', 'podcasts', 'publicaciones')
+            ->find($comiteId);
 
         if (!$comite) {
             return response()->json([

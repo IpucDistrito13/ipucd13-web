@@ -3,29 +3,18 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\InformeCollection;
-use App\Http\Resources\InformeResource;
-use App\Models\Publicacion;
+use App\Http\Resources\LideresResource;
+use App\Models\Lider;
 use Illuminate\Http\Request;
 
-class InformesController extends Controller
+class LiderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $informes = Publicacion::ListarInformesPaginacion();
-        $informeData = new  InformeCollection($informes);
-
-        // Crear la respuesta personalizada sin los campos 'links' y'meta'
-        $response = [
-            'data' => $informeData,
-            'total' => $informes->total(),
-            'per_page' => $informes->perPage(),
-            'current_page' => $informes->currentPage(),
-        ];
-        return response()->json($response);
+        //
     }
 
     /**
@@ -47,19 +36,11 @@ class InformesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($informeId)
+    public function show(string $id)
     {
-        $informe = Publicacion::with(['comite', 'categoria'])
-            ->findOrFail($informeId);
-
-        if (!$informe) {
-            return response()->json([
-                'message' => 'Informe no encontrado.'
-            ], 404);
-        }
-
-        return new InformeResource($informe);
+        //
     }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -82,5 +63,21 @@ class InformesController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function lideres($comiteId)
+    {
+        $lideres = Lider::where('comite_id', $comiteId)
+            ->with('liderTipo', 'usuario', 'comite')
+            ->get();
+
+
+        if (!$lideres) {
+            return response()->json([
+                'message' => 'Lideres no encontrado.'
+            ], 404);
+        }
+
+        return LideresResource::collection($lideres);
     }
 }

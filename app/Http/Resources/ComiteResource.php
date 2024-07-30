@@ -22,11 +22,12 @@ class ComiteResource extends JsonResource
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
             'imagenbanner' => $this->imagen_banner,
 
-            'relationships' => [
-                'podcasts' => PodcastSimpleResource::collection($this->whenLoaded('podcasts')),
-                'series' => SerieSimpleResource::collection($this->whenLoaded('series')),
-                'informes' => InformeSimpleResource::collection($this->whenLoaded('publicaciones')),
-            ],
+            'leader' => LiderSimpleResource::collection($this->whenLoaded('lideres')),
+            'podcasts' => PodcastSimpleResource::collection($this->whenLoaded('podcasts')),
+            'series' => SerieSimpleResource::collection($this->whenLoaded('series')),
+            'informes' => InformeSimpleResource::collection($this->whenLoaded('publicaciones')),
+
+
 
         ];
     }

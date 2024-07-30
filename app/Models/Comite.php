@@ -55,6 +55,12 @@ class Comite extends Model
         return $this->hasMany(Publicacion::class);
     }
 
+    public function lideres()
+    {
+        return $this->hasMany(Lider::class);
+    }
+
+
 
     public function getRouteKeyName()
     {

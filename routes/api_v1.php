@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\ComiteController;
 use App\Http\Controllers\Api\V1\CronogramaController;
 use App\Http\Controllers\Api\V1\EventoController;
 use App\Http\Controllers\Api\V1\InformesController;
+use App\Http\Controllers\Api\V1\LiderController;
 use App\Http\Controllers\Api\V1\PodcastController;
 use App\Http\Controllers\Api\V1\SerieController;
 use App\Http\Controllers\Web\Admin\EpisodioController;
@@ -23,10 +24,7 @@ Route::get('informes/{informeId}', [InformesController::class, 'show']);
 Route::get('getAudioEpisodio/{episodio}', [EpisodioController::class, 'apigetAudio'])->name('public.audio.episodio');
 
 Route::get('comites/{comiteId}', [ComiteController::class, 'show']);
-
-
-
-
+Route::get('lideres/{comiteId}', [LiderController::class, 'lideres']);
 
 
 Route::middleware(['auth:sanctum'])->group(function() {

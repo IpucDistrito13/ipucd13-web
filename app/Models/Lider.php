@@ -37,15 +37,15 @@ class Lider extends Model
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
+    public function comite()
+    {
+        return $this->belongsTo(Comite::class, 'comite_id');
+    }
+
     // Relación con Usuario que creó el registro
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'user_created');
-    }
-
-    public function comite()
-    {
-        return $this->belongsTo(Comite::class, 'comite_id');
     }
 
     //RELACION UNO A UNO POLIMORFICA
