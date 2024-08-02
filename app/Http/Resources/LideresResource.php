@@ -19,6 +19,7 @@ class LideresResource extends JsonResource
             'type' => 'lider',
             'lidertipo' => new LiderTipoSimpleResource($this->whenLoaded('liderTipo')),
             'lider' => new LiderSimpleResource($this->whenLoaded('usuario')),
+            'imagenperfil' => $this->imagen ? $this->imagen->url : null, 
         ];
     }
 }
