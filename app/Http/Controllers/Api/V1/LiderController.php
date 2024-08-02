@@ -67,7 +67,7 @@ class LiderController extends Controller
 
     public function lideres($comiteId)
     {
-        $lideres = Lider::where('comite_id', $comiteId)
+         $lideres = Lider::where('comite_id', $comiteId)
             ->with('liderTipo', 'usuario', 'comite')
             ->get();
 

@@ -18,7 +18,7 @@ class LideresResource extends JsonResource
             'id' => $this->id,
             'type' => 'lider',
             'lidertipo' => new LiderTipoSimpleResource($this->whenLoaded('liderTipo')),
-            'leader' => new LiderSimpleResource($this->whenLoaded('usuario')),
+            'lider' => new LiderSimpleResource($this->whenLoaded('usuario')),
         ];
     }
 }

@@ -16,6 +16,7 @@ class LiderTipoSimpleResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'type' => 'lider_tipo',
             'nombre' => $this->nombre,
         ];
     }
