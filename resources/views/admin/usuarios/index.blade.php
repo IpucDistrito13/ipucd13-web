@@ -51,6 +51,7 @@
                         <th>Apellidos</th>
                         <th>Celular</th>
                         <th>Rol</th>
+                        <th>Congregación</th>
                         <th class="acciones-column">Acciones</th>
 
                     </tr>
@@ -146,6 +147,10 @@
                     {
                         data: 'roles',
                         name: 'roles'
+                    },
+                    {
+                        data: 'direccion_nombre',
+                        name: 'direccion_nombre'
                     },
                     {
                         data: 'action',

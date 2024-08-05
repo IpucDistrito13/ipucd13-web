@@ -178,6 +178,7 @@ SELECT
     users.visible_celular,
     users.estado,
     congregaciones.direccion AS direccion_congregacion,
+    congregaciones.direccion AS direccion_congregacion,
     municipios.nombre AS nombre_municipio,
     (
         SELECT GROUP_CONCAT(roles.name SEPARATOR ', ')
@@ -203,6 +204,47 @@ ORDER BY
     roles DESC;
 
 
+
+
+
+
+
+    CREATE VIEW vista_roles_usuario AS
+SELECT 
+    users.id, 
+    users.email, 
+    users.uuid, 
+    users.codigo,
+    users.nombre,
+    users.apellidos,
+    users.celular,
+    users.visible_celular,
+    users.estado,
+    congregaciones.direccion AS direccion_congregacion,
+    congregaciones.nombre AS direccion_nombre,
+    municipios.nombre AS nombre_municipio,
+    (
+        SELECT GROUP_CONCAT(roles.name SEPARATOR ', ')
+        FROM roles
+        INNER JOIN model_has_roles ON roles.id = model_has_roles.role_id
+        WHERE model_has_roles.model_id = users.id 
+        AND model_has_roles.model_type = 'App\\Models\\User'
+    ) AS roles,
+    (
+        SELECT url
+        FROM images
+        WHERE images.imageable_id = users.id 
+        AND images.imageable_type = 'App\\Models\\User'
+        LIMIT 1
+    ) AS image_url
+FROM 
+    users
+LEFT JOIN
+    congregaciones ON users.congregacion_id = congregaciones.id
+LEFT JOIN
+    municipios ON congregaciones.municipio_id = municipios.id
+ORDER BY 
+    roles DESC;
 
     */
 }
