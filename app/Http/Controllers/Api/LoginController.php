@@ -16,6 +16,8 @@ class LoginController extends Controller
     {
         // Verificar si el correo electrónico existe en la base de datos
         $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->with('roles')->first();
+
 
         if (!$user) {
             // El correo electrónico no existe en la base de datos
@@ -37,20 +39,22 @@ class LoginController extends Controller
             // Si la autenticación es exitosa y el usuario no está inactivo, continuar con la respuesta
             return response()->json([
                 'data' => [
-                    'attributes' => [
-                        'id' => $user->id,
-                        'nombre' => $user->nombre,
-                        'apellidos' => $user->apellidos,
-                        'email' => $user->email,
-                    ],
+                    //'attributes' => [
+                    'id' => $user->id,
+                    'nombre' => $user->nombre,
+                    'apellidos' => $user->apellidos,
+                    'email' => $user->email,
+                    //],
 
                     'relationships' => [
-                        /*
-                        'rol' => [
-                            'id' => $user->rol->id,
-                            'nombre' => $user->rol->nombre,
-                        ]
-                        */
+                        //'roles' => $user->roles->pluck('id')->implode(',')
+                        'roles' => $user->roles->map(function ($role) {
+                            return [
+                                'id' => $role->id,
+                                'type' => 'rol',
+                                'nombre' => $role->name,
+                            ];
+                        })
                     ],
                     'token' => $user->createToken($request->device_name)->plainTextToken,
                 ]

@@ -72,16 +72,16 @@
                             <td>
                                 <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Acciones">
-                                    @can('admin.categorias.edit')
+                                    @can('admin.solicitudes.edit')
                                         <!-- Update Button -->
                                         <button class="btn btn-success btn-sm"
-                                            data-url="{{ route('admin.categorias.edit', $item) }}"
+                                            data-url="{{ route('admin.solicitudes.edit', $item) }}"
                                             onclick="redirectUpdate(this.getAttribute('data-url'))">Actualizar</button>
                                     @endcan
 
                                     @can('admin.categorias.destroy')
                                         <!-- Delete Button -->
-                                        <form action="{{ route('admin.categorias.destroy', $item) }}" method="POST">
+                                        <form action="{{ route('admin.solicitudes.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

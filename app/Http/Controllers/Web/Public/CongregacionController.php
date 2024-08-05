@@ -31,7 +31,8 @@ class CongregacionController extends Controller
             return Congregacion::all();
         });
 
-      return  $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
+        return Redes::Activo()->get();
+        return  $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
             $redes_sociales = Redes::Activo()->get();
             $data = [
                 'links' => ['facebook' => '', 'youtube' => '', 'instagram' => ''],
