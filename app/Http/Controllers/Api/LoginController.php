@@ -15,7 +15,6 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         // Verificar si el correo electrónico existe en la base de datos
-        $user = User::where('email', $request->email)->first();
         $user = User::where('email', $request->email)->with('roles')->first();
 
 

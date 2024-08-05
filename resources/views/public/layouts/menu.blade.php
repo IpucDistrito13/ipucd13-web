@@ -86,17 +86,17 @@
             <div class="col-auto col-lg-2 text-end">
                 <div class="header-icon">
                     <div class="header-social-icon icon">
-                        @if (!empty($transmision->url))
-                            <a href="https://www.youtube.com/watch?v={{ $transmision->url }}" target="_blank"><i
-                                    class="fas fa-video"></i> En vivo</a>
+                        @if (!empty(trim($transmision->url)))
+                            <a href="https://www.youtube.com/watch?v={{ $transmision->url }}" target="_blank">
+                                <i class="fas fa-video"></i> En vivo
+                            </a>
                         @endif
-
+                    
                         <a href="{{ $facebook }}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="{{ $instagram }}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="{{ $youtube }}" target="_blank"><i
-                                class="fa-brands fa-youtube fs-18 me-10px"></i></a>
-
+                        <a href="{{ $youtube }}" target="_blank"><i class="fa-brands fa-youtube fs-18 me-10px"></i></a>
                     </div>
+                    
                 </div>
             </div>
         </div>
