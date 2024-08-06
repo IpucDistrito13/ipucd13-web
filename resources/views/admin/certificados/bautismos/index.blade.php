@@ -45,8 +45,8 @@
                 @include('admin.certificados.bautismos.form')
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.comites.index') }}">Volver</a>
-                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
+                    
+                    <button type="submit" class="btn btn-primary float-right">Generar PDF</button>
                 </div>
             </form>
 
