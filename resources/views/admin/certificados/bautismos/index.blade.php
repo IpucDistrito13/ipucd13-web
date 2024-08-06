@@ -39,7 +39,7 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.certificado.bautismo.download') }}" autocomplete="off">
+            <form method="POST" action="{{ route('admin.certificado.bautismo.download') }}" autocomplete="off" target="_blank">
 
                 @csrf
                 @include('admin.certificados.bautismos.form')

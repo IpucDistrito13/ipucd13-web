@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CertificadoBautismoRequest;
 use Illuminate\Http\Request;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use DateTime;
@@ -21,27 +22,23 @@ class CertificadoController extends Controller
         return view('admin.certificados.bautismos.index');
     }
 
-    public function downloadCertificadoBautismo(Request $request)
+    public function downloadCertificadoBautismo(CertificadoBautismoRequest $request)
     {
-        //return $request;
-
-        $nombre = $request->nombre;//27
+        $nombre = $request->nombre;
         setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'es');
     
         $municipio = $request->municipio;
-        $fecha  = date('Y-m-d');
+        $fecha  = date($request->start);
     
-        // Create a DateTime object
         $dateTime = new DateTime($fecha);
         $formattedDate = strftime('el %d %B del %Y', $dateTime->getTimestamp());
     
-        // Ensure only the month is capitalized
         $formattedDate = strtolower($formattedDate);
         $formattedDate = preg_replace_callback('/(\w+)( del)/', function ($matches) {
             return ucfirst($matches[1]) . $matches[2];
         }, $formattedDate);
     
-        $pdf = new FPDF('L', 'mm', 'Letter'); // 'L' for landscape orientation
+        $pdf = new FPDF('L', 'mm', 'Letter');
         $pdf->AddPage();
         $pdf->SetTitle("Certificado de bautismo");
     
@@ -49,35 +46,30 @@ class CertificadoController extends Controller
     
         $this->showImagenPDF(3, 3, 273, 210, $pdf, 'https://ipucd13.nyc3.cdn.digitaloceanspaces.com/certificados/bautismo/certificado-bautismo.jpg');
         $pdf->Ln(80);
-
+    
         $pdf->SetTextColor(0, 51, 141);
         $pdf->SetX(20);
     
-        // Display name
-        $pdf->Cell(150, 10, mb_convert_encoding( 
-            $nombre,
-            'ISO-8859-1'
-        ), 0, 0, 'C');
-        
-        // Move to the next line
-        $pdf->Ln(41); 
-
+        $pdf->Cell(150, 10, mb_convert_encoding($nombre, 'ISO-8859-1'), 0, 0, 'C');
+    
+        $pdf->Ln(41);
+    
         $pdf->SetTextColor(0, 0, 0);
     
         $pdf->SetFont('Arial', '', 11);
-        //$pdf->SetFont('Courier', 'B', 11);
         $pdf->Ln(0);
-        
-        $pdf->SetX(65);
-        $pdf->Cell(115, 11, mb_convert_encoding(
-            $municipio. ', '. $formattedDate,
-            'ISO-8859-1'
-        ), 0, 0, 'L');
     
-        $pdf->Output();
+        $pdf->SetX(65);
+        $pdf->Cell(115, 11, mb_convert_encoding($municipio . ', ' . $formattedDate, 'ISO-8859-1'), 0, 0, 'L');
+    
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename="certificado-bautismo.pdf"');
+    
+        $pdf->Output('I');
         exit;
     }
     
+
 
 
     public function showImagenPDF($x, $y, $width, $height, $pdf, $urlImagen)
