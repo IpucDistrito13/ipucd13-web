@@ -363,6 +363,12 @@ return [
                     'can' => 'admin.solicitudes.respondidas'
                 ],
 
+                [
+                    'text' => 'Certificado bautismo',
+                    'route' => 'admin.certificado.bautismo',
+                    //'can' => 'admin.solicitudes.respondidas'
+                ],
+
             ],
         ],
 

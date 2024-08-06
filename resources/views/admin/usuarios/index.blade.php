@@ -53,7 +53,6 @@
                         <th>Rol</th>
                         <th>Congregación</th>
                         <th class="acciones-column">Acciones</th>
-
                     </tr>
                 </thead>
                 <tbody>
