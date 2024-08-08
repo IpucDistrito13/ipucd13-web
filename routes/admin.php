@@ -18,6 +18,7 @@ use App\Http\Controllers\Web\Admin\HomeController;
 use App\Http\Controllers\Web\Admin\IpucEnLineaController;
 use App\Http\Controllers\Web\Admin\LiderController;
 use App\Http\Controllers\Web\Admin\LiderTipoController;
+use App\Http\Controllers\Web\Admin\LogController;
 use App\Http\Controllers\Web\Admin\PermisoController;
 use App\Http\Controllers\Web\Admin\PodcastController;
 use App\Http\Controllers\Web\Admin\PublicacionController;
@@ -195,3 +196,6 @@ Route::get('permissions/edit/{permiso}', [PermisoController::class, 'edit'])->na
 Route::put('permissions/{permission}', [PermisoController::class, 'update'])->name('developer.permissions.update');
 
 Route::delete('permissions/{permission}', [PermisoController::class, 'destroy'])->name('developer.permissions.destroy');
+
+
+Route::resource('logs', LogController::class)->names('admin.logs');

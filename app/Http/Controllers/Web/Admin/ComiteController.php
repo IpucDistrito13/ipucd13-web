@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ComiteRequest;
 use App\Models\Comite;
+use App\Models\Log as ModelsLog;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -85,6 +86,15 @@ class ComiteController extends Controller
             // Crear el comité
             $comite = Comite::create($data);
 
+            $dataLog = [
+                'descripcion' => 'Nuevo resgistro comité - ' . $comite->id,
+                'accion' => 'Add',
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ];
+
+            $log = ModelsLog::create($dataLog);
+
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
                 $filePortada = $request->file('file');
@@ -137,7 +147,7 @@ class ComiteController extends Controller
             DB::beginTransaction();
 
             $url_banner = $comite->imagen_banner;
-            
+
 
             // Verificar si se cargó un nuevo banner
             if ($request->hasFile('imagen_banner')) {
@@ -151,7 +161,6 @@ class ComiteController extends Controller
                 if ($comite->imagen_banner) {
                     Storage::delete($comite->imagen_banner);
                 }
-
             }
 
             $mini_banner = $comite->banner_little;
@@ -161,7 +170,7 @@ class ComiteController extends Controller
 
                 $fileMiniBanner = $request->file('banner_little');
                 $ubicacionBanner = 'public/comites/banner';
-                
+
                 $mini_banner = $this->storeFile($fileMiniBanner, $ubicacionBanner);
 
                 // Eliminar el banner anterior si existe
@@ -179,6 +188,15 @@ class ComiteController extends Controller
             ];
 
             $comite->update($data);
+
+            $dataLog = [
+                'descripcion' => 'Actualiza registro comité - ' . $comite->id,
+                'accion' => 'Update',
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ];
+
+            $log = ModelsLog::create($dataLog);
 
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
@@ -209,6 +227,7 @@ class ComiteController extends Controller
             // Redireccionar con un mensaje de éxito
             return back()
                 ->with('success', 'Comité actualizado exitosamente.');
+                
         } catch (\Exception $e) {
             // Revertir la transacción en caso de error
             DB::rollBack();

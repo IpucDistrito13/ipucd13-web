@@ -314,13 +314,21 @@ return [
 
         [
             'header' => 'DESARROLLO',
-            'can' => 'developer.permissions'
+            //'can' => 'developer.permissions'
         ],
 
         [
             'text' => 'Routing permissions',
             'route' => 'developer.permissions.index',
             'icon' => 'fas fa-shield-alt',
+            //'active' => ['admin/roles*'],
+            //'can' => 'developer.permissions'
+        ],
+
+        [
+            'text' => 'Logs system',
+            'route' => 'admin.logs.index',
+            'icon' => 'fas fa-sitemap',
             //'active' => ['admin/roles*'],
             //'can' => 'developer.permissions'
         ],
