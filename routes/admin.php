@@ -15,8 +15,10 @@ use App\Http\Controllers\Web\Admin\EventoController;
 use App\Http\Controllers\Web\Admin\FileUploadController;
 use App\Http\Controllers\Web\Admin\GaleriaController;
 use App\Http\Controllers\Web\Admin\HomeController;
+use App\Http\Controllers\Web\Admin\IpucEnLineaController;
 use App\Http\Controllers\Web\Admin\LiderController;
 use App\Http\Controllers\Web\Admin\LiderTipoController;
+use App\Http\Controllers\Web\Admin\PermisoController;
 use App\Http\Controllers\Web\Admin\PodcastController;
 use App\Http\Controllers\Web\Admin\PublicacionController;
 use App\Http\Controllers\Web\Admin\RedesController;
@@ -182,3 +184,14 @@ Route::resource('lideres_tipos', LiderTipoController::class)->names('admin.lider
 Route::resource('lideres', LiderController::class)
     ->names('admin.lideres')
     ->parameter('lideres', 'lider');
+
+
+Route::get('ipuc_en_linea', [IpucEnLineaController::class, 'index'])->name('admin.ipuc.linea');
+
+Route::get('permissions', [PermisoController::class, 'index'])->name('developer.permissions.index');
+Route::get('permissions/create', [PermisoController::class, 'create'])->name('developer.permissions.create');
+Route::post('permissions/store', [PermisoController::class, 'store'])->name('developer.permissions.store');
+Route::get('permissions/edit/{permiso}', [PermisoController::class, 'edit'])->name('developer.permissions.edit');
+Route::put('permissions/{permission}', [PermisoController::class, 'update'])->name('developer.permissions.update');
+
+Route::delete('permissions/{permission}', [PermisoController::class, 'destroy'])->name('developer.permissions.destroy');

@@ -65,11 +65,21 @@ class ComiteController extends Controller
                 $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
             }
 
+            $mini_banner = '';
+
+            // Verificar si se cargó un nuevo banner
+            if ($request->hasFile('banner_little')) {
+                $fileBanner = $request->file('banner_little');
+                $ubicacionBanner = 'public/comites/banner';
+                $mini_banner = $this->storeFile($fileBanner, $ubicacionBanner);
+            }
+
             $data = [
                 'nombre' => $request->nombre,
                 'slug' => $request->slug,
                 'descripcion' => $request->descripcion,
                 'imagen_banner' => $url_banner,
+                'banner_little' => $mini_banner,
             ];
 
             // Crear el comité
@@ -121,21 +131,42 @@ class ComiteController extends Controller
      */
     public function update(ComiteRequest $request, Comite $comite)
     {
+        //return $request->banner_little;
         try {
             // Iniciar una transacción de base de datos
             DB::beginTransaction();
 
             $url_banner = $comite->imagen_banner;
+            
 
             // Verificar si se cargó un nuevo banner
             if ($request->hasFile('imagen_banner')) {
+
                 $fileBanner = $request->file('imagen_banner');
                 $ubicacionBanner = 'public/comites/banner';
+
                 $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
 
                 // Eliminar el banner anterior si existe
                 if ($comite->imagen_banner) {
                     Storage::delete($comite->imagen_banner);
+                }
+
+            }
+
+            $mini_banner = $comite->banner_little;
+
+            // Verificar si se cargó mini banner
+            if ($request->hasFile('banner_little')) {
+
+                $fileMiniBanner = $request->file('banner_little');
+                $ubicacionBanner = 'public/comites/banner';
+                
+                $mini_banner = $this->storeFile($fileMiniBanner, $ubicacionBanner);
+
+                // Eliminar el banner anterior si existe
+                if ($comite->mini_banner) {
+                    Storage::delete($comite->mini_banner);
                 }
             }
 
@@ -144,6 +175,7 @@ class ComiteController extends Controller
                 'slug' => $request->slug,
                 'descripcion' => $request->descripcion,
                 'imagen_banner' => $url_banner,
+                'banner_little' => $mini_banner,
             ];
 
             $comite->update($data);

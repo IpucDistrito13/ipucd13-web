@@ -74,14 +74,17 @@
 
                                 
                                 @foreach ($comites as $comite)
-                                <li class="d-flex align-items-center h-80px cover-background ps-35px pe-35px" style="background-image: url('https://via.placeholder.com/600x144')">
-                                    <div class="opacity-medium bg-gradient-dark-transparent"></div>
-                                    <a href="{{ route('comite.show', $comite ) }}" class="d-flex align-items-center position-relative w-100 h-100">
-                                        <span class="text-white mb-0 fs-20 fw-500 fancy-text-style-4">{{ $comite->nombre }}</span>
-                                        <span class="btn text-white position-absolute"><i class="bi bi-arrow-right ms-0 fs-24"></i></span>
-                                    </a>
-                                </li>
-                                
+                                    <li class="d-flex align-items-center h-80px cover-background ps-35px pe-35px">
+                                        @if ($comite->banner_little)
+                                            <div class="opacity-medium bg-gradient-dark-transparent" style="background-image: url({{ Storage::url($comite->banner_little) }})"></div>
+                                        @else
+                                            <div class="opacity-medium bg-gradient-dark-transparent"></div>
+                                        @endif
+                                        <a href="{{ route('comite.show', $comite ) }}" class="d-flex align-items-center position-relative w-100 h-100">
+                                            <span class="text-white mb-0 fs-20 fw-500 fancy-text-style-4">{{ $comite->nombre }}</span>
+                                            <span class="btn text-white position-absolute"><i class="bi bi-arrow-right ms-0 fs-24"></i></span>
+                                        </a>
+                                    </li>
                                 @endforeach
                                 
                             </ul>

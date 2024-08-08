@@ -5,7 +5,6 @@
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">Certificado de bautismo</h1>
-        
     </div>
 @stop
 

@@ -1,15 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar comité')
+@section('title', 'Editar permissions')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Editar comité: {{ $comite->nombre }}</h1>
-        <div>
-            <a class="btn btn-secondary btn-sm" href="{{ route('admin.comites.index') }}">
-                <i class="fas fa-arrow-left"></i> Volver
-            </a>
-        </div>
+        <h1 style="margin: 0;">Editar permissions: {{ $permiso->name }}</h1>
+        <a class="btn btn-secondary btn-sm" href="{{ route('developer.permissions.index')}}">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
     </div>
 @stop
 
@@ -37,21 +35,22 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos comité
+                Datos permissions
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.comites.update', $comite) }}" autocomplete="off"
+            <form method="POST" action="{{ route('developer.permissions.update', $permiso) }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
                 @csrf
-                @method('PUT') <!-- Establece el método PUT -->
+                @method('PUT')
 
-                @include('admin.comites.form', $comite)
+                @include('admin.permissions.form', $permiso)
+
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.comites.index') }}">Volver</a>
+                    <a class="btn btn-secondary" href="{{ route('developer.permissions.index') }}">Volver</a>
                     <button type="submit" class="btn btn-success float-right">Actualizar</button>
                 </div>
             </form>
@@ -62,9 +61,7 @@
 @stop
 
 @section('css')
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-
 
     <style>
         .image-wrapper {
@@ -84,17 +81,10 @@
 
 @section('js')
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-
     <script>
-        // Generate slug
+        // generate slug
         function generateSlug(inputText) {
-            var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            var slug = withoutAccents.toLowerCase()
-                .replace(/[^a-zA-Z0-9 -]/g, '') // Remueve caracteres no alfanuméricos ni espacios
-                .replace(/\s+/g, '-') // Reemplaza espacios con guiones
-                .replace(/-+/g, '-') // Reemplaza múltiples guiones con uno solo
-                .trim(); // Elimina espacios en blanco al inicio y al final
+            var slug = inputText.toLowerCase().replace(/[^a-zA-Z0-9 -]/g, '').replace(/\s+/g, '-');
             return slug;
         }
 
@@ -112,14 +102,16 @@
         document.addEventListener("DOMContentLoaded", function() {
             updateSlug();
         });
-        // End generate slug
 
-        // Mostrar imagen
+        // end generate slug
+
+        //Mostrar imagen
         function redirectUpdate(url) {
             window.location.href = url;
         }
 
-        //Mostrar imagen
+        document.getElementById("imagen").addEventListener("change", cambiarImagen);
+
         function cambiarImagen(evento) {
             var file = evento.target.files[0];
             var reader = new FileReader();
@@ -128,29 +120,6 @@
             }
             reader.readAsDataURL(file);
         }
-
         //end mostrar imagen
-
-        //Mostrar imagen banner
-        function cambiarImagenBanner(evento) {
-            var file = evento.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function(evento) {
-                document.getElementById("imagen_banner").src = evento.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-        //end mostrar imagen banner
-
-        //Mostrar mini imagen banner
-        function cambiarMiniImagenBanner(evento) {
-            var file = evento.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function(evento) {
-                document.getElementById("banner_little").src = evento.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-        //end mostrar mini imagen banner
     </script>
 @stop

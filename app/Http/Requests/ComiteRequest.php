@@ -30,6 +30,7 @@ class ComiteRequest extends FormRequest
             'descripcion' => 'required|max:1000',
             'file' => 'required|image|dimensions:width=480,height=640',
             'imagen_banner' => 'required|image|dimensions:width=1920,height=500',
+            'banner_little' => 'required|image|dimensions:width=600,height=144',
         ];
 
         // Si hay una categoría, aplicar regla de validación condicional para el slug
@@ -37,6 +38,8 @@ class ComiteRequest extends FormRequest
             $rules['slug'] = 'required|max:255|alpha_dash|unique:comites,slug,' . $comite->id;
             $rules['file'] = 'nullable|image|dimensions:width=480,height=640';
             $rules['imagen_banner'] = 'nullable|image|dimensions:width=1920,height=500';
+            $rules['banner_little'] = 'nullable|image|dimensions:width=600,height=144';
+
         }
 
         return $rules;
@@ -56,6 +59,11 @@ class ComiteRequest extends FormRequest
             'imagen_banner.required' => 'La imagen de banner es obligatoria.',
             'imagen_banner.image' => 'El archivo debe ser una imagen.',
             'imagen_banner.dimensions' => 'La imagen de banner debe tener dimensiones de :widthx:height píxeles.',
+
+            'banner_little.required' => 'La imagen del mini banner es obligatoria.',
+            'banner_little.image' => 'El archivo debe ser una imagen.',
+            'banner_little.dimensions' => 'La imagen del mini banner debe tener dimensiones de :widthx:height píxeles.',
+
             'file.required' => 'La imagen de portada es obligatoria.',
             'file.image' => 'El archivo debe ser una imagen.',
             'file.dimensions' => 'La imagen de portada debe tener dimensiones de :widthx:height píxeles.',

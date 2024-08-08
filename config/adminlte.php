@@ -313,6 +313,19 @@ return [
         ],
 
         [
+            'header' => 'DESARROLLO',
+            'can' => 'developer.permissions'
+        ],
+
+        [
+            'text' => 'Routing permissions',
+            'route' => 'developer.permissions.index',
+            'icon' => 'fas fa-shield-alt',
+            //'active' => ['admin/roles*'],
+            //'can' => 'developer.permissions'
+        ],
+
+        [
             'header' => 'ADMINISTRADOR',
             'can' => 'admin.roles.index'
         ],
@@ -383,7 +396,7 @@ return [
                 ],
 
                 [
-                    'text' => 'Lider',
+                    'text' => 'Líder',
                     'route' => 'admin.lideres.index',
                     'can' => 'admin.lideres.index'
                 ],
@@ -406,7 +419,7 @@ return [
         ],
 
         [
-            'text' => 'Cronograma distrital',
+            'text' => 'Cronograma Distrital',
             'route' => 'admin.cronogramas.create',
             'icon' => 'fas fa-calendar-day',
             'can' => 'admin.cronogramas.create'
@@ -478,6 +491,13 @@ return [
         ],
 
         ['header' => 'USUARIO'],
+
+        [
+            'text' => 'IPUC en Linea',
+            'route' => 'admin.ipuc.linea',
+            'icon' => 'fas fa-globe',
+            //'can' => 'admin.solicitudes.respondidas'
+        ],
         
 
         [

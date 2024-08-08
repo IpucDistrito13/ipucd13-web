@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear comité')
+@section('title', 'Crear permissions')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear comité</h1>
-        
+        <h1 style="margin: 0;">Crear permissions</h1>
+
     </div>
 @stop
 
@@ -33,20 +33,20 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos comité
+                Datos permissions
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.comites.store') }}" autocomplete="off"
-                enctype="multipart/form-data" file="true">
-
+            <form method="POST" action="{{ route('developer.permissions.store') }}" autocomplete="off" 
+            enctype="multipart/form-data" file="true">
                 @csrf
-                @include('admin.comites.form')
+
+                @include('admin.permissions.form')
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.comites.index') }}">Volver</a>
+                    <a class="btn btn-secondary" href="{{ route('developer.permissions.index') }}">Volver</a>
                     <button type="submit" class="btn btn-primary float-right">Guardar</button>
                 </div>
             </form>
@@ -57,9 +57,7 @@
 @stop
 
 @section('css')
-    
-
-    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
     <style>
         .image-wrapper {
@@ -78,10 +76,18 @@
 
 @section('js')
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-   
-
     <script>
+        showErrores();
+
+        function showErrores() {
+            @if ($errors->any())
+
+                @foreach ($errors->all() as $error)
+                    console.error('{{ $error }}');
+                @endforeach
+            @endif
+        }
+
         // Generate slug
         function generateSlug(inputText) {
             var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -94,7 +100,7 @@
         }
 
         function updateSlug() {
-            var nombreInput = document.getElementById("nombre"); // Corregido aquí
+            var nombreInput = document.getElementById("titulo");
             var slugInput = document.getElementById("slug");
 
             if (nombreInput && slugInput) {
@@ -109,7 +115,11 @@
         });
         // End generate slug
 
-        // Mostrar imagen
+        //Mostrar imagen
+        function redirectUpdate(url) {
+            window.location.href = url;
+        }
+
         document.getElementById("imagen").addEventListener("change", cambiarImagen);
 
         function cambiarImagen(evento) {
@@ -132,42 +142,5 @@
             reader.readAsDataURL(file);
         }
         //end mostrar imagen banner
-
-        //Mostrar mini imagen banner
-        function cambiarMiniImagenBanner(evento) {
-            var file = evento.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function(evento) {
-                document.getElementById("banner_little").src = evento.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-        //end mostrar mini imagen banner
-        
     </script>
-
-    <script>
-        // datatable
-        $("#datatable").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-
-            language: {
-                processing: "Procesando...",
-                lengthMenu: "Mostrar _MENU_ registros por página",
-                zeroRecords: "No se encontraron registros en el sistema...",
-                info: "Mostrando página _PAGE_ de _PAGES_",
-                infoEmpty: "No hay registros disponibles",
-                infoFiltered: "(filtrado de _MAX_ registros totales)",
-                search: "Buscar",
-                paginate: {
-                    next: "Siguiente",
-                    previous: "Anterior"
-                }
-            },
-        });
-        //end datatable
-    </script>
-
 @stop
