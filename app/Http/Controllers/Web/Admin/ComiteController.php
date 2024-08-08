@@ -191,9 +191,9 @@ class ComiteController extends Controller
 
             $dataLog = [
                 'descripcion' => 'Se actualizo registro comité - ' . $comite->id,
-                'accion' => 'Add',
+                'accion' => 'Update',
                 'ip' => '',
-                'user_id' => auth()->user()->id,
+                'user_id' => auth()->id,
             ];
 
             $log = ModelsLog::create($dataLog);
