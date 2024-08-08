@@ -7,7 +7,7 @@
         <h1 style="margin: 0;">IPUC en Línea</h1>
         <div>
             <a class="btn btn-warning btn-sm" href="https://online.tiipuc.org/Seguridad/Login?ReturnUrl=%2F" target="_blank">
-                <i class="fas fa-globe"></i> IPUC en Línea
+                <i class="fas fa-globe"></i> Ingresar aquí
             </a>
         </div>
     </div>
