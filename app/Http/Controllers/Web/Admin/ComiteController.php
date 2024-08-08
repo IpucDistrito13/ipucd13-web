@@ -87,7 +87,7 @@ class ComiteController extends Controller
             $comite = Comite::create($data);
 
             $dataLog = [
-                'descripcion' => 'Nuevo resgistro comité - ' . $comite->id,
+                'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
                 'accion' => 'Add',
                 'ip' => '',
                 'user_id' => auth()->user()->id,
@@ -188,6 +188,15 @@ class ComiteController extends Controller
             ];
 
             $comite->update($data);
+
+            $dataLog = [
+                'descripcion' => 'Se actualizo registro comité - ' . $comite->id,
+                'accion' => 'Add',
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ];
+
+            $log = ModelsLog::create($dataLog);
 
             $dataLog = [
                 'descripcion' => 'Actualiza registro comité - ' . $comite->id,
