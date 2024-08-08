@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CongregacionRequest;
 use App\Models\Congregacion;
+use App\Models\Log as ModelsLog;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,7 +46,8 @@ class CongregacionController extends Controller
     {
         DB::beginTransaction();
         try {
-            Congregacion::create([
+
+            $congregacion = Congregacion::create([
                 'municipio_id' => $request->municipio,
                 'longitud' => $request->longitud,
                 'latitud' => $request->latitud,
@@ -55,6 +57,15 @@ class CongregacionController extends Controller
                 'googlemaps' => $request->googlemaps,
                 'estado' => 'Activo',
             ]);
+
+            $dataLog = [
+                'descripcion' => 'Se registro nueva congregación - ' . $congregacion->id,
+                'accion' => 'Add', //Add, Update, Delete
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ];
+
+            $log = ModelsLog::create($dataLog);
     
             // Elimina las variables almacenadas en cache
             Cache::flush();
@@ -98,7 +109,7 @@ class CongregacionController extends Controller
         DB::beginTransaction();
         try {
             // Actualiza los datos de la congregación
-            $congregacion->update([
+              $congregacion->update([
                 'municipio_id' => $request->municipio,
                 'longitud' => $request->longitud,
                 'latitud' => $request->latitud,
@@ -107,6 +118,16 @@ class CongregacionController extends Controller
                 'urlfacebook' => $request->urlfacebook,
                 'googlemaps' => $request->googlemaps,
             ]);
+
+            $dataLog = [
+                //'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
+                'descripcion' => 'Se actualizo registro congregación - ' . $congregacion->id,
+                'accion' => 'Update', //Add, Update, Delete
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ];
+
+            $log = ModelsLog::create($dataLog);
     
             // Elimina las variables almacenadas en cache
             Cache::flush();

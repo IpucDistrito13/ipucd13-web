@@ -1,3 +1,14 @@
+$dataLog = [
+    'descripcion' => 'Se registro nueva congregación - ' . $congregacion->id,
+    //'descripcion' => 'Se actualizo registro congregacion - ' . $congregacion->id,
+    'accion' => 'Add', //Add, Update, Delete
+    'ip' => '',
+    'user_id' => auth()->user()->id,
+];
+
+$log = ModelsLog::create($dataLog);
+
+
 //LIMPIAR CACHE
 
 php artisan migrate:refresh --seed

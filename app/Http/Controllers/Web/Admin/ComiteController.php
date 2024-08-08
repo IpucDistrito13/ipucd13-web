@@ -190,8 +190,9 @@ class ComiteController extends Controller
             $comite->update($data);
 
             $dataLog = [
+                //'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
                 'descripcion' => 'Se actualizo registro comité - ' . $comite->id,
-                'accion' => 'Update',
+                'accion' => 'Update', //Add, Update, Delete
                 'ip' => '',
                 'user_id' => auth()->user()->id,
             ];
