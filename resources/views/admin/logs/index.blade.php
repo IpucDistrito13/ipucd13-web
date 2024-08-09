@@ -43,9 +43,10 @@
                     <tr>
                         <th class="counter-column">#</th>
                         <th>Descripcion</th>
-                        <th>Accioón</th>
+                        <th>Acción</th>
+                        <th>Fecha</th>
                         <th>Ip</th>
-                        <th>User Id</th>
+                        <th>User</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +58,7 @@
                             <td>{{ $log->id }}</td>
                             <td>{{ $log->descripcion }}</td>
                             <td>{{ $log->accion }}</td>
+                            <td>{{ $log->created_at->format('Y-m-d h:i a') }}</td>
                             <td>{{ $log->ip }}</td>
                             <td>{{ $log->user->name }}</td>                            
 

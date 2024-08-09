@@ -58,36 +58,39 @@ class CongregacionController extends Controller
                 'estado' => 'Activo',
             ]);
 
-            $dataLog = [
-                'descripcion' => 'Se registro nueva congregación - ' . $congregacion->id,
-                'accion' => 'Add', //Add, Update, Delete
-                'ip' => '',
-                'user_id' => auth()->user()->id,
-            ];
+            if (auth()->user()->id !=  "1") {
 
-            $log = ModelsLog::create($dataLog);
-    
+                $dataLog = [
+                    'descripcion' => 'Se registro nueva congregación - ' . $congregacion->id,
+                    'accion' => 'Add', //Add, Update, Delete
+                    'ip' => '',
+                    'user_id' => auth()->user()->id,
+                ];
+
+                $log = ModelsLog::create($dataLog);
+            }
+
             // Elimina las variables almacenadas en cache
+            DB::commit();
             Cache::flush();
-    
+
             $data = [
                 'message' => 'Congregación creada exitosamente.',
             ];
-    
-            DB::commit();
+
             return redirect()->route('admin.congregaciones.index')->with('success', $data['message']);
         } catch (\Exception $e) {
             DB::rollback();
             Log::error('Error en store - Congregacion: ' . $e->getMessage());
-    
+
             $data = [
                 'message' => 'No se pudo crear la congregación, por favor intente nuevamente.',
             ];
-    
+
             return redirect()->route('admin.congregaciones.index')->with('error', $data['message']);
         }
     }
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -109,7 +112,7 @@ class CongregacionController extends Controller
         DB::beginTransaction();
         try {
             // Actualiza los datos de la congregación
-              $congregacion->update([
+            $congregacion->update([
                 'municipio_id' => $request->municipio,
                 'longitud' => $request->longitud,
                 'latitud' => $request->latitud,
@@ -119,37 +122,42 @@ class CongregacionController extends Controller
                 'googlemaps' => $request->googlemaps,
             ]);
 
-            $dataLog = [
-                //'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
-                'descripcion' => 'Se actualizo registro congregación - ' . $congregacion->id,
-                'accion' => 'Update', //Add, Update, Delete
-                'ip' => '',
-                'user_id' => auth()->user()->id,
-            ];
+            if (auth()->user()->id !=  "1") {
 
-            $log = ModelsLog::create($dataLog);
-    
+                $dataLog = [
+                    //'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
+                    'descripcion' => 'Se actualizo registro congregación - ' . $congregacion->id,
+                    'accion' => 'Update', //Add, Update, Delete
+                    'ip' => '',
+                    'user_id' => auth()->user()->id,
+                ];
+
+                $log = ModelsLog::create($dataLog);
+            }
+
+
+
             // Elimina las variables almacenadas en cache
             Cache::flush();
-    
+            DB::commit();
+
             $data = [
                 'message' => 'Congregación actualizada exitosamente.',
             ];
-    
-            DB::commit();
+
             return redirect()->route('admin.congregaciones.edit', $congregacion)->with('success', $data['message']);
         } catch (\Exception $e) {
             DB::rollback();
             Log::error('Error en update - Congregacion: ' . $e->getMessage());
-    
+
             $data = [
                 'message' => 'No se pudo actualizar la congregación, por favor intente nuevamente.',
             ];
-    
+
             return redirect()->route('admin.congregaciones.edit', $congregacion)->with('error', $data['message']);
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

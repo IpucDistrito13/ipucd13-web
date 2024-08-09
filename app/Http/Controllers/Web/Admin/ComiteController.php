@@ -200,7 +200,7 @@ class ComiteController extends Controller
             $log = ModelsLog::create($dataLog);
 
             $dataLog = [
-                'descripcion' => 'Actualiza registro comité - ' . $comite->id,
+                'descripcion' => 'Se actualiza registro comité - ' . $comite->id,
                 'accion' => 'Update',
                 'ip' => '',
                 'user_id' => auth()->user()->id,
