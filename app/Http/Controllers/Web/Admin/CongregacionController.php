@@ -61,7 +61,7 @@ class CongregacionController extends Controller
 
 
             $dataLog = [
-                'descripcion' => 'Add - CONGREGACION - ' . $congregacion->id,
+                'descripcion' => 'ADD - CONGREGACION - ' . $congregacion->id,
                 'accion' => 'Add', //Add, Update, Delete
                 'ip' => '',
                 'user_id' => auth()->user()->id,

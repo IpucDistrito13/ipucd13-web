@@ -87,24 +87,13 @@ class ComiteController extends Controller
             $comite = Comite::create($data);
 
             $dataLog = [
-                'descripcion' => 'Add - COMITE - ' . $comite->id,
+                'descripcion' => 'ADD - COMITE - ' . $comite->id,
                 'accion' => 'Add',
                 'ip' => '',
                 'user_id' => auth()->user()->id,
             ];
 
              ModelsLog::create($dataLog);
-
-            /*
-            $dataLog = [
-                'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
-                'accion' => 'Add',
-                'ip' => '',
-                'user_id' => auth()->user()->id,
-            ];
-
-            $log = ModelsLog::create($dataLog);
-            */
 
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
@@ -201,7 +190,7 @@ class ComiteController extends Controller
             $comite->update($data);
 
             $dataLog = [
-                'descripcion' => 'Update - COMITE - ' . $comite->id,
+                'descripcion' => 'UPDATE - COMITE - ' . $comite->id,
                 'accion' => 'Update',
                 'ip' => '',
                 'user_id' => auth()->user()->id,
