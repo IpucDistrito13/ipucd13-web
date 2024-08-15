@@ -86,6 +86,15 @@ class ComiteController extends Controller
             // Crear el comité
             $comite = Comite::create($data);
 
+            $dataLog = [
+                'descripcion' => 'Add - COMITE - ' . $comite->id,
+                'accion' => 'Add',
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ];
+
+             ModelsLog::create($dataLog);
+
             /*
             $dataLog = [
                 'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
@@ -192,9 +201,9 @@ class ComiteController extends Controller
             $comite->update($data);
 
             $dataLog = [
-                'descripcion' => 'Se actualiza registro comité - ' . $comite->id,
+                'descripcion' => 'Update - COMITE - ' . $comite->id,
                 'accion' => 'Update',
-                'ip' => $request->ip(), // Opcional: obtener la IP real del request
+                'ip' => '',
                 'user_id' => auth()->user()->id,
             ];
 

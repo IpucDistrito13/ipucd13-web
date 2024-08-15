@@ -58,19 +58,18 @@ class CongregacionController extends Controller
                 'estado' => 'Activo',
             ]);
 
-            /*
-            if (auth()->user()->id !=  "1") {
 
-                $dataLog = [
-                    'descripcion' => 'Se registro nueva congregación - ' . $congregacion->id,
-                    'accion' => 'Add', //Add, Update, Delete
-                    'ip' => '',
-                    'user_id' => auth()->user()->id,
-                ];
 
-                $log = ModelsLog::create($dataLog);
-            }
-                */
+            $dataLog = [
+                'descripcion' => 'Add - CONGREGACION - ' . $congregacion->id,
+                'accion' => 'Add', //Add, Update, Delete
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ];
+
+            $log = ModelsLog::create($dataLog);
+
+
 
             // Elimina las variables almacenadas en cache
             DB::commit();
@@ -124,20 +123,18 @@ class CongregacionController extends Controller
                 'googlemaps' => $request->googlemaps,
             ]);
 
-            /*
-            if (auth()->user()->id !=  "1") {
 
-                $dataLog = [
-                    //'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
-                    'descripcion' => 'Se actualizo registro congregación - ' . $congregacion->id,
-                    'accion' => 'Update', //Add, Update, Delete
-                    'ip' => '',
-                    'user_id' => auth()->user()->id,
-                ];
+            $dataLog = [
+                //'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
+                'descripcion' => 'UPDATE - CONGREGACION - ' . $congregacion->id,
+                'accion' => 'Update', //Add, Update, Delete
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ];
 
-                $log = ModelsLog::create($dataLog);
-            }
-                */
+            $log = ModelsLog::create($dataLog);
+
+
 
 
 
