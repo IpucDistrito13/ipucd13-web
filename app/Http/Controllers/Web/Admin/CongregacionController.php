@@ -135,9 +135,6 @@ class CongregacionController extends Controller
             $log = ModelsLog::create($dataLog);
 
 
-
-
-
             // Elimina las variables almacenadas en cache
             Cache::flush();
             DB::commit();

@@ -40,6 +40,7 @@ class ComiteRequest extends FormRequest
             $rules['imagen_banner'] = 'nullable|image|dimensions:width=1920,height=500';
             $rules['banner_little'] = 'nullable|image|dimensions:width=600,height=144';
 
+
         }
 
         return $rules;
