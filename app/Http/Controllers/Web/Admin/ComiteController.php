@@ -194,7 +194,7 @@ class ComiteController extends Controller
             $dataLog = [
                 'descripcion' => 'Se actualiza registro comité - ' . $comite->id,
                 'accion' => 'Update',
-                'ip' => '',
+                'ip' => $request->ip(), // Opcional: obtener la IP real del request
                 'user_id' => auth()->user()->id,
             ];
 
