@@ -191,7 +191,6 @@ class ComiteController extends Controller
 
             $comite->update($data);
 
-            /*
             $dataLog = [
                 'descripcion' => 'Se actualiza registro comité - ' . $comite->id,
                 'accion' => 'Update',
@@ -199,8 +198,8 @@ class ComiteController extends Controller
                 'user_id' => auth()->user()->id,
             ];
 
-            $log = ModelsLog::create($dataLog);
-            */
+             ModelsLog::create($dataLog);
+            
 
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
