@@ -58,6 +58,7 @@ class CongregacionController extends Controller
                 'estado' => 'Activo',
             ]);
 
+            /*
             if (auth()->user()->id !=  "1") {
 
                 $dataLog = [
@@ -69,6 +70,7 @@ class CongregacionController extends Controller
 
                 $log = ModelsLog::create($dataLog);
             }
+                */
 
             // Elimina las variables almacenadas en cache
             DB::commit();
@@ -122,6 +124,7 @@ class CongregacionController extends Controller
                 'googlemaps' => $request->googlemaps,
             ]);
 
+            /*
             if (auth()->user()->id !=  "1") {
 
                 $dataLog = [
@@ -134,6 +137,7 @@ class CongregacionController extends Controller
 
                 $log = ModelsLog::create($dataLog);
             }
+                */
 
 
 
