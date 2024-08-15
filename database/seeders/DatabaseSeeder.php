@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([DepartamentoSeeder::class]);//REQUERIDO EN PRODUCCION
         $this->call([MunicipioSeeder::class]);//REQUERIDO EN PRODUCCION
-        \App\Models\Congregacion::factory(1)->create();
+        \App\Models\Congregacion::factory(5)->create();
 
         User::factory()->create([
             'name' => 'Desarrollo Ipuc',

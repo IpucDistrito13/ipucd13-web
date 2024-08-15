@@ -86,6 +86,7 @@ class ComiteController extends Controller
             // Crear el comité
             $comite = Comite::create($data);
 
+            /*
             $dataLog = [
                 'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
                 'accion' => 'Add',
@@ -94,6 +95,7 @@ class ComiteController extends Controller
             ];
 
             $log = ModelsLog::create($dataLog);
+            */
 
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
