@@ -69,7 +69,7 @@ class PermisoController extends Controller
      */
     public function store(PermisoRequest $request)
     {
-        return $request;   
+        //return $request;   
         DB::beginTransaction();
 
         try {
