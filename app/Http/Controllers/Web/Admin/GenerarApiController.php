@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GenerarKeyApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB; // Asegúrate de incluir esta importación si no está ya
 
 
 class GenerarApiController extends Controller
@@ -35,6 +36,7 @@ class GenerarApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function store(Request $request)
     {
         // Iniciar una transacción
         DB::beginTransaction();
