@@ -11,6 +11,9 @@ class GenerarKeyApi extends Model
     protected $fillable = ['apikey', 'descripcion', 'tipo'];
     protected $table = 'generar_apis';
 
-    
+    public function scopeValidarKeyApi( $query,  $apiKey)
+    {
+        return $query->where('apikey', $apiKey);
+    }
 
 }

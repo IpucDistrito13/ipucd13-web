@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ComiteCollection;
 use App\Models\Comite;
+use App\Models\GenerarKeyApi;
 use Illuminate\Http\Request;
 
 class ComiteController extends Controller
@@ -14,18 +15,24 @@ class ComiteController extends Controller
      */
     public function index(Request $request)
     {
-       // return 'Hola v2';
         // Obtener la clave API del parámetro
         $apiKey = $request->query('api_key');
 
-        // Verificar la clave API (esto es solo un ejemplo, personaliza según tus necesidades)
-        if ($apiKey !== 'test') {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        //  $apiKeyExists = GenerarKeyApi::where('apikey', $apiKey)->exists();
+
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
         }
 
         // Obtener los parámetros limit y offset de la URL
-        $limit = $request->query('limit', 10); 
-        $offset = $request->query('offset', 0); 
+        $limit = $request->query('limit', 10);
+        $offset = $request->query('offset', 0);
 
         // Obtener los comités con los parámetros de limit y offset
         $comites = Comite::orderBy('id', 'asc')
