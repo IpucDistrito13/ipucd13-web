@@ -53,8 +53,7 @@ Route::get('solicitudes/download/{solicitudId}', [SolicitudController::class, 'd
 Route::get('solicitudes/pendientes', [SolicitudController::class, 'pendientes'])->name('admin.solicitudes.pendientes');
 Route::get('solicitudes/respondidas', [SolicitudController::class, 'respondidas'])->name('admin.solicitudes.respondidas');
 //Route::get('solicitudes/download/{solicitudId}', [SolicitudController::class, 'download'])->name('admin.solicitudes.download');// CREAR NUEVO EPISODIO
-Route::get('certificado/bautismo', [CertificadoController::class, 'certificadoBautismo'])->name('admin.certificado.bautismo');
-Route::post('certificado/bautismo/download', [CertificadoController::class, 'downloadCertificadoBautismo'])->name('admin.certificado.bautismo.download');
+
 
 Route::resource('solicitudes', SolicitudController::class)->names('admin.solicitudes')->parameters([
     'solicitudes' => 'solicitud',
@@ -202,4 +201,18 @@ Route::delete('permissions/{permission}', [PermisoController::class, 'destroy'])
 Route::resource('logs', LogController::class)->names('admin.logs');
 
 Route::resource('keyapis', GenerarApiController::class)->names('admin.keyapis');
+
+
+Route::get('certificado/bautismo', [CertificadoController::class, 'certificadoBautismo'])
+    ->name('admin.certificado.bautismo');
+
+Route::post('certificado/bautismo/download', [CertificadoController::class, 'downloadCertificadoBautismo'])
+    ->name('admin.certificado.bautismo.download');
+
+
+Route::get('diploma/bautismo', [CertificadoController::class, 'diplomaBautismo'])
+    ->name('admin.diploma.bautismo');
+
+Route::post('diploma/bautismo/download', [CertificadoController::class, 'downloadDiplomaBautismo'])
+    ->name('admin.diploma.bautismo.download');
 

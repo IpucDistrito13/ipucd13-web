@@ -22,6 +22,11 @@ class CertificadoController extends Controller
         return view('admin.certificados.bautismos.index');
     }
 
+    public function diplomaBautismo()
+    {
+        return view('admin.certificados.diploma-bautismo.index');
+    }
+
     public function downloadCertificadoBautismo(CertificadoBautismoRequest $request)
     {
         $nombre = $request->nombre;
@@ -69,6 +74,10 @@ class CertificadoController extends Controller
         exit;
     }
     
+    public function downloadDiplomaBautismo()
+    {
+        return 'Se requiere la imagen';
+    }
 
 
 

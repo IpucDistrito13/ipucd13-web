@@ -397,6 +397,11 @@ return [
                     'route' => 'admin.certificado.bautismo',
                     //'can' => 'admin.solicitudes.respondidas'
                 ],
+                [
+                    'text' => 'Diploma de bautismo',
+                    'route' => 'admin.diploma.bautismo',
+                    //'can' => 'admin.solicitudes.respondidas'
+                ],
 
             ],
         ],
