@@ -4,9 +4,9 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Lista de Apis</h1>
-        @can('admin.apis.create')
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.roles.create') }}">
+        <h1 style="margin: 0;">Lista de KEY_API</h1>
+        @can('admin.keyapis.create')
+            <a class="btn btn-primary btn-sm" href="{{ route('admin.keyapis.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista de apis
+                Lista de key api
             </span>
         </div>
         <!-- /.card-header -->
@@ -62,7 +62,7 @@
                         <tr>
                             <td>{{ $api->id }}</td>
                             <td>{{ $api->apikey }}</td>
-                            <td>{{ $rapi->descripcion }}</td>
+                            <td>{{ $api->descripcion }}</td>
                             <td>{{ $api->tipo }}</td>
                             <td>{{ $api->created_at->format('Y-m-d h:i a') }}</td>
                             <th></th>

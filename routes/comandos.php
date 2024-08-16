@@ -32,6 +32,8 @@ php artisan migrate:fresh --seed
 // CREA CONTROLADOR CON METODOS
 php artisan make:controller Web/Admin/RolController -r
 
+php artisan make:controller Api/V2/ComiteController -r
+
 // CREA RECURSO
 
 php artisan make:resource UserResource

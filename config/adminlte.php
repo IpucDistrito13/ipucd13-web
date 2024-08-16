@@ -334,10 +334,10 @@ return [
         ],
 
         [
-            'text' => 'APIS',
-            'route' => 'admin.apis.index',
+            'text' => 'KEYS',
+            'route' => 'admin.keyapis.index',
             'icon' => 'fas fa-code-branch',
-            'active' => ['admin/apis*'],
+            'active' => ['admin/keyapis*'],
             //'can' => 'admin.apis.index',
         ],
 

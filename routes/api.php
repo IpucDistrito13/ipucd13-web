@@ -40,3 +40,9 @@ Route::prefix('v1')->group(function () {
 
 });
 
+
+Route::prefix('v2')->group(function () {
+
+    require __DIR__ . '/api_v2.php';
+
+});

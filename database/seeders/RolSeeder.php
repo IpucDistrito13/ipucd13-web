@@ -162,6 +162,12 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'developer.permissions.store', 'descripcion' => 'Guardar permiso'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'developer.permissions.edit', 'descripcion' => 'Editar permiso'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'developer.permissions.destroy', 'descripcion' => 'Eliminar permiso'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'admin.keyapis.index', 'descripcion' => 'Ver listado de keyapis'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.keyapis.create', 'descripcion' => 'Crear keyapi'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.keyapis.store', 'descripcion' => 'Guardar keyapi'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.keyapis.edit', 'descripcion' => 'Editar keyapi'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.keyapis.destroy', 'descripcion' => 'Eliminar keyapi'])->syncRoles([$rol1]);
     
     }
 

@@ -201,5 +201,5 @@ Route::delete('permissions/{permission}', [PermisoController::class, 'destroy'])
 
 Route::resource('logs', LogController::class)->names('admin.logs');
 
-Route::resource('apis', GenerarApiController::class)->names('admin.apis');
+Route::resource('keyapis', GenerarApiController::class)->names('admin.keyapis');
 

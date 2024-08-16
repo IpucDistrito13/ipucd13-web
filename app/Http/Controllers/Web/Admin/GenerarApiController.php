@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\GenerarApi;
+use App\Models\GenerarKeyApi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class GenerarApiController extends Controller
 {
@@ -13,7 +15,7 @@ class GenerarApiController extends Controller
      */
     public function index()
     {
-        $apis = GenerarApi::all();
+        $apis = GenerarKeyApi::all();
         return view('admin.apis.index', [
             'apis' => $apis,
         ]);
@@ -24,7 +26,10 @@ class GenerarApiController extends Controller
      */
     public function create()
     {
-        //
+        // $apiKey =  Str::random(32); // Genera una cadena aleatoria de 32 caracteres
+        return view('admin.apis.create', [
+            //'apiKey' => $apiKey
+        ]);
     }
 
     /**
@@ -32,7 +37,15 @@ class GenerarApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $apiKey =  Str::random(32);
+        $data = [
+            'apikey' => $apiKey,
+            'descripcion' => $request->descripcion,
+            'tipo' => $request->tipo
+        ];
+
+        GenerarKeyApi::create($data);
     }
 
     /**
