@@ -35,17 +35,40 @@ class GenerarApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
     {
-
-        $apiKey =  Str::random(32);
-        $data = [
-            'apikey' => $apiKey,
-            'descripcion' => $request->descripcion,
-            'tipo' => $request->tipo
-        ];
-
-        GenerarKeyApi::create($data);
+        // Iniciar una transacción
+        DB::beginTransaction();
+    
+        try {
+            // Generar la clave API
+            $apiKey = Str::random(32);
+    
+            // Preparar los datos para la inserción
+            $data = [
+                'apikey' => $apiKey,
+                'descripcion' => $request->descripcion,
+                'tipo' => $request->tipo
+            ];
+    
+            // Crear el registro en la base de datos
+            GenerarKeyApi::create($data);
+    
+            // Confirmar la transacción
+            DB::commit();
+    
+            // Redirigir con un mensaje de éxito
+            return redirect()->route('admin.keyapis.index')
+                             ->with('success', 'Permiso creado y asignado exitosamente.');
+    
+        } catch (\Exception $e) {
+            // Deshacer la transacción en caso de error
+            DB::rollBack();
+    
+            // Registrar el error y redirigir con un mensaje de error
+            Log::error('Error en store - GenerarKeyApi: ' . $e->getMessage());
+    
+            return redirect()->back()->with('error', 'Ocurrió un error al crear la clave API.');
+        }
     }
 
     /**
