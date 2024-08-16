@@ -4,9 +4,9 @@
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Desarrollo - Routing permissions</h1>
-        @can('admin.solicitud_tipos.create')
-            <a class="btn btn-primary btn-sm" href="{{ route('developer.permissions.create') }}">
+        <h1 style="margin: 0;">Lista de Apis</h1>
+        @can('admin.apis.create')
+            <a class="btn btn-primary btn-sm" href="{{ route('admin.roles.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                List of Routing permissions
+                Lista de apis
             </span>
         </div>
         <!-- /.card-header -->
@@ -47,10 +47,10 @@
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
-                        <th>Name</th>
+                        <th>Api</th>
                         <th>Descripcion</th>
-                        <th>Guard_name</th>
-                        <th>Rol</th>
+                        <th>Tipo</th>
+                        <th>Fecha</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -58,17 +58,15 @@
                     @php
                         $contador = 0;
                     @endphp
-                    @foreach ($permisos as $item)
+                    @foreach ($apis as $api)
                         <tr>
-                            <td style="text-align: center">{{ ++$contador }}</td>
-
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->descripcion	 }}</td>
-                            <td>{{ $item->guard_name	 }}</td>
-                            <td>{{ $item->role_names	 }}</td>
-                            <td>
-                                
-                            </td>
+                            <td>{{ $api->id }}</td>
+                            <td>{{ $api->apikey }}</td>
+                            <td>{{ $rapi->descripcion }}</td>
+                            <td>{{ $api->tipo }}</td>
+                            <td>{{ $api->created_at->format('Y-m-d h:i a') }}</td>
+                            <th></th>
+                            
 
                         </tr>
                     @endforeach
@@ -88,7 +86,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap4.min.css">
     <style>
         .acciones-column {
-            width: 100px;
+            width: 150px;
         }
 
         .counter-column {
@@ -114,7 +112,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-
         $(function() {
             $("#datatable").DataTable({
                 "responsive": true,
@@ -122,26 +119,24 @@
                 "autoWidth": false,
 
                 language: {
-                processing: "Procesando...",
-                lengthMenu: "Mostrar _MENU_ registros por página",
-                zeroRecords: "No se encontraron registros en el sistema...",
-                info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
-                infoEmpty: "No hay registros disponibles",
-                infoFiltered: "(filtrado de _MAX_ registros totales)",
-                search: "Buscar",
-                paginate: {
-                    next: "Siguiente",
-                    previous: "Anterior"
+                    processing: "Procesando...",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron registros en el sistema...",
+                    info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar",
+                    paginate: {
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    },
+                    emptyTable: "No hay datos disponibles en la tabla"
                 },
-                emptyTable: "No hay datos disponibles en la tabla"
-            },
-        })
-    });
+            })
+        });
 
-    function redirectUpdate(url) {
+        function redirectUpdate(url) {
             window.location.href = url;
         }
-
-
     </script>
 @stop

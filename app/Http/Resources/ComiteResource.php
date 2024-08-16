@@ -18,7 +18,7 @@ class ComiteResource extends JsonResource
             'id' => $this->id,
             'type' => 'comite',
             'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
+            //'descripcion' => $this->descripcion,
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
             'imagenbanner' => $this->imagen_banner,
 

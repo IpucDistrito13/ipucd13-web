@@ -25,6 +25,8 @@ class PermisoRequest extends FormRequest
             'name' => 'required|max:250',
             'descripcion' => 'required|max:250',
             'guard_name' => 'required|in:web,api',
+            'roles' => 'required|array|min:1', // Asegura que al menos un rol esté seleccionado
+            'roles.*' => 'exists:roles,id', // Valida que cada rol seleccionado exista en la tabla de roles
         ];
     }
 }

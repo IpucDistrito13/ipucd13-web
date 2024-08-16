@@ -156,6 +156,12 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.lideres.store', 'descripcion' => 'Guardar líder'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.lideres.edit', 'descripcion' => 'Editar líder'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.lideres.destroy', 'descripcion' => 'Eliminar líder'])->syncRoles([$rol1]);
+
+        $permission = Permission::create(['name' => 'developer.permissions.index', 'descripcion' => 'Ver listado de permisos'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'developer.permissions.create', 'descripcion' => 'Crear permiso'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'developer.permissions.store', 'descripcion' => 'Guardar permiso'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'developer.permissions.edit', 'descripcion' => 'Editar permiso'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'developer.permissions.destroy', 'descripcion' => 'Eliminar permiso'])->syncRoles([$rol1]);
     
     }
 

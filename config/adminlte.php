@@ -334,6 +334,14 @@ return [
         ],
 
         [
+            'text' => 'APIS',
+            'route' => 'admin.apis.index',
+            'icon' => 'fas fa-code-branch',
+            'active' => ['admin/apis*'],
+            //'can' => 'admin.apis.index',
+        ],
+
+        [
             'header' => 'ADMINISTRADOR',
             'can' => 'admin.roles.index'
         ],
@@ -506,7 +514,7 @@ return [
             'icon' => 'fas fa-globe',
             //'can' => 'admin.solicitudes.respondidas'
         ],
-        
+
 
         [
             'text' => ' Eventos',
@@ -533,7 +541,7 @@ return [
             'text' => 'Directorio D13',
             'icon' => 'fas fa-cloud-download-alt',
             'submenu' => [
-               
+
                 [
                     'text' => 'Pastores',
                     'route' => 'admin.usuarios.directorioPastores',
@@ -546,7 +554,7 @@ return [
                 ],
 
             ],
-        ],       
+        ],
 
         [
             'text' => 'profile',

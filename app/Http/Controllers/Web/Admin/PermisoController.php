@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Spatie\Permission\Models\Role;
+
+
 
 class PermisoController extends Controller
 {
@@ -16,26 +19,49 @@ class PermisoController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        /*
-        $permisos = \DB::table("permissions")->get();
-        return view('admin.permissions.index', [
-            'permisos' => $permisos,
-        ]);
-        */
+{
+    $permisos = DB::table('permissions as p')
+        ->join('role_has_permissions as rp', 'p.id', '=', 'rp.permission_id')
+        ->join('roles as r', 'r.id', '=', 'rp.role_id')
+        ->select(
+            'p.id',
+            'p.name',
+            'p.descripcion',
+            'p.guard_name',
+            'p.created_at',
+            DB::raw('GROUP_CONCAT(r.name ORDER BY r.name SEPARATOR ", ") as role_names')
+        )
+        ->groupBy('p.id', 'p.name', 'p.descripcion')
+        ->orderBy('p.created_at', 'desc')
+        ->get();
 
-        $permisos = Permission::all(); // Usa el modelo Eloquent para obtener los permisos
-        return view('admin.permissions.index', [
-            'permisos' => $permisos,
-        ]);
+    return view('admin.permissions.index', [
+        'permisos' => $permisos,
+    ]);
+}
+
+
+     /*
+    public function index()
+    {
+        // Obtener permisos desde la vista
+        $permisos = DB::table('permisos_con_roles')->get();
+
+        // Pasar la variable a la vista usando compact
+        return view('admin.permissions.index', compact('permisos'));
     }
+    */
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('admin.permissions.create');
+        $roles = Role::all();
+        return view('admin.permissions.create', [
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -43,39 +69,52 @@ class PermisoController extends Controller
      */
     public function store(PermisoRequest $request)
     {
-        //return $request;
+        //return $request;   
         DB::beginTransaction();
 
         try {
-
-            $data = Permission::create([
+            // Crea el nuevo permiso
+            $permission = Permission::create([
                 'name' => $request->name,
                 'descripcion' => $request->descripcion,
                 'guard_name' => $request->guard_name,
-
             ]);
 
-            // Elimina datos cache
+
+            // Obtén los IDs de roles seleccionados
+            $roleIds = $request->input('roles', []);
+
+            // Asigna el permiso a los roles seleccionados
+            foreach ($roleIds as $roleId) {
+                DB::table('role_has_permissions')->insert([
+                    'permission_id' => $permission->id,
+                    'role_id' => $roleId,
+                ]);
+            }
+
+            // Elimina datos de cache
             Cache::flush();
             DB::commit();
 
-            return redirect()->route('developer.permissions.index')->with('success', $data['message']);
+            return redirect()->route('developer.permissions.index')->with('success', 'Permiso creado y asignado exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Error  store - Permiso: ' . $e->getMessage());
+            Log::error('Error en store - Permiso: ' . $e->getMessage());
 
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
+
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Permission $permiso)
+    public function edit(Permission $permission)
     {
         //$permiso;
         return view('admin.permissions.edit', [
-            'permiso' => $permiso,
+            'permiso' => $permission,
         ]);
     }
 
@@ -86,9 +125,9 @@ class PermisoController extends Controller
     {
 
         //return $request;
-    
+
         DB::beginTransaction();
-    
+
         try {
             // Actualizar los datos del permiso
             $permiso->update([
@@ -96,22 +135,22 @@ class PermisoController extends Controller
                 'descripcion' => $request->descripcion,
                 'guard_name' => $request->guard_name,
             ]);
-    
+
             // Limpiar la caché
             Cache::flush();
             DB::commit();
-    
+
             // Redirigir con un mensaje de éxito
             return redirect()->route('developer.permissions.index')->with('success', 'Permiso actualizado exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error update - Permiso: ' . $e->getMessage());
-    
+
             // Redirigir con un mensaje de error
             return redirect()->back()->with(['error' => 'No se pudo actualizar el permiso. Por favor, intente de nuevo.']);
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -139,3 +178,24 @@ class PermisoController extends Controller
         }
     }
 }
+
+
+/*
+
+CREATE VIEW permisos_con_roles AS
+SELECT 
+    p.id,
+    p.name,
+    p.descripcion,
+    p.guard_name,
+    GROUP_CONCAT(r.name ORDER BY r.name SEPARATOR ', ') AS role_names
+FROM 
+    permissions p
+JOIN 
+    role_has_permissions rp ON p.id = rp.permission_id
+JOIN 
+    roles r ON r.id = rp.role_id
+GROUP BY 
+    p.id, p.name, p.descripcion, p.guard_name;
+
+    */
