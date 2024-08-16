@@ -65,6 +65,12 @@ return [
             'model' => App\Models\User::class,
         ],
 
+        'permissions' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Permission::class, // Registra aquí tu modelo personalizado de Permission
+        ],
+
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
