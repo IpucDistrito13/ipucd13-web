@@ -77,7 +77,7 @@ class PermisoController extends Controller
             $permission = Permission::create([
                 'name' => $request->name,
                 'descripcion' => $request->descripcion,
-                'guard_name' => $request->guard_name,
+                'guard_name' => 'web',
             ]);
 
 
