@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use Vendor\Permission\Models\Permission as OriginalPermission;
+//use Vendor\Permission\Models\Permission as OriginalPermission;
+use Spatie\Permission\Models\Permission as OriginalPermission;
 
 
 class Permission extends OriginalPermission
