@@ -11,10 +11,8 @@ use Vendor\Permission\Models\Permission as OriginalPermission;
 class Permission extends OriginalPermission
 {
     use HasFactory;
-    protected $fillable = [
-        'description',
-        'guard_name',
-        'roles',
-    ];
+
+
+    protected $fillable = ['name', 'slug', 'http_method', 'http_path', 'descripcion', 'guard_name', 'roles'];
 
 }
