@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ComiteCollection;
+use App\Http\Resources\ComiteResource;
 use App\Models\Comite;
 use App\Models\GenerarKeyApi;
 use Illuminate\Http\Request;
@@ -62,10 +63,38 @@ class ComiteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, $id)
     {
-        //
+        //return 'show v2';
+        // Obtener la clave API del parámetro
+        //return $id;
+         $apiKey = $request->query('api_key');
+    
+        // Validar si la clave API es válida
+         $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+    
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+    
+        // Obtener el comité por ID
+        $comite = Comite::find($id);
+    
+        // Si no se encuentra el comité, devolver un mensaje de error con el código de estado 404
+        if (!$comite) {
+            return response()->json([
+                'error' => 'No encontrado',
+                'message' => 'El comité solicitado no existe.'
+            ], 404);
+        }
+    
+        return new ComiteResource($comite);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
