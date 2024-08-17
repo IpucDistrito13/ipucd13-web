@@ -18,14 +18,14 @@ class ComiteResource extends JsonResource
             'id' => $this->id,
             'type' => 'comite',
             'nombre' => $this->nombre,
-            //'descripcion' => $this->descripcion,
+            'descripcion' => $this->descripcion,
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
             'imagenbanner' => $this->imagen_banner,
 
-            'leader' => LiderSimpleResource::collection($this->whenLoaded('lideres')),
-            'podcasts' => PodcastSimpleResource::collection($this->whenLoaded('podcasts')),
-            'series' => SerieSimpleResource::collection($this->whenLoaded('series')),
-            'informes' => InformeSimpleResource::collection($this->whenLoaded('publicaciones')),
+            //'leader' => LiderSimpleResource::collection($this->whenLoaded('lideres')),
+            //'podcasts' => PodcastSimpleResource::collection($this->whenLoaded('podcasts')),
+            //'series' => SerieSimpleResource::collection($this->whenLoaded('series')),
+            //'informes' => InformeSimpleResource::collection($this->whenLoaded('publicaciones')),
 
 
 
