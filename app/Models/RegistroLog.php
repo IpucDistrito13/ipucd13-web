@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Log extends Model
+class RegistroLog extends Model
 {
     use HasFactory;
     protected $fillable = ['descripcion', 'accion', 'ip', 'user_id'];

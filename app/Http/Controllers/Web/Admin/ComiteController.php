@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ComiteRequest;
 use App\Models\Comite;
-use App\Models\Log as ModelsLog;
+use App\Models\RegistroLog;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -178,15 +178,15 @@ class ComiteController extends Controller
                 'banner_little' => $mini_banner,
             ]);
 
-            /*
+            
             // Registro en log
-            ModelsLog::create([
+            RegistroLog::create([
                 'descripcion' => 'UPDATE - COMITE - ' . $comite->id,
                 'accion' => 'Update',
                 'ip' => $request->ip(),
                 'user_id' => auth()->user()->id,
             ]);
-            */
+            
     
             // Manejo del archivo
             if ($request->hasFile('file')) {
