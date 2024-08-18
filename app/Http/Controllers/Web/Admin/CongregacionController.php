@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Web\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CongregacionRequest;
 use App\Models\Congregacion;
-use App\Models\Log as ModelsLog;
 use App\Models\Municipio;
+use App\Models\RegistroLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -67,9 +67,13 @@ class CongregacionController extends Controller
                 'user_id' => auth()->user()->id,
             ];
 
-            $log = ModelsLog::create($dataLog);
-
-
+            // Registro en log
+            RegistroLog::create([
+                'descripcion' => 'ADD - CONGREGACION - ' .  $congregacion->id,
+                'accion' => 'Add',
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ]);
 
             // Elimina las variables almacenadas en cache
             DB::commit();
@@ -123,17 +127,13 @@ class CongregacionController extends Controller
                 'googlemaps' => $request->googlemaps,
             ]);
 
-
-            $dataLog = [
-                //'descripcion' => 'Se registro nuevo comité - ' . $comite->id,
+            // Registro en log
+            RegistroLog::create([
                 'descripcion' => 'UPDATE - CONGREGACION - ' . $congregacion->id,
-                'accion' => 'Update', //Add, Update, Delete
-                'ip' => '',
+                'accion' => 'Update',
+                'ip' => $request->ip(),
                 'user_id' => auth()->user()->id,
-            ];
-
-            $log = ModelsLog::create($dataLog);
-
+            ]);
 
             // Elimina las variables almacenadas en cache
             Cache::flush();

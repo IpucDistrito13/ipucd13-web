@@ -9,6 +9,7 @@ class RegistroLog extends Model
 {
     use HasFactory;
     protected $fillable = ['descripcion', 'accion', 'ip', 'user_id'];
+    protected $table ='logs';
 
     public function user()
     {
