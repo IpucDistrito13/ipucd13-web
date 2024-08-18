@@ -141,105 +141,84 @@ class ComiteController extends Controller
      */
     public function update(ComiteRequest $request, Comite $comite)
     {
-        //return $request->banner_little;
         try {
-            // Iniciar una transacción de base de datos
             DB::beginTransaction();
-
+    
             $url_banner = $comite->imagen_banner;
-
-
-            // Verificar si se cargó un nuevo banner
+            $mini_banner = $comite->banner_little;
+    
+            // Manejo del banner
             if ($request->hasFile('imagen_banner')) {
-
                 $fileBanner = $request->file('imagen_banner');
                 $ubicacionBanner = 'public/comites/banner';
-
                 $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
-
-                // Eliminar el banner anterior si existe
+    
                 if ($comite->imagen_banner) {
                     Storage::delete($comite->imagen_banner);
                 }
             }
-
-            $mini_banner = $comite->banner_little;
-
-            // Verificar si se cargó mini banner
+    
+            // Manejo del mini banner
             if ($request->hasFile('banner_little')) {
-
                 $fileMiniBanner = $request->file('banner_little');
                 $ubicacionBanner = 'public/comites/banner';
-
                 $mini_banner = $this->storeFile($fileMiniBanner, $ubicacionBanner);
-
-                // Eliminar el banner anterior si existe
-                if ($comite->mini_banner) {
-                    Storage::delete($comite->mini_banner);
+    
+                if ($comite->banner_little) {
+                    Storage::delete($comite->banner_little);
                 }
             }
-
-            $data = [
+    
+            // Actualizar el comité
+            $comite->update([
                 'nombre' => $request->nombre,
                 'slug' => $request->slug,
                 'descripcion' => $request->descripcion,
                 'imagen_banner' => $url_banner,
                 'banner_little' => $mini_banner,
-            ];
-
-            $comite->update($data);
-
-            $dataLog = [
+            ]);
+    
+            // Registro en log
+            ModelsLog::create([
                 'descripcion' => 'UPDATE - COMITE - ' . $comite->id,
                 'accion' => 'Update',
-                'ip' => '',
+                'ip' => $request->ip(),
                 'user_id' => auth()->user()->id,
-            ];
-
-             ModelsLog::create($dataLog);
-            
-
-            // Verificar si se cargó un nuevo archivo
+            ]);
+    
+            // Manejo del archivo
             if ($request->hasFile('file')) {
                 $filePortada = $request->file('file');
                 $ubicacionPortada = 'public/comites/portadas';
                 $url = $this->storeFile($filePortada, $ubicacionPortada);
-
+    
                 if ($comite->imagen) {
                     Storage::delete($comite->imagen->url);
-
-                    // Actualizar la relación de imagen con la nueva URL del archivo
                     $comite->imagen()->update([
                         'url' => $url,
                         'imageable_type' => Comite::class,
                     ]);
                 } else {
-                    // Si el comité no tiene una imagen, agregar una nueva imagen
                     $comite->imagen()->create([
                         'url' => $url,
                         'imageable_type' => Comite::class,
                     ]);
                 }
             }
-
+    
             DB::commit();
             Cache::flush();
-
-            // Redireccionar con un mensaje de éxito
-            return back()
-                ->with('success', 'Comité actualizado exitosamente.');
-                
+    
+            return back()->with('success', 'Comité actualizado exitosamente.');
+    
         } catch (\Exception $e) {
-            // Revertir la transacción en caso de error
             DB::rollBack();
-            Log::error('Error  update - Comite: ' . $e->getMessage());
-
-            // Redireccionar con un mensaje de error
-            return back()
-                ->with('error', 'Error al actualizar el comité: ' . $e->getMessage())
-                ->withInput();
+            Log::error('Error update - Comite: ' . $e->getMessage());
+    
+            return back()->with('error', 'Error al actualizar el comité: ' . $e->getMessage())->withInput();
         }
     }
+    
 
     public function destroy(Comite $comite)
     {
