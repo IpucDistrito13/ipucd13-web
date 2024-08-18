@@ -177,7 +177,8 @@ class ComiteController extends Controller
                 'imagen_banner' => $url_banner,
                 'banner_little' => $mini_banner,
             ]);
-    
+
+            /*
             // Registro en log
             ModelsLog::create([
                 'descripcion' => 'UPDATE - COMITE - ' . $comite->id,
@@ -185,6 +186,7 @@ class ComiteController extends Controller
                 'ip' => $request->ip(),
                 'user_id' => auth()->user()->id,
             ]);
+            */
     
             // Manejo del archivo
             if ($request->hasFile('file')) {
