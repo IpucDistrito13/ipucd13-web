@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Log;
+use App\Models\RegistroLog;
 use Illuminate\Http\Request;
 
 class LogController extends Controller
