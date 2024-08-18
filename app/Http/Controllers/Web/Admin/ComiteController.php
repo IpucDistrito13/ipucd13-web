@@ -182,7 +182,7 @@ class ComiteController extends Controller
             RegistroLog::create([
                 'descripcion' => 'UPDATE - COMITE - ' . $comite->id,
                 'accion' => 'Update',
-                'ip' => $request->ip(),
+                'ip' => '',
                 'user_id' => auth()->user()->id,
             ]);
             

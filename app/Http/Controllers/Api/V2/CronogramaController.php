@@ -3,23 +3,21 @@
 namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PodcastCollection;
-use App\Http\Resources\PodcastResource;
+use App\Http\Resources\CronogramaCollection;
+use App\Http\Resources\CronogramaoCollection;
+use App\Models\Cronograma;
 use App\Models\GenerarKeyApi;
-use App\Models\Podcast;
 use Illuminate\Http\Request;
 
-class PodcastController extends Controller
+class CronogramaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        //return 'Podcast v2';
         // Obtener la clave API del parámetro
         $apiKey = $request->query('api_key');
-
         $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
 
         // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
@@ -35,13 +33,12 @@ class PodcastController extends Controller
         $offset = $request->query('offset', 0);
 
         // Obtener los comités con los parámetros de limit y offset
-        $comites = Podcast::where('estado', 'Publicado')
-            ->orderBy('id', 'asc')
+        $eventos = Cronograma::orderBy('id', 'asc')
             ->offset($offset)
             ->limit($limit)
             ->get();
 
-        return new PodcastCollection($comites);
+        return new CronogramaCollection($eventos);
     }
 
     /**
@@ -63,34 +60,9 @@ class PodcastController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, $id)
+    public function show(string $id)
     {
-
-        $apiKey = $request->query('api_key');
-
-        // Validar si la clave API es válida
-        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
-
-        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
-        if (!$apiKeyExists) {
-            return response()->json([
-                'error' => 'No autorizado',
-                'message' => 'La clave API proporcionada no es válida.'
-            ], 401);
-        }
-
-        // Obtener el comité por ID
-        $comite = Podcast::find($id);
-
-        // Si no se encuentra el comité, devolver un mensaje de error con el código de estado 404
-        if (!$comite) {
-            return response()->json([
-                'error' => 'No encontrado',
-                'message' => 'El podcast solicitado no existe.'
-            ], 404);
-        }
-
-        return new PodcastResource($comite);
+        //
     }
 
     /**

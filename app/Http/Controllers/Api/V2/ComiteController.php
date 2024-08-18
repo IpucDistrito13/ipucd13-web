@@ -18,9 +18,6 @@ class ComiteController extends Controller
     {
         // Obtener la clave API del parámetro
         $apiKey = $request->query('api_key');
-
-        //  $apiKeyExists = GenerarKeyApi::where('apikey', $apiKey)->exists();
-
         $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
 
         // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
@@ -65,9 +62,7 @@ class ComiteController extends Controller
      */
     public function show(Request $request, $id)
     {
-        //return 'show v2';
-        // Obtener la clave API del parámetro
-        //return $id;
+
          $apiKey = $request->query('api_key');
     
         // Validar si la clave API es válida
@@ -94,7 +89,6 @@ class ComiteController extends Controller
     
         return new ComiteResource($comite);
     }
-    
 
     /**
      * Show the form for editing the specified resource.
