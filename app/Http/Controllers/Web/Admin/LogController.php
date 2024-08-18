@@ -13,7 +13,7 @@ class LogController extends Controller
      */
     public function index()
     {
-        $log = Log::latest()->take(20)->get();
+        $log = RegistroLog::latest()->take(20)->get();
         return view('admin.logs.index', [
             'logs' => $log,
         ]);
