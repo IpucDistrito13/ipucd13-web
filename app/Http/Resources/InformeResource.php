@@ -16,18 +16,15 @@ class InformeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => 'informe',
             'nombre' => $this->titulo,
-            'descripcion' => $this->descripcion,
-            'contenido' => $this->contenido,
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
 
-
+            /*
             'relationships' => [
-                
                 'comite' => new ComiteSimpleResource($this->whenLoaded('comite')),
                 'categoria' => new CategoriaSimpleResource($this->whenLoaded('categoria')),
             ]
+            */
         ];
     }
 }

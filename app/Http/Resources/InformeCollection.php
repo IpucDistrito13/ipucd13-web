@@ -17,11 +17,8 @@ class InformeCollection extends ResourceCollection
         return $this->collection->map(function ($informe) {
             return [
                 'id' => $informe->id,
-                'titulo' => $informe->titulo,
+                'nombre' => $informe->titulo,
                 'imagenportada' => $informe->imagen?  $informe->imagen->url : null,
-                'imagenbanner' => $informe->imagen_banner,
-                'contenido' => $informe->contenido
-
             ];
         })->toArray();
         

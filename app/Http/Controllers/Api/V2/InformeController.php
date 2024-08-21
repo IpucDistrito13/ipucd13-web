@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\InformeCollection;
 use App\Http\Resources\InformeResource;
 use App\Models\GenerarKeyApi;
 use App\Models\Publicacion;
@@ -38,7 +39,7 @@ class InformeController extends Controller
             ->limit($limit)
             ->get();
 
-        return InformeResource::collection($comites);
+        return new InformeCollection($comites); 
     }
 
     /**
