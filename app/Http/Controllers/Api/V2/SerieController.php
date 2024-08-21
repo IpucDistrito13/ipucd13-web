@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ComiteCollection;
+use App\Http\Resources\SerieCollection;
 use App\Http\Resources\SerieResource;
 use App\Models\GenerarKeyApi;
 use App\Models\Serie;
@@ -39,7 +40,7 @@ class SerieController extends Controller
             ->limit($limit)
             ->get();
 
-        return new ComiteCollection($serie);
+        return new SerieCollection($serie);
     }
 
     /**

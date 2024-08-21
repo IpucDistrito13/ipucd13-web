@@ -80,17 +80,17 @@ class PodcastController extends Controller
         }
 
         // Obtener el comité por ID
-        $comite = Podcast::find($id);
+        $podcast = Podcast::where('id', $id)->where('estado', 'Publicado')->first();
 
         // Si no se encuentra el comité, devolver un mensaje de error con el código de estado 404
-        if (!$comite) {
+        if (!$podcast) {
             return response()->json([
                 'error' => 'No encontrado',
                 'message' => 'El podcast solicitado no existe.'
             ], 404);
         }
 
-        return new PodcastResource($comite);
+        return new PodcastResource($podcast);
     }
 
     /**

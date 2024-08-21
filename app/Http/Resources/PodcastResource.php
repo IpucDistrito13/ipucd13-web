@@ -19,15 +19,10 @@ class PodcastResource extends JsonResource
             'id' => $this->id,
             'type' => 'podcasts',
             'nombre' => $this->titulo,
+            'slug' => $this->slug,
             'descripcion' => $this->descripcion,
             'contenido' => $this->contenido,
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
-            'imagenbanner' => $this->imagen_banner,
-
-            'relationships' => [
-                'episodios' => EpisodioSimpleResource::collection($this->episodios),
-            ],
-            
         ];
     }
 }
