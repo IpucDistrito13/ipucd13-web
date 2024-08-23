@@ -16,7 +16,6 @@ class PodcastController extends Controller
      */
     public function index(Request $request)
     {
-        //return 'Podcast v2';
         // Obtener la clave API del parámetro
         $apiKey = $request->query('api_key');
 
@@ -115,5 +114,47 @@ class PodcastController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getPodcastByComite(Request $request, $comiteId)
+    {
+        //return 'podcast by comite';
+        // Obtener la clave API del parámetro
+        $apiKey = $request->query('api_key');
+
+        // Verificar la clave API
+        $apiKeyResponse = $this->verificaApiKey($apiKey);
+        if ($apiKeyResponse !== true) {
+            return $apiKeyResponse;
+        }
+
+        //return $request;
+        // Obtener los parámetros limit y offset de la URL
+        $limit = $request->query('limit', 10);
+        $offset = $request->query('offset', 0);
+
+        $podcast = Podcast::where('comite_id', $comiteId)
+            ->where('estado', 'Publicado')
+            ->orderBy('id', 'desc')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+
+        return new PodcastCollection($podcast);
+
+    }
+
+    public function verificaApiKey($apiKey)
+    {
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        return true; // Si la clave API es válida, retornar true.
     }
 }

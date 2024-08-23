@@ -17,6 +17,7 @@ Route::get('cronogramas', [CronogramaController::class, 'index']);
 
 Route::get('comite/{id}', [ComiteController::class, 'show']);
 Route::get('podcast/{id}', [PodcastController::class, 'show']);
+Route::get('podcasts/comite/{comiteId}', [PodcastController::class, 'getPodcastByComite']);
 
 Route::get('serie/{id}', [SerieController::class, 'show']);
 
