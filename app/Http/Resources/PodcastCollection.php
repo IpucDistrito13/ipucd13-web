@@ -17,6 +17,7 @@ class PodcastCollection extends ResourceCollection
         return $this->collection->map(function ($podcast) {
             return [
                 'id' => $podcast->id,
+                'slug' => $podcast->slug,
                 'nombre' => $podcast->titulo,
                 'imagenportada' => $podcast->imagen?  $podcast->imagen->url : null,
             
