@@ -17,6 +17,7 @@ class ComiteCollection extends ResourceCollection
         return $this->collection->map(function ($comite) {
             return [
                 'id' => $comite->id,
+                'slug' => $comite->slug,
                 'nombre' => $comite->nombre,
                 'imagenportada' => $comite->imagen?  $comite->imagen->url : null,
                 'imagenbanner' => $comite->imagen_banner,
