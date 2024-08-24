@@ -36,7 +36,7 @@ class PodcastController extends Controller
 
         // Obtener los comités con los parámetros de limit y offset
         $comites = Podcast::where('estado', 'Publicado')
-            ->orderBy('id', 'asc')
+            ->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($limit)
             ->get();
