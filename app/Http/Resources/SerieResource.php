@@ -16,12 +16,13 @@ class SerieResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'slug' => $this->slug,
             'type' => 'serie',
             'nombre' => $this->titulo,
-            'imagenbanner' => $this->imagen_banner,
-            'imagenportada' => $this->imagen ? $this->imagen->url : null,
+            'descripcion' => $this->descripcion,
             'contenido' => $this->contenido,
-
+            'imagenportada' => $this->imagen ? $this->imagen->url : null,
+            'categoria' => $this->categoria->nombre,
         ];
     }
 }
