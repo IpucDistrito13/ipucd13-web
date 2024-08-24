@@ -22,11 +22,6 @@ class SerieResource extends JsonResource
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
             'contenido' => $this->contenido,
 
-            'relationships' => [
-                'videos' => VideoSimpleResource::collection($this->whenLoaded('videos')),
-            ],
-
-
         ];
     }
 }
