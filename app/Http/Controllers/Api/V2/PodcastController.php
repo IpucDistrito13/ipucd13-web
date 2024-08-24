@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PodcastCollection;
+use App\Http\Resources\PodcastDetailsCollection;
 use App\Http\Resources\PodcastResource;
 use App\Models\GenerarKeyApi;
 use App\Models\Podcast;
@@ -116,7 +117,7 @@ class PodcastController extends Controller
         //
     }
 
-    public function getPodcastByComite(Request $request, $comiteId)
+    public function getPodcastsByComite(Request $request, $comiteId)
     {
         //return 'podcast by comite';
         // Obtener la clave API del parámetro
@@ -140,7 +141,7 @@ class PodcastController extends Controller
             ->limit($limit)
             ->get();
 
-        return new PodcastCollection($podcast);
+        return new PodcastDetailsCollection($podcast);
 
     }
 
