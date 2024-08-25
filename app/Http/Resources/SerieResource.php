@@ -24,5 +24,7 @@ class SerieResource extends JsonResource
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
             'categoria' => $this->categoria->nombre,
         ];
+        
+
     }
 }

@@ -10,7 +10,7 @@
         "dompdf/dompdf": "^3.0",
         "fakerphp/faker": "^1.9.1",
         "guzzlehttp/guzzle": "^7.8",
-        "intervention/image": "^3.6",
+        "intervention/image": "^3.8",
         "james-heinrich/getid3": "^1.9",
         "jeroennoten/laravel-adminlte": "^3.11",
         "laravel-admin-ext/summernote": "^1.0",

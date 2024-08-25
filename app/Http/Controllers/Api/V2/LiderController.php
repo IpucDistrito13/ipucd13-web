@@ -78,12 +78,10 @@ class LiderController extends Controller
             return $apiKeyResponse;
         }
 
-        //return $request;
         // Obtener los parámetros limit y offset de la URL
         $limit = $request->query('limit', 10);
         $offset = $request->query('offset', 0);
 
-        //return Lider::all();
 
         $lideres = Lider::where('comite_id', $comiteId)
             ->where('estado', 'Activo')
@@ -93,7 +91,6 @@ class LiderController extends Controller
             ->get();
 
         return new LiderCollection($lideres);
-
     }
 
     public function verificaApiKey($apiKey)

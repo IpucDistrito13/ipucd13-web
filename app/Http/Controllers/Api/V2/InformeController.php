@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\InformeCollection;
+use App\Http\Resources\InformeDetailsCollection;
 use App\Http\Resources\InformeResource;
 use App\Models\GenerarKeyApi;
 use App\Models\Publicacion;
@@ -88,5 +89,32 @@ class InformeController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getInformesByComite(Request $request, $comiteId)
+    {
+        // Obtener la clave API del parámetro
+        $apiKey = $request->query('api_key');
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        // Obtener los parámetros limit y offset de la URL
+        $limit = $request->query('limit', 10);
+        $offset = $request->query('offset', 0);
+
+        // Obtener los informes del comité con los parámetros de limit y offset
+        $informes = Publicacion::where('estado', 'Publicado')
+        ->where('comite_id', $comiteId)
+        ->orderBy('id', 'desc')
+        ->get();
+
+        return new InformeDetailsCollection($informes);
     }
 }

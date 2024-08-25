@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('comites', [ComiteController::class, 'index']);
 Route::get('podcasts/comite/{comiteId}', [PodcastController::class, 'getPodcastsByComite']);
 Route::get('lideres/comite/{comiteId}', [LiderController::class, 'getLideresByComite']);
+Route::get('series/comite/{comiteId}', [SerieController::class, 'getSeriesByComite']);
+Route::get('informes/comite/{comiteId}', [InformeController::class, 'getInformesByComite']);
+
 
 Route::get('podcasts', [PodcastController::class, 'index']);
 Route::get('series', [SerieController::class, 'index']);

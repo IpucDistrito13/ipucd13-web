@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ComiteCollection;
 use App\Http\Resources\SerieCollection;
+use App\Http\Resources\SerieDetailsCollection;
 use App\Http\Resources\SerieResource;
 use App\Models\GenerarKeyApi;
 use App\Models\Serie;
@@ -114,5 +115,29 @@ class SerieController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getSeriesByComite(Request $request, $comiteId)
+    {
+        $apiKey = $request->query('api_key');
+
+        // Validar si la clave API es válida
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        // Obtener las series del comité por ID
+        $series = Serie::where('estado', 'Publicado')
+            ->where('comite_id', $comiteId)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return new SerieDetailsCollection($series);
     }
 }
