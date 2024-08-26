@@ -21,6 +21,8 @@ class PodcastDetailsCollection extends ResourceCollection
                 'nombre' => $podcast->titulo,
                 'descripcion' => $podcast->descripcion,
                 'imagenportada' => $podcast->imagen?  $podcast->imagen->url : null,
+                'categoria' => $podcast->categoria->nombre,
+
             
             ];
         })->toArray();
