@@ -40,7 +40,7 @@ class InformeController extends Controller
             ->limit($limit)
             ->get();
 
-        return new InformeCollection($comites); 
+        return new InformeCollection($comites);
     }
 
     /**
@@ -62,9 +62,33 @@ class InformeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, $id)
     {
-        //
+        $apikey = $request->query('api_key');
+
+        //validar si la clave API es valida
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apikey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        // Obtener el comité por ID
+        $informe = Publicacion::find($id)->where('estado', 'Publicado')->first();
+
+        // Si no se encuentra el comité, devolver un mensaje de error con el código de estado 404
+        if (!$informe) {
+            return response()->json([
+                'error' => 'No encontrado',
+                'message' => 'La serie solicitada no existe.'
+            ], 404);
+        }
+
+        return new InformeResource($informe);
     }
 
     /**
@@ -111,9 +135,9 @@ class InformeController extends Controller
 
         // Obtener los informes del comité con los parámetros de limit y offset
         $informes = Publicacion::where('estado', 'Publicado')
-        ->where('comite_id', $comiteId)
-        ->orderBy('id', 'desc')
-        ->get();
+            ->where('comite_id', $comiteId)
+            ->orderBy('id', 'desc')
+            ->get();
 
         return new InformeDetailsCollection($informes);
     }

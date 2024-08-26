@@ -16,8 +16,15 @@ class InformeResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'slug' => $this->slug,
             'nombre' => $this->titulo,
+            'descripcion' => $this->descripcion,
+            'contenido' => $this->contenido,
             'imagenportada' => $this->imagen ? $this->imagen->url : null,
+            'categoria' => $this->categoria->nombre,
+            'comite' => $this->comite->nombre,
+            'created_at' => $this->created_at->format('d/m/Y'),
+
 
             /*
             'relationships' => [

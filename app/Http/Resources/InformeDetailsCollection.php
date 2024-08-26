@@ -14,14 +14,16 @@ class InformeDetailsCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return $this->collection->map(function ($informe) {
+        return $this->collection->map(function ($publicacion) {
             return [
-                'id' => $informe->id,
-                'slug' => $informe->slug,
-                'nombre' => $informe->titulo,
-                'descripcion' => $informe->descripcion,
-                'imagenportada' => $informe->imagen?  $informe->imagen->url : null,
-                'categoria' => $informe->categoria->nombre
+                'id' => $publicacion->id,
+                'slug' => $publicacion->slug,
+                'nombre' => $publicacion->titulo,
+                'descripcion' => $publicacion->descripcion,
+                'imagenportada' => $publicacion->imagen?  $publicacion->imagen->url : null,
+                'categoria' => $publicacion->categoria->nombre,
+                //'comite' => $publicacion->comite->nombre,
+                //'created_at' => $informe->created_at->format('dd/mm/Y'),
             ];
         })->toArray();
         

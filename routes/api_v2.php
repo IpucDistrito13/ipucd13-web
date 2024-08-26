@@ -24,11 +24,8 @@ Route::get('cronogramas', [CronogramaController::class, 'index']);
 
 Route::get('comite/{id}', [ComiteController::class, 'show']);
 Route::get('podcast/{id}', [PodcastController::class, 'show']);
-
-
 Route::get('serie/{id}', [SerieController::class, 'show']);
-
-
+Route::get('informe/{id}', [InformeController::class, 'show']);
 
 Route::middleware(['auth:sanctum'])->group(function() {
 
