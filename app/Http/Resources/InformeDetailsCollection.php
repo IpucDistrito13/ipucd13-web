@@ -21,6 +21,7 @@ class InformeDetailsCollection extends ResourceCollection
                 'nombre' => $informe->titulo,
                 'descripcion' => $informe->descripcion,
                 'imagenportada' => $informe->imagen?  $informe->imagen->url : null,
+                'categoria' => $informe->categoria->nombre
             ];
         })->toArray();
         
