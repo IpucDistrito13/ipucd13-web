@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V2\ComiteController;
 use App\Http\Controllers\Api\V2\CronogramaController;
+use App\Http\Controllers\Api\V2\EpisodioController;
 use App\Http\Controllers\Api\V2\EventoController;
 use App\Http\Controllers\Api\V2\InformeController;
 use App\Http\Controllers\Api\V2\LiderController;
@@ -15,7 +16,6 @@ Route::get('lideres/comite/{comiteId}', [LiderController::class, 'getLideresByCo
 Route::get('series/comite/{comiteId}', [SerieController::class, 'getSeriesByComite']);
 Route::get('informes/comite/{comiteId}', [InformeController::class, 'getInformesByComite']);
 
-
 Route::get('podcasts', [PodcastController::class, 'index']);
 Route::get('series', [SerieController::class, 'index']);
 Route::get('informes', [InformeController::class, 'index']);
@@ -26,6 +26,9 @@ Route::get('comite/{id}', [ComiteController::class, 'show']);
 Route::get('podcast/{id}', [PodcastController::class, 'show']);
 Route::get('serie/{id}', [SerieController::class, 'show']);
 Route::get('informe/{id}', [InformeController::class, 'show']);
+
+Route::get('episodios/podcast/{podcastId}', [EpisodioController::class, 'getEpisodiosByPodcast']);
+
 
 Route::middleware(['auth:sanctum'])->group(function() {
 
