@@ -78,7 +78,7 @@ class InformeController extends Controller
         }
 
         // Obtener el comité por ID
-        $informe = Publicacion::find($id)->where('estado', 'Publicado')->first();
+        $informe = Publicacion::where('id', $id)->where('estado', 'Publicado')->first();
 
         // Si no se encuentra el comité, devolver un mensaje de error con el código de estado 404
         if (!$informe) {
