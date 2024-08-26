@@ -64,7 +64,7 @@ class EpisodioController extends Controller
     {
         //
     }
-
+    
     public function getEpisodiosByPodcast(Request $request, $podcastId)
     {
         $limit = $request->input('limit', 10);
@@ -79,4 +79,8 @@ class EpisodioController extends Controller
 
             return new EpisodioCollection($episodios);
     }
+            
+
+            
+        
 }

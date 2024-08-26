@@ -23,7 +23,7 @@ class EpisodioCollection extends ResourceCollection
                 'titulo' => $episodio->titulo,
                 'descripcion' => $episodio->descripcion,
                 'imagenportada' => $episodio->podcast->imagen ?  $episodio->podcast->imagen->url : null,
-                'url' => $episodio->url,
+                'url' => $episodio->url ?? '',
                 'categoria' => $episodio->podcast->categoria->nombre,
                 //'comite' => $episodio->podcast->comite->nombre,
                 //'updated_at' => $episodio->updated_at->format('d/m/Y'),
