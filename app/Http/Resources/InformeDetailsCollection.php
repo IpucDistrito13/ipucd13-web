@@ -20,12 +20,11 @@ class InformeDetailsCollection extends ResourceCollection
                 'slug' => $publicacion->slug,
                 'nombre' => $publicacion->titulo,
                 'descripcion' => $publicacion->descripcion,
-                'imagenportada' => $publicacion->imagen?  $publicacion->imagen->url : null,
+                'imagenportada' => $publicacion->imagen ?  $publicacion->imagen->url : null,
                 'categoria' => $publicacion->categoria->nombre,
-                //'comite' => $publicacion->comite->nombre,
-                //'created_at' => $informe->created_at->format('dd/mm/Y'),
+                'comite' => $publicacion->comite->nombre,
+                'created_at' => $publicacion->created_at->format('dd/mm/Y'),
             ];
         })->toArray();
-        
     }
 }
