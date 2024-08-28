@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EpisodioCollection;
+use App\Http\Resources\V2\Collection\EpisodioCollection;
 use App\Models\Episodio;
 use Illuminate\Http\Request;
 

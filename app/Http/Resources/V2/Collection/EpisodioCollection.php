@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\V2\Collection;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -12,8 +12,6 @@ class EpisodioCollection extends ResourceCollection
      *
      * @return array<int|string, mixed>
      */
-
-     //Mostrar episodios segun el podcast
     public function toArray(Request $request): array
     {
         return $this->collection->map(function ($episodio) {
