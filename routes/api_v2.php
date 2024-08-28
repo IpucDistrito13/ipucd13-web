@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V2\InformeController;
 use App\Http\Controllers\Api\V2\LiderController;
 use App\Http\Controllers\Api\V2\PodcastController;
 use App\Http\Controllers\Api\V2\SerieController;
+use App\Http\Controllers\Api\V2\VideoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('comites', [ComiteController::class, 'index']);
@@ -28,6 +29,8 @@ Route::get('serie/{id}', [SerieController::class, 'show']);
 Route::get('informe/{id}', [InformeController::class, 'show']);
 
 Route::get('episodios/podcast/{podcastId}', [EpisodioController::class, 'getEpisodiosByPodcast']);
+Route::get('videos/serie/{serieId}', [VideoController::class, 'getVideosBySerie']);
+
 
 
 Route::middleware(['auth:sanctum'])->group(function() {
