@@ -27,6 +27,7 @@ Route::get('comite/{id}', [ComiteController::class, 'show']);
 Route::get('podcast/{id}', [PodcastController::class, 'show']);
 Route::get('serie/{id}', [SerieController::class, 'show']);
 Route::get('informe/{id}', [InformeController::class, 'show']);
+Route::get('video/{id}', [VideoController::class, 'show']);
 
 Route::get('episodios/podcast/{podcastId}', [EpisodioController::class, 'getEpisodiosByPodcast']);
 Route::get('videos/serie/{serieId}', [VideoController::class, 'getVideosBySerie']);

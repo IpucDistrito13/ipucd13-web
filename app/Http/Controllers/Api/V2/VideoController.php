@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V2\Collection\VideoCollection;
+use App\http\Resources\V2\Collection\VideoCollection;
+use App\Http\Resources\VideoResource;
+use App\Models\GenerarKeyApi;
 use App\Models\Video;
 use Illuminate\Http\Request;
 
@@ -36,10 +38,35 @@ class VideoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, $id)
     {
-        //
+        $apiKey = $request->query('api_key');
+    
+        // Validar si la clave API es válida
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+    
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+    
+        // Obtener el video por ID con la relación de serie
+        $video = Video::with('serie')->where('id', $id)->first();
+    
+        // Si no se encuentra el video, devolver un mensaje de error con el código de estado 404
+        if (!$video) {
+            return response()->json([
+                'error' => 'No encontrado',
+                'message' => 'El video solicitado no existe.'
+            ], 404);
+        }
+    
+        return new VideoResource($video);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
