@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
-use App\http\Resources\V2\Collection\VideoCollection;
+use App\Http\Resources\V2\Collection\VideoCollection;
 use App\Http\Resources\VideoResource;
 use App\Models\GenerarKeyApi;
 use App\Models\Video;
