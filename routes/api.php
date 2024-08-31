@@ -37,12 +37,41 @@ Route::post('login', [LoginController::class, 'login']);
 Route::prefix('v1')->group(function () {
 
     require __DIR__ . '/api_v1.php';
-
 });
 
 
 Route::prefix('v2')->group(function () {
 
     require __DIR__ . '/api_v2.php';
+});
 
+
+
+/*
+Route::middleware('auth:sanctum')->get('/check-status', function () {
+    return response()->json(['status' => 'Token is valid'], 200);
+    
+});
+*/
+
+use Laravel\Sanctum\NewAccessToken;
+
+Route::middleware('auth:sanctum')->get('/check-status', function () {
+    $user = Auth::user(); // Obtiene la información del usuario autenticado
+
+    // Generar un nuevo token
+    $newToken = $user->createToken('new-token-name')->plainTextToken;
+
+
+    return response()->json([
+
+        'id' => $user->id,
+        'nombre' => $user->nombre,
+        'apellidos' => $user->apellidos,
+        'email' => $user->email,
+        'isActivo' => true,
+        'roles' => $user->roles->pluck('name'),
+        'token' => $newToken, // Nuevo token generado
+
+    ], 200);
 });
