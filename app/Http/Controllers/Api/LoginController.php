@@ -77,7 +77,7 @@ class LoginController extends Controller
             // El correo electrónico no existe en la base de datos
             return response()->json([
                 'message' => 'Correo electrónico no encontrado.'
-            ], Response::HTTP_FORBIDDEN); //402
+            ], Response::HTTP_UNAUTHORIZED); //401
         }
 
         // Intentar autenticar al usuario
@@ -87,7 +87,7 @@ class LoginController extends Controller
                 // Si el usuario está inactivo, devolver un mensaje indicando el estado
                 return response()->json([
                     'message' => 'Usuario inactivo. Por favor, contacte al administrador.'
-                ], Response::HTTP_FORBIDDEN); //402
+                ], Response::HTTP_UNAUTHORIZED); //401
             }
 
             // Si la autenticación es exitosa y el usuario no está inactivo, continuar con la respuesta
