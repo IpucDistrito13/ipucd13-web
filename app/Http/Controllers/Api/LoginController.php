@@ -87,7 +87,7 @@ class LoginController extends Controller
                 // Si el usuario está inactivo, devolver un mensaje indicando el estado
                 return response()->json([
                     'message' => 'Usuario inactivo. Por favor, contacte al administrador.'
-                ], Response::HTTP_FORBIDDEN); //401
+                ], Response::HTTP_UNAUTHORIZED); //401
             }
 
             // Si la autenticación es exitosa y el usuario no está inactivo, continuar con la respuesta
