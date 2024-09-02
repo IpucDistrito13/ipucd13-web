@@ -86,6 +86,7 @@ class ComiteController extends Controller
             // Crear el comité
             $comite = Comite::create($data);
 
+            /*
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'ADD - COMITE - ' . $comite->id,
@@ -93,6 +94,7 @@ class ComiteController extends Controller
                 'ip' => '',
                 'user_id' => auth()->user()->id,
             ]);
+            */
 
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
@@ -177,7 +179,7 @@ class ComiteController extends Controller
                 'banner_little' => $mini_banner,
             ]);
 
-            
+            /*
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'UPDATE - COMITE - ' . $comite->id,
@@ -185,6 +187,7 @@ class ComiteController extends Controller
                 'ip' => '',
                 'user_id' => auth()->user()->id,
             ]);
+            */
             
     
             // Manejo del archivo

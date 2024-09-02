@@ -58,8 +58,7 @@ class CongregacionController extends Controller
                 'estado' => 'Activo',
             ]);
 
-
-
+            /*
             $dataLog = [
                 'descripcion' => 'ADD - CONGREGACION - ' . $congregacion->id,
                 'accion' => 'Add', //Add, Update, Delete
@@ -67,6 +66,7 @@ class CongregacionController extends Controller
                 'user_id' => auth()->user()->id,
             ];
 
+            
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'ADD - CONGREGACION - ' .  $congregacion->id,
@@ -74,6 +74,7 @@ class CongregacionController extends Controller
                 'ip' => '',
                 'user_id' => auth()->user()->id,
             ]);
+            */
 
             // Elimina las variables almacenadas en cache
             DB::commit();
@@ -127,6 +128,7 @@ class CongregacionController extends Controller
                 'googlemaps' => $request->googlemaps,
             ]);
 
+            /*
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'UPDATE - CONGREGACION - ' . $congregacion->id,
@@ -134,6 +136,7 @@ class CongregacionController extends Controller
                 'ip' => $request->ip(),
                 'user_id' => auth()->user()->id,
             ]);
+            */
 
             // Elimina las variables almacenadas en cache
             Cache::flush();
