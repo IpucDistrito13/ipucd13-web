@@ -58,15 +58,6 @@ class CongregacionController extends Controller
                 'estado' => 'Activo',
             ]);
 
-            /*
-            $dataLog = [
-                'descripcion' => 'ADD - CONGREGACION - ' . $congregacion->id,
-                'accion' => 'Add', //Add, Update, Delete
-                'ip' => '',
-                'user_id' => auth()->user()->id,
-            ];
-
-            
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'ADD - CONGREGACION - ' .  $congregacion->id,
@@ -74,29 +65,22 @@ class CongregacionController extends Controller
                 'ip' => '',
                 'user_id' => auth()->user()->id,
             ]);
-            */
+
 
             // Elimina las variables almacenadas en cache
             DB::commit();
             Cache::flush();
 
-            $data = [
-                'message' => 'Congregación creada exitosamente.',
-            ];
-
-            return redirect()->route('admin.congregaciones.index')->with('success', $data['message']);
-        } catch (\Exception $e) {
+            return redirect()->route('admin.congregaciones.index')
+                ->with('success', 'Congregación creada exitosamente.');
+        } catch (\Throwable $th) {
             DB::rollback();
-            Log::error('Error en store - Congregacion: ' . $e->getMessage());
+            Log::error('Error en store - Congregacion: ' . $th->getMessage());
 
-            $data = [
-                'message' => 'No se pudo crear la congregación, por favor intente nuevamente.',
-            ];
-
-            return redirect()->route('admin.congregaciones.index')->with('error', $data['message']);
+            return redirect()->route('admin.congregaciones.index')
+                ->with('error', 'No se pudo crear la congregación, por favor intente nuevamente.');
         }
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -128,7 +112,7 @@ class CongregacionController extends Controller
                 'googlemaps' => $request->googlemaps,
             ]);
 
-            /*
+
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'UPDATE - CONGREGACION - ' . $congregacion->id,
@@ -136,7 +120,7 @@ class CongregacionController extends Controller
                 'ip' => $request->ip(),
                 'user_id' => auth()->user()->id,
             ]);
-            */
+
 
             // Elimina las variables almacenadas en cache
             Cache::flush();
@@ -147,15 +131,17 @@ class CongregacionController extends Controller
             ];
 
             return redirect()->route('admin.congregaciones.edit', $congregacion)->with('success', $data['message']);
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error('Error en update - Congregacion: ' . $e->getMessage());
+        } catch (\Throwable $th) {
+            DB::rollBack(); // Rollback en caso de error
+            Log::error('Error en update - Congregacion: ' . $th->getMessage());
 
             $data = [
                 'message' => 'No se pudo actualizar la congregación, por favor intente nuevamente.',
             ];
 
-            return redirect()->route('admin.congregaciones.edit', $congregacion)->with('error', $data['message']);
+            return redirect()
+                ->route('admin.congregaciones.edit', $congregacion)
+                ->with('error', $data['message']);
         }
     }
 

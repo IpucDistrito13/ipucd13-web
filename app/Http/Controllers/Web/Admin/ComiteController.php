@@ -86,7 +86,6 @@ class ComiteController extends Controller
             // Crear el comité
             $comite = Comite::create($data);
 
-            /*
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'ADD - COMITE - ' . $comite->id,
@@ -94,7 +93,6 @@ class ComiteController extends Controller
                 'ip' => '',
                 'user_id' => auth()->user()->id,
             ]);
-            */
 
             // Verificar si se cargó un nuevo archivo
             if ($request->hasFile('file')) {
@@ -114,15 +112,15 @@ class ComiteController extends Controller
             // Redireccionar con un mensaje de éxito
             return redirect()->route('admin.comites.index')
                 ->with('success', 'Comité creado exitosamente.');
-        } catch (\Exception $e) {
+        } catch (\Throwable $th) {
             // Revertir la transacción en caso de error
             DB::rollBack();
-            Log::error('Error  store - Comite: ' . $e->getMessage());
+            Log::error('Error  store - Comite: ' . $th->getMessage());
 
             // Redireccionar con un mensaje de error
             return redirect()
                 ->back()
-                ->with('error', 'Error al crear el Comité: ' . $e->getMessage())
+                ->with('error', 'Error al crear el Comité: ' . $th->getMessage())
                 ->withInput();
         }
     }
@@ -140,36 +138,37 @@ class ComiteController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(ComiteRequest $request, Comite $comite)
     {
+        DB::beginTransaction(); // Inicia la transacción
+
         try {
-            DB::beginTransaction();
-    
             $url_banner = $comite->imagen_banner;
             $mini_banner = $comite->banner_little;
-    
+
             // Manejo del banner
             if ($request->hasFile('imagen_banner')) {
                 $fileBanner = $request->file('imagen_banner');
                 $ubicacionBanner = 'public/comites/banner';
                 $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
-    
+
                 if ($comite->imagen_banner) {
                     Storage::delete($comite->imagen_banner);
                 }
             }
-    
+
             // Manejo del mini banner
             if ($request->hasFile('banner_little')) {
                 $fileMiniBanner = $request->file('banner_little');
                 $ubicacionBanner = 'public/comites/banner';
                 $mini_banner = $this->storeFile($fileMiniBanner, $ubicacionBanner);
-    
+
                 if ($comite->banner_little) {
                     Storage::delete($comite->banner_little);
                 }
             }
-    
+
             // Actualizar el comité
             $comite->update([
                 'nombre' => $request->nombre,
@@ -179,7 +178,6 @@ class ComiteController extends Controller
                 'banner_little' => $mini_banner,
             ]);
 
-            /*
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'UPDATE - COMITE - ' . $comite->id,
@@ -187,15 +185,13 @@ class ComiteController extends Controller
                 'ip' => '',
                 'user_id' => auth()->user()->id,
             ]);
-            */
-            
-    
+
             // Manejo del archivo
             if ($request->hasFile('file')) {
                 $filePortada = $request->file('file');
                 $ubicacionPortada = 'public/comites/portadas';
                 $url = $this->storeFile($filePortada, $ubicacionPortada);
-    
+
                 if ($comite->imagen) {
                     Storage::delete($comite->imagen->url);
                     $comite->imagen()->update([
@@ -209,20 +205,109 @@ class ComiteController extends Controller
                     ]);
                 }
             }
-    
+
             DB::commit();
             Cache::flush();
-    
-            return back()->with('success', 'Comité actualizado exitosamente.');
-    
+
+            return redirect()->route('admin.comites.edit', $comite)->with('success', 'Comité actualizado exitosamente.');
+
+
+        } catch (\Throwable $th) {
+            DB::rollBack(); // Rollback en caso de error
+            Log::error('Error en update - Comite: ' . $th->getMessage());
+
+            return redirect()
+            ->route('admin.congregaciones.edit', $comite)
+                ->with('error', 'Hubo un error al actualizar el comité.');
+        }
+    }
+
+
+
+    /*
+    public function update(ComiteRequest $request, Comite $comite)
+    {
+        try {
+            DB::beginTransaction();
+
+            $url_banner = $comite->imagen_banner;
+            $mini_banner = $comite->banner_little;
+
+            // Manejo del banner
+            if ($request->hasFile('imagen_banner')) {
+                $fileBanner = $request->file('imagen_banner');
+                $ubicacionBanner = 'public/comites/banner';
+                $url_banner = $this->storeFile($fileBanner, $ubicacionBanner);
+
+                if ($comite->imagen_banner) {
+                    Storage::delete($comite->imagen_banner);
+                }
+            }
+
+            // Manejo del mini banner
+            if ($request->hasFile('banner_little')) {
+                $fileMiniBanner = $request->file('banner_little');
+                $ubicacionBanner = 'public/comites/banner';
+                $mini_banner = $this->storeFile($fileMiniBanner, $ubicacionBanner);
+
+                if ($comite->banner_little) {
+                    Storage::delete($comite->banner_little);
+                }
+            }
+
+            // Actualizar el comité
+            $comite->update([
+                'nombre' => $request->nombre,
+                'slug' => $request->slug,
+                'descripcion' => $request->descripcion,
+                'imagen_banner' => $url_banner,
+                'banner_little' => $mini_banner,
+            ]);
+
+
+            // Registro en log
+            RegistroLog::create([
+                'descripcion' => 'UPDATE - COMITE - ' . $comite->id,
+                'accion' => 'Update',
+                'ip' => '',
+                'user_id' => auth()->user()->id,
+            ]);
+
+
+            // Manejo del archivo
+            if ($request->hasFile('file')) {
+                $filePortada = $request->file('file');
+                $ubicacionPortada = 'public/comites/portadas';
+                $url = $this->storeFile($filePortada, $ubicacionPortada);
+
+                if ($comite->imagen) {
+                    Storage::delete($comite->imagen->url);
+                    $comite->imagen()->update([
+                        'url' => $url,
+                        'imageable_type' => Comite::class,
+                    ]);
+                } else {
+                    $comite->imagen()->create([
+                        'url' => $url,
+                        'imageable_type' => Comite::class,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            Cache::flush();
+
+            //return back()->with('success', 'Comité actualizado exitosamente.');
+            return redirect()->route('admin.comites.index')->with('success', 'Comité actualizado exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error update - Comite: ' . $e->getMessage());
-    
-            return back()->with('error', 'Error al actualizar el comité: ' . $e->getMessage())->withInput();
+
+            //return back()->with('error', 'Error al actualizar el comité: ' . $e->getMessage())->withInput();
+            return redirect()->route('admin.comites.index')->with('error', 'Error al actualizar el comité');
         }
-    }
-    
+    }*/
+
 
     public function destroy(Comite $comite)
     {
