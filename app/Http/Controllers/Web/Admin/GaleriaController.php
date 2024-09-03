@@ -161,8 +161,6 @@ class GaleriaController extends Controller
             // Determinar la ubicación de almacenamiento según el entorno
             $ubicacion = 'public/galeria/' . $usuario;
             //$ubicacion = env('APP_ENV') === 'local' ? 'galeria/' . $usuario : 'public/galeria/' . $usuario;
-            
-
             //$ubicacion = (env('APP_ENV') === 'local') ? 'galeria/' . $usuario : 'galeria/' . $usuario;
 
             // Almacenar el archivo en el sistema de archivos utilizando storeFile
