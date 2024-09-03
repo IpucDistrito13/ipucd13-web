@@ -1,13 +1,17 @@
 <?php
 
 use App\Http\Controllers\Api\V2\ComiteController;
+use App\Http\Controllers\Api\V2\CongregacionController;
 use App\Http\Controllers\Api\V2\CronogramaController;
 use App\Http\Controllers\Api\V2\EpisodioController;
 use App\Http\Controllers\Api\V2\EventoController;
+use App\Http\Controllers\Api\V2\GaleriaController;
 use App\Http\Controllers\Api\V2\InformeController;
+use App\Http\Controllers\Api\V2\IpucenLineaController;
 use App\Http\Controllers\Api\V2\LiderController;
 use App\Http\Controllers\Api\V2\PodcastController;
 use App\Http\Controllers\Api\V2\SerieController;
+use App\Http\Controllers\Api\V2\UsuarioController;
 use App\Http\Controllers\Api\V2\VideoController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,9 +36,23 @@ Route::get('video/{id}', [VideoController::class, 'show']);
 Route::get('episodios/podcast/{podcastId}', [EpisodioController::class, 'getEpisodiosByPodcast']);
 Route::get('videos/serie/{serieId}', [VideoController::class, 'getVideosBySerie']);
 
+Route::get('podcasts/comite/{comiteId}', [PodcastController::class, 'getPodcastsByComite']);
 
 
-Route::middleware(['auth:sanctum'])->group(function() {
+Route::middleware(['auth:sanctum'])->group(function () {
 
-    
+    Route::get('usuarios', [UsuarioController::class, 'getListUsuario']);
+    //Route::get('usuarios/pastores', [UsuarioController::class, 'getListUsuarioPastor']);
+    //Route::get('usuarios/lideres', [UsuarioController::class, 'getListUsuarioLider']);
+    Route::get('usuario/perfil/{uuid}', [UsuarioController::class, 'show']);
+    Route::get('ipucenlinea', [IpucenLineaController::class, 'index']);
+    Route::get('congregaciones', [CongregacionController::class, 'index']);
+    Route::get('galeria/privada/{uuid}', [GaleriaController::class, 'showGaleriaPrivadaUsuario']);
+    Route::get('galeria/publica/{usuarioId}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
+
+
+
+
+
+
 });
