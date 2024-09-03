@@ -48,7 +48,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('ipucenlinea', [IpucenLineaController::class, 'index']);
     Route::get('congregaciones', [CongregacionController::class, 'index']);
     Route::get('galeria/privada/{uuid}', [GaleriaController::class, 'showGaleriaPrivadaUsuario']);
-    Route::get('galeria/publica/{usuarioId}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
+    Route::get('galeria/publica/{uuid}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
 
 
 
