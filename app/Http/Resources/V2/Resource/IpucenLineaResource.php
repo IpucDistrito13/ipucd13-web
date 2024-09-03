@@ -16,9 +16,9 @@ class IpucenLineaResource extends JsonResource
     {
         return [
             'descripcion' => $this->descripcion ?? null,
-            'url' => $this->url,
-            'video1' => $this->video1,
-            'video2' => $this->video2,
+            'url' => $this->url ?? null,
+            'video1' => $this->video1 ?? null,
+            'video2' => $this->video2 ?? null,
         ];
     }
 }
