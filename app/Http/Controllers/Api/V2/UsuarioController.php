@@ -83,7 +83,7 @@ class UsuarioController extends Controller
 
     public function getListUsuario()
     {
-        $usuario = User::where('estado', 'Activo')->get();
+        $usuario = User::with('congregacion')->where('estado', 'Activo')->get();
         return UsuarioPerfilResource::collection($usuario);
     }
 
