@@ -16,6 +16,7 @@ class CongregacionCollection extends ResourceCollection
     {
         return $this->collection->map(function ($congregacion) {
             return [
+                'id' => $congregacion->id,
                 'congregacion' => $congregacion->nombre,
                 'municipio' => $congregacion->municipio->nombre,
                 'departamento' => $congregacion->municipio->departamento->nombre,
