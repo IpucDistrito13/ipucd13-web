@@ -15,7 +15,7 @@ class IpucenLineaResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'descripcion' => $this->descripcion,
+            'descripcion' => $this->descripcion ?? null,
             'url' => $this->url,
             'video1' => $this->video1,
             'video2' => $this->video2,
