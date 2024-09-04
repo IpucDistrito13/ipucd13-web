@@ -25,7 +25,7 @@ class UsuarioPerfilResource extends JsonResource
             'congregacion' => $this->congregacion->nombre,
             'municipio' => $this->congregacion->municipio->nombre,
             'departamento' => $this->congregacion->municipio->departamento->nombre,
-            'role' => $this->roles->pluck('name')->implode(', '),
+            'roles' => $this->roles->pluck('name'),
             'imagen' => $this->imagen ? $this->imagen->url : null,
         ];
     }
