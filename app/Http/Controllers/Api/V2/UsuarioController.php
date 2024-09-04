@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UsuariosResource;
 use App\Http\Resources\V2\Resource\UsuarioCollection;
 use App\Http\Resources\V2\Resource\UsuarioPerfilResource;
+use App\Models\GenerarKeyApi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -81,9 +82,30 @@ class UsuarioController extends Controller
        
     }
 
-    public function getListUsuario()
+    public function getListUsuario(Request $request)
     {
-        $usuario = User::with('congregacion')->where('estado', 'Activo')->get();
+        // Obtener la clave API del parámetro
+        $apiKey = $request->query('api_key');
+
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        // Obtener los parámetros limit y offset de la URL
+        $limit = $request->query('limit', 10);
+        $offset = $request->query('offset', 0);
+
+        $usuario = User::with('congregacion')->where('estado', 'Activo')
+        ->orderBy('id', 'desc')
+        ->offset($offset)
+        ->limit($limit)
+        ->get();
         return UsuarioPerfilResource::collection($usuario);
     }
 
