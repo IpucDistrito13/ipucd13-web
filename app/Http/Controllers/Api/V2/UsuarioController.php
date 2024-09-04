@@ -116,7 +116,7 @@ class UsuarioController extends Controller
         $pastorRole = Role::where('name', 'Pastor')->first();
     
         // Filtrar usuarios con el rol 'Pastor' y estado 'Activo'
-        $usuarios = User::whereHas('roles', function ($query) use ($pastorRole) {
+        $usuarios = User::with('congregacion')->whereHas('roles', function ($query) use ($pastorRole) {
             $query->where('role_id', $pastorRole->id);
         })->where('estado', 'Activo')->get();
     
@@ -129,7 +129,7 @@ class UsuarioController extends Controller
         $pastorRole = Role::where('name', 'Lider')->first();
     
         // Filtrar usuarios con el rol 'Pastor' y estado 'Activo'
-        $usuarios = User::whereHas('roles', function ($query) use ($pastorRole) {
+        $usuarios = User::with('congregacion')->whereHas('roles', function ($query) use ($pastorRole) {
             $query->where('role_id', $pastorRole->id);
         })->where('estado', 'Activo')->get();
     
