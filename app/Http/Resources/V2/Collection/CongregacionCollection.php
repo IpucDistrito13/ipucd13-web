@@ -17,10 +17,15 @@ class CongregacionCollection extends ResourceCollection
         return $this->collection->map(function ($congregacion) {
             return [
                 'id' => $congregacion->id,
+                'uuid' => null,
                 'congregacion' => $congregacion->nombre,
                 'municipio' => $congregacion->municipio->nombre,
                 'departamento' => $congregacion->municipio->departamento->nombre,
                 'direccion'=> $congregacion->direccion,
+                'longitud' => $congregacion->longitud,
+                'latitud' => $congregacion->latitud,
+                'urlfacebook' => $congregacion->urlfacebook,
+                'googlemaps' => $congregacion->googlemaps,
             ];
         })->toArray();
     }
