@@ -109,9 +109,6 @@ class UsuarioController extends Controller
 
     public function getListUsuarioPastor(Request $request)
     {
-
-
-
         // Obtener la clave API del parámetro
         $apiKey = $request->query('api_key');
 
@@ -126,8 +123,8 @@ class UsuarioController extends Controller
         }
 
         // Obtener los parámetros limit y offset de la URL
-        $limit = $request->query('limit', $request->limit);
-        $offset = $request->query('offset', $request->offset);
+        $limit = $request->query('limit', 10);
+        $offset = $request->query('offset', 0);
 
         // Obtener el rol 'Pastor'
         $pastorRole = Role::where('name', 'Pastor')->first();
