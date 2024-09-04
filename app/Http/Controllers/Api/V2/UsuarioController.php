@@ -40,17 +40,17 @@ class UsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( $uuid)
+    public function show($uuid)
     {
-         // Busca al usuario por UUID
-         $usuario = User::with('congregacion')->where('uuid', $uuid)->first();
+        // Busca al usuario por UUID
+        $usuario = User::with('congregacion')->where('uuid', $uuid)->first();
 
-         // Verifica si el usuario existe
-         if (!$usuario) {
-             return response()->json(['error' => 'Usuario no encontrado'], 404);
-         }
- 
-         return new UsuarioPerfilResource($usuario);
+        // Verifica si el usuario existe
+        if (!$usuario) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        return new UsuarioPerfilResource($usuario);
     }
 
     /**
@@ -77,10 +77,7 @@ class UsuarioController extends Controller
         //
     }
 
-    public function getPerfilUsuario( $uuid)
-    {
-       
-    }
+    public function getPerfilUsuario($uuid) {}
 
     public function getListUsuario(Request $request)
     {
@@ -102,38 +99,81 @@ class UsuarioController extends Controller
         $offset = $request->query('offset', 0);
 
         $usuario = User::with('congregacion')->where('estado', 'Activo')
-        ->orderBy('id', 'desc')
-        ->offset($offset)
-        ->limit($limit)
-        ->get();
+            ->orderBy('nombre', 'desc')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
         return UsuarioPerfilResource::collection($usuario);
     }
 
 
-    public function getListUsuarioPastor()
+    public function getListUsuarioPastor(Request $request)
     {
+
+        // Obtener la clave API del parámetro
+        $apiKey = $request->query('api_key');
+
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        // Obtener los parámetros limit y offset de la URL
+        $limit = $request->query('limit', 10);
+        $offset = $request->query('offset', 0);
+
         // Obtener el rol 'Pastor'
         $pastorRole = Role::where('name', 'Pastor')->first();
-    
+
         // Filtrar usuarios con el rol 'Pastor' y estado 'Activo'
         $usuarios = User::with('congregacion')->whereHas('roles', function ($query) use ($pastorRole) {
             $query->where('role_id', $pastorRole->id);
-        })->where('estado', 'Activo')->get();
-    
+        })->where('estado', 'Activo')
+            ->orderBy('nombre', 'desc')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+
         return new UsuarioCollection($usuarios);
     }
 
-    public function getListUsuarioLider()
+    public function getListUsuarioLider(Request $request)
     {
+
+        // Obtener la clave API del parámetro
+        $apiKey = $request->query('api_key');
+
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        // Obtener los parámetros limit y offset de la URL
+        $limit = $request->query('limit', 10);
+        $offset = $request->query('offset', 0);
+
         // Obtener el rol 'Lider'
         $pastorRole = Role::where('name', 'Lider')->first();
-    
+
         // Filtrar usuarios con el rol 'Pastor' y estado 'Activo'
         $usuarios = User::with('congregacion')->whereHas('roles', function ($query) use ($pastorRole) {
             $query->where('role_id', $pastorRole->id);
-        })->where('estado', 'Activo')->get();
-    
+        })->where('estado', 'Activo')
+            ->orderBy('nombre', 'desc')
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+
         return new UsuarioCollection($usuarios);
     }
-    
 }
