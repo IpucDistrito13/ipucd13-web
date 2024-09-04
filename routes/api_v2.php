@@ -38,9 +38,10 @@ Route::get('podcasts/comite/{comiteId}', [PodcastController::class, 'getPodcasts
 Route::get('congregaciones', [CongregacionController::class, 'index']);
 
 
+Route::get('usuarios', [UsuarioController::class, 'getListUsuario']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::get('usuarios', [UsuarioController::class, 'getListUsuario']);
     //Route::get('usuarios/pastores', [UsuarioController::class, 'getListUsuarioPastor']);
     //Route::get('usuarios/lideres', [UsuarioController::class, 'getListUsuarioLider']);
     Route::get('usuario/perfil/{uuid}', [UsuarioController::class, 'show']);
