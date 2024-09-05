@@ -99,7 +99,7 @@ class UsuarioController extends Controller
         $offset = $request->query('offset', 0);
 
         $usuario = User::with('congregacion')->where('estado', 'Activo')
-            ->orderBy('nombre', 'desc')
+            ->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($limit)
             ->get();
@@ -133,7 +133,7 @@ class UsuarioController extends Controller
         $usuarios = User::with('congregacion')->whereHas('roles', function ($query) use ($pastorRole) {
             $query->where('role_id', $pastorRole->id);
         })->where('estado', 'Activo')
-            ->orderBy('nombre', 'desc')
+            ->orderBy('id', 'desc')
             ->offset($offset)
             ->limit($limit)
             ->get();
