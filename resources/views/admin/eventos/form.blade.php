@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <p><b>Cuando en la fecha de inicio aun no hay hora determinada, registrar la hora como 11;59</b></p>
+    <p><b>Cuando en la fecha de inicio aun no hay hora determinada, registrar la hora como 01:00 am</b></p>
 
     <div class="col-md-6">
         <div class="form-group">
@@ -25,6 +25,7 @@
         </div>
     </div>
 
+    <p><b>Cuando en la fecha de inicio aun no hay hora determinada, registrar la hora como 01:00 pm</b></p>
     <div class="col-md-6">
         <div class="form-group">
             <label for="exampleInputEmail1">Fecha Final *</label>
