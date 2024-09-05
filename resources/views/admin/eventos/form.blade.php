@@ -12,8 +12,7 @@
         </div>
     </div>
 
-    <p><b>Cuando en las fechas aún no hay hora especifica, registra la hora como 11:59 pm</b></p>
-
+    <p><b>Cuando en la fecha de inicio aun no hay hora determinada, registrar la hora como 11;59</b></p>
 
     <div class="col-md-6">
         <div class="form-group">
