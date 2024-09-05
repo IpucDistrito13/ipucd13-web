@@ -22,7 +22,7 @@ class CronogramaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:50',
+            'title' => 'required|max:100',
             'start' => 'required|date_format:Y-m-d\TH:i',
             'end' => 'required|date_format:Y-m-d\TH:i|after:start',
             'lugar' => 'nullable|max:100',
