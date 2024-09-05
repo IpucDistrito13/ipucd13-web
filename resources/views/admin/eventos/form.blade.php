@@ -1,5 +1,6 @@
 <div class="row">
 
+
     <div class="col-md-12">
         <div class="form-group">
             <label for="title">Título *</label>
@@ -10,6 +11,9 @@
             @enderror
         </div>
     </div>
+
+    <p><b>Cuando en las fechas aún no hay hora especifica, registra la hora como 11:59 pm</b></p>
+
 
     <div class="col-md-6">
         <div class="form-group">
