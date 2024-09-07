@@ -23,6 +23,7 @@ class UsuarioPerfilResource extends JsonResource
             'celular' => $this->celular,
             'visibleCelular' => $this->visible_celular,
             'congregacion' => $this->congregacion->nombre,
+            'direccion' => $this->congregacion->direccion,
             'municipio' => $this->congregacion->municipio->nombre,
             'departamento' => $this->congregacion->municipio->departamento->nombre,
             'roles' => $this->roles->pluck('name'),
