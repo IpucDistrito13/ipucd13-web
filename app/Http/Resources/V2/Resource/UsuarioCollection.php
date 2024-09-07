@@ -23,6 +23,7 @@ class UsuarioCollection extends ResourceCollection
                 'celular' => $usuario->celular,
                 'visibleCelular' => $usuario->visible_celular,
                 'congregacion' => $usuario->congregacion->nombre,
+                'direccion' => $usuario->congregacion->direccion,
                 'municipio' => $usuario->congregacion->municipio->nombre,
                 'departamento' => $usuario->congregacion->municipio->departamento->nombre,
                 'imagen' => $usuario->imagen?  $usuario->imagen->url : null,
