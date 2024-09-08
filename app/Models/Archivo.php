@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Archivo extends Model
 {
     use HasFactory;
-    protected $fillable = ['uuid', 'url', 'carpeta_id', 'user_id', 'nombre_original'];
+    protected $fillable = ['uuid', 'url', 'carpeta_id', 'user_id', 'nombre_original', 'tipo'];
 
     //Obtenemos los archivos segun la carpetaId
     public function scopeCarpetaPrivadaxArchivo($query, $carpetaId)

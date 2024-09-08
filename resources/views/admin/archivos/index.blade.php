@@ -8,10 +8,17 @@
         <h1 style="margin: 0;">Carpeta: {{ $carpeta->nombre }} </h1>
 
         @can('admin.archivos.upload')
-            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_upload">
-                <i class="fas fa-upload"></i> Añadir archivos
-            </a>
+            <div class="btn-group">
+                <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_upload">
+                    <i class="fas fa-upload"></i> Añadir archivos
+                </a>
+
+                <a class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modal_enlace">
+                    <i class="fas fa-link"></i> Añadir enlace
+                </a>
+            </div>
         @endcan
+
 
     </div>
 @stop
@@ -51,6 +58,7 @@
                     <tr>
                         <th>#</th>
                         <th>Nombre</th>
+                        <th>Tipo</th>
                         <th>Fecha</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
@@ -61,14 +69,20 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->nombre_original }}</td>
+                            <td>{{ $item->tipo }}</td>
                             <td>{{ $item->created_at->format('Y-m-d h:i a') }}</td>
 
                             <td>
                                 <div class="btn-group" role="group" aria-label="Group of buttons">
-                                    @can('admin.archivos.download')
-                                        <a class="btn btn-success btn-sm"
-                                            href="{{ route('admin.archivos.download', $item->uuid) }}">Descargar</a>
-                                    @endcan
+                                    @if ($item->tipo === 'archivo')
+                                        @can('admin.archivos.download')
+                                            <a class="btn btn-success btn-sm"
+                                                href="{{ route('admin.archivos.download', $item->uuid) }}">Descargar</a>
+                                        @endcan
+                                    @elseif ($item->tipo === 'enlace')
+                                        <a class="btn btn-primary btn-sm" href="{{ $item->url }}"
+                                            target="_blank">Abrir</a>
+                                    @endif
 
                                     @can('admin.archivos.destroy')
                                         <!-- Delete Button -->
@@ -108,14 +122,11 @@
                                             }
                                         </script>
                                     @endcan
-
                                 </div>
-
-
                             </td>
-
                         </tr>
                     @endforeach
+
 
                     <!-- Fin del ejemplo -->
                 </tbody>
@@ -125,7 +136,7 @@
 
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Archivos -->
     <div class="modal fade" id="modal_upload">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -141,8 +152,7 @@
                     @csrf
                     <div class="modal-body">
 
-                        <input type="hidden" value="{{ $carpeta->id }}" id="carpeta" name="carpeta">
-
+                        <input type="text" value="{{ $carpeta->id }}" id="carpeta" name="carpeta">
                         <div class="fallback">
                             <input type="file" name="file" multiple>
                         </div>
@@ -156,7 +166,53 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <!-- /.modal archivos -->
+
+
+
+    <div class="modal fade" id="modal_enlace">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Añadir enlace</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.archivos.storeUrl') }}" method="POST">
+                        @csrf
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="nombre">Nombre *</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="url">Enlace *</label>
+                                <input type="text" class="form-control" id="url" name="url"
+                                    placeholder="Enlace url externo">
+                            </div>
+
+                            <input type="hidden" value="{{ $carpeta->id }}" id="carpeta" name="carpeta">
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary float-right">Guardar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!-- /.modal -->
+
 @stop
 
 @section('css')

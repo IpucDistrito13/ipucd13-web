@@ -216,3 +216,5 @@ Route::get('diploma/bautismo', [CertificadoController::class, 'diplomaBautismo']
 Route::post('diploma/bautismo/download', [CertificadoController::class, 'downloadDiplomaBautismo'])
     ->name('admin.diploma.bautismo.download');
 
+
+    Route::post('archivos/carpetas/storeUrl', [ArchivoController::class, 'storeUrl'])->name('admin.archivos.storeUrl');

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V2\ComiteController;
 use App\Http\Controllers\Api\V2\CongregacionController;
 use App\Http\Controllers\Api\V2\CronogramaController;
+use App\Http\Controllers\Api\V2\DescargableComiteCarpetasController;
 use App\Http\Controllers\Api\V2\EpisodioController;
 use App\Http\Controllers\Api\V2\EventoController;
 use App\Http\Controllers\Api\V2\GaleriaController;
@@ -45,6 +46,13 @@ Route::get('usuario/perfil/{uuid}', [UsuarioController::class, 'show']);
 Route::get('ipucenlinea', [IpucenLineaController::class, 'index']);
 Route::get('galeria/privada/{uuid}', [GaleriaController::class, 'showGaleriaPrivadaUsuario']);
 Route::get('galeria/publica/{uuid}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
+
+//Lita las carpetas segun el comite
+//El uuid es del comite
+Route::get('descargable/carpeta/privado/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePrivado']);
+Route::get('descargable/carpeta/publico/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePublico']);
+
+Route::get('archivo/carpeta/{uuid}', [DescargableComiteCarpetasController::class, 'getArchivosCarpeta']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 

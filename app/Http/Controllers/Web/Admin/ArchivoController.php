@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ArchivoController extends Controller
 {
@@ -103,6 +104,8 @@ class ArchivoController extends Controller
         DB::beginTransaction();
 
         try {
+            $uuid = Str::uuid()->toString();
+
             // Obtener la carpeta desde la solicitud
             $carpeta = $request->carpeta;
 
@@ -122,11 +125,13 @@ class ArchivoController extends Controller
 
             // Crear una entrada en la base de datos para el archivo cargado
             $archivo = Archivo::create([
-                'uuid' => time(), // Puedes usar esto o generar un UUID único según tu lógica
+                
+                'uuid' => $uuid, // Puedes usar esto o generar un UUID único según tu lógica
                 'url' => $url,
                 'carpeta_id' => $carpeta,
                 'user_id' => auth()->id(),
                 'nombre_original' => $originalName,
+                'tipo' => 'archivo', // Asegúrate de que 'tipo' sea 'enlace'
             ]);
 
             // Commit de la transacción si no hay errores
@@ -146,6 +151,54 @@ class ArchivoController extends Controller
                 ->json(['error' => 'Error al cargar el archivo: ' . $e->getMessage()], 500);
         }
     }
+
+
+    public function storeUrl(Request $request)
+{
+    //return $request;
+    // Validar la solicitud antes de procesarla
+    $request->validate([
+        'carpeta' => 'required|integer',
+        'nombre' => 'required|max:150',
+        'url' => 'required',
+    ]);
+
+    // Iniciar transacción de base de datos
+    DB::beginTransaction();
+
+    try {
+        $uuid = Str::uuid()->toString();
+
+        // Crear una entrada en la base de datos para el archivo cargado
+        $archivo = Archivo::create([
+            'uuid' => $uuid,
+            'url' => $request->url,
+            'carpeta_id' => $request->carpeta,
+            'user_id' => auth()->id(),
+            'nombre_original' => $request->nombre,
+            'tipo' => 'enlace', // Asegúrate de que 'tipo' sea 'enlace'
+        ]);
+
+        // Commit de la transacción si no hay errores
+        DB::commit();
+        Cache::flush();
+
+        // Redirigir a la página anterior con un mensaje de éxito
+        return redirect()->back()->with('success', 'Enlace guardado exitosamente.');
+        
+    } catch (\Exception $e) {
+        // Rollback de la transacción en caso de error
+        DB::rollBack();
+        Log::error('Error en storeUrl - Archivo: ' . $e->getMessage());
+
+        // En caso de error, devolver una respuesta con el mensaje de error
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with('error', 'Error al guardar enlace: ' . $e->getMessage());
+    }
+}
+
 
     public function download($uuid)
     {

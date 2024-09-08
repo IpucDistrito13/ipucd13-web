@@ -30,6 +30,12 @@ class Comite extends Model
     }
     //END WEB
 
+    public function scopeGetComiteUUID($query, $uuid)
+    {
+        return $query->select('id', 'nombre' , 'slug')->where('uuid', $uuid);
+
+    }
+
     public function scopeApiV1($query)
     {
         return $query->select('id', 'nombre', 'slug', 'descripcion', 'imagen_banner');
