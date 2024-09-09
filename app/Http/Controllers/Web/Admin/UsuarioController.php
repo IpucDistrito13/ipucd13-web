@@ -305,8 +305,8 @@ class UsuarioController extends Controller
             // Redimensionamos la imagen a 340x450 píxeles
             //$image->resize(340, 470);
     
-            // Convertimos la imagen a JPG y reducimos la calidad al 50%
-            $image->toJpg(50);
+            // Convertimos la imagen a JPG y reducimos la calidad al 60%
+            $image->toJpg(60);
     
             // Generamos un nombre único para el archivo
             $fileName = uniqid() . '.jpg';
