@@ -23,7 +23,7 @@ class ArchivosDetailsCollection extends ResourceCollection
                 'nombre' => $archivos->nombre_original,
                 'created_at' => $archivos->updated_at,
                 'carpeta' => $archivos->carpeta->nombre,
-                'comite' => $archivos->carpeta->comite->nombre,
+                //'comite' => $archivos->carpeta->comite->nombre,
             ];
         })->toArray();
     }

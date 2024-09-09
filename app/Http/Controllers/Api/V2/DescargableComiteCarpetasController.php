@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V2\Collection\ArchivosDetailsCollection;
 use App\Http\Resources\V2\Collection\CarpetaDetailsCollection;
 use App\Http\Resources\V2\Collection\DescargablesComiteCollection;
 use App\Models\Archivo;
@@ -86,7 +87,7 @@ class DescargableComiteCarpetasController extends Controller
         $carpetaId = Carpeta::where('slug', $slugCarpeta)->select('id')->first()->id;
         // return Archivo::all();
         $archivos = Archivo::where('carpeta_id', $carpetaId)->get();
-        return new DescargablesComiteCollection($archivos);
+        return new ArchivosDetailsCollection($archivos);
     }
 
     public function getComitePublico(Request $request, $slug)
