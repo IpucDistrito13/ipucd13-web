@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 
 class UsuarioController extends Controller
 {
@@ -223,9 +226,7 @@ class UsuarioController extends Controller
     }
 
 
-    public function storeCongregacionPastor()
-    {
-    }
+    public function storeCongregacionPastor() {}
 
     /**
      * Display the specified resource.
@@ -277,32 +278,43 @@ class UsuarioController extends Controller
             ],
             'password' => 'nullable|string|min:8|confirmed',
             'celular' => 'required|regex:/^[0-9]{10}$/',
-            // usar confirmed en lugar de password_confirmation
         ]);
-
+    
         // Preparar los datos para la actualización
         $data = [
             'email' => $request->email,
             'celular' => $request->celular,
         ];
-
-        // Validar y actualizar el correo electrónico si se proporciona
-        if ($request->has('email')) {
-            $data['email'] = $request->input('email');
-        }
-
+    
         // Validar y actualizar la contraseña si se proporciona
         if ($request->filled('password')) {
-            $data['password'] = bcrypt($request->input('password'));
+            $data['password'] = bcrypt($request->password);
         }
-
+    
         // Manejar la imagen de perfil si se proporciona
-        if ($request->file('file')) {
-            //$url = Storage::disk('s3')->put('public/usuarios/perfil', $request->file('file'));
+        if ($request->hasFile('file')) {
             $imgPerfil = $request->file('file');
-            $ubicacionImgPerfil = 'public/usuarios/' . $usuario->uuid . '/' . 'perfil';
-            $url = $this->storeFile($imgPerfil, $ubicacionImgPerfil);
-
+            $newLocation = 'public/new/usuarios/' . $usuario->uuid . '/perfil';
+            
+            // Creamos instancia de ImageManager
+            $imgManager = new ImageManager(new Driver());
+    
+            // Leemos la imagen
+            $image = $imgManager->read($imgPerfil);
+    
+            // Redimensionamos la imagen a 340x450 píxeles
+            $image->resize(340, 450);
+    
+            // Convertimos la imagen a JPG y reducimos la calidad al 70%
+            $image->toJpg(70);
+    
+            // Generamos un nombre único para el archivo
+            $fileName = uniqid() . '.jpg';
+    
+            // Guardamos la imagen convertida en la nueva ubicación
+            $url = $newLocation . '/' . $fileName;
+            Storage::put($url, $image->encode());
+    
             // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
             if ($usuario->imagen) {
                 Storage::delete($usuario->imagen->url);
@@ -318,11 +330,11 @@ class UsuarioController extends Controller
                 ]);
             }
         }
-
+    
         // Actualizar el usuario con los datos preparados
         $usuario->update($data);
         Cache::flush();
-
+    
         // Redirigir con un mensaje de éxito
         return redirect()->route('admin.usuario.perfil')->with('success', 'Perfil actualizado exitosamente.');
     }
@@ -455,3 +467,149 @@ class UsuarioController extends Controller
             ->make(true);
     }
 }
+
+
+/*
+// FORMATO DE IMAGEN . WEBP
+public function updatePerfil(Request $request, User $usuario)
+{
+    $request->validate([
+        'email' => [
+            'sometimes',
+            'email',
+            Rule::unique('users')->ignore($usuario->id),
+        ],
+        'password' => 'nullable|string|min:8|confirmed',
+        'celular' => 'required|regex:/^[0-9]{10}$/',
+    ]);
+
+    // Preparar los datos para la actualización
+    $data = [
+        'email' => $request->email,
+        'celular' => $request->celular,
+    ];
+
+    // Validar y actualizar la contraseña si se proporciona
+    if ($request->filled('password')) {
+        $data['password'] = bcrypt($request->password);
+    }
+
+    // Manejar la imagen de perfil si se proporciona
+    if ($request->hasFile('file')) {
+        $imgPerfil = $request->file('file');
+        $newLocation = 'public/new/usuarios/' . $usuario->uuid . '/perfil';
+        
+        // Creamos instancia de ImageManager
+        $imgManager = new ImageManager(new Driver());
+
+        // Leemos la imagen
+        $image = $imgManager->read($imgPerfil);
+
+        // Convertimos la imagen a WebP y reducimos la calidad
+        $image->toWebp(60); // 60 es el nivel de calidad (0-100)
+
+        // Generamos un nombre único para el archivo
+        $fileName = uniqid() . '.webp';
+
+        // Guardamos la imagen convertida en la nueva ubicación
+        $url = $newLocation . '/' . $fileName;
+        Storage::put($url, $image->encode());
+
+        // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
+        if ($usuario->imagen) {
+            Storage::delete($usuario->imagen->url);
+            $usuario->imagen()->update([
+                'url' => $url,
+                'imageable_type' => User::class,
+            ]);
+        } else {
+            // Si el usuario no tiene una imagen, agregar una nueva imagen
+            $usuario->imagen()->create([
+                'url' => $url,
+                'imageable_type' => User::class,
+            ]);
+        }
+    }
+
+    // Actualizar el usuario con los datos preparados
+    $usuario->update($data);
+    Cache::flush();
+
+    // Redirigir con un mensaje de éxito
+    return redirect()->route('admin.usuario.perfil')->with('success', 'Perfil actualizado exitosamente.');
+}
+ 
+ */
+
+
+
+/*
+// FORMATO DE IMAGEN .JPG Y REDUZCE EL TAMAÑO 
+public function updatePerfil(Request $request, User $usuario)
+{
+    $request->validate([
+        'email' => [
+            'sometimes',
+            'email',
+            Rule::unique('users')->ignore($usuario->id),
+        ],
+        'password' => 'nullable|string|min:8|confirmed',
+        'celular' => 'required|regex:/^[0-9]{10}$/',
+    ]);
+
+    // Preparar los datos para la actualización
+    $data = [
+        'email' => $request->email,
+        'celular' => $request->celular,
+    ];
+
+    // Validar y actualizar la contraseña si se proporciona
+    if ($request->filled('password')) {
+        $data['password'] = bcrypt($request->password);
+    }
+
+    // Manejar la imagen de perfil si se proporciona
+    if ($request->hasFile('file')) {
+        $imgPerfil = $request->file('file');
+        $newLocation = 'public/new/usuarios/' . $usuario->uuid . '/perfil';
+        
+        // Creamos instancia de ImageManager
+        $imgManager = new ImageManager(new Driver());
+
+        // Leemos la imagen
+        $image = $imgManager->read($imgPerfil);
+
+        // Convertimos la imagen a WebP y reducimos la calidad
+        $image->toWebp(60); // 60 es el nivel de calidad (0-100)
+
+        // Generamos un nombre único para el archivo
+        $fileName = uniqid() . '.webp';
+
+        // Guardamos la imagen convertida en la nueva ubicación
+        $url = $newLocation . '/' . $fileName;
+        Storage::put($url, $image->encode());
+
+        // Si el usuario ya tiene una imagen, eliminar el archivo antiguo y actualizar la URL
+        if ($usuario->imagen) {
+            Storage::delete($usuario->imagen->url);
+            $usuario->imagen()->update([
+                'url' => $url,
+                'imageable_type' => User::class,
+            ]);
+        } else {
+            // Si el usuario no tiene una imagen, agregar una nueva imagen
+            $usuario->imagen()->create([
+                'url' => $url,
+                'imageable_type' => User::class,
+            ]);
+        }
+    }
+
+    // Actualizar el usuario con los datos preparados
+    $usuario->update($data);
+    Cache::flush();
+
+    // Redirigir con un mensaje de éxito
+    return redirect()->route('admin.usuario.perfil')->with('success', 'Perfil actualizado exitosamente.');
+}
+    */
