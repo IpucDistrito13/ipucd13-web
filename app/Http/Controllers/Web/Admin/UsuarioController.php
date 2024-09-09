@@ -303,7 +303,7 @@ class UsuarioController extends Controller
             $image = $imgManager->read($imgPerfil);
     
             // Redimensionamos la imagen a 340x450 píxeles
-            $image->resize(340, 450);
+            //$image->resize(340, 470);
     
             // Convertimos la imagen a JPG y reducimos la calidad al 70%
             $image->toJpg(70);
