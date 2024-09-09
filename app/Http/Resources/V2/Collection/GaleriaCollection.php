@@ -19,8 +19,8 @@ class GaleriaCollection extends ResourceCollection
                 'uuid' => $galeria->uuid,
                 'imagen' => $galeria->url,
                 'created_at' => $galeria->created_at->format('d/m/Y'),
-                'nombre' => $galeria->user->nombre,
-                'apelliidos' => $galeria->user->apellidos,
+                //'nombre' => $galeria->user->nombre,
+                //'apellidos' => $galeria->user->apellidos,
                 //'updated_at' => $episodio->updated_at->format('d/m/Y'),
             ];
         })->toArray();

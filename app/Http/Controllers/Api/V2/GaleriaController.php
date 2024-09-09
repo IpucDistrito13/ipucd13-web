@@ -91,34 +91,42 @@ class GaleriaController extends Controller
     {
         // Obtener el usuario autenticado
         $usuario = auth()->user();
-    
+
         // Obtener el ID del usuario basado en el UUID
         $user_id = User::where('uuid', $uuid)->first()->id;
-    
+
         // Verificar si el usuario autenticado tiene el rol 'Pastor' o 'Administrador'
         if ($usuario && $usuario->roles->contains(function ($role) {
             return in_array($role->name, ['Pastor', 'Administrador']);
         })) {
             // Mostrar solo los elementos con galeriatipo_id = 2 para el user_id especificado
             $galeria = Galeria::where('user_id', $user_id)
-                              ->where('galeriatipo_id', 2)
-                              ->get(); 
+                ->where('galeriatipo_id', 2)
+                ->get();
             return new GaleriaCollection($galeria);
         }
-    
+
         return response()->json(['message' => 'No tiene acceso a esta galería'], 403);
     }
 
-    
-    
+
 
     public function showGaleriaPublicaUsuario($uuid)
     {
+
         // Obtener el usuario autenticado
         $usuario = auth()->user();
-    
+
         // Obtener el ID del usuario basado en el UUID
         $user_id = User::where('uuid', $uuid)->first()->id;
+        // Mostrar solo los elementos con galeriatipo_id = 2 para el user_id especificado
+        $galeria = Galeria::where('user_id', $user_id)
+            ->where('galeriatipo_id', 1)
+            ->get();
+        return new GaleriaCollection($galeria);
+
+
+        /*
     
         // Verificar si el usuario autenticado tiene el rol 'Pastor' o 'Administrador'
         if ($usuario && $usuario->roles->contains(function ($role) {
@@ -130,8 +138,9 @@ class GaleriaController extends Controller
                               ->get(); 
             return new GaleriaCollection($galeria);
         }
-    
+
+        */
+
         return response()->json(['message' => 'No tiene acceso a esta galería'], 403);
     }
-    
 }
