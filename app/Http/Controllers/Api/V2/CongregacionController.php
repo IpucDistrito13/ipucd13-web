@@ -86,4 +86,46 @@ class CongregacionController extends Controller
     {
         //
     }
+
+
+    public function search(Request $request)
+    {
+
+         // Obtener la clave API del parámetro
+         $apiKey = $request->query('api_key');
+         $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+ 
+         // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+         if (!$apiKeyExists) {
+             return response()->json([
+                 'error' => 'No autorizado',
+                 'message' => 'La clave API proporcionada no es válida.'
+             ], 401);
+         }
+ 
+
+        $query = $request->input('query');
+        $limit = $request->input('limit', 10);  // valor por defecto es 10
+        $offset = $request->input('offset', 0); // valor por defecto es 0
+    
+        if (!$query) {
+            return response()->json([
+                'error' => 'Debe proporcionar un término de búsqueda.'
+            ], 400);
+        }
+    
+        $congregaciones = Congregacion::where('nombre', 'like', "%{$query}%")
+            ->skip($offset)
+            ->take($limit)
+            ->get();
+    
+        if ($congregaciones->isEmpty()) {
+            return response()->json([
+                'message' => 'No se encontraron resultados.'
+            ], 404);
+        }
+    
+        return new CollectionCongregacionCollection($congregaciones);
+    }
+    
 }
