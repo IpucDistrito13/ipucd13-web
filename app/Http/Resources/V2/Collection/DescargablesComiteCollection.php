@@ -21,6 +21,7 @@ class DescargablesComiteCollection extends ResourceCollection
                 'url' => $descargableComite->url,
                 'nombre' => $descargableComite->nombre_original,
                 'created_at' => $descargableComite->updated_at,
+                //'comite' => $descargableComite->comite->nombre,
                 
             ];
         })->toArray();
