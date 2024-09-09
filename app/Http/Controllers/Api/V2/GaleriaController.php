@@ -108,6 +108,8 @@ class GaleriaController extends Controller
     
         return response()->json(['message' => 'No tiene acceso a esta galería'], 403);
     }
+
+    
     
 
     public function showGaleriaPublicaUsuario($uuid)
