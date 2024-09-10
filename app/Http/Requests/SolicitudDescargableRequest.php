@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ComiteRequest extends FormRequest
+class SolicitudDescargableRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,27 +21,22 @@ class ComiteRequest extends FormRequest
      */
     public function rules(): array
     {
-        $comite = $this->route()->parameter('comite');
-        //dd($comite);
+        $solicitudDescargable = $this->route()->parameter('solicitud_descargable');
+        //dd($solicitudDescargable);
 
         // Reglas de validación por defecto
         $rules = [
-            'nombre' => 'required|max:50',
-            'slug' => 'required|max:255|alpha_dash|unique:comites,slug',
-            'descripcion' => 'required|max:1000',
-            'file' => 'required|image|dimensions:width=480,height=640',
-            'imagen_banner' => 'required|image|dimensions:width=1920,height=500',
-            'banner_little' => 'required|image|dimensions:width=600,height=144',
+            'nombre' => 'required|max:230',
+            'slug' => 'required|max:255|alpha_dash|unique:solicitud_descargables,slug',
+            'url' => 'required|file|max:10240', // 10MB max
+            'descripcion' => 'nullable|max:250',
+            'estado' => 'required|in:Activo,Inactivo',
+
         ];
 
         // Si hay una categoría, aplicar regla de validación condicional para el slug
-        if ($comite) {
-            $rules['slug'] = 'required|max:255|alpha_dash|unique:comites,slug,' . $comite->id;
-            $rules['file'] = 'nullable|image|dimensions:width=480,height=640';
-            $rules['imagen_banner'] = 'nullable|image|dimensions:width=1920,height=500';
-            $rules['banner_little'] = 'nullable|image|dimensions:width=600,height=144';
-
-
+        if ($solicitudDescargable) {
+            $rules['slug'] = 'required|max:255|alpha_dash|unique:solicitud_descargables,slug,' . $solicitudDescargable->id;
         }
 
         return $rules;

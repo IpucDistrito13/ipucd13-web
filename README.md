@@ -207,3 +207,26 @@ Log and try
 
 # USUARIO
 - store
+
+09/24
+# Menu
+Se escondienron las los el siguiente codigo ubicado desde adminlte (Menu)
+
+                [
+                    'text' => 'Pendientes',
+                    'route' => 'admin.solicitudes.pendientes',
+                    'can' => 'admin.solicitudes.pendientes'
+                ],
+
+                [
+                    'text' => 'Respondidas',
+                    'route' => 'admin.solicitudes.respondidas',
+                    'can' => 'admin.solicitudes.respondidas'
+                ],
+
+
+                [
+                    'text' => 'Diploma de bautismo',
+                    'route' => 'admin.diploma.bautismo',
+                    //'can' => 'admin.solicitudes.respondidas'
+                ],

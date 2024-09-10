@@ -27,10 +27,12 @@ use App\Http\Controllers\Web\Admin\RedesController;
 use App\Http\Controllers\Web\Admin\RolController;
 use App\Http\Controllers\Web\Admin\SerieController;
 use App\Http\Controllers\Web\Admin\SolicitudController;
+use App\Http\Controllers\Web\Admin\SolicitudDescargableController;
 use App\Http\Controllers\Web\Admin\SolicitudTipoController;
 use App\Http\Controllers\Web\Admin\UsuarioController;
 use App\Http\Controllers\Web\Admin\VideoController;
 use App\Models\GaleriaTipo;
+use App\Models\SolicitudDescargable;
 use Illuminate\Support\Facades\Route;
 
 
@@ -217,4 +219,11 @@ Route::post('diploma/bautismo/download', [CertificadoController::class, 'downloa
     ->name('admin.diploma.bautismo.download');
 
 
-    Route::post('archivos/carpetas/storeUrl', [ArchivoController::class, 'storeUrl'])->name('admin.archivos.storeUrl');
+Route::post('archivos/carpetas/storeUrl', [ArchivoController::class, 'storeUrl'])->name('admin.archivos.storeUrl');
+
+
+Route::resource('solicitud_descargables', SolicitudDescargableController::class)->names('admin.solicitud_descargables');
+Route::get('solicitud_descargables/download/{uuid}', [SolicitudDescargableController::class, 'download'])->name('admin.solicitud_descargables.download');
+
+
+

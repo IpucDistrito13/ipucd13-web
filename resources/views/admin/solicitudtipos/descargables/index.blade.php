@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Solicitud tipo')
+@section('title', 'Solicitud descargable')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Tipos solicitud</h1>
-        @can('admin.solicitud_tipos.create')
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.solicitud_tipos.create') }}">
+        <h1 style="margin: 0;">Solicitud descargable</h1>
+        @can('admin.solicitud_descargables.create')
+            <a class="btn btn-primary btn-sm" href="{{ route('admin.solicitud_descargables.create') }}">
                 Crear Nuevo
             </a>
         @endcan
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Lista tipos de solicitud
+                Solicitud descargable
             </span>
         </div>
         <!-- /.card-header -->
@@ -50,6 +50,7 @@
                         <th>Nombre</th>
                         <th>Slug</th>
                         <th>Descripción</th>
+                        <th>Tipo</th>
                         <th>Estado</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
@@ -58,28 +59,37 @@
                     @php
                         $contador = 0;
                     @endphp
-                    @foreach ($solicitud_tipo as $item)
+                    @foreach ($solicitud_descargable as $item)
                         <tr>
                             <td style="text-align: center">{{ ++$contador }}</td>
 
                             <td>{{ $item->nombre }}</td>
                             <td>{{ $item->slug }}</td>
                             <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->tipo }}</td>
                             <td>{{ $item->estado }}</td>
                             <td>
                                 <!-- Botones de acciones -->
                                 <div class="btn-group" role="group" aria-label="Acciones">
+
+                                    @if ($item->tipo === 'Archivo')
+                                        @can('admin.solicitud_descargables.download')
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{ route('admin.solicitud_descargables.download', $item->uuid) }}">Descargar</a>
+                                        @endcan
+                                  
+                                    @endif
                         
-                                    @can('admin.solicitud_tipos.edit')
+                                    @can('admin.solicitud_descargables.edit')
                                         <!-- Update Button -->
                                         <a class="btn btn-success btn-sm"
-                                            href="{{ route('admin.solicitud_tipos.edit', $item) }}">Actualizar</a>
+                                            href="{{ route('admin.solicitud_descargables.edit', $item) }}">Actualizar</a>
                                     @endcan
 
-                                    @can('admin.solicitud_tipos.destroy')
+                                    @can('admin.solicitud_descargables.destroy')
                                         <!-- Botón de Eliminar -->
                                         <form id="deleteForm{{ $item->id }}"
-                                            action="{{ route('admin.solicitud_tipos.destroy', $item) }}" method="POST">
+                                            action="{{ route('admin.solicitud_descargables.destroy', $item) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-danger btn-sm"

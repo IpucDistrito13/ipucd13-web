@@ -21,15 +21,18 @@ class SolicitudTipoRequest extends FormRequest
      */
     public function rules(): array
     {
-        $solicitudTipo = $this->route('solicitud_tipos'); // Access route parameters correctly
+        $solicitudTipo = $this->route('solicitud_tipos');
+        //dd($solicitudTipo);
 
-        // Default validation rules
         $rules = [
-            'nombre' => 'required|max:100',
+            'nombre' => 'required|max:230',
             'slug' => 'required|max:255|alpha_dash|unique:solicitud_tipos,slug',
             'descripcion' => 'nullable|max:250',
+            'estado' => 'required|in:Activo,Inactivo',
+
         ];
 
+        // Si es una actualización, ajustar la regla unique para el slug
         if ($solicitudTipo) {
             $rules['slug'] = 'required|max:255|alpha_dash|unique:solicitud_tipos,slug,' . $solicitudTipo->id;
         }
@@ -46,7 +49,6 @@ class SolicitudTipoRequest extends FormRequest
             'slug.required' => 'El campo slug es obligatorio.',
             'slug.unique' => 'El slug ya está en uso.',
             'slug.alpha_dash' => 'El campo slug solo puede contener letras, números, guiones y guiones bajos.',
-
             'descripcion.max' => 'El campo descripción no debe tener más de :max caracteres.',
         ];
     }

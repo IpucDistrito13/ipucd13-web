@@ -373,6 +373,7 @@ return [
         [
             'text' => 'Solicitudes',
             'icon' => 'fas fa-bullhorn',
+            'active' => ['admin/solicitud_tipos*', 'admin/solicitud_descargable*'],
             'submenu' => [
                 [
                     'text' => 'Tipos',
@@ -381,15 +382,9 @@ return [
                 ],
 
                 [
-                    'text' => 'Pendientes',
-                    'route' => 'admin.solicitudes.pendientes',
-                    'can' => 'admin.solicitudes.pendientes'
-                ],
-
-                [
-                    'text' => 'Respondidas',
-                    'route' => 'admin.solicitudes.respondidas',
-                    'can' => 'admin.solicitudes.respondidas'
+                    'text' => 'Descargables',
+                    'route' => 'admin.solicitud_descargables.index',
+                    //'can' => 'admin.solicitud_tipos.index'
                 ],
 
                 [
@@ -397,11 +392,7 @@ return [
                     'route' => 'admin.certificado.bautismo',
                     //'can' => 'admin.solicitudes.respondidas'
                 ],
-                [
-                    'text' => 'Diploma de bautismo',
-                    'route' => 'admin.diploma.bautismo',
-                    //'can' => 'admin.solicitudes.respondidas'
-                ],
+
 
             ],
         ],

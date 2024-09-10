@@ -41,7 +41,7 @@ class SolicitudController extends Controller
         $solicitudTipo = SolicitudTipo::all();
         $uuid = time();
         $usuario = @auth()->user();
-        
+
         $listSolicitudes = Solicitud::with('solicitudTipo')->SolicitudesListadoUser($usuario->id)
             ->orderBy('created_at', 'desc')  // Ordenar por created_at en orden descendente
             ->limit(100)                      // Limitar a los últimos 100 registros
@@ -106,55 +106,54 @@ class SolicitudController extends Controller
      * Update the specified resource in storage.
      */
     public function update(SolicitudRequest $request, Solicitud $solicitud)
-{
-    try {
-        // Validación de los datos del formulario
-        $validatedData = $request->validate([
-            'file' => 'required|file|mimes:jpeg,png,pdf|max:2048', // Acepta JPEG, PNG y PDF, tamaño máximo de 2MB
-        ]);
+    {
+        try {
+            // Validación de los datos del formulario
+            $validatedData = $request->validate([
+                'file' => 'required|file|mimes:jpeg,png,pdf|max:2048', // Acepta JPEG, PNG y PDF, tamaño máximo de 2MB
+            ]);
 
-        // Verificar si se cargó un nuevo archivo
-        if ($request->file('file')) {
-            // Almacenar el archivo y obtener la URL
-            $url = Storage::put('public/solicitudes', $request->file('file'));
+            // Verificar si se cargó un nuevo archivo
+            if ($request->file('file')) {
+                // Almacenar el archivo y obtener la URL
+                $url = Storage::put('public/solicitudes', $request->file('file'));
 
-            // Si la solicitud ya tiene una imagen, eliminarla
-            if ($solicitud->url) {
-                Storage::delete($solicitud->url);
+                // Si la solicitud ya tiene una imagen, eliminarla
+                if ($solicitud->url) {
+                    Storage::delete($solicitud->url);
+                }
+
+                // Datos a actualizar en la solicitud
+                $data = [
+                    'estado' => '1',
+                    'url' => $url,
+                    'user_response' => auth()->user()->id,
+                ];
+
+                // Actualizar la solicitud
+                $solicitud->update($data);
+
+                // Enviar correo de respuesta
+                Mail::to($solicitud->userSolicitud->email)
+                    ->send(new ResponseSolicitudMail($solicitud, auth()->user()));
+
+                // Limpiar la caché
+                Cache::flush();
+
+                // Redireccionar con un mensaje de éxito
+                return redirect()->route('admin.solicitudes.pendientes')
+                    ->with('success', 'Solicitud ' . $solicitud->uuid . ' actualizada exitosamente.');
             }
 
-            // Datos a actualizar en la solicitud
-            $data = [
-                'estado' => '1',
-                'url' => $url,
-                'user_response' => auth()->user()->id,
-            ];
-
-            // Actualizar la solicitud
-            $solicitud->update($data);
-
-            // Enviar correo de respuesta
-            Mail::to($solicitud->userSolicitud->email)
-                ->send(new ResponseSolicitudMail($solicitud, auth()->user()));
-
-            // Limpiar la caché
-            Cache::flush();
-
-            // Redireccionar con un mensaje de éxito
+            // En caso de no haber archivo, redireccionar con mensaje de error
             return redirect()->route('admin.solicitudes.pendientes')
-                ->with('success', 'Solicitud ' . $solicitud->uuid . ' actualizada exitosamente.');
+                ->with('error', 'No se ha cargado ningún archivo.');
+        } catch (\Exception $e) {
+            // Capturar excepciones generales
+            return redirect()->route('admin.solicitudes.pendientes')
+                ->with('error', 'Ocurrió un error al procesar la solicitud: ' . $e->getMessage());
         }
-
-        // En caso de no haber archivo, redireccionar con mensaje de error
-        return redirect()->route('admin.solicitudes.pendientes')
-            ->with('error', 'No se ha cargado ningún archivo.');
-
-    } catch (\Exception $e) {
-        // Capturar excepciones generales
-        return redirect()->route('admin.solicitudes.pendientes')
-            ->with('error', 'Ocurrió un error al procesar la solicitud: ' . $e->getMessage());
     }
-}
 
 
 

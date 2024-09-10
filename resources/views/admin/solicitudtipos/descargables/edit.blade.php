@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar solicitud tipo')
+@section('title', 'Editar solicitud descargable')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Editar tipo solicitiud: {{ $solicitud_tipo->nombre }}</h1>
+        <h1 style="margin: 0;">Editar tipo solicitiud: {{ $solicitud_descargable->nombre }}</h1>
         <div>
             
         </div>
@@ -42,12 +42,12 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.solicitud_tipos.update', $solicitud_tipo) }}" autocomplete="off"
+            <form method="POST" action="{{ route('admin.solicitud_descargables.update', $solicitud_descargable) }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
                 @csrf
                 @method('PUT') <!-- Establece el método PUT -->
 
-                @include('admin.solicitudtipos.form', $solicitud_tipo)
+                @include('admin.solicitudtipos.descargables.form', $solicitud_descargable)
 
 
                 <div class="modal-footer">

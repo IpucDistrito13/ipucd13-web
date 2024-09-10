@@ -1,13 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar solicitud tipo')
+@section('title', 'Crear solicitud descargable')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Editar tipo solicitiud: {{ $solicitud_tipo->nombre }}</h1>
-        <div>
-            
-        </div>
+        <h1 style="margin: 0;">Solicitud descargable</h1>
 
     </div>
 @stop
@@ -36,23 +33,22 @@
     <div class="card">
         <div class="card-header">
             <span id="card_title">
-                Datos tipo solicitud
+                Solicitud descargable
             </span>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
 
-            <form method="POST" action="{{ route('admin.solicitud_tipos.update', $solicitud_tipo) }}" autocomplete="off"
+            <form method="POST" action="{{ route('admin.solicitud_descargables.store') }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
+
                 @csrf
-                @method('PUT') <!-- Establece el método PUT -->
 
-                @include('admin.solicitudtipos.form', $solicitud_tipo)
-
+                @include('admin.solicitudtipos.descargables.form')
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.solicitud_tipos.index') }}">Volver</a>
-                    <button type="submit" class="btn btn-success float-right">Actualizar</button>
+                    <a class="btn btn-secondary" href="{{ route('admin.solicitud_descargables.index') }}">Volver</a>
+                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
                 </div>
             </form>
 
@@ -77,12 +73,22 @@
             height: 100%;
         }
     </style>
-
 @stop
 
 @section('js')
 
     <script>
+        showErrores();
+
+        function showErrores() {
+            @if ($errors->any())
+
+                @foreach ($errors->all() as $error)
+                    console.error('{{ $error }}');
+                @endforeach
+            @endif
+        }
+
         // Generate slug
         function generateSlug(inputText) {
             var withoutAccents = inputText.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -95,7 +101,7 @@
         }
 
         function updateSlug() {
-            var nombreInput = document.getElementById("nombre"); // Corregido aquí
+            var nombreInput = document.getElementById("nombre");
             var slugInput = document.getElementById("slug");
 
             if (nombreInput && slugInput) {
@@ -109,21 +115,6 @@
             updateSlug();
         });
         // End generate slug
-
-        //Mostrar imagen
-        function redirectUpdate(url) {
-            window.location.href = url;
-        }
-
-
-        function cambiarImagen(evento) {
-            var file = evento.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function(evento) {
-                document.getElementById("imagen").src = evento.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-        //end mostrar imagen
     </script>
+
 @stop

@@ -42,7 +42,13 @@ class SolicitudTipoController extends Controller
      */
     public function store(SolicitudTipoRequest $request)
     {
-        SolicitudTipo::create($request->all());
+   
+        SolicitudTipo::create([
+            'nombre' => $request->nombre,
+            'slug' => $request->slug,
+            'descripcion' => $request->descripcion,
+            'estado' => $request->estado,
+        ]);
 
         $data = [
             'message' => 'Tipo de solicitud creado exitosamente.',

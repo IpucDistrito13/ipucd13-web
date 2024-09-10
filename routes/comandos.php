@@ -123,3 +123,32 @@ public function scopeGetSimilaresCategoria($query, $categoria_id)
             updateSlug();
         });
         // End generate slug
+
+php artisan make:migration add_tipo_to_solicitud_tipos_table --table=solicitud_tipos
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('solicitud_tipos', function (Blueprint $table) {
+            $table->enum('tipo', ['Archivo', 'Enlace', 'Otro'])->default('Enlace');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('solicitud_tipos', function (Blueprint $table) {
+            $table->dropColumn('tipo');
+        });
+    }
+};
+
+//Genenrar uuid 
+use Illuminate\Support\Str;
+$uuid = Str::uuid()->toString();

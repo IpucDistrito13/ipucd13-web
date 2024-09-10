@@ -10,7 +10,7 @@ class SolicitudTipo extends Model
     use HasFactory;
 
     protected $table ='solicitud_tipos';
-    protected $fillable = ['nombre', 'slug', 'descripcion'];
+    protected $fillable = ['nombre', 'slug', 'descripcion', 'estado'];
 
     public function getRouteKeyName()
     {
@@ -19,6 +19,6 @@ class SolicitudTipo extends Model
 
     public function scopeListarCampos($query)
     {
-        return $query->select('id','nombre', 'slug', 'descripcion');
+        return $query->select('id','nombre', 'slug', 'descripcion', 'estado');
     }
 }
