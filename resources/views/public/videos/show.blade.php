@@ -30,7 +30,7 @@
                 <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9 position-relative page-title-extra-small"
                     data-anime='{ "el": "childs", "translateY": [-15, 0], "perspective": [1200,1200], "scale": [1.1, 1], "rotateX": [50, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
                     <h1 class="mb-20px alt-font text-yellow"></h1>
-                    <h2 class="fw-500 m-0 ls-minus-2px text-white alt-font">{{ $serie->titulo }}</h2>
+                    <h2 class="fw-500 m-0 ls-minus-2px text-white alt-font"></h2>
                 </div>
             </div>
         </div>
@@ -49,6 +49,7 @@
                         alt="" />
                 </div>
                 <div class="col-12 col-lg-5 col-md-6 offset-lg-1 dropcap-style-01 last-paragraph-no-margin">
+                    <h3>{{ $serie->titulo }}</h3>
                     <p><span class="first-letter text-dark-gray fw-700">{{ strtoupper(substr($serie->contenido, 0, 1)) }}</span>{{ substr($serie->contenido, 1) }}</p>
                 </div>
             </div>

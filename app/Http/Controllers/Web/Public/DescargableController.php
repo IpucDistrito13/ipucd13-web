@@ -108,6 +108,7 @@ class DescargableController extends Controller
             'comite' => $comite,
             'carpetas' => $carpetas,
             'metaData' => $metaData,
+            'transmision' => $socialData['transmision'],
             'facebook' => $socialData['links']['facebook'],
             'youtube' => $socialData['links']['youtube'],
             'instagram' => $socialData['links']['instagram'],
