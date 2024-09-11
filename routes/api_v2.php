@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\V2\IpucenLineaController;
 use App\Http\Controllers\Api\V2\LiderController;
 use App\Http\Controllers\Api\V2\PodcastController;
 use App\Http\Controllers\Api\V2\SerieController;
+use App\Http\Controllers\Api\V2\TransmisionController;
 use App\Http\Controllers\Api\V2\UsuarioController;
 use App\Http\Controllers\Api\V2\VideoController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,7 @@ Route::get('descargable/carpeta/privado/comite/{uuid}', [DescargableComiteCarpet
 Route::get('descargable/carpeta/publico/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePublico']);
 
 Route::get('archivo/carpeta/{uuid}', [DescargableComiteCarpetasController::class, 'getArchivosCarpeta']);
+Route::get('transmision/envivo', [TransmisionController::class, 'getTransmisionEnVivo']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
