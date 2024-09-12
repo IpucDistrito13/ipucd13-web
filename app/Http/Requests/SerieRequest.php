@@ -26,7 +26,7 @@ class SerieRequest extends FormRequest
         $rules = [
             'titulo' => 'required|max:230',
             'slug' => 'required|max:255|alpha_dash|unique:series,slug',
-            'descripcion' => 'nullable|max:300',
+            'descripcion' => 'required|max:300',
             'contenido' => 'required',
             'comite' => 'required|exists:comites,id',
             'categoria' => 'required|exists:categorias,id',
@@ -40,6 +40,8 @@ class SerieRequest extends FormRequest
             $rules['slug'] = 'required|max:255|alpha_dash|unique:series,slug,' . $serie->id;
             $rules['file'] = 'nullable|image|dimensions:width=480,height=640';
             $rules['imagen_banner'] = 'nullable|image|dimensions:width=1920,height=500';
+            $rules['descripcion'] = 'required';
+            $rules['contenido'] = 'required';
         }
 
         return $rules;

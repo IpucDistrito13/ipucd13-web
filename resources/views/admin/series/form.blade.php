@@ -67,7 +67,7 @@
 
     <div class="col-sm-12">
         <div class="form-group">
-            <label>Descripción</label>
+            <label>Descripción *</label>
             <textarea class="form-control" rows="2" placeholder="" id="descripcion" name="descripcion">{{ old('descripcion', $serie->descripcion ?? '') }}</textarea>
             <div class="text-muted">Máximo 500 caracteres</div>
 
@@ -80,7 +80,7 @@
 
     <div class="col-sm-12">
         <div class="form-group">
-            <label>Contenido</label>
+            <label>Contenido *</label>
             <textarea class="form-control" rows="2" placeholder="" id="contenido" name="contenido">{{ old('contenido', $serie->contenido ?? '') }}</textarea>
             <div class="text-muted">Máximo 1.000 caracteres</div>
             @error('contenido')

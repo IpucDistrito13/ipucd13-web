@@ -54,43 +54,43 @@ class RedesController extends Controller
      */
     public function updateTransmision(Request $request, Redes $redes)
     {
-        // Validate the request data
+        // Validar los datos del request
         $validatedData = $request->validate([
             'id' => 'required|exists:redes,id',
             'url' => 'nullable|max:255',
         ]);
-
-        // Fetch the record to update
+    
+        // Obtener el registro a actualizar
         $redes = Redes::findOrFail($validatedData['id']);
-
-        // Extract YouTube video ID if URL is provided
+    
+        // Extraer el ID del video de YouTube si se proporciona la URL
         if (!empty($validatedData['url'])) {
             $videoId = $this->extractYouTubeId($validatedData['url']);
             $validatedData['url'] = $videoId;
         } else {
-            // If URL is empty, set it to null
+            // Si la URL está vacía, se establece como null
             $validatedData['url'] = null;
         }
-
-        // Update the record with the validated data
+    
+        // Actualizar el registro con los datos validados
         $redes->update([
             'url' => $validatedData['url'],
         ]);
-
-        // Clear the cache
+    
+        // Limpiar la caché
         Cache::flush();
-
-        // Redirect to the dashboard with a success message
+    
+        // Redirigir al dashboard con un mensaje de éxito
         return redirect()->route('admin.dashboard')->with('success', 'Transmisión actualizada exitosamente.');
     }
-
-
-    // Function to extract YouTube video ID from URL
+    
+    // Función para extraer el ID del video de YouTube (incluyendo live)
     private function extractYouTubeId($url)
     {
-        preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/.*v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $url, $matches);
+        preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|live\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/', $url, $matches);
         return $matches[1] ?? null;
     }
+    
 
     /**
      * Remove the specified resource from storage.
