@@ -146,7 +146,9 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
+        //Muestra todos execpto el id que es rol developer
+        $roles = Role::where('id', '!=', 4)->get();
+
         $congregaciones = Congregacion::select('id', 'direccion', 'nombre')->where('estado', 'Activo')->get();
         return view('admin.usuarios.create', compact('congregaciones', 'roles'));
     }
@@ -241,7 +243,8 @@ class UsuarioController extends Controller
      */
     public function edit(User $usuario)
     {
-        $roles = Role::all();
+        //Muestra todos execpto el id que es rol developer
+        $roles = Role::where('id', '!=', 4)->get();
         $congregaciones = Congregacion::SelectList()->get();
         return view('admin.usuarios.edit', [
             'usuario' => $usuario,

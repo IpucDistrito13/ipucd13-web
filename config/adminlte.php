@@ -314,7 +314,7 @@ return [
 
         [
             'header' => 'DESARROLLO',
-            //'can' => 'developer.permissions'
+            'can' => 'developer.permissions.index'
         ],
 
         [
@@ -322,7 +322,7 @@ return [
             'route' => 'developer.permissions.index',
             'icon' => 'fas fa-shield-alt',
             //'active' => ['admin/roles*'],
-            //'can' => 'developer.permissions'
+            'can' => 'developer.permissions.index'
         ],
 
         [
@@ -330,7 +330,7 @@ return [
             'route' => 'admin.logs.index',
             'icon' => 'fas fa-sitemap',
             //'active' => ['admin/roles*'],
-            //'can' => 'developer.permissions'
+            'can' => 'admin.logs.index'
         ],
 
         [
@@ -338,7 +338,7 @@ return [
             'route' => 'admin.keyapis.index',
             'icon' => 'fas fa-code-branch',
             'active' => ['admin/keyapis*'],
-            //'can' => 'admin.apis.index',
+            'can' => 'admin.keyapis.index',
         ],
 
         [
@@ -527,13 +527,6 @@ return [
         ],
 
         [
-            'text' => 'Solicitudes',
-            'route' => 'admin.solicitudes.create',
-            'icon' => 'fas fa-bullhorn',
-            'can' => 'admin.solicitudes.create'
-        ],
-
-        [
             'text' => 'Directorio D13',
             'icon' => 'fas fa-cloud-download-alt',
             'submenu' => [
@@ -544,7 +537,7 @@ return [
                     'can' => 'admin.usuarios.directorioPastores',
                 ],
                 [
-                    'text' => 'Lideres',
+                    'text' => 'Líderes',
                     'route' => 'admin.usuarios.directorioLideres',
                     'can' => 'admin.usuarios.directorioLideres'
                 ],

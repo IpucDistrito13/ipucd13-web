@@ -191,13 +191,15 @@ Route::resource('lideres', LiderController::class)
 
 Route::get('ipuc_en_linea', [IpucEnLineaController::class, 'index'])->name('admin.ipuc.linea');
 
+////////////////////////////////////////////////////////////////
+//developer.permissions.destroy
 Route::get('permissions', [PermisoController::class, 'index'])->name('developer.permissions.index');
 Route::get('permissions/create', [PermisoController::class, 'create'])->name('developer.permissions.create');
 Route::post('permissions/store', [PermisoController::class, 'store'])->name('developer.permissions.store');
 Route::get('permissions/edit/{permission}', [PermisoController::class, 'edit'])->name('developer.permissions.edit');
 Route::put('permissions/{permission}', [PermisoController::class, 'update'])->name('developer.permissions.update');
-
 Route::delete('permissions/{permission}', [PermisoController::class, 'destroy'])->name('developer.permissions.destroy');
+////////////////////////////////////////////////////////////////
 
 
 Route::resource('logs', LogController::class)->names('admin.logs');

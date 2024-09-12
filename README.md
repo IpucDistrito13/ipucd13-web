@@ -230,3 +230,11 @@ Se escondienron las los el siguiente codigo ubicado desde adminlte (Menu)
                     'route' => 'admin.diploma.bautismo',
                     //'can' => 'admin.solicitudes.respondidas'
                 ],
+
+
+                        [
+            'text' => 'Solicitudes',
+            'route' => 'admin.solicitudes.create',
+            'icon' => 'fas fa-bullhorn',
+            'can' => 'admin.solicitudes.create'
+        ],

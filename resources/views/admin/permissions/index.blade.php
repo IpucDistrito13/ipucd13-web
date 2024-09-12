@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Routing permissions')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">Desarrollo - Routing permissions</h1>
-        @can('admin.solicitud_tipos.create')
+        @can('developer.permissions.create')
             <a class="btn btn-primary btn-sm" href="{{ route('developer.permissions.create') }}">
                 Crear Nuevo
             </a>
@@ -46,12 +46,12 @@
             <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th class="counter-column">#</th>
-                        <th>Name</th>
-                        <th>Descripcion</th>
-                        <th>Guard_name</th>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>-</th>
                         <th>Rol</th>
-                        <th class="acciones-column">Acciones</th>
+                        <th>Actualizado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,15 +60,12 @@
                     @endphp
                     @foreach ($permisos as $item)
                         <tr>
-                            <td style="text-align: center">{{ ++$contador }}</td>
-
+                            <td>{{ $item->id }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->descripcion	 }}</td>
-                            <td>{{ $item->guard_name	 }}</td>
-                            <td>{{ $item->role_names	 }}</td>
-                            <td>
-                                
-                            </td>
+                            <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->guard_name }}</td>
+                            <td>{{ $item->role_names }}</td>
+                            <td>{{ $item->updated_at }}</td>
 
                         </tr>
                     @endforeach
@@ -114,7 +111,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-
         $(function() {
             $("#datatable").DataTable({
                 "responsive": true,
@@ -122,26 +118,24 @@
                 "autoWidth": false,
 
                 language: {
-                processing: "Procesando...",
-                lengthMenu: "Mostrar _MENU_ registros por página",
-                zeroRecords: "No se encontraron registros en el sistema...",
-                info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
-                infoEmpty: "No hay registros disponibles",
-                infoFiltered: "(filtrado de _MAX_ registros totales)",
-                search: "Buscar",
-                paginate: {
-                    next: "Siguiente",
-                    previous: "Anterior"
+                    processing: "Procesando...",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron registros en el sistema...",
+                    info: "Mostrando _START_ al _END_ de _TOTAL_ registros",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    search: "Buscar",
+                    paginate: {
+                        next: "Siguiente",
+                        previous: "Anterior"
+                    },
+                    emptyTable: "No hay datos disponibles en la tabla"
                 },
-                emptyTable: "No hay datos disponibles en la tabla"
-            },
-        })
-    });
+            })
+        });
 
-    function redirectUpdate(url) {
+        function redirectUpdate(url) {
             window.location.href = url;
         }
-
-
     </script>
 @stop

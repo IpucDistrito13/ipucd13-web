@@ -29,7 +29,7 @@ class PermisoController extends Controller
             'p.name',
             'p.descripcion',
             'p.guard_name',
-            'p.created_at',
+            'p.updated_at',
             DB::raw('GROUP_CONCAT(r.name ORDER BY r.name SEPARATOR ", ") as role_names')
         )
         ->groupBy('p.id', 'p.name', 'p.descripcion')

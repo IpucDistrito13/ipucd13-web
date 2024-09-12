@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Listar pastores ')
+@section('title', 'Listar usuarios ')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
