@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermisoRequest;
+use App\Models\Permiso;
 use Encore\Admin\Auth\Database\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -74,7 +75,7 @@ class PermisoController extends Controller
 
         try {
             // Crea el nuevo permiso
-            $permission = Permission::create([
+            $permission = Permiso::create([
                 'name' => $request->name,
                 'descripcion' => $request->descripcion,
                 'guard_name' => 'web',

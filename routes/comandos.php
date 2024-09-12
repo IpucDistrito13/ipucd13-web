@@ -11,7 +11,7 @@ $log = ModelsLog::create($dataLog);
 
 //LIMPIAR CACHE
 
-php artisan migrate:refresh --seed
+php artisan migrate:fresh --seed
 php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
@@ -41,6 +41,13 @@ php artisan make:resource UserResource
 // CREA MIGRACION Y FACTORY
 
 php artisan make:model SolicitudTipo -mf
+
+// CREAR MODELO
+php artisan make:model Permiso
+
+//Eliminar tabla
+php artisan make:migration drop_ipuc_en_linea_table --table=ipuc_en_linea
+
 
 // CREA SEEDER
 php artisan make:seeder SolicitudTipoSeeder

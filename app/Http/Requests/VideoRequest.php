@@ -21,13 +21,13 @@ class VideoRequest extends FormRequest
      */
     public function rules(): array
     {
-        $video = $this->route()->parameter('video');
+        $video = $this->route()->parameter(name: 'video');
 
         $rules = [
             'titulo' => 'required|max:230',
             'slug' => 'required|max:255|alpha_dash|unique:videos,slug',
             'url' => ['required', 'max:150', 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/'],
-            'descripcion' => 'nullable|max:300',
+            'descripcion' => 'required|max:250',
         ];
 
         // Si hay un video, aplicar regla de validación condicional para el slug

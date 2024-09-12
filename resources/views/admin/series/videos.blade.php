@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Serie')
+@section('title', 'Crear video')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -151,7 +151,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="titulo" class="col-form-label">Título</label>
+                                    <label for="titulo" class="col-form-label">Título *</label>
                                     <input type="text" class="form-control" id="titulo" name="titulo"
                                         value="{{ old('titulo') }}" onkeyup="updateSlug()">
                                     @error('titulo')
@@ -173,7 +173,7 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="descripcion" class="col-form-label">Descripción</label>
+                                    <label for="descripcion" class="col-form-label">Descripción *</label>
                                     <textarea class="form-control" id="descripcion" name="descripcion">{{ old('descripcion') }}</textarea>
                                     @error('descripcion')
                                         <span class="text-danger">{{ $message }}</span>

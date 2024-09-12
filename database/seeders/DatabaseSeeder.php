@@ -53,6 +53,24 @@ class DatabaseSeeder extends Seeder
             'estado' => 'Activo',
         ])->assignRole('Administrador');
 
+        User::factory()->create([
+            'name' => 'Pastor Ipuc',
+            'nombre' => 'Pastor',
+            'apellidos' => 'D13',
+            'email' => 'pastor@ipucdistrito13.org',
+            'isbloqueo' => true,
+            'estado' => 'Activo',
+        ])->assignRole('Pastor');
+
+        User::factory()->create([
+            'name' => 'Lider Ipuc',
+            'nombre' => 'Lider',
+            'apellidos' => 'D13',
+            'email' => 'lider@ipucdistrito13.org',
+            'isbloqueo' => true,
+            'estado' => 'Activo',
+        ])->assignRole('Lider');
+
         //User::factory(3700)->create(); //3700
     
         \App\Models\Evento::factory(1)->create();

@@ -29,14 +29,8 @@ class EpisodioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EpisodioRequest $request)
     {
-
-        $request->validate([
-            'titulo' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
-        ]);
 
         $episodio = Episodio::create([
             'titulo' => $request->titulo,

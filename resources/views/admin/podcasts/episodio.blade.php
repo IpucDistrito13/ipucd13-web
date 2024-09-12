@@ -14,7 +14,7 @@
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
 
-            <a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_data">
+            <a type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_episodio">
                 <i class="fas fa-pencil-alt"></i> Registrar datos episodio</a>
 
         </div>
@@ -44,28 +44,28 @@
 
     <!-- Contenedor de audio en la tarjeta de música -->
     <div class="card" id="seccion_musica" style="display: none;">
-    <div class="card-body">
-        <audio></audio>
+        <div class="card-body">
+            <audio></audio>
 
-        <div id="info-cancion"></div> <!-- Elemento para mostrar información de la canción -->
+            <div id="info-cancion"></div> <!-- Elemento para mostrar información de la canción -->
 
-        <div id="current_time">0:00</div>
-        <div id="total_duration">Duración: --:--</div> <!-- Nuevo elemento para mostrar la duración total -->
-        <div class="progress-bar" id="progress-bar" onclick="seek(event)">
-            <div class="progress-fill"></div>
-            <div class="progress-circle"></div> <!-- Círculo indicador -->
-        </div>
-
-        <div class="section-pause">
-            <div class="buttons">
-                <button class="pause" id="pause" onclick="togglePlayPause()">
-                    <i class="fas fa-pause" id="pause-icon"></i>
-                </button>
+            <div id="current_time">0:00</div>
+            <div id="total_duration">Duración: --:--</div> <!-- Nuevo elemento para mostrar la duración total -->
+            <div class="progress-bar" id="progress-bar" onclick="seek(event)">
+                <div class="progress-fill"></div>
+                <div class="progress-circle"></div> <!-- Círculo indicador -->
             </div>
-        </div>
 
+            <div class="section-pause">
+                <div class="buttons">
+                    <button class="pause" id="pause" onclick="togglePlayPause()">
+                        <i class="fas fa-pause" id="pause-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
 
     <!-- Default box -->
     <div class="card">
@@ -225,7 +225,7 @@
     </div>
 
     <!-- Modal data -->
-    <div class="modal fade" id="modal_data">
+    <div class="modal fade" id="modal_episodio">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -282,7 +282,7 @@
 
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Descripción</label>
+                                    <label>Descripción *</label>
                                     <textarea class="form-control" rows="3" placeholder="" id="descripcion" name="descripcion">{{ old('descripcion', $episodio->descripcion ?? '') }}</textarea>
                                     @error('descripcion')
                                         <div class="text-danger">{{ $message }}</div>
@@ -578,6 +578,14 @@
             updateSlug();
         });
         // End generate slug
+
+        //show modal with error
+        $(document).ready(function() {
+            @if ($errors->any())
+                $('#modal_episodio').modal('show');
+            @endif
+        });
+        //end show modal errors
     </script>
 
     <script>

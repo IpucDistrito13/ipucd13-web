@@ -35,7 +35,6 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.solicitudes.destroy', 'descripcion' => 'Eliminar solicitud'])->syncRoles([$rol3]);
         $permission = Permission::create(['name' => 'admin.solicitudes.pendientes', 'descripcion' => 'Ver listado solicitudes pendientes'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.solicitudes.respondidas', 'descripcion' => 'Ver listado solicitudes respondidas'])->syncRoles([$rol1]);
-
         $permission = Permission::create(['name' => 'admin.solicitudes.download', 'descripcion' => 'Descargar archivo solicitud'])->syncRoles([$rol1, $rol2]);
 
         $permission = Permission::create(['name' => 'admin.congregaciones.index', 'descripcion' => 'Ver listado de congregaciones'])->syncRoles([$rol1]);
@@ -60,10 +59,9 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.podcasts.destroy', 'descripcion' => 'Eliminar podcasts'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.podcasts.listEpisodio', 'descripcion' => 'Ver listado episodios'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.podcasts.createEpisodio', 'descripcion' => 'Crear episodio'])->syncRoles([$rol1]);
+        
         $permission = Permission::create(['name' => 'admin.episodio.apigetAudio', 'descripcion' => 'Api audio episodio'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.episodios.upload_audio', 'descripcion' => 'Guarda y reproduzca archivo de podcast'])->syncRoles([$rol1]);
-
-
         $permission = Permission::create(['name' => 'admin.episodios.index', 'descripcion' => 'Ver listado de episodios'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.episodios.create', 'descripcion' => 'Crear episodios'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.episodios.edit', 'descripcion' => 'Editar episodios'])->syncRoles([$rol1]);
@@ -114,12 +112,10 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.galerias.create', 'descripcion' => 'Crear galeria'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galerias.edit', 'descripcion' => 'Editar galeria'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galerias.destroy', 'descripcion' => 'Eliminar galeria'])->syncRoles([$rol1]);
-
         $permission = Permission::create(['name' => 'admin.galerias.privadoadmin', 'descripcion' => 'Galeria privada'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galerias.generaladmin', 'descripcion' => 'Galeria general'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.galerias.upload', 'descripcion' => 'Galeria subir archivo'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.galeria.destroy', 'descripcion' => 'Eliminar galeria'])->syncRoles([$rol1]);
-
         //$permission = Permission::create(['name' => 'admin.galerias.list', 'descripcion' => 'Ver listado galerias - General'])->syncRoles([$rol3]);
 
         $permission = Permission::create(['name' => 'admin.carpetas.index', 'descripcion' => 'Ver listado de carpetas'])->syncRoles([$rol1]);
@@ -128,23 +124,20 @@ class RolSeeder extends Seeder
         $permission = Permission::create(['name' => 'admin.carpetas.edit', 'descripcion' => 'Editar carpeta'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.carpetas.destroyCarpeta', 'descripcion' => 'Eliminar carpeta'])->syncRoles([$rol1]);
 
-
         //$permission = Permission::create(['name' => '', 'descripcion' => 'Descargable privado'])->syncRoles([$rol1, $rol2, $rol3]);
 
         $permission = Permission::create(['name' => 'admin.carpetas.listComitePrivado', 'descripcion' => 'Descargable privado'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.carpetas.listComitePublico', 'descripcion' => 'Descargable publico'])->syncRoles([$rol1, $rol2, $rol3]);
+
+        $permission = Permission::create(['name' => 'admin.carpetas.listCarpetasPublicoComite', 'descripcion' => 'Ver listado carpeta tipo publico'])->syncRoles([$rol1, $rol2, $rol3]);
+        $permission = Permission::create(['name' => 'admin.carpetas.publico.crearCarpetaPublico', 'descripcion' => 'Crear carpeta tipo publico'])->syncRoles([$rol1]);
+        $permission = Permission::create(['name' => 'admin.carpetas.storeCarpetaPublico', 'descripcion' => 'Guardar carpeta tipo publico'])->syncRoles([$rol1]);
 
         $permission = Permission::create(['name' => 'admin.archivos.index', 'descripcion' => 'Listar archivos'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.archivos.upload', 'descripcion' => 'Subir archivo'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.archivos.download', 'descripcion' => 'Descargar archivo'])->syncRoles([$rol1, $rol2, $rol3]);
         $permission = Permission::create(['name' => 'admin.archivos.destroy', 'descripcion' => 'Eliminar archivo'])->syncRoles([$rol1]);
 
-
-        $permission = Permission::create(['name' => 'admin.carpetas.listCarpetasPublicoComite', 'descripcion' => 'Ver listado carpeta tipo publico'])->syncRoles([$rol1, $rol2, $rol3]);
-        $permission = Permission::create(['name' => 'admin.carpetas.publico.crearCarpetaPublico', 'descripcion' => 'Crear carpeta tipo publico'])->syncRoles([$rol1]);
-
-        $permission = Permission::create(['name' => 'admin.carpetas.storeCarpetaPublico', 'descripcion' => 'Guardar carpeta tipo publico'])->syncRoles([$rol1]);
-    
         $permission = Permission::create(['name' => 'admin.lideres_tipos.index', 'descripcion' => 'Ver listado de líder tipo'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.lideres_tipos.create', 'descripcion' => 'Crear líder tipo'])->syncRoles([$rol1]);
         $permission = Permission::create(['name' => 'admin.lideres_tipos.store', 'descripcion' => 'Guardar líder tipo'])->syncRoles([$rol1]);
