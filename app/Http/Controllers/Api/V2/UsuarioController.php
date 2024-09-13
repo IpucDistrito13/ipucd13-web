@@ -207,7 +207,8 @@ class UsuarioController extends Controller
         })
         ->where(function($q) use ($query) {
             $q->where('nombre', 'like', "%{$query}%")
-              ->orWhere('apellidos', 'like', "%{$query}%");
+              ->orWhere('apellidos', 'like', "%{$query}%")
+              ->orWhere(DB::raw("CONCAT(nombre, ' ', apellidos)"), 'like', "%{$query}%");
         })
         ->get();
 
@@ -244,22 +245,23 @@ class UsuarioController extends Controller
 
 
         // Iniciar la consulta base en la vista_roles_usuario
-        $pastores = User::with('congregacion')
+        $lideres = User::with('congregacion')
         ->whereHas('roles', function($q) {
             $q->where('name', 'Lider');
         })
         ->where(function($q) use ($query) {
             $q->where('nombre', 'like', "%{$query}%")
-              ->orWhere('apellidos', 'like', "%{$query}%");
+              ->orWhere('apellidos', 'like', "%{$query}%")
+              ->orWhere(DB::raw("CONCAT(nombre, ' ', apellidos)"), 'like', "%{$query}%");
         })
         ->get();
 
-        if ($pastores->isEmpty()) {
+        if ($lideres->isEmpty()) {
             return response()->json([
                 'message' => 'No se encontraron resultados.'
             ], 404);
         }
 
-        return new UsuarioCollection($pastores);
+        return new UsuarioCollection($lideres);
     }
 }
