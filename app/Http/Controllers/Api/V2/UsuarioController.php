@@ -199,18 +199,23 @@ class UsuarioController extends Controller
             ], 400);
         }
 
+        // Dividir el término de búsqueda en palabras
+        $searchTerms = explode(' ', $query);
 
         // Iniciar la consulta base en la vista_roles_usuario
         $pastores = User::with('congregacion')
-        ->whereHas('roles', function($q) {
-            $q->where('name', 'Pastor');
-        })
-        ->where(function($q) use ($query) {
-            $q->where('nombre', 'like', "%{$query}%")
-              ->orWhere('apellidos', 'like', "%{$query}%")
-              ->orWhere(DB::raw("CONCAT(nombre, ' ', apellidos)"), 'like', "%{$query}%");
-        })
-        ->get();
+            ->whereHas('roles', function ($q) {
+                $q->where('name', 'Pastor');
+            })
+            ->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->where('nombre', 'like', "%{$term}%")
+                        ->orWhere('apellidos', 'like', "%{$term}%")
+                        ->orWhere(DB::raw("CONCAT(nombre, ' ', apellidos)"), 'like', "%{$term}%");
+                }
+            })
+            ->get();
+
 
         if ($pastores->isEmpty()) {
             return response()->json([
@@ -243,18 +248,23 @@ class UsuarioController extends Controller
             ], 400);
         }
 
+        // Dividir el término de búsqueda en palabras
+    $searchTerms = explode(' ', $query);
+
 
         // Iniciar la consulta base en la vista_roles_usuario
         $lideres = User::with('congregacion')
-        ->whereHas('roles', function($q) {
-            $q->where('name', 'Lider');
-        })
-        ->where(function($q) use ($query) {
-            $q->where('nombre', 'like', "%{$query}%")
-              ->orWhere('apellidos', 'like', "%{$query}%")
-              ->orWhere(DB::raw("CONCAT(nombre, ' ', apellidos)"), 'like', "%{$query}%");
-        })
-        ->get();
+            ->whereHas('roles', function ($q) {
+                $q->where('name', 'Lider');
+            })
+            ->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->where('nombre', 'like', "%{$term}%")
+                      ->orWhere('apellidos', 'like', "%{$term}%")
+                      ->orWhere(DB::raw("CONCAT(nombre, ' ', apellidos)"), 'like', "%{$term}%");
+                }
+            })
+            ->get();
 
         if ($lideres->isEmpty()) {
             return response()->json([
