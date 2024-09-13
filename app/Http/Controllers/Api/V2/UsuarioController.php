@@ -10,6 +10,7 @@ use App\Models\GenerarKeyApi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class UsuarioController extends Controller
 {
@@ -174,5 +175,91 @@ class UsuarioController extends Controller
             ->get();
 
         return new UsuarioCollection($usuarios);
+    }
+
+    public function searchPastores(Request $request)
+    {
+        // Obtener la clave API del parámetro
+        $apiKey = $request->query('api_key');
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        $query = $request->input('query');
+
+        if (!$query) {
+            return response()->json([
+                'error' => 'Debe proporcionar un término de búsqueda.'
+            ], 400);
+        }
+
+
+        // Iniciar la consulta base en la vista_roles_usuario
+        $pastores = User::with('congregacion')
+        ->whereHas('roles', function($q) {
+            $q->where('name', 'Pastor');
+        })
+        ->where(function($q) use ($query) {
+            $q->where('nombre', 'like', "%{$query}%")
+              ->orWhere('apellidos', 'like', "%{$query}%");
+        })
+        ->get();
+
+        if ($pastores->isEmpty()) {
+            return response()->json([
+                'message' => 'No se encontraron resultados.'
+            ], 404);
+        }
+
+        return new UsuarioCollection($pastores);
+    }
+
+    public function searchLideres(Request $request)
+    {
+        // Obtener la clave API del parámetro
+        $apiKey = $request->query('api_key');
+        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+
+        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+        if (!$apiKeyExists) {
+            return response()->json([
+                'error' => 'No autorizado',
+                'message' => 'La clave API proporcionada no es válida.'
+            ], 401);
+        }
+
+        $query = $request->input('query');
+
+        if (!$query) {
+            return response()->json([
+                'error' => 'Debe proporcionar un término de búsqueda.'
+            ], 400);
+        }
+
+
+        // Iniciar la consulta base en la vista_roles_usuario
+        $pastores = User::with('congregacion')
+        ->whereHas('roles', function($q) {
+            $q->where('name', 'Lider');
+        })
+        ->where(function($q) use ($query) {
+            $q->where('nombre', 'like', "%{$query}%")
+              ->orWhere('apellidos', 'like', "%{$query}%");
+        })
+        ->get();
+
+        if ($pastores->isEmpty()) {
+            return response()->json([
+                'message' => 'No se encontraron resultados.'
+            ], 404);
+        }
+
+        return new UsuarioCollection($pastores);
     }
 }
