@@ -122,96 +122,116 @@ class DescargableComiteCarpetasController extends Controller
     }
 
     public function searchPublicoComite(Request $request)
-    {
-        // Obtener la clave API del parámetro
-        $apiKey = $request->query('api_key');
-        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+{
+    // Obtener la clave API del parámetro
+    $apiKey = $request->query('api_key');
+    $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
 
-        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
-        if (!$apiKeyExists) {
-            return response()->json([
-                'error' => 'No autorizado',
-                'message' => 'La clave API proporcionada no es válida.'
-            ], 401);
-        }
-
-        $query = $request->input('query');
-        $comite = $request->input(key: 'comite');
-
-        if (!$query) {
-            return response()->json([
-                'error' => 'Debe proporcionar un término de búsqueda.'
-            ], 400);
-        }
-
-        if (!$comite) {
-            return response()->json([
-                'error' => 'Debe proporcionar un cómite de búsqueda.'
-            ], 400);
-        }
-
-        $comite = Comite::select('id')->Where('slug', $comite)->first();
-
-        // Dividir el término de búsqueda en palabras
-         $searchTerms = explode(' ', $query);
-
-        // Construir la consulta para buscar según los términos en la carpeta (comité)
-        $carpetas = Carpeta::where('comite_id', $comite->id)
-            ->where('galeriatipo_id', 1) // Filtro adicional para galeriatipo_id 1 (General o publico)
-            ->where(function ($query) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $query->orWhere('nombre', 'LIKE', '%' . $term . '%');
-                }
-            })
-            ->get();
-       // return $carpetas;
-       return new CarpetaDetailsCollection($carpetas);
-
+    // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+    if (!$apiKeyExists) {
+        return response()->json([
+            'error' => 'No autorizado',
+            'message' => 'La clave API proporcionada no es válida.'
+        ], 401);
     }
+
+    $query = $request->input('query');
+    $comiteSlug = $request->input('comite');
+
+    if (!$query) {
+        return response()->json([
+            'error' => 'Debe proporcionar un término de búsqueda.'
+        ], 400);
+    }
+
+    if (!$comiteSlug) {
+        return response()->json([
+            'error' => 'Debe proporcionar un comité de búsqueda.'
+        ], 400);
+    }
+
+    // Obtener el ID del comité según el slug
+    $comite = Comite::select('id')->where('slug', $comiteSlug)->first();
+
+    // Verificar si el comité existe
+    if (!$comite) {
+        return response()->json([
+            'error' => 'Comité no encontrado.'
+        ], 404);
+    }
+
+    // Dividir el término de búsqueda en palabras
+    $searchTerms = explode(' ', $query);
+
+    // Construir la consulta para buscar según los términos en la carpeta (comité)
+    $carpetas = Carpeta::where('comite_id', $comite->id)
+        ->where('galeriatipo_id', 1) // Filtro adicional para galeriatipo_id 1 (General o público)
+        ->where(function ($query) use ($searchTerms) {
+            foreach ($searchTerms as $term) {
+                $query->orWhere('nombre', 'LIKE', '%' . $term . '%');
+            }
+        })
+        ->get();
+
+    return new CarpetaDetailsCollection($carpetas);
+}
+
 
     public function searchPrivadoComite(Request $request)
     {
-        $apiKey = $request->query('api_key');
-        $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
-
-        // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
-        if (!$apiKeyExists) {
-            return response()->json([
-                'error' => 'No autorizado',
-                'message' => 'La clave API proporcionada no es válida.'
-            ], 401);
+        public function searchPublicoComite(Request $request)
+        {
+            // Obtener la clave API del parámetro
+            $apiKey = $request->query('api_key');
+            $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
+        
+            // Si la clave API no existe, devolver un mensaje de error con el código de estado 401
+            if (!$apiKeyExists) {
+                return response()->json([
+                    'error' => 'No autorizado',
+                    'message' => 'La clave API proporcionada no es válida.'
+                ], 401);
+            }
+        
+            $query = $request->input('query');
+            $comiteSlug = $request->input('comite');
+        
+            if (!$query) {
+                return response()->json([
+                    'error' => 'Debe proporcionar un término de búsqueda.'
+                ], 400);
+            }
+        
+            if (!$comiteSlug) {
+                return response()->json([
+                    'error' => 'Debe proporcionar un comité de búsqueda.'
+                ], 400);
+            }
+        
+            // Obtener el ID del comité según el slug
+            $comite = Comite::select('id')->where('slug', $comiteSlug)->first();
+        
+            // Verificar si el comité existe
+            if (!$comite) {
+                return response()->json([
+                    'error' => 'Comité no encontrado.'
+                ], 404);
+            }
+        
+            // Dividir el término de búsqueda en palabras
+            $searchTerms = explode(' ', $query);
+        
+            // Construir la consulta para buscar según los términos en la carpeta (comité)
+            $carpetas = Carpeta::where('comite_id', $comite->id)
+                ->where('galeriatipo_id', 2) // Filtro adicional para galeriatipo_id 2 (Privado)
+                ->where(function ($query) use ($searchTerms) {
+                    foreach ($searchTerms as $term) {
+                        $query->orWhere('nombre', 'LIKE', '%' . $term . '%');
+                    }
+                })
+                ->get();
+        
+            return new CarpetaDetailsCollection($carpetas);
         }
-
-        $query = $request->input('query');
-        $comite = $request->input(key: 'comite');
-
-        if (!$query) {
-            return response()->json([
-                'error' => 'Debe proporcionar un término de búsqueda.'
-            ], 400);
-        }
-
-        if (!$comite) {
-            return response()->json([
-                'error' => 'Debe proporcionar un cómite de búsqueda.'
-            ], 400);
-        }
-
-        $comite = Comite::select('id')->Where('slug', $comite)->first();
-
-        // Dividir el término de búsqueda en palabras
-         $searchTerms = explode(' ', $query);
-
-        // Construir la consulta para buscar según los términos en la carpeta (comité)
-        $carpetas = Carpeta::where('comite_id', $comite->id)
-            ->where('galeriatipo_id', 2) // Filtro adicional para galeriatipo_id 2 (Privado)
-            ->where(function ($query) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $query->orWhere('nombre', 'LIKE', '%' . $term . '%');
-                }
-            })
-            ->get();
-       // return $carpetas;
-       return new CarpetaDetailsCollection($carpetas);
-    }
+        
 }
