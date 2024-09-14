@@ -48,10 +48,13 @@ Route::get('ipucenlinea', [IpucenLineaController::class, 'index']);
 Route::get('galeria/privada/{uuid}', [GaleriaController::class, 'showGaleriaPrivadaUsuario']);
 Route::get('galeria/publica/{uuid}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
 
+Route::get('congregaciones/search/', [CongregacionController::class, 'search']);
+
 Route::get('usuarios/pastores/search', [UsuarioController::class, 'searchPastores']);
 Route::get('usuarios/lideres/search', [UsuarioController::class, 'searchLideres']);
 
-//Lista las carpetas segun el comite
+
+//Lita las carpetas segun el comite
 //El uuid es del comite
 Route::get('descargable/carpeta/privado/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePrivado']);
 Route::get('descargable/carpeta/publico/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePublico']);
@@ -60,5 +63,6 @@ Route::get('archivo/carpeta/{uuid}', [DescargableComiteCarpetasController::class
 Route::get('transmision/envivo', [TransmisionController::class, 'getTransmisionEnVivo']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
 
 });

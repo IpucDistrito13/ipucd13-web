@@ -249,7 +249,7 @@ class UsuarioController extends Controller
         }
 
         // Dividir el término de búsqueda en palabras
-    $searchTerms = explode(' ', $query);
+        $searchTerms = explode(' ', $query);
 
 
         // Iniciar la consulta base en la vista_roles_usuario
@@ -260,8 +260,8 @@ class UsuarioController extends Controller
             ->where(function ($q) use ($searchTerms) {
                 foreach ($searchTerms as $term) {
                     $q->where('nombre', 'like', "%{$term}%")
-                      ->orWhere('apellidos', 'like', "%{$term}%")
-                      ->orWhere(DB::raw("CONCAT(nombre, ' ', apellidos)"), 'like', "%{$term}%");
+                        ->orWhere('apellidos', 'like', "%{$term}%")
+                        ->orWhere(DB::raw("CONCAT(nombre, ' ', apellidos)"), 'like', "%{$term}%");
                 }
             })
             ->get();
