@@ -179,8 +179,6 @@ class DescargableComiteCarpetasController extends Controller
 
     public function searchPrivadoComite(Request $request)
     {
-        public function searchPublicoComite(Request $request)
-        {
             // Obtener la clave API del parámetro
             $apiKey = $request->query('api_key');
             $apiKeyExists = GenerarKeyApi::ValidarKeyApi($apiKey)->exists();
