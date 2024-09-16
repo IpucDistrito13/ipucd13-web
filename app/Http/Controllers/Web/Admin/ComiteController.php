@@ -108,7 +108,7 @@ class ComiteController extends Controller
                 // Crear versión redimensionada
                 $imgManager = new ImageManager(new Driver());
                 $image = $imgManager->read($filePortada);
-                $image->resize(  300, 400);
+                $image->resize(  330, 430);
                 $image->toJpg(100);
                 $urlA3 = $ubicacionPortadaA3 . '/' . $fileName;
                 Storage::put($urlA3, $image->encode());
@@ -219,7 +219,7 @@ class ComiteController extends Controller
                  // Crear versión redimensionada
                  $imgManager = new ImageManager(new Driver());
                  $image = $imgManager->read($filePortada);
-                 $image->resize(  300, 400);
+                 $image->resize(  330, 430);
                  $image->toJpg(100);
                  $urlA3 = $ubicacionPortadaA3 . '/' . $fileName;
                  Storage::put($urlA3, $image->encode());
