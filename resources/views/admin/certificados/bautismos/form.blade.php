@@ -16,9 +16,9 @@
     <div class="col-sm-4">
         <!-- text input -->
         <div class="form-group">
-            <label>Municipio *</label>
+            <label>Lugar *</label>
             <input type="text" class="form-control" id="municipio" name="municipio"
-            placeholder="Escriba el municipio"
+            placeholder="Ciudad"
                 value="{{ old('municipio') }}">
             @error('municipio')
                 <div class="text-danger">{{ $message }}</div>

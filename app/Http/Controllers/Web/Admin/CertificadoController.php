@@ -29,19 +29,22 @@ class CertificadoController extends Controller
 
     public function downloadCertificadoBautismo(CertificadoBautismoRequest $request)
     {
-        $nombre = $request->nombre;
-        setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'es');
-    
+        // Convertir el nombre a title case (primera letra de cada palabra en mayúscula)
+        $nombre = mb_convert_case($request->nombre, MB_CASE_TITLE, "UTF-8");
+        
         $municipio = $request->municipio;
-        $fecha  = date($request->start);
+        $fecha = date($request->start);
     
         $dateTime = new DateTime($fecha);
-        $formattedDate = strftime('el %d %B del %Y', $dateTime->getTimestamp());
-    
-        $formattedDate = strtolower($formattedDate);
-        $formattedDate = preg_replace_callback('/(\w+)( del)/', function ($matches) {
-            return ucfirst($matches[1]) . $matches[2];
-        }, $formattedDate);
+        
+        // Array con los nombres de los meses en español
+        $meses = array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
+        
+        // Formatear la fecha manualmente
+        $dia = $dateTime->format('d');
+        $mes = ucfirst($meses[$dateTime->format('n') - 1]);  // Primera letra del mes en mayúscula
+        $anio = $dateTime->format('Y');
+        $formattedDate = "El $dia de $mes del $anio";
     
         $pdf = new FPDF('L', 'mm', 'Letter');
         $pdf->AddPage();
@@ -49,7 +52,7 @@ class CertificadoController extends Controller
     
         $pdf->SetFont('Arial', 'B', 20);
     
-        $this->showImagenPDF(3, 3, 273, 210, $pdf, 'https://ipucd13.nyc3.cdn.digitaloceanspaces.com/certificados/bautismo/certificado-bautismo.jpg');
+        $this->showImagenPDF(3, 3, 273, 210, $pdf, 'https://ipucd13.nyc3.cdn.digitaloceanspaces.com/certificados/bautismo/Certificado-bautismo.png');
         $pdf->Ln(80);
     
         $pdf->SetTextColor(0, 51, 141);
