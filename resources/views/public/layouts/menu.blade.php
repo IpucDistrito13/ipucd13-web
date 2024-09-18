@@ -10,6 +10,8 @@
     .dropdown-menu .dropdown-item {
         font-family: 'MyriadProBold', sans-serif;
     }
+
+    
 </style>
 
 <header>
@@ -87,9 +89,10 @@
                 <div class="header-icon">
                     <div class="header-social-icon icon">
                         @if (!empty(trim($transmision->url)))
-                            <a href="https://www.youtube.com/watch?v={{ $transmision->url }}" target="_blank">
-                                <i class="fas fa-video"></i> En vivo
-                            </a>
+                        <a href="https://www.youtube.com/watch?v={{ $transmision->url }}" target="_blank" style="color: red;">
+                            <i class="fas fa-video"></i> En vivo
+                        </a>
+                        
                         @endif
                     
                         <a href="{{ $facebook }}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
