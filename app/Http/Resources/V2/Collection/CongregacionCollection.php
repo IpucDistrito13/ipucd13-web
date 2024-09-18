@@ -26,6 +26,7 @@ class CongregacionCollection extends ResourceCollection
                 'latitud' => $congregacion->latitud,
                 'urlfacebook' => $congregacion->urlfacebook,
                 'googlemaps' => $congregacion->googlemaps,
+                'fotocongregacion' => $congregacion->imagen?  $congregacion->imagen->url : null,
             ];
         })->toArray();
     }

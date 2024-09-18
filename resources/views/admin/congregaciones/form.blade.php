@@ -105,7 +105,7 @@
                     style="max-width: 100%; height: auto;">
             @else
 
-                <img id="imagen" alt="" src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/No_imagen/imagen_no_found_vertical.webp" class="img-thumbnail" style="width: 300px; height: auto;">
+                <img id="imagen" alt="" src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/No_imagen/imagen_no_found_horizontal.webp" class="img-thumbnail" style="width: 300px; height: auto;">
             @endif
         </div>
     </div>

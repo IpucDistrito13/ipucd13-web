@@ -32,7 +32,7 @@ class CongregacionRequest extends FormRequest
             'nombre' => 'required|max:250',
             'urlfacebook' => 'nullable|regex:/^(https?:\/\/)?(www\.)?facebook.com\/.+$/',
             'googlemaps' => 'required|regex:/^https:\/\/www\.google\.com\/maps.+$/',
-            'file' => 'required|image|max:1024', // 2M = 2048
+            'file' => 'required|image', // 2M = 2048
         ];
 
         return $rules;
