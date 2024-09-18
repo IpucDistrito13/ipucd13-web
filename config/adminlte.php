@@ -374,6 +374,7 @@ return [
             'text' => 'Solicitudes',
             'icon' => 'fas fa-bullhorn',
             'active' => ['admin/solicitud_tipos*', 'admin/solicitud_descargable*'],
+            'can' => 'admin.solicitud_tipos.index',
             'submenu' => [
                 [
                     'text' => 'Tipos',

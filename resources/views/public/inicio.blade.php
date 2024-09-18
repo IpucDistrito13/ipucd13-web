@@ -205,7 +205,7 @@
                             data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10=""
                             data-description="">
                             <!-- slide's main background image -->
-                            <img src="https://via.placeholder.com/1920x1200" alt="Image"
+                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/pastores.jpg" alt="Image"
                                 data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
                                 class="rev-slidebg" data-no-retina>
                             <!-- start overlay layer -->
@@ -269,66 +269,7 @@
                                         data-columnwidth="100%" data-verticalalign="top"
                                         data-textAlign="['center','center','center','center']">
 
-                                        <!-- start title layer -->
-                                        <div class="tp-caption mx-auto" id="slide-1-layer-07"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']"
-                                            data-y="['middle','middle','middle','middle']"
-                                            data-voffset="['0','0','0','0']" data-fontsize="['75','60','70','50']"
-                                            data-lineheight="['70','65','75','55']"
-                                            data-fontweight="['700','700','700','700']"
-                                            data-letterspacing="['-2','-2','-2','0']"
-                                            data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
-                                            data-width="['700','600','600','auto']" data-height="auto"
-                                            data-whitespace="normal" data-basealign="grid" data-type="text"
-                                            data-responsive_offset="off" data-verticalalign="middle"
-                                            data-responsive="on"
-                                            data-frames='[{"delay":"1500","split":"chars","splitdelay":0.03,"speed":800,"split_direction":"middletoedge","frame":"0","from":"x:50px;opacity:0;fb:10px;","to":"o:1;fb:0;","ease":"Power4.easeOut"},{"delay":"wait","speed":100,"frame":"999","to":"opacity:0;fb:0;","ease":"Power4.easeOut"}]'
-                                            data-textAlign="['center','center','center','center']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
-                                            data-paddingbottom="[33,28,35,25]" data-paddingleft="[0,0,0,0]"
-                                            style="word-break: initial; text-shadow: #0b1236 3px 3px 15px;">
-                                            Title slider 1
-                                        </div>
-                                        <!-- end title layer -->
-                                        <!-- start text layer -->
-                                        <div class="tp-caption mx-auto" id="slide-1-layer-08"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']"
-                                            data-y="['middle','middle','middle','middle']"
-                                            data-voffset="['0','0','0','0']" data-fontsize="['20','20','24','20']"
-                                            data-lineheight="['36','36','40','30']"
-                                            data-fontweight="['300','300','300','300']"
-                                            data-letterspacing="['0','0','0','0']"
-                                            data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
-                                            data-width="['500','500','auto','auto']" data-height="auto"
-                                            data-whitespace="normal" data-basealign="grid" data-type="text"
-                                            data-responsive_offset="off" data-verticalalign="middle"
-                                            data-responsive="on"
-                                            data-frames='[{"delay":2500,"speed":800,"frame":"0","from":"y:50px;opacity:0;fb:20px;","to":"o:0.6;fb:0;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
-                                            data-textAlign="['center','center','center','center']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
-                                            data-paddingbottom="[36,36,60,40]" data-paddingleft="[0,0,0,0]">
-                                            Subtitle slider 1
-                                        </div>
-                                        <!-- end text layer -->
-                                        <!-- start button layer -->
-                                        <div class="tp-caption tp-resizeme" id="slide-1-layer-09"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']" data-y="['top','top','top','top']"
-                                            data-voffset="['0','0','0','0']" data-width="auto" data-height="none"
-                                            data-whitespace="nowrap" data-fontsize="['18','16','16','16']"
-                                            data-lineheight="['70','55','55','55']" data-type="text"
-                                            data-responsive_offset="off" data-responsive="off"
-                                            data-frames='[{"delay":3000,"speed":1000,"frame":"0","from":"y:100px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
-                                            data-textAlign="['inherit','inherit','inherit','inherit']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
-                                            data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
-                                            <a href="#"
-                                                class="btn btn-extra-large btn-rounded with-rounded btn-dark-gray d-table d-lg-inline-block lg-mb-15px md-mx-auto">Text
-                                                button 1<span class="bg-white text-base-color"><i
-                                                        class="fa-solid fa-arrow-right"></i></span></a>
-                                        </div>
+
                                         <!-- end button layer -->
                                     </div>
                                     <!-- end column layer -->
@@ -348,7 +289,7 @@
                             data-param3="" data-param4="" data-param5="" data-param6="" data-param7=""
                             data-param8="" data-param9="" data-param10="" data-description="">
                             <!-- slide's main background image -->
-                            <img src="https://via.placeholder.com/1920x1200" alt="Image"
+                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/traslados%20agosto.jpg" alt="Image"
                                 data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
                                 class="rev-slidebg" data-no-retina>
                             <!-- start overlay layer -->
@@ -413,67 +354,7 @@
                                         data-textAlign="['center','center','center','center']">
 
                                         <!-- end subtitle layer -->
-                                        <!-- start title layer -->
-                                        <div class="tp-caption mx-auto" id="slide-2-layer-07"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']"
-                                            data-y="['middle','middle','middle','middle']"
-                                            data-voffset="['0','0','0','0']" data-fontsize="['75','60','70','50']"
-                                            data-lineheight="['70','65','75','55']"
-                                            data-fontweight="['700','700','700','700']"
-                                            data-letterspacing="['-2','-2','-2','0']"
-                                            data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
-                                            data-width="['700','600','600','auto']" data-height="auto"
-                                            data-whitespace="normal" data-basealign="grid" data-type="text"
-                                            data-responsive_offset="off" data-verticalalign="middle"
-                                            data-responsive="on"
-                                            data-frames='[{"delay":"1500","split":"chars","splitdelay":0.03,"speed":800,"split_direction":"middletoedge","frame":"0","from":"x:50px;opacity:0;fb:10px;","to":"o:1;fb:0;","ease":"Power4.easeOut"},{"delay":"wait","speed":100,"frame":"999","to":"opacity:0;fb:0;","ease":"Power4.easeOut"}]'
-                                            data-textAlign="['center','center','center','center']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
-                                            data-paddingbottom="[33,28,35,25]" data-paddingleft="[0,0,0,0]"
-                                            style="word-break: initial; text-shadow: #0b1236 3px 3px 15px;">
-                                            Title slider 2
-                                        </div>
-                                        <!-- end title layer -->
-                                        <!-- start text layer -->
-                                        <div class="tp-caption mx-auto" id="slide-2-layer-08"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']"
-                                            data-y="['middle','middle','middle','middle']"
-                                            data-voffset="['0','0','0','0']" data-fontsize="['20','20','24','20']"
-                                            data-lineheight="['36','36','40','30']"
-                                            data-fontweight="['300','300','300','300']"
-                                            data-letterspacing="['0','0','0','0']"
-                                            data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
-                                            data-width="['500','500','auto','auto']" data-height="auto"
-                                            data-whitespace="normal" data-basealign="grid" data-type="text"
-                                            data-responsive_offset="off" data-verticalalign="middle"
-                                            data-responsive="on"
-                                            data-frames='[{"delay":2500,"speed":800,"frame":"0","from":"y:50px;opacity:0;fb:20px;","to":"o:0.6;fb:0;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
-                                            data-textAlign="['center','center','center','center']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
-                                            data-paddingbottom="[36,36,60,40]" data-paddingleft="[0,0,0,0]">
-                                            Subtitle slider 2
-                                        </div>
-                                        <!-- end text layer -->
-                                        <!-- start button layer -->
-                                        <div class="tp-caption tp-resizeme" id="slide-2-layer-09"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']" data-y="['top','top','top','top']"
-                                            data-voffset="['0','0','0','0']" data-width="auto" data-height="none"
-                                            data-whitespace="nowrap" data-fontsize="['18','16','16','16']"
-                                            data-lineheight="['70','55','55','55']" data-type="text"
-                                            data-responsive_offset="off" data-responsive="off"
-                                            data-frames='[{"delay":3000,"speed":1000,"frame":"0","from":"y:100px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
-                                            data-textAlign="['inherit','inherit','inherit','inherit']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
-                                            data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
-                                            <a href="#"
-                                                class="btn btn-extra-large btn-rounded with-rounded btn-dark-gray d-table d-lg-inline-block lg-mb-15px md-mx-auto">
-                                                Text button 2<span class="bg-white text-base-color"><i
-                                                        class="fa-solid fa-arrow-right"></i></span></a>
-                                        </div>
-                                        <!-- end button layer -->
+
                                     </div>
                                     <!-- end column layer -->
                                 </div>
@@ -507,7 +388,7 @@
                             data-param3="" data-param4="" data-param5="" data-param6="" data-param7=""
                             data-param8="" data-param9="" data-param10="" data-description="">
                             <!-- slide's main background image -->
-                            <img src="https://via.placeholder.com/1920x1200" alt="Image"
+                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/hasta%20lo%20ultimo.jpg" alt="Image"
                                 data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
                                 class="rev-slidebg" data-no-retina>
                             <!-- start overlay layer -->
@@ -571,68 +452,7 @@
                                         data-columnwidth="100%" data-verticalalign="top"
                                         data-textAlign="['center','center','center','center']">
 
-                                        <!-- start title layer -->
-                                        <div class="tp-caption mx-auto" id="slide-3-layer-07"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']"
-                                            data-y="['middle','middle','middle','middle']"
-                                            data-voffset="['0','0','0','0']" data-fontsize="['75','60','70','50']"
-                                            data-lineheight="['70','65','75','55']"
-                                            data-fontweight="['700','700','700','700']"
-                                            data-letterspacing="['-2','-2','-2','0']"
-                                            data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
-                                            data-width="['700','600','600','auto']" data-height="auto"
-                                            data-whitespace="normal" data-basealign="grid" data-type="text"
-                                            data-responsive_offset="off" data-verticalalign="middle"
-                                            data-responsive="on"
-                                            data-frames='[{"delay":"1500","split":"chars","splitdelay":0.03,"speed":800,"split_direction":"middletoedge","frame":"0","from":"x:50px;opacity:0;fb:10px;","to":"o:1;fb:0;","ease":"Power4.easeOut"},{"delay":"wait","speed":100,"frame":"999","to":"opacity:0;fb:0;","ease":"Power4.easeOut"}]'
-                                            data-textAlign="['center','center','center','center']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
-                                            data-paddingbottom="[33,28,35,25]" data-paddingleft="[0,0,0,0]"
-                                            style="word-break: initial; text-shadow: #0b1236 3px 3px 15px;">
-                                            Title slider 3
-                                        </div>
-                                        <!-- end title layer -->
-                                        <!-- start text layer -->
-                                        <div class="tp-caption mx-auto" id="slide-3-layer-08"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']"
-                                            data-y="['middle','middle','middle','middle']"
-                                            data-voffset="['0','0','0','0']" data-fontsize="['20','20','24','20']"
-                                            data-lineheight="['36','36','40','30']"
-                                            data-fontweight="['300','300','300','300']"
-                                            data-letterspacing="['0','0','0','0']"
-                                            data-color="['#ffffff','#ffffff','#ffffff','#ffffff']"
-                                            data-width="['500','500','auto','auto']" data-height="auto"
-                                            data-whitespace="normal" data-basealign="grid" data-type="text"
-                                            data-responsive_offset="off" data-verticalalign="middle"
-                                            data-responsive="on"
-                                            data-frames='[{"delay":2500,"speed":800,"frame":"0","from":"y:50px;opacity:0;fb:20px;","to":"o:0.6;fb:0;","ease":"power3.inOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"power3.inOut"}]'
-                                            data-textAlign="['center','center','center','center']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[0,0,0,0]"
-                                            data-paddingbottom="[36,36,60,40]" data-paddingleft="[0,0,0,0]">
-                                            Subtitle slider 3
-                                        </div>
-                                        <!-- end text layer -->
-                                        <!-- start button layer -->
-                                        <div class="tp-caption tp-resizeme" id="slide-3-layer-09"
-                                            data-x="['center','center','center','center']"
-                                            data-hoffset="['0','0','0','0']" data-y="['top','top','top','top']"
-                                            data-voffset="['0','0','0','0']" data-width="auto" data-height="none"
-                                            data-whitespace="nowrap" data-fontsize="['18','16','16','16']"
-                                            data-lineheight="['70','55','55','55']" data-type="text"
-                                            data-responsive_offset="off" data-responsive="off"
-                                            data-frames='[{"delay":3000,"speed":1000,"frame":"0","from":"y:100px;opacity:0;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
-                                            data-textAlign="['inherit','inherit','inherit','inherit']"
-                                            data-paddingtop="[0,0,0,0]" data-paddingright="[75,70,65,60]"
-                                            data-paddingbottom="[0,0,0,0]" data-paddingleft="[45,35,30,30]">
-                                            <a href="#"
-                                                class="btn btn-extra-large btn-rounded with-rounded btn-dark-gray d-table d-lg-inline-block lg-mb-15px md-mx-auto">Text
-                                                button 3
-                                                <span class="bg-white text-base-color"><i
-                                                        class="fa-solid fa-arrow-right"></i></span></a>
-                                        </div>
-                                        <!-- end button layer -->
+
                                     </div>
                                     <!-- end column layer -->
                                 </div>
