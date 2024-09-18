@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     use HasFactory;
-    protected $fillable = ['titulo', 'subtitulo', 'buttontext', 'url', 'estado'];
+    protected $fillable = ['titulo', 'subtitulo', 'buttontext', 'url', 'estado', 'file'];
 
      //RELACION UNO A UNO POLIMORFICA
      public function imagen()

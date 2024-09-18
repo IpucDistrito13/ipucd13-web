@@ -418,6 +418,12 @@ return [
             ],
         ],
         
+        [
+            'text' => 'Sliders',
+            'route' => 'admin.sliders.index',
+            'icon' => 'fas fa-file-image',
+            'can' => 'admin.series.create'
+        ],
 
         [
             'text' => 'Galeria',

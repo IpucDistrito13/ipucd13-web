@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\V2\IpucenLineaController;
 use App\Http\Controllers\Api\V2\LiderController;
 use App\Http\Controllers\Api\V2\PodcastController;
 use App\Http\Controllers\Api\V2\SerieController;
+use App\Http\Controllers\Api\V2\SliderController;
 use App\Http\Controllers\Api\V2\TransmisionController;
 use App\Http\Controllers\Api\V2\UsuarioController;
 use App\Http\Controllers\Api\V2\VideoController;
@@ -24,7 +25,7 @@ Route::get('series/comite/{comiteId}', [SerieController::class, 'getSeriesByComi
 Route::get('informes/comite/{comiteId}', [InformeController::class, 'getInformesByComite']);
 
 Route::get('podcasts', [PodcastController::class, 'index']);
-Route::get('series', [SerieController::class, 'index']);
+Route::get('series', action: [SerieController::class, 'index']);
 Route::get('informes', [InformeController::class, 'index']);
 Route::get('eventos', [EventoController::class, 'index']);
 Route::get('cronogramas', [CronogramaController::class, 'index']);
@@ -64,6 +65,9 @@ Route::get('carpetas/publico/comite/search', [DescargableComiteCarpetasControlle
 
 Route::get('archivo/carpeta/{uuid}', [DescargableComiteCarpetasController::class, 'getArchivosCarpeta']);
 Route::get('transmision/envivo', [TransmisionController::class, 'getTransmisionEnVivo']);
+
+
+Route::get('sliders', action: [SliderController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 

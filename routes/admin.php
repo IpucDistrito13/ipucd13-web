@@ -26,6 +26,7 @@ use App\Http\Controllers\Web\Admin\PublicacionController;
 use App\Http\Controllers\Web\Admin\RedesController;
 use App\Http\Controllers\Web\Admin\RolController;
 use App\Http\Controllers\Web\Admin\SerieController;
+use App\Http\Controllers\Web\Admin\SliderController;
 use App\Http\Controllers\Web\Admin\SolicitudController;
 use App\Http\Controllers\Web\Admin\SolicitudDescargableController;
 use App\Http\Controllers\Web\Admin\SolicitudTipoController;
@@ -227,5 +228,6 @@ Route::post('archivos/carpetas/storeUrl', [ArchivoController::class, 'storeUrl']
 Route::resource('solicitud_descargables', SolicitudDescargableController::class)->names('admin.solicitud_descargables');
 Route::get('solicitud_descargables/download/{uuid}', [SolicitudDescargableController::class, 'download'])->name('admin.solicitud_descargables.download');
 
+Route::resource('sliders', SliderController::class)->names('admin.sliders');
 
 
