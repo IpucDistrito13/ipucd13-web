@@ -44,7 +44,7 @@
                                     class="img-thumbnail small-image img-fluid mb-2">
                             @else
                                 <img id="imagen"
-                                    src="https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png"
+                                    src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/No_imagen/imagen_no_found_horizontal.webp"
                                     alt="Imagen predeterminada" class="img-thumbnail small-image img-fluid mb-2">
                             @endif
 

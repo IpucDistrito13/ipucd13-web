@@ -400,21 +400,24 @@ return [
         [
             'text' => 'Líder Distrito 13',
             'icon' => 'fas fa-users',
+            //'active' => ['admin/lideres*'],
             'submenu' => [
                 [
                     'text' => 'Tipos Líder',
                     'route' => 'admin.lideres_tipos.index',
-                    'can' => 'admin.lideres_tipos.index'
+                    'can' => 'admin.lideres_tipos.index',
+                    //'active' => ['admin/lideres_tipos*'], // Activar el subítem cuando esté en esta ruta
                 ],
-
+        
                 [
                     'text' => 'Líder',
                     'route' => 'admin.lideres.index',
-                    'can' => 'admin.lideres.index'
+                    'can' => 'admin.lideres.index',
+                    //'active' => ['admin/lideres*'], // Activar el subítem cuando esté en esta ruta
                 ],
-
             ],
         ],
+        
 
         [
             'text' => 'Galeria',

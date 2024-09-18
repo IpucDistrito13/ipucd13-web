@@ -95,6 +95,22 @@
         // Llamar al método para cada campo
         textoMayuscula('direccion');
         textoMayuscula('nombre');
+
+        //Mostrar imagen
+        function redirectUpdate(url) {
+            window.location.href = url;
+        }
+
+
+        function cambiarImagen(evento) {
+            var file = evento.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evento) {
+                document.getElementById("imagen").src = evento.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+        //end mostrar imagen
     </script>
 
 @stop

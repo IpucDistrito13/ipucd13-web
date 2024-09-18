@@ -38,14 +38,13 @@
                         <h1 class="text-dark-gray alt-font ls-minus-1px fw-700 mb-20px">Congregaciones</h1>
                         <h2 class="text-dark-gray d-inline-block fw-400 ls-0px mb-0">Lista de congregaciones IPUC Distrito 13</h2>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </section>
     <!-- end page title -->
-
-        <!-- start section -->
+    <!-- start section -->
         <section>
             <div class="container">
                 

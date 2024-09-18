@@ -32,6 +32,7 @@ class CongregacionRequest extends FormRequest
             'nombre' => 'required|max:250',
             'urlfacebook' => 'nullable|regex:/^(https?:\/\/)?(www\.)?facebook.com\/.+$/',
             'googlemaps' => 'required|regex:/^https:\/\/www\.google\.com\/maps.+$/',
+            'file' => 'required|image|max:1024', // 2M = 2048
         ];
 
         return $rules;
@@ -48,7 +49,6 @@ class CongregacionRequest extends FormRequest
             'direccion.max' => 'El campo dirección no puede tener más de :max caracteres.',
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.max' => 'El campo nombre no puede tener más de :max caracteres.',
-
             'urlfacebook.regex' => 'El campo url de Facebook debe ser una URL válida de Facebook.',
             'googlemaps.required' => 'El campo Google Maps es obligatorio.',
             'googlemaps.regex' => 'El campo Google Maps debe ser una URL válida de Google Maps.',

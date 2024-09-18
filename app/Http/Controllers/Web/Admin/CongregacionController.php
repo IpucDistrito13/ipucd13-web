@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class CongregacionController extends Controller
 {
@@ -58,6 +59,17 @@ class CongregacionController extends Controller
                 'estado' => 'Activo',
             ]);
 
+            // Manejar la imagen de portada si se proporciona
+            if ($request->hasFile('file')) {
+                $fileFachada = $request->file('file');
+                $ubicacionPortada = 'public/congregaciones';
+                $url = $this->storeFile($fileFachada, $ubicacionPortada);
+                $congregacion->imagen()->create([
+                    'url' => $url,
+                    'imageable_type' => Congregacion::class,
+                ]);
+            }
+
             // Registro en log
             RegistroLog::create([
                 'descripcion' => 'ADD - CONGREGACION - ' .  $congregacion->id,
@@ -78,7 +90,7 @@ class CongregacionController extends Controller
             Log::error('Error en store - Congregacion: ' . $th->getMessage());
 
             return redirect()->route('admin.congregaciones.index')
-                ->with('error', 'No se pudo crear la congregación, por favor intente nuevamente.');
+                ->with('error', 'No se pudo crear la congregación, por favor intente nuevamente.' .$th);
         }
     }
 
@@ -112,6 +124,29 @@ class CongregacionController extends Controller
                 'googlemaps' => $request->googlemaps,
             ]);
 
+            // Manejar la imagen de portada si se proporciona
+            if ($request->hasFile('file')) {
+                $fileFachada = $request->file('file');
+                $ubicacionPortada = 'public/congregaciones';
+                $url = $this->storeFile($fileFachada, $ubicacionPortada);
+
+                if ($congregacion->imagen) {
+                    Storage::delete($congregacion->imagen->url);
+    
+                    // Actualizar la relación de imagen con la nueva URL del archivo
+                    $congregacion->imagen()->update([
+                        'url' => $url,
+                        'imageable_type' => Congregacion::class,
+                    ]);
+                } else {
+                    // Si la categoría no tiene una imagen, agregar una nueva imagen
+                    $congregacion->imagen()->create([
+                        'url' => $url,
+                        'imageable_type' => Congregacion::class,
+                    ]);
+                }
+
+            }
 
             // Registro en log
             RegistroLog::create([
@@ -120,6 +155,8 @@ class CongregacionController extends Controller
                 'ip' => $request->ip(),
                 'user_id' => auth()->user()->id,
             ]);
+
+            
 
 
             // Elimina las variables almacenadas en cache
@@ -173,6 +210,15 @@ class CongregacionController extends Controller
             ];
 
             return redirect()->route('admin.congregaciones.index')->with('error', $data['message']);
+        }
+    }
+
+    private function storeFile($file, $location)
+    {
+        if (env('APP_ENV') === 'local') {
+            return Storage::put($location, $file);
+        } else {
+            return Storage::disk('s3')->put($location, $file);
         }
     }
 }

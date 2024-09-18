@@ -45,7 +45,8 @@
             <form method="POST" action="{{ route('admin.solicitud_descargables.update', $solicitud_descargable) }}" autocomplete="off"
                 enctype="multipart/form-data" file="true">
                 @csrf
-                @method('PUT') <!-- Establece el método PUT -->
+                @method('PUT')
+                <!-- Establece el método PUT -->
 
                 @include('admin.solicitudtipos.descargables.form', $solicitud_descargable)
 

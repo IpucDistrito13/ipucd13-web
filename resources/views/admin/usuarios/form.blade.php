@@ -142,9 +142,9 @@
             @php
                 $imageUrl = isset($usuario) && $usuario->imagen && $usuario->imagen->url
                     ? Storage::url($usuario->imagen->url)
-                    : 'https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png';
+                    : 'https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/No_imagen/imagen_no_found_horizontal.webp';
             @endphp
-            <img id="imagen" src="{{ $imageUrl }}" alt="Imagen del usuario" class="img-thumbnail">
+            <img id="imagen" alt="" src="{{ $imageUrl }}" class="img-thumbnail" style="width: 300px; height: auto;">
         </div>
     </div>
 

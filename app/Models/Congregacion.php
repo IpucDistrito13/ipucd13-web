@@ -10,7 +10,7 @@ class Congregacion extends Model
     use HasFactory;
 
     protected $table = 'congregaciones';
-    protected $fillable = ['municipio_id', 'longitud', 'latitud', 'direccion', 'nombre', 'urlfacebook', 'googlemaps', 'estado'];
+    protected $fillable = ['municipio_id', 'longitud', 'latitud', 'direccion', 'nombre', 'urlfacebook', 'googlemaps', 'estado', 'file'];
 
     public function scopeListarCongregaciones($query)
     {
@@ -31,5 +31,11 @@ class Congregacion extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    
+    public function imagen()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

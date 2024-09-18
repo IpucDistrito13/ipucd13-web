@@ -66,8 +66,6 @@ class Comite extends Model
         return $this->hasMany(Lider::class);
     }
 
-
-
     public function getRouteKeyName()
     {
         return 'slug';
