@@ -31,8 +31,8 @@ class UsuarioController extends Controller
 
      public function __construct()
      {
-         $this->middleware('can:admin.usuarios.index')->only('index');
-         $this->middleware('can:admin.usuarios.create')->only('create','store','edit','update', 'destroyUser' );
+         $this->middleware('can:admin.usuarios.index')->only('index');        
+         $this->middleware('can:admin.usuarios.editar')->only('editar', 'create','store','edit','update', 'destroyUser');
          $this->middleware('can:admin.usuarios.perfil')->only('perfil', 'updatePerfil');
      }
 
