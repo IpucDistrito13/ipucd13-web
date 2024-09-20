@@ -23,10 +23,8 @@ class LiderTipo extends Model
         return LiderTipo::select('id', 'nombre', 'slug');
     }
 
-    /*
-    public function scopeSeccionComites($query)
+    public function getRouteKeyName()
     {
-        return $query->select('id', 'nombre', 'slug');
+        return 'slug';
     }
-    */
 }

@@ -18,6 +18,11 @@ class CongregacionController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('can:admin.congregaciones.index')->only('index');
+        $this->middleware('can:admin.congregaciones.create')->only('create','store','edit','update', 'destroy' );
+    }
     public function index(Request $request)
     {
         //CACHE

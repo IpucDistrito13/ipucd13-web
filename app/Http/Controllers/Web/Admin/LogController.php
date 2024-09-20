@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class LogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.logs.index')->only(  'index');
+    }
     /**
      * Display a listing of the resource.
      */

@@ -16,6 +16,12 @@ class LiderTipoController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('can:admin.lideres_tipos.index')->only(  'index');
+        $this->middleware('can:admin.lideres_tipos.create')->only(  'create', 'store', 'edit', 'destroy');
+    }
+
     public function index()
     {
         $tipos = LiderTipo::selectList()->get();
@@ -30,7 +36,7 @@ class LiderTipoController extends Controller
     public function create()
     {
         //
-        
+
         return view('admin.lidertipos.create');
     }
 
@@ -129,7 +135,7 @@ class LiderTipoController extends Controller
      */
     public function destroy(LiderTipo $lideres_tipo)
     {
-        
+
         DB::beginTransaction();
 
         try {
@@ -148,6 +154,5 @@ class LiderTipoController extends Controller
             // Aquí puedes manejar el error como desees, por ejemplo, redireccionar con un mensaje de error
             return redirect()->back()->withInput()->with(['error' => 'Ha ocurrido un error al eliminar el tipo de líder. Por favor']);
         }
-            
     }
 }

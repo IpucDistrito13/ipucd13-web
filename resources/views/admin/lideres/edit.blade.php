@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar comité')
+@section('title', 'Editar líder')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Editar líder: {{ $lider->nombre }}</h1>
+        <h1 style="margin: 0;">Editar líder: {{ $lider->usuario->nombre }}</h1>
         <div>
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.lideres.index') }}">
                 <i class="fas fa-arrow-left"></i> Volver
@@ -52,7 +52,9 @@
 
                 <div class="modal-footer">
                     <a class="btn btn-secondary" href="{{ route('admin.lideres.index') }}">Volver</a>
-                    <button type="submit" class="btn btn-success float-right">Actualizar</button>
+                    @can('admin.lideres.update')
+                        <button type="submit" class="btn btn-success float-right">Actualizar</button>
+                    @endcan
                 </div>
             </form>
 

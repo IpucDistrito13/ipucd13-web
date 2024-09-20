@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Cache;
 
 class CarpetaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.carpetas.privado.listCarpetasPrivadoComite')->only(  'listCarpetasPrivadoComite');
+        $this->middleware('can:admin.carpetas.privado.crearCarpetaPrivada')->only(  'crearCarpetaPrivada');
+
+        $this->middleware('can:admin.carpetas.publico.listCarpetasPublicoComite')->only(  'listCarpetasPublicoComite');
+        $this->middleware('can:admin.carpetas.publico.crearCarpetaPublico')->only(  'crearCarpetaPublico');
+    }
+
     // LISTA LOS COMITES CON LAS CARPETAS PRIVADAS
     public function listComitePrivado()
     {

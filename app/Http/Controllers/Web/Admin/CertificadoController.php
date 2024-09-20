@@ -15,6 +15,7 @@ class CertificadoController extends Controller
     public function __construct()
     {
         $this->fpdf = new Fpdf;
+
     }
 
     public function certificadoBautismo()

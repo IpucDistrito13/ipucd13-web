@@ -53,5 +53,10 @@ class Lider extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
     
 }

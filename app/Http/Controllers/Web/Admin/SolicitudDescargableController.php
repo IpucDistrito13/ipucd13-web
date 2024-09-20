@@ -15,7 +15,14 @@ class SolicitudDescargableController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */ public function index()
+     * 
+     * 
+     */ 
+    public function __construct()
+    {
+        $this->middleware('can:admin.solicitud_tipos.index')->only('index', 'download');
+    }
+     public function index()
     {
         //return 'Hola';
         /*
@@ -28,6 +35,8 @@ class SolicitudDescargableController extends Controller
         }
         //CACHE
         */
+
+        
 
         //return SolicitudDescargable::all();
         $solicitud_descargable = SolicitudDescargable::all();

@@ -13,9 +13,10 @@ class VideoController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        return 'Hola';
+       // return 'Hola';
     }
 
     /**

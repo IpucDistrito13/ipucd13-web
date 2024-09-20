@@ -385,7 +385,7 @@ return [
                 [
                     'text' => 'Descargables',
                     'route' => 'admin.solicitud_descargables.index',
-                    //'can' => 'admin.solicitud_tipos.index'
+                    'can' => 'admin.solicitud_tipos.index'
                 ],
 
                 [
@@ -515,12 +515,11 @@ return [
         ['header' => 'USUARIO'],
 
         [
-            'text' => 'IPUC en Linea',
+            'text' => 'IPUC en Línea',
             'route' => 'admin.ipuc.linea',
             'icon' => 'fas fa-globe',
-            //'can' => 'admin.solicitudes.respondidas'
+            'can' => 'admin.ipucenlinea.index'
         ],
-
 
         [
             'text' => ' Eventos',

@@ -15,6 +15,11 @@ class SliderController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('can:admin.slider_app.index')->only(  'index');
+        $this->middleware('can:admin.slider_app.create')->only(  'create', 'store', 'edit', 'update', 'destroy');
+    }
     public function index()
     {
         $sliders = Slider::all();

@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Cache;
 
 class CronogramaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.cronogramas.index')->only(  'index');
+        $this->middleware('can:admin.cronogramas.create')->only(  'create', 'store', 'edit', 'update', 'destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */

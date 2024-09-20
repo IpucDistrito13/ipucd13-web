@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 class CategoriaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.categorias.index')->only(  'index');
+        $this->middleware('can:admin.categorias.create')->only(  'create', 'store', 'edit', 'update', 'destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -132,7 +132,7 @@ Route::get('galerias', [GaleriaController::class, 'index'])->name('admin.galeria
 //GALERIA PRIVADA ADMIN
 Route::get('galeria/privado/{usuario}', [GaleriaController::class, 'privadoAdmin'])->name('admin.galerias.privadoadmin');
 Route::get('galeria/general/{usuario}', [GaleriaController::class, 'generalAdmin'])->name('admin.galerias.generalAdmin');
-Route::get('galeria/generalLider/{usuario}', [GaleriaController::class, 'generalLider'])->name('admin.galerias.generalLider');
+Route::get('galeria/verGaleriaPublicaPastor/{usuario}', [GaleriaController::class, 'verGaleriaPublicaPastor'])->name('admin.galerias.verGaleriaPublicaPastor');
 
 //GUARDAR IMAGENES MASIVO
 Route::post('galerias/upload', [GaleriaController::class, 'upload'])->name('admin.galerias.upload');

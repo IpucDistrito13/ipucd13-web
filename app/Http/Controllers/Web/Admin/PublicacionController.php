@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\DB;
 
 class PublicacionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.publicaciones.index')->only(  'index');
+        $this->middleware('can:admin.publicaciones.create')->only(  'create', 'edit',  'destroy');
+    }
     /**
      * Display a listing of the resource.
      */

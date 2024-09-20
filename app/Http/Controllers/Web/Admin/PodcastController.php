@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Log;
 
 class PodcastController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.podcasts.index')->only(  'index');
+        $this->middleware('can:admin.podcasts.create')->only(  'create', 'edit',  'destroy', 'listEpisodio', 'createEpisodio');
+    }
+
     /**
      * Display a listing of the resource.
      */

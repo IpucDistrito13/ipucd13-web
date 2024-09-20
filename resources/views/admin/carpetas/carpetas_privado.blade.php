@@ -16,13 +16,13 @@
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
 
-            <a class="btn btn-primary btn-sm" href="{{ route('admin.carpetas.privado.crearCarpetaPrivada', $comite) }}">
-                <i class="fas fa-folder-open"></i> Crear carpeta
-            </a>
+
             @can('admin.carpetas.privado.crearCarpetaPrivada')
-            
+                <a class="btn btn-primary btn-sm" href="{{ route('admin.carpetas.privado.crearCarpetaPrivada', $comite) }}">
+                    <i class="fas fa-folder-open"></i> Crear carpeta
+                </a>
             @endcan
-            
+
         </div>
 
     </div>
@@ -51,19 +51,19 @@
                 <tbody>
 
                     @foreach ($carpetas as $item)
-                    <tr>
-                        <td>{{ $item->id }}</td>
-                        <td>{{ $item->nombre }}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Group of buttons">
-                                <!-- Update Button -->
-                                <a class="btn btn-primary btn-sm"
-                                   href="{{ route('admin.archivos.index', $item->id) }}">Ver más</a>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-                
+                        <tr>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->nombre }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Group of buttons">
+                                    <!-- Update Button -->
+                                    <a class="btn btn-primary btn-sm"
+                                        href="{{ route('admin.archivos.index', $item->id) }}">Ver más</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+
 
                     <!-- Fin del ejemplo -->
                 </tbody>
@@ -130,5 +130,5 @@
 @stop
 
 @section('js')
-    
+
 @stop

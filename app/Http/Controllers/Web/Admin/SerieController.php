@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Log;
 
 class SerieController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.series.index')->only(  'index');
+        $this->middleware('can:admin.series.create')->only(  'create', 'edit',  'destroy', 'listVideos');
+    }
+
     /**
      * Display a listing of the resource.
      */

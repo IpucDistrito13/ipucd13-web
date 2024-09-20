@@ -19,6 +19,14 @@ class LiderController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct()
+     {
+         $this->middleware('can:admin.lideres.index')->only(  'index');
+         $this->middleware('can:admin.lideres.create')->only(  'create', 'store', 'edit', 'update', 'destroy');
+     }
+
+     
     public function index()
     {
         $lideres = Lider::all();
@@ -59,7 +67,6 @@ class LiderController extends Controller
      */
     public function store(LiderRequest $request)
     {
-        // Utilizamos DB::transaction() para iniciar una transacción en la base de datos
         DB::beginTransaction();
 
         try {

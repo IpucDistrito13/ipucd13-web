@@ -16,6 +16,13 @@ use Spatie\Permission\Models\Role;
 
 class PermisoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:developer.permissions.index')->only(  'index');
+        $this->middleware('can:developer.permissions.create')->only(  'create', 'store', 'edit', 'update', 'destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -40,18 +47,6 @@ class PermisoController extends Controller
         'permisos' => $permisos,
     ]);
 }
-
-
-     /*
-    public function index()
-    {
-        // Obtener permisos desde la vista
-        $permisos = DB::table('permisos_con_roles')->get();
-
-        // Pasar la variable a la vista usando compact
-        return view('admin.permissions.index', compact('permisos'));
-    }
-    */
 
 
     /**

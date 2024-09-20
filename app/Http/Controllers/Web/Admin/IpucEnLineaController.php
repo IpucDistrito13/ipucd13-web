@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class IpucEnLineaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.ipucenlinea.index')->only(  'index');
+    }
+
     /**
      * Display a listing of the resource.
      */

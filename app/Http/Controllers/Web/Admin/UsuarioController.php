@@ -29,6 +29,13 @@ class UsuarioController extends Controller
      * Display a listing of the resource.
      */
 
+     public function __construct()
+     {
+         $this->middleware('can:admin.usuarios.index')->only('index');
+         $this->middleware('can:admin.usuarios.create')->only('create','store','edit','update', 'destroyUser' );
+         $this->middleware('can:admin.usuarios.perfil')->only('perfil', 'updatePerfil');
+     }
+
     protected static ?string $password;
 
     public function index(Request $request)
@@ -227,16 +234,6 @@ class UsuarioController extends Controller
         }
     }
 
-
-    public function storeCongregacionPastor() {}
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

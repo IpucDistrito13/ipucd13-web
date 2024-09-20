@@ -19,6 +19,12 @@ class ComiteController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct()
+     {
+         $this->middleware('can:admin.comites.index')->only(  'index');
+         $this->middleware('can:admin.comites.create')->only(  'create', 'store', 'edit', 'update', 'destroy');
+     }
     public function index()
     {
         //CACHE

@@ -18,6 +18,14 @@ class GaleriaController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct()
+    {
+        $this->middleware('can:admin.galerias.index')->only(  'index');
+        $this->middleware('can:admin.galerias.create')->only(  'create', 'store', 'edit', 'update', 'destroy');
+
+    }
+
     // Muestra lista de  Pastores con el estado Activo
     public function index(Request $request)
     {
@@ -71,7 +79,7 @@ class GaleriaController extends Controller
             return datatables()::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
+                    $buttons = ' <a href="' . route("admin.galerias.verGaleriaPublicaPastor", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
                     return $buttons;
                 })
                 ->rawColumns(['action'])
@@ -214,8 +222,8 @@ class GaleriaController extends Controller
     }
 
     //AGREGA GALERIA E IMAGENES, SE VISUALIZA EN TODOS LOS ROLES PASTORES
-    /*
-    public function generalLider($uuid)
+    
+    public function verGaleriaPublicaPastor($uuid)
     {
         // 1 = GALERIA GENERAL
         $tipoGeneral = 1;
@@ -229,7 +237,7 @@ class GaleriaController extends Controller
 
         return view('admin.galerias.upload_general_lider', compact('usuario', 'galerias'));
     }
-    */
+    
 
 
 

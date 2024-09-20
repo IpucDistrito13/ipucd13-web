@@ -44,8 +44,10 @@
                 @include('admin.certificados.bautismos.form')
 
                 <div class="modal-footer">
-                    
+                    @can('admin.certificado.bautismo.download')
                     <button type="submit" class="btn btn-primary float-right">Generar PDF</button>
+
+                    @endcan
                 </div>
             </form>
 

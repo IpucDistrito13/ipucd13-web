@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Cache;
 
 class EventoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.eventos.index')->only(  'index');
+        $this->middleware('can:admin.eventos.create')->only(  'create', 'store', 'edit', 'update', 'destroy');
+    }
+
+
     /**
      * Display a listing of the resource.
      */
