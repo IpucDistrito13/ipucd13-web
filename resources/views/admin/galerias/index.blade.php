@@ -42,10 +42,8 @@
             <table id="datatable" class="table table-striped table-bordered data-table data-table">
                 <thead>
                     <tr>
-                        <th>Código</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
-                        <th>Celular</th>
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
@@ -113,10 +111,7 @@
                     }
                 },
                 ajax: "{{ route('admin.galerias.index') }}",
-                columns: [{
-                        data: 'codigo',
-                        name: 'codigo'
-                    },
+                columns: [
                     {
                         data: 'nombre',
                         name: 'nombre'
@@ -126,10 +121,6 @@
                         name: 'apellidos'
                     },
 
-                    {
-                        data: 'celular',
-                        name: 'celular'
-                    },
                     {
                         data: 'action',
                         name: 'action',
