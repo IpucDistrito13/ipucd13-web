@@ -12,6 +12,10 @@
         @include('public.layouts.iconos')
         <link rel="stylesheet" href="{{ asset('demos/elearning/elearning.css')}}" />
     </head>
+
+    <!-- google analytics -->
+    @include('public.layouts.analytics')
+
     <body class="bg-very-light-gray" data-mobile-nav-style="classic">
         <!-- start header -->
         @include('public.layouts.menu')

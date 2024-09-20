@@ -18,6 +18,10 @@
             }
         </style>
     </head>
+
+    <!-- google analytics -->
+    @include('public.layouts.analytics')
+
     <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
     class="custom-cursor">
 

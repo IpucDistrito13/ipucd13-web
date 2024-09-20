@@ -5,14 +5,14 @@
     <title>{{ $metaData['title'] }}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="author" content="{{ $metaData['author']}}">
+    <meta name="author" content="{{ $metaData['author'] }}">
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <meta name="description" content="{{ $metaData['description']}}">
+    <meta name="description" content="{{ $metaData['description'] }}">
     <meta name="robots" content="noindex">
 
     {{-- <meta name="robots" content="noindex"> --}}
-   <!-- favicon icon -->
-   @include('public.layouts.iconos')
+    <!-- favicon icon -->
+    @include('public.layouts.iconos')
 
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
@@ -20,15 +20,17 @@
 
 </head>
 
-<body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
-    class="custom-cursor">
-        <!-- start cursor -->
-        <div class="cursor-page-inner">
-            <div class="circle-cursor circle-cursor-inner"></div>
-            <div class="circle-cursor circle-cursor-outer"></div>
-        </div>
-        <!-- end cursor -->
-        
+<!-- google analytics -->
+@include('public.layouts.analytics')
+
+<body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D" class="custom-cursor">
+    <!-- start cursor -->
+    <div class="cursor-page-inner">
+        <div class="circle-cursor circle-cursor-inner"></div>
+        <div class="circle-cursor circle-cursor-outer"></div>
+    </div>
+    <!-- end cursor -->
+
     @include('public.layouts.menu')
 
     <!-- start section -->

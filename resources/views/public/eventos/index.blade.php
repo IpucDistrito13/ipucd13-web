@@ -15,8 +15,12 @@
         <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        </head>
-        <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
+    </head>
+    
+    <!-- google analytics -->
+    @include('public.layouts.analytics')
+
+    <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D"
         class="custom-cursor">
 
         @include('public.layouts.menu')
