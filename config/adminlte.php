@@ -322,7 +322,7 @@ return [
             'route' => 'developer.permissions.index',
             'icon' => 'fas fa-shield-alt',
             //'active' => ['admin/roles*'],
-            'can' => 'developer.permissions.index'
+            //'can' => 'developer.permissions.index'
         ],
 
         [
