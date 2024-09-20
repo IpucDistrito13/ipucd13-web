@@ -321,8 +321,8 @@ return [
             'text' => 'Routing permissions',
             'route' => 'developer.permissions.index',
             'icon' => 'fas fa-shield-alt',
-            //'active' => ['admin/roles*'],
-            //'can' => 'developer.permissions.index'
+            'active' => ['developer.permissions*'],
+            'can' => 'developer.permissions.index'
         ],
 
         [
