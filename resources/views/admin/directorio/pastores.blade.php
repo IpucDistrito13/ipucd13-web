@@ -125,7 +125,7 @@
                 {
                     "data": "image_url",
                     "render": function(data, type, row) {
-                        var baseUrl = '{{ env('APP_URL') }}/storage/'; // Usa APP_URL del archivo .env
+                        var baseUrl = 'https://ipucd13.nyc3.digitaloceanspaces.com/public/usuarios/'; 
                         var imageUrl = row.image_url ? baseUrl + row.image_url.replace('public/', '') : 'https://cdn.icon-icons.com/icons2/3250/PNG/512/person_circle_filled_icon_202012.png';
                         return '<img src="' + imageUrl + '" alt="Image" style="width:50px;height:50px;"/>';
                     }
