@@ -99,7 +99,7 @@ class UsuarioController extends Controller
             return datatables()::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-primary btn-sm">LLamar</a>';
+                    $buttons = ' <a href="' . route("admin.galerias.verGaleriaPublicaPastor", $row->uuid) . '" class="btn btn-primary btn-sm">LLamar</a>';
                     return $buttons;
                 })
                 ->rawColumns(['action'])
@@ -120,7 +120,7 @@ class UsuarioController extends Controller
             return datatables()::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $buttons = ' <a href="' . route("admin.galerias.generalLider", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
+                    $buttons = ' <a href="' . route("admin.galerias.verGaleriaPublicaPastor", $row->uuid) . '" class="btn btn-secondary btn-sm">Ver galeria</a>';
                     $buttons .= ' <a href="tel:' . $row->celular . '" class="btn btn-primary btn-sm">Llamar</a>';
                     return $buttons;
                 })
