@@ -485,7 +485,7 @@
                             <div class="atropos-scale">
                                 <div class="atropos-rotate">
                                     <div class="atropos-inner text-center w-100 overflow-visible">
-                                        <img src="https://via.placeholder.com/835x710" alt="">
+                                        <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/Otros/img-muestra-descargar.webp" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -494,9 +494,7 @@
                     <div class="col-xl-5 col-lg-6 col-md-11 position-relative"
                         data-anime='{ "el": "childs", "translateX": [30, 0], "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 100, "staggervalue": 300, "easing": "easeOutQuad" }'>
 
-                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-40px sm-mb-25px mx-auto">Descarga
-                            nuestra
-                            app</h2>
+                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-40px sm-mb-25px mx-auto">Próximamente</h2>
                         <div class="accordion accordion-style-06 text-start" id="accordion-style-07">
                             <!-- start accordion item -->
                             <div class="accordion-item active-accordion">
@@ -533,7 +531,7 @@
                                 <div id="accordion-style-07-02" class="accordion-collapse collapse"
                                     data-bs-parent="#accordion-style-07">
                                     <div class="accordion-body last-paragraph-no-margin">
-                                        <p>Informate de primera mano con información privilegiada.</p>
+                                        <p>Infórmate de primera mano con información privilegiada.</p>
                                         <i class="line-icon-Sand-watch icon-extra-double-large opacity-2"></i>
                                     </div>
                                 </div>
