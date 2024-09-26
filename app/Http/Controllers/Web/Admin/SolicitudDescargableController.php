@@ -18,13 +18,13 @@ class SolicitudDescargableController extends Controller
      * 
      * 
      */ 
-    public function __construct()
+    public function __construct() 
     {
-        //$this->middleware('can:admin.solicitud_descargables.index')->only('index');
+        $this->middleware('can:admin.solicitud_descargables.index')->only('index','download');
+        $this->middleware('can:admin.solicitud_descargables.create')->only('create', 'store', 'edit', 'update', 'destroy');
     }
      public function index()
     {
-        //return 'Hola';
         /*
         //CACHE
         if (Cache::has('solicitud_descargable')) {
@@ -116,7 +116,6 @@ class SolicitudDescargableController extends Controller
     public function update(SolicitudDescargableRequest $request, SolicitudDescargable $solicitud_descargable)
     {
 
-        // return $solicitud_descargable;
         try {
 
 
