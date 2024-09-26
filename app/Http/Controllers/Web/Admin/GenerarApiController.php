@@ -6,11 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\GenerarKeyApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB; // Asegúrate de incluir esta importación si no está ya
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class GenerarApiController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin.keyapis.index')->only('index');
+        $this->middleware('can:admin.keyapis.create')->only('create','store','edit','update', 'destroy' );
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,9 +35,7 @@ class GenerarApiController extends Controller
     public function create()
     {
         // $apiKey =  Str::random(32); // Genera una cadena aleatoria de 32 caracteres
-        return view('admin.apis.create', [
-            //'apiKey' => $apiKey
-        ]);
+        return view('admin.apis.create');
     }
 
     /**
