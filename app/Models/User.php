@@ -164,6 +164,8 @@ class User extends Authenticatable
     }
 
 
+
+
     /*
 
 CREATE VIEW vista_roles_usuario AS

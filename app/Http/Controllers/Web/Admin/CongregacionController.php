@@ -36,6 +36,19 @@ class CongregacionController extends Controller
         return view('admin.congregaciones.index', compact('congregaciones'));
     }
 
+    public function list() {
+        
+        //CACHE
+        if (Cache::has('congregaciones')) {
+            $congregaciones = Cache::get('congregaciones');
+        } else {
+            $congregaciones = Congregacion::ListarCongregaciones()->get();
+            Cache::put('congregaciones', $congregaciones);
+        }
+        //CACHE
+        return view('public.congregaciones.list', compact('congregaciones'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

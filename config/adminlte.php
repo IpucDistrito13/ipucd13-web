@@ -427,7 +427,7 @@ return [
         ],
 
         [
-            'text' => 'Galeria',
+            'text' => 'Galería',
             'route' => 'admin.galerias.index',
             'icon' => 'fas fa-file-image',
             'can' => 'admin.galerias.index'
@@ -537,7 +537,7 @@ return [
 
         [
             'text' => 'Directorio D13',
-            'icon' => 'fas fa-cloud-download-alt',
+            'icon' => 'fas fa-address-book',
             'submenu' => [
 
                 [
@@ -552,6 +552,13 @@ return [
                 ],
 
             ],
+        ],
+
+        [
+            'text' => 'Congregaciones',
+            'route' => 'admin.congregaciones.list',
+            'icon' => 'fas fa-place-of-worship',
+            'active' => ['admin/congregacion/list'],
         ],
 
         [
