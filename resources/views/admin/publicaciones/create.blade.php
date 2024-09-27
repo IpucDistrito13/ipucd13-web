@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear publicación')
+@section('title', 'Crear informe')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear publicación</h1>
+        <h1 style="margin: 0;">Crear informe</h1>
 
     </div>
 @stop

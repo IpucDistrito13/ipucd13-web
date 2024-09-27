@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Publicaciones</title>
+    <title>Informes</title>
     <meta name="robots" content="noindex">
 
     <!-- favicon icon -->
     @include('public.layouts.iconos')
 
-        <style>
+    <style>
         .podcast-row:hover {
             box-shadow: 0 0 10px #00338d;
             /* Color: #00338d */
@@ -44,8 +44,8 @@
 
 </head>
 
-    <!-- google analytics -->
-    @include('public.layouts.analytics')
+<!-- google analytics -->
+@include('public.layouts.analytics')
 
 <body data-mobile-nav-style="full-screen-menu" data-mobile-nav-bg-color="#00338D" class="custom-cursor">
     <!-- start cursor -->
@@ -59,95 +59,101 @@
     @include('public.layouts.menu')
     <!-- end header -->
 
-<!-- start banner -->
-<section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography banner-section"
-    style="background-image: url('https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/banners_internos/informes_banner.webp');" >
-    <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
-        style="background-image: url('images/vertical-line-bg-small.svg');">
-    </div>
-    <div id="particles-style-01" class="h-100 position-absolute left-0px top-0 w-100" data-particle="true"
-        data-particle-options='{"particles": {"number": {"value": 50,"density": {"enable": true,"value_area": 2000}},"color": {"value": ["#00338D", "#009FDA", "#F0AB00"]},"shape": {"type": "circle","stroke":{"width":0,"color":"#000000"}},"opacity": {"value": 1,"random": false,"anim": {"enable": false,"speed": 1,"sync": false}},"size": {"value": 8,"random": true,"anim": {"enable": false,"sync": true}},"line_linked":{"enable":false,"distance":0,"color":"#ffffff","opacity":1,"width":1},"move": {"enable": true,"speed":1,"direction": "right","random": false,"straight": false}},"interactivity": {"detect_on": "canvas","events": {"onhover": {"enable": false,"mode": "repulse"},"onclick": {"enable": false,"mode": "push"},"resize": true}},"retina_detect": false}'>
-    </div>
-    <div class="container h-100 position-relative">
-        <div class="row align-items-center h-100 extra-small-screen">
-            <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9 position-relative page-title-extra-small"
-                data-anime='{ "el": "childs", "translateY": [-15, 0], "perspective": [1200,1200], "scale": [1.1, 1], "rotateX": [50, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                <h2 class="fw-500 m-0 ls-minus-2px text-white alt-font"></h2>
+    <!-- start banner -->
+    <section class="ipad-top-space-margin bg-dark-gray cover-background page-title-big-typography banner-section"
+        style="background-image: url('https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/banners_internos/informes_banner.webp');">
+        <div class="background-position-center-top h-100 w-100 position-absolute left-0px top-0"
+            style="background-image: url('images/vertical-line-bg-small.svg');">
+        </div>
+        <div id="particles-style-01" class="h-100 position-absolute left-0px top-0 w-100" data-particle="true"
+            data-particle-options='{"particles": {"number": {"value": 50,"density": {"enable": true,"value_area": 2000}},"color": {"value": ["#00338D", "#009FDA", "#F0AB00"]},"shape": {"type": "circle","stroke":{"width":0,"color":"#000000"}},"opacity": {"value": 1,"random": false,"anim": {"enable": false,"speed": 1,"sync": false}},"size": {"value": 8,"random": true,"anim": {"enable": false,"sync": true}},"line_linked":{"enable":false,"distance":0,"color":"#ffffff","opacity":1,"width":1},"move": {"enable": true,"speed":1,"direction": "right","random": false,"straight": false}},"interactivity": {"detect_on": "canvas","events": {"onhover": {"enable": false,"mode": "repulse"},"onclick": {"enable": false,"mode": "push"},"resize": true}},"retina_detect": false}'>
+        </div>
+        <div class="container h-100 position-relative">
+            <div class="row align-items-center h-100 extra-small-screen">
+                <div class="col-xl-6 col-lg-7 col-md-8 col-sm-9 position-relative page-title-extra-small"
+                    data-anime='{ "el": "childs", "translateY": [-15, 0], "perspective": [1200,1200], "scale": [1.1, 1], "rotateX": [50, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    <h2 class="fw-500 m-0 ls-minus-2px text-white alt-font"></h2>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- end banner -->
+    </section>
+    <!-- end banner -->
 
-        <!-- start section  ultimas publicaciones -->
-        <section class="pt-0 ps-15 pe-15 xl-ps-2 xl-pe-2 lg-ps-2 lg-pe-2 sm-mx-0">
-            <div class="container-fluid">                
-                <div class="row">
-                    <div class="col-12">
-                        <ul class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
-                            <li class="grid-sizer"></li>
+    <!-- start section  ultimas publicaciones -->
+    <section class="pt-0 ps-15 pe-15 xl-ps-2 xl-pe-2 lg-ps-2 lg-pe-2 sm-mx-0">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <ul
+                        class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
+                        <li class="grid-sizer"></li>
 
-                            @foreach ($publicaciones as $publicacion)
-
+                        @foreach ($publicaciones as $publicacion)
                             <!-- start blog item -->
                             <li class="grid-item">
                                 <div class="card bg-transparent border-0 h-100">
                                     <div class="blog-image position-relative overflow-hidden border-radius-4px">
                                         <a href="{{ route('public.publicaciones.show', $publicacion) }}">
                                             <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
-                                                    alt="" />
+                                                alt="" />
                                         </a>
                                     </div>
                                     <div class="card-body px-0 pt-30px pb-30px">
-                                        <span class="fs-13 text-uppercase mb-5px d-block"><a href="{{ route('public.publicaciones.show', $publicacion) }}" class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $publicacion->comite->nombre }}</a>
+                                        <span class="fs-13 text-uppercase mb-5px d-block"><a
+                                                href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                                class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $publicacion->comite->nombre }}</a>
                                             <br>
-                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="blog-date text-dark-gray-hover">{{ $publicacion->created_at->format('Y-m-d h:i a') }}</a>
+                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                                class="blog-date text-dark-gray-hover">{{ $publicacion->created_at->format('Y-m-d h:i a') }}</a>
                                         </span>
-                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $publicacion->titulo }}</a>
+                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                            class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $publicacion->titulo }}</a>
                                         <p class="mb-10px w-95">{{ $publicacion->descripcion }}</p>
-                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}" class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
+                                        <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                            class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver
+                                            más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
                                     </div>
                                 </div>
                             </li>
                             <!-- end blog item -->
-                            @endforeach
+                        @endforeach
 
 
-                        </ul>
-                    </div>
-                    
+                    </ul>
                 </div>
+
             </div>
-            
-            <!-- start pagination -->
-            <div class="col-12 mt-4 d-flex justify-content-center">
-                <ul class="pagination pagination-style-01 fs-13 fw-500 mb-0">
-                    <!-- Previous Page Link -->
-                    <li class="page-item {{ $publicaciones->onFirstPage() ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $publicaciones->previousPageUrl() }}">
-                            <i class="feather icon-feather-arrow-left fs-18 d-xs-none"></i>
-                        </a>
+        </div>
+
+        <!-- start pagination -->
+        <div class="col-12 mt-4 d-flex justify-content-center">
+            <ul class="pagination pagination-style-01 fs-13 fw-500 mb-0">
+                <!-- Previous Page Link -->
+                <li class="page-item {{ $publicaciones->onFirstPage() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $publicaciones->previousPageUrl() }}">
+                        <i class="feather icon-feather-arrow-left fs-18 d-xs-none"></i>
+                    </a>
+                </li>
+
+                <!-- Pagination Elements -->
+                @foreach ($publicaciones->getUrlRange(max(1, $publicaciones->currentPage() - 2), min($publicaciones->lastPage(), $publicaciones->currentPage() + 2)) as $page => $url)
+                    <li class="page-item {{ $page == $publicaciones->currentPage() ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
                     </li>
-            
-                    <!-- Pagination Elements -->
-                    @foreach ($publicaciones->getUrlRange(max(1, $publicaciones->currentPage() - 2), min($publicaciones->lastPage(), $publicaciones->currentPage() + 2)) as $page => $url)
-                        <li class="page-item {{ $page == $publicaciones->currentPage() ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                        </li>
-                    @endforeach
-            
-                    <!-- Next Page Link -->
-                    <li class="page-item {{ $publicaciones->hasMorePages() ? '' : 'disabled' }}">
-                        <a class="page-link" href="{{ $publicaciones->nextPageUrl() }}">
-                            <i class="feather icon-feather-arrow-right fs-18 d-xs-none"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- end pagination -->
+                @endforeach
+
+                <!-- Next Page Link -->
+                <li class="page-item {{ $publicaciones->hasMorePages() ? '' : 'disabled' }}">
+                    <a class="page-link" href="{{ $publicaciones->nextPageUrl() }}">
+                        <i class="feather icon-feather-arrow-right fs-18 d-xs-none"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- end pagination -->
 
 
-            <!-- seccion redes -->
+        <!-- seccion redes -->
         <div class="row justify-content-center mt-5">
 
             <!-- start features box item -->
@@ -159,10 +165,11 @@
                     </div>
                     <div class="feature-box-content">
                         <span class="text-dark-gray fw-500 fs-20 xs-fs-18 ls-minus-05px">
-                            Suscríbete, mira videos y transmisiones en 
-                            <a href="{{ $youtube }}" target="_blank" class="text-decoration-line-bottom-medium text-dark-gray fw-600">Youtube</a>
+                            Suscríbete, mira videos y transmisiones en
+                            <a href="{{ $youtube }}" target="_blank"
+                                class="text-decoration-line-bottom-medium text-dark-gray fw-600">Youtube</a>
                         </span>
-                        
+
                     </div>
                 </div>
             </div>
@@ -201,23 +208,24 @@
         </div>
         <!-- end seccion redes -->
 
-            
-        </section>
-        <!-- end section ultimas publicaciones -->
+
+    </section>
+    <!-- end section ultimas publicaciones -->
 
 
 
 
-        
 
 
-        <!-- start footer -->
+
+    <!-- start footer -->
     @include('public.layouts.footer')
     <!-- end footer -->
 
-        <!-- javascript libraries -->
-        <script type="text/javascript" src="{{ asset('js/jquery.js') }} "></script>
+    <!-- javascript libraries -->
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }} "></script>
     <script type="text/javascript" src="{{ asset('js/vendors.min.js') }} "></script>
     <script type="text/javascript" src="{{ asset('js/main.js') }} "></script>
-    </body>
+</body>
+
 </html>
