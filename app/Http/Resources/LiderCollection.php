@@ -23,6 +23,7 @@ class LiderCollection extends ResourceCollection
                 'celular' => $lider->usuario->celular,
                 'imagenperfil' => $lider->imagen?  $lider->imagen->url : null,
                 'tipolider' => $lider->liderTipo->nombre,
+                'visiblecelular' => $lider->usuario->visible_celular,
             
             ];
         })->toArray();

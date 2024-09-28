@@ -83,7 +83,7 @@ class LiderController extends Controller
         $offset = $request->query('offset', 0);
 
 
-        $lideres = Lider::where('comite_id', $comiteId)
+        $lideres = Lider::with('usuario', 'liderTipo', 'comite')->where('comite_id', $comiteId)
             ->where('estado', 'Activo')
             ->orderBy('id', 'desc')
             ->offset($offset)
