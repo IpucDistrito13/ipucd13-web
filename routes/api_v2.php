@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V2\CertificadoController;
 use App\Http\Controllers\Api\V2\ComiteController;
 use App\Http\Controllers\Api\V2\CongregacionController;
 use App\Http\Controllers\Api\V2\CronogramaController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Api\V2\LiderController;
 use App\Http\Controllers\Api\V2\PodcastController;
 use App\Http\Controllers\Api\V2\SerieController;
 use App\Http\Controllers\Api\V2\SliderController;
+use App\Http\Controllers\Api\V2\SolicitudDescargableController;
 use App\Http\Controllers\Api\V2\TransmisionController;
 use App\Http\Controllers\Api\V2\UsuarioController;
 use App\Http\Controllers\Api\V2\VideoController;
@@ -68,6 +70,12 @@ Route::get('transmision/envivo', [TransmisionController::class, 'getTransmisionE
 
 
 Route::get('sliders', action: [SliderController::class, 'index']);
+
+Route::get('certificado/bautismo/download', [CertificadoController::class, 'downloadCertificadoBautismoApi']);
+Route::get('solicitudes/descargable/archivos', [SolicitudDescargableController::class, 'index']);
+Route::get('solicitudes/archivo/download/{slug}', [SolicitudDescargableController::class, 'download'])->name('download');
+
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
 

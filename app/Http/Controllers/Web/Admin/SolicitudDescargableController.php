@@ -61,7 +61,7 @@ class SolicitudDescargableController extends Controller
         if ($request->hasFile('url')) {
             $fileArchivo = $request->file('url');
             $originalName = $fileArchivo->getClientOriginalName();
-            $ubicacionArchivo = 'public/solicitud/descargables/';
+            $ubicacionArchivo = 'public/solicitud/descargables';
             $url_archivo = $this->storeFile($fileArchivo, $ubicacionArchivo);
             // Almacenar el archivo utilizando storeFile
 
@@ -124,7 +124,7 @@ class SolicitudDescargableController extends Controller
 
                 $fileArchivo = $request->file('url');
                 $originalName = $fileArchivo->getClientOriginalName();
-                $ubicacionArchivo = 'public/solicitud/descargables/';
+                $ubicacionArchivo = 'public/solicitud/descargables';
                 $url_archivo = $this->storeFile($fileArchivo, $ubicacionArchivo);
 
                 if ($solicitud_descargable->url) {
