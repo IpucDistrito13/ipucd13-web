@@ -7,6 +7,8 @@ use App\Http\Resources\V2\Collection\SolicitudDescargableCollection;
 use App\Models\SolicitudDescargable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 class SolicitudDescargableController extends Controller
 {

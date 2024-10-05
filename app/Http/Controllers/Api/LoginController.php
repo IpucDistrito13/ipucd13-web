@@ -94,6 +94,7 @@ class LoginController extends Controller
             return response()->json([
 
                     'id' => $user->id,
+                    'uuid' => $user->uuid,
                     'nombre' => $user->nombre,
                     'apellidos' => $user->apellidos,
                     'email' => $user->email,
