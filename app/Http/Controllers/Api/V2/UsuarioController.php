@@ -41,10 +41,10 @@ class UsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($uuid)
+    public function show($id)
     {
         // Busca al usuario por UUID
-        $usuario = User::with('congregacion')->where('uuid', $uuid)->first();
+        $usuario = User::with('congregacion')->where('id', $id)->first();
 
         // Verifica si el usuario existe
         if (!$usuario) {
