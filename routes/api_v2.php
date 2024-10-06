@@ -46,7 +46,6 @@ Route::get('congregaciones/search/{query}', [CongregacionController::class, 'sea
 Route::get('usuarios', [UsuarioController::class, 'getListUsuario']);
 Route::get('usuarios/pastores', [UsuarioController::class, 'getListUsuarioPastor']);
 Route::get('usuarios/lideres', [UsuarioController::class, 'getListUsuarioLider']);
-Route::get('usuario/perfil/{uuid}', [UsuarioController::class, 'show']);
 Route::get('ipucenlinea', [IpucenLineaController::class, 'index']);
 Route::get('galeria/privada/{uuid}', [GaleriaController::class, 'showGaleriaPrivadaUsuario']);
 Route::get('galeria/publica/{uuid}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
@@ -79,5 +78,6 @@ Route::get('solicitudes/archivo/download/{slug}', [SolicitudDescargableControlle
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+    Route::get('usuario/perfil', [UsuarioController::class, 'show']);
 
 });
