@@ -46,7 +46,9 @@ Route::get('sliders', action: [SliderController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::get('usuario/perfil/{uuid}', [UsuarioController::class, 'show']);
+    Route::get('usuario/perfil/{uuid}', action: [UsuarioController::class, 'show']);
+    Route::get('usuario/miPerfil', action: [UsuarioController::class, 'miPerfil']);
+
     Route::get('usuarios', [UsuarioController::class, 'getListUsuario']);
     Route::get('usuarios/pastores', [UsuarioController::class, 'getListUsuarioPastor']);
     Route::get('usuarios/lideres', [UsuarioController::class, 'getListUsuarioLider']);

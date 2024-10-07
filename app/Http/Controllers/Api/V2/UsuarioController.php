@@ -38,15 +38,29 @@ class UsuarioController extends Controller
         //
     }
 
+    public function miPerfil()
+    {
+        $usuario = @auth()->user();
+        // Busca al usuario por UUID
+        //$usuario = User::with('congregacion')->where('uuid', $usuario->uuid)->first();
+        $usuario = User::with('congregacion')->where('uuid', $usuario->uuid)->first();
+
+        // Verifica si el usuario existe
+        if (!$usuario) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        return new UsuarioPerfilResource($usuario);
+    }
+
     /**
      * Display the specified resource.
      */
-    public function show($uuid)
+    public function show()
     {
-        //$usuario = @auth()->user();
+        $usuario = @auth()->user();
         // Busca al usuario por UUID
-        //$usuario = User::with('congregacion')->where('uuid', $usuario->uuid)->first();
-        $usuario = User::with('congregacion')->where('uuid', $uuid)->first();
+        $usuario = User::with('congregacion')->where('uuid', $usuario->uuid)->first();
 
         // Verifica si el usuario existe
         if (!$usuario) {
