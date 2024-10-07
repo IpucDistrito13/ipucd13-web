@@ -43,18 +43,6 @@ Route::get('podcasts/comite/{comiteId}', [PodcastController::class, 'getPodcasts
 Route::get('congregaciones', [CongregacionController::class, 'index']);
 Route::get('congregaciones/search/{query}', [CongregacionController::class, 'search']);
 
-Route::get('usuarios', [UsuarioController::class, 'getListUsuario']);
-Route::get('usuarios/pastores', [UsuarioController::class, 'getListUsuarioPastor']);
-Route::get('usuarios/lideres', [UsuarioController::class, 'getListUsuarioLider']);
-Route::get('ipucenlinea', [IpucenLineaController::class, 'index']);
-Route::get('galeria/privada/{uuid}', [GaleriaController::class, 'showGaleriaPrivadaUsuario']);
-Route::get('galeria/publica/{uuid}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
-
-Route::get('congregaciones/search/', [CongregacionController::class, 'search']);
-
-Route::get('usuarios/pastores/search', [UsuarioController::class, 'searchPastores']);
-Route::get('usuarios/lideres/search', [UsuarioController::class, 'searchLideres']);
-
 
 //Lita las carpetas segun el comite
 //El uuid es del comite
@@ -79,5 +67,19 @@ Route::get('solicitudes/archivo/download/{slug}', [SolicitudDescargableControlle
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('usuario/perfil', [UsuarioController::class, 'show']);
+
+    
+Route::get('usuarios', [UsuarioController::class, 'getListUsuario']);
+Route::get('usuarios/pastores', [UsuarioController::class, 'getListUsuarioPastor']);
+Route::get('usuarios/lideres', [UsuarioController::class, 'getListUsuarioLider']);
+Route::get('ipucenlinea', [IpucenLineaController::class, 'index']);
+Route::get('galeria/privada/{uuid}', [GaleriaController::class, 'showGaleriaPrivadaUsuario']);
+Route::get('galeria/publica/{uuid}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
+
+Route::get('congregaciones/search/', [CongregacionController::class, 'search']);
+
+Route::get('usuarios/pastores/search', [UsuarioController::class, 'searchPastores']);
+Route::get('usuarios/lideres/search', [UsuarioController::class, 'searchLideres']);
+
 
 });
