@@ -44,6 +44,13 @@ Route::get('transmision/envivo', [TransmisionController::class, 'getTransmisionE
 Route::get('sliders', action: [SliderController::class, 'index']);
 
 Route::get('certificado/bautismo/download', [CertificadoController::class, 'downloadCertificadoBautismoApi']);
+Route::get('congregaciones/search/', [CongregacionController::class, 'search']);
+Route::get('ipucenlinea', action: [IpucenLineaController::class, 'index']);
+Route::get('descargable/carpeta/publico/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePublico']);
+Route::get('archivo/carpeta/{uuid}', [DescargableComiteCarpetasController::class, 'getArchivosCarpeta']);
+Route::get('solicitudes/archivo/download/{slug}', [SolicitudDescargableController::class, 'download'])->name('download');
+
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -53,22 +60,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('usuarios', [UsuarioController::class, 'getListUsuario']);
     Route::get('usuarios/pastores', [UsuarioController::class, 'getListUsuarioPastor']);
     Route::get('usuarios/lideres', [UsuarioController::class, 'getListUsuarioLider']);
-    Route::get('ipucenlinea', [IpucenLineaController::class, 'index']);
     Route::get('galeria/privada/{uuid}', [GaleriaController::class, 'showGaleriaPrivadaUsuario']);
     Route::get('galeria/publica/{uuid}', [GaleriaController::class, 'showGaleriaPublicaUsuario']);
-    Route::get('congregaciones/search/', [CongregacionController::class, 'search']);
     Route::get('usuarios/pastores/search', [UsuarioController::class, 'searchPastores']);
     Route::get('usuarios/lideres/search', [UsuarioController::class, 'searchLideres']);
 
     //Lita las carpetas segun el comite
     //El uuid es del comite
     Route::get('descargable/carpeta/privado/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePrivado']);
-    Route::get('descargable/carpeta/publico/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePublico']);
     Route::get('carpetas/privado/comite/search', [DescargableComiteCarpetasController::class, 'searchPrivadoComite']);
     Route::get('carpetas/publico/comite/search', [DescargableComiteCarpetasController::class, 'searchPublicoComite']);
-    Route::get('archivo/carpeta/{uuid}', [DescargableComiteCarpetasController::class, 'getArchivosCarpeta']);
     Route::get('solicitudes/descargable/archivos', [SolicitudDescargableController::class, 'index']);
-    Route::get('solicitudes/archivo/download/{slug}', [SolicitudDescargableController::class, 'download'])->name('download');
     Route::get('solicitudes/descargable/archivos', [SolicitudDescargableController::class, 'index']);
     Route::get('solicitudes/archivo/download/{slug}', [SolicitudDescargableController::class, 'download'])->name('download');
 });
