@@ -43,6 +43,9 @@ Route::get('congregaciones/search/{query}', [CongregacionController::class, 'sea
 Route::get('transmision/envivo', [TransmisionController::class, 'getTransmisionEnVivo']);
 Route::get('sliders', action: [SliderController::class, 'index']);
 
+Route::get('certificado/bautismo/download', [CertificadoController::class, 'downloadCertificadoBautismoApi']);
+
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -66,7 +69,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('carpetas/privado/comite/search', [DescargableComiteCarpetasController::class, 'searchPrivadoComite']);
     Route::get('carpetas/publico/comite/search', [DescargableComiteCarpetasController::class, 'searchPublicoComite']);
     Route::get('archivo/carpeta/{uuid}', [DescargableComiteCarpetasController::class, 'getArchivosCarpeta']);
-    Route::get('certificado/bautismo/download', [CertificadoController::class, 'downloadCertificadoBautismoApi']);
     Route::get('solicitudes/descargable/archivos', [SolicitudDescargableController::class, 'index']);
     Route::get('solicitudes/archivo/download/{slug}', [SolicitudDescargableController::class, 'download'])->name('download');
     Route::get('certificado/bautismo/download', [CertificadoController::class, 'downloadCertificadoBautismoApi']);
