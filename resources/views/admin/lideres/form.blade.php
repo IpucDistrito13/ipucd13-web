@@ -58,32 +58,6 @@
         </div>
     </div>
 
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>Imagen líder (600x755) *</label>
-            <input class="form-control-file" type="file" class="custom-file-input" name="file" id="file"
-                accept="image/*" onchange="cambiarImagen(event)">
-            @error('file')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-    
-    <div class="col-sm-6">
-        
-    </div>
-
-    <div class="col-sm-4">
-        <div class="form-group">
-            @if (isset($lider) && $lider->imagen)
-                <img id="imagen" src="{{ Storage::url($lider->imagen->url) }}" alt=""
-                    class="img-thumbnail">
-            @else
-                <img id="imagen" src="" alt="600x755"
-                    class="img-thumbnail">
-            @endif
-        </div>
-    </div>
-
+   
 
 </div>

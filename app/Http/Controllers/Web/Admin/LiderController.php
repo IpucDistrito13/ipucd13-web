@@ -82,22 +82,6 @@ class LiderController extends Controller
             // Creamos el registro dentro de la transacción
             $lider = Lider::create($data);
 
-            // Verificar si se cargó un nuevo archivo
-            if ($request->hasFile('file')) {
-                $fileImagen = $request->file('file');
-
-                // Verificar el tipo de archivo
-                $ubicacion = 'public/comites/lideres';
-                $url = $this->storeFile($fileImagen, $ubicacion);
-
-                if ($url) {
-                    $lider->imagen()->create([
-                        'url' => $url,
-                        'imageable_type' => Lider::class,
-                    ]);
-                }
-            }
-
             // Commit para confirmar la transacción si todo va bien
             DB::commit();
             Cache::flush();
@@ -149,37 +133,13 @@ class LiderController extends Controller
 
         try {
             $data = [
-                'lidertipo_id' => $request->tipo,
-                'comite_id' => $request->comite,
                 'usuario_id' => $request->usuario,
+                'comite_id' => $request->comite,
+                'lidertipo_id' => $request->tipo,
             ];
 
             // Actualizamos el registro dentro de la transacción
             $lider->update($data);
-
-            // Verificar si se cargó un nuevo archivo
-            if ($request->hasFile('file')) {
-                $fileImagen = $request->file('file');
-                $ubicacion = 'public/comites/lideres';
-                $url = $this->storeFile($fileImagen, $ubicacion);
-
-                if ($lider->imagen) {
-                    Storage::delete($lider->imagen->url);
-
-                    // Actualizar la relación de imagen con la nueva URL del archivo
-                    $lider->imagen()->update([
-                        'url' => $url,
-                        'imageable_type' => Lider::class,
-                    ]);
-                } else {
-                    // Si el comité no tiene una imagen, agregar una nueva imagen
-                    $lider->imagen()->create([
-                        'url' => $url,
-                        'imageable_type' => Lider::class,
-                    ]);
-                }
-            }
-
 
             // Commit para confirmar la transacción si todo va bien
             DB::commit();

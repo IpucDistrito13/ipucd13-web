@@ -116,7 +116,7 @@
                     <!-- start team member item --> 
                     <div class="col text-center team-style-05 md-mb-20px">
                         <div class="position-relative mb-30px border-radius-4px last-paragraph-no-margin overflow-hidden">
-                            <img src="{{ !empty($lider->imagen->url) ? Storage::url($lider->imagen->url) : 'https://via.placeholder.com/600x755' }}" class="border-radius-4px" alt="" />
+                            <img src="{{ !empty($lider->usuario->imagen->url) ? Storage::url($lider->usuario->imagen->url) : 'https://via.placeholder.com/600x755' }}" class="border-radius-4px" alt="" />
                             <div class="w-100 h-100 d-flex flex-column justify-content-end align-items-center p-40px lg-p-20px team-content bg-gradient-gray-light-dark-transparent">
                                 <div class="social-icon fs-19">
                                     <!-- Enlace para WhatsApp -->

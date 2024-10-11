@@ -25,7 +25,6 @@ class LiderRequest extends FormRequest
             'tipo' => 'required|integer',
             'comite' => 'required|integer',
             'usuario' => 'required|integer',
-            'file' => 'required|image|dimensions:width=600,height=755',
         ];
     }
 }

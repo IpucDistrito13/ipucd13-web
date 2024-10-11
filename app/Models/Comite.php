@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comite extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'slug', 'descripcion', 'imagen_banner', 'banner_little'];
+    protected $fillable = ['nombre', 'slug', 'descripcion', 'imagen_banner', 'banner_little', 'imagenportada', 'filename'];
 
     //WEB
     public function scopeSeccionComites($query)
