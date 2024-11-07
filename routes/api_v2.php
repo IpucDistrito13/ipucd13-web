@@ -65,7 +65,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('usuarios/pastores/search', [UsuarioController::class, 'searchPastores']);
     Route::get('usuarios/lideres/search', [UsuarioController::class, 'searchLideres']);
 
-    //Lita las carpetas segun el comite
+    //Lista las carpetas segun el comite
     //El uuid es del comite
     Route::get('descargable/carpeta/privado/comite/{uuid}', [DescargableComiteCarpetasController::class, 'getComitePrivado']);
     Route::get('carpetas/privado/comite/search', [DescargableComiteCarpetasController::class, 'searchPrivadoComite']);
