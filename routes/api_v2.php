@@ -71,6 +71,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('carpetas/privado/comite/search', [DescargableComiteCarpetasController::class, 'searchPrivadoComite']);
     Route::get('carpetas/publico/comite/search', [DescargableComiteCarpetasController::class, 'searchPublicoComite']);
     Route::get('solicitudes/descargable/archivos', [SolicitudDescargableController::class, 'index']);
-    Route::get('solicitudes/descargable/archivos', [SolicitudDescargableController::class, 'index']);
     Route::get('solicitudes/archivo/download/{slug}', [SolicitudDescargableController::class, 'download'])->name('download');
 });

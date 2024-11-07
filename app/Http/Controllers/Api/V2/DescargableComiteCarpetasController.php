@@ -36,7 +36,6 @@ class DescargableComiteCarpetasController extends Controller
 
         $comiteId = Comite::where('slug', $slug)->select('id')->first()->id;
         $carpetas = Carpeta::with('comite')->where('comite_id', $comiteId)
-        //$carpetas = Carpeta::select('id', 'nombre', 'slug', 'created_at')
             ->where('comite_id', $comiteId)
             ->where('galeriatipo_id', 2) // Privado
             ->get();
