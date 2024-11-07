@@ -11,19 +11,20 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+
 class SolicitudDescargableController extends Controller
 {
     /**
      * Display a listing of the resource.
      * 
      * 
-     */ 
-    public function __construct() 
+     */
+    public function __construct()
     {
-        $this->middleware('can:admin.solicitud_descargables.index')->only('index','download');
+        $this->middleware('can:admin.solicitud_descargables.index')->only('index', 'download');
         $this->middleware('can:admin.solicitud_descargables.create')->only('create', 'store', 'edit', 'update', 'destroy');
     }
-     public function index()
+    public function index()
     {
         /*
         //CACHE
@@ -83,13 +84,16 @@ class SolicitudDescargableController extends Controller
             // Elimina datos cache
             Cache::flush();
 
-            return redirect()->route('admin.solicitud_descargable.index')
-                ->with('success', 'Solicitud descargable creado exitosamente.');
+            return redirect()->route('admin.solicitud_descargables.index')
+                ->with('success', 'Solicitud descargable creada exitosamente.');
         } catch (\Exception $e) {
-            // Si ocurre un error, redirigir de vuelta con un mensaje de error
+            DB::rollBack();
+            Log::error('Error store - Solicitud Descargable: ' . $e->getMessage());
+
             return redirect()->back()
                 ->withInput()
-                ->withErrors(['error' => 'Error al guardar: ' . $e->getMessage()]);
+                ->with('error', 'Error al crear la soicitud descargable. Por favor, inténtelo de nuevo.');
+
         }
     }
 
@@ -118,7 +122,6 @@ class SolicitudDescargableController extends Controller
 
         try {
 
-
             // Verificar si se cargó un nuevo archivo
             if ($request->file('url')) {
 
@@ -130,8 +133,6 @@ class SolicitudDescargableController extends Controller
                 if ($solicitud_descargable->url) {
                     Storage::delete($solicitud_descargable->url);
                 }
-
-
 
                 // Almacenar el archivo y obtener la URL
                 // $url_archivo = Storage::put('public/solicitud/descargables/', $request->file('url'));
@@ -176,46 +177,46 @@ class SolicitudDescargableController extends Controller
     /**
      * Remove the specified resource from storage.
      */
- 
-     public function destroy(SolicitudDescargable $solicitud_descargable)
-     {
-         DB::beginTransaction();
- 
-         try {
-             // Eliminar el banner del comité, si existe
-             if ($solicitud_descargable->url) {
-                 $this->deleteFile($solicitud_descargable->url);
-             }
 
-             $solicitud_descargable->delete();
-             DB::commit();
-             Cache::flush();
- 
-             // Redireccionar con un mensaje de éxito
-             return redirect()
-                 ->route('admin.solicitud_descargables.index')
-                 ->with('success', 'Soiicitud descargable eliminado exitosamente.');
-         } catch (\Exception $e) {
-             DB::rollBack();
-             Log::error('Error  destroy - Solicitud descargable: ' . $e->getMessage());
- 
-             // Redireccionar con un mensaje de error
-             return redirect()
-                 ->back()
-                 ->with('error', 'No se pudo eliminar la solicitud descargable.');
-         }
-     }
- 
-     private function deleteFile($url)
-     {
-         // Lógica para eliminar el archivo físico dependiendo del entorno
-         if (env('APP_ENV') === 'local') {
-             Storage::delete($url); // Eliminar archivo localmente
-         } else {
-             // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
-             Storage::disk('s3')->delete($url);
-         }
-     }
+    public function destroy(SolicitudDescargable $solicitud_descargable)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Eliminar el banner del comité, si existe
+            if ($solicitud_descargable->url) {
+                $this->deleteFile($solicitud_descargable->url);
+            }
+
+            $solicitud_descargable->delete();
+            DB::commit();
+            Cache::flush();
+
+            // Redireccionar con un mensaje de éxito
+            return redirect()
+                ->route('admin.solicitud_descargables.index')
+                ->with('success', 'Soiicitud descargable eliminado exitosamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error  destroy - Solicitud descargable: ' . $e->getMessage());
+
+            // Redireccionar con un mensaje de error
+            return redirect()
+                ->back()
+                ->with('error', 'No se pudo eliminar la solicitud descargable.');
+        }
+    }
+
+    private function deleteFile($url)
+    {
+        // Lógica para eliminar el archivo físico dependiendo del entorno
+        if (env('APP_ENV') === 'local') {
+            Storage::delete($url); // Eliminar archivo localmente
+        } else {
+            // Lógica para eliminar el archivo en S3 u otro servicio de almacenamiento en la nube
+            Storage::disk('s3')->delete($url);
+        }
+    }
     private function storeFile($file, $ubicacion)
     {
         if (env('APP_ENV') === 'local') {
@@ -255,7 +256,6 @@ class SolicitudDescargableController extends Controller
             }
         } catch (\Exception $e) {
             // Manejar errores generales y devolver una respuesta con el mensaje de error
-
             Log::error('Error en download - SolicitudDescargable: ' . $e->getMessage());
 
             return response()->json(['error' => 'Error al descargar el archivo: ' . $e->getMessage()], 500);

@@ -75,7 +75,6 @@ class SerieController extends Controller
     public function store(SerieRequest $request)
     {
 
-
         try {
             // Iniciar una transacción de base de datos
             DB::beginTransaction();

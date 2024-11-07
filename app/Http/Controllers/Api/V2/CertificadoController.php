@@ -74,7 +74,7 @@ class CertificadoController extends Controller
         // Convertir el nombre a title case (primera letra de cada palabra en mayúscula)
         $nombre = mb_convert_case($request->nombre, MB_CASE_TITLE, "UTF-8");
     
-        $municipio = $request->municipio;
+        $municipio = $request->lugar;
         $fecha = date($request->start);
     
         $dateTime = new DateTime($fecha);

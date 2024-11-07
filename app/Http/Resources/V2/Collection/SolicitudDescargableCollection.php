@@ -23,7 +23,7 @@ class SolicitudDescargableCollection extends ResourceCollection
                 'tipo' => $solicitudDescargable->tipo,
                 'url' => $solicitudDescargable->url,
                 'nombre' => $solicitudDescargable->nombre,
-                'created_at' => $solicitudDescargable->created_at->format('d/m/Y'),
+                'created_at' => $solicitudDescargable->created_at,
                 //'nombre_original' => $solicitudDescargable->nombre_original,
             ];
         })->toArray();

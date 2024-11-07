@@ -207,7 +207,6 @@ Route::put('permissions/{permission}', [PermisoController::class, 'update'])->na
 Route::delete('permissions/{permission}', [PermisoController::class, 'destroy'])->name('developer.permissions.destroy');
 ////////////////////////////////////////////////////////////////
 
-
 Route::resource('logs', LogController::class)->names('admin.logs');
 
 Route::resource('keyapis', GenerarApiController::class)->names('admin.keyapis');
