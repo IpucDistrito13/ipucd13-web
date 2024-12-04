@@ -28,22 +28,22 @@
             background-color: #333333;
             color: var(--white);
         }
-    
+
         .navbar .navbar-nav .dropdown .dropdown-menu {
             background-color: #00338D;
         }
-    
+
         @font-face {
             font-family: 'Myriad Pro Bold';
             src: url('{{ asset('fonts/myriadpro_bold.otf') }}') format('opentype');
             font-weight: bold;
         }
-    
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
         }
-    
+
         .reproductor {
             position: fixed;
             bottom: 20px;
@@ -58,75 +58,83 @@
             text-align: center;
             font-family: 'Myriad Pro Bold', Arial, sans-serif;
         }
-    
+
         .titulo {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 10px;
         }
-    
+
         .controles {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-    
+
         .btn {
             margin: 0 10px;
         }
-    
+
         .icono {
             margin-right: 8px;
         }
-    
+
         .bg-base-color {
             background-color: #f0ab00;
         }
-    
+
         .liveText,
         .text_secccion1,
         .playText {
             font-family: 'Myriad Pro Bold', Arial, sans-serif;
         }
-    
+
         #liveText {
             color: white;
             background-color: red;
             padding: 2px 5px;
             border-radius: 5px;
         }
-    
+
         .btn.btn-base-color {
             background-color: #f00;
             color: var(--white);
             border: 2px solid #f00;
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
-    
+
         .btn.btn-base-color:hover {
             background-color: #f00;
             color: var(--white);
             border-color: #f00;
         }
-    
+
         @media only screen and (max-width: 600px) {
             .reproductor {
-                width: 70px; /* Ancho del círculo para móviles */
-                height: 70px; /* Altura del círculo para móviles */
-                padding: 0; /* Elimina el padding */
-                border-radius: 50%; /* Forma circular */
+                width: 70px;
+                /* Ancho del círculo para móviles */
+                height: 70px;
+                /* Altura del círculo para móviles */
+                padding: 0;
+                /* Elimina el padding */
+                border-radius: 50%;
+                /* Forma circular */
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
-    
-            .titulo, #liveText, .playText {
-                display: none; /* Oculta el texto en móviles */
+
+            .titulo,
+            #liveText,
+            .playText {
+                display: none;
+                /* Oculta el texto en móviles */
             }
-    
+
             .icono {
                 margin: 0;
-                font-size: 24px; /* Tamaño del icono */
+                font-size: 24px;
+                /* Tamaño del icono */
             }
         }
     </style>
@@ -208,9 +216,9 @@
                             data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10=""
                             data-description="">
                             <!-- slide's main background image -->
-                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/pastores.jpg" alt="Image"
-                                data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
-                                class="rev-slidebg" data-no-retina>
+                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/pastores.jpg"
+                                alt="Image" data-bgposition="center center" data-bgfit="cover"
+                                data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
                             <!-- start overlay layer -->
                             <div class="tp-caption tp-shape tp-shapewrapper " id="slide-1-layer-01"
                                 data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
@@ -292,9 +300,9 @@
                             data-param3="" data-param4="" data-param5="" data-param6="" data-param7=""
                             data-param8="" data-param9="" data-param10="" data-description="">
                             <!-- slide's main background image -->
-                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/traslados%20agosto.jpg" alt="Image"
-                                data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
-                                class="rev-slidebg" data-no-retina>
+                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/traslados%20agosto.jpg"
+                                alt="Image" data-bgposition="center center" data-bgfit="cover"
+                                data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
                             <!-- start overlay layer -->
                             <div class="tp-caption tp-shape tp-shapewrapper " id="slide-2-layer-01"
                                 data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
@@ -391,9 +399,9 @@
                             data-param3="" data-param4="" data-param5="" data-param6="" data-param7=""
                             data-param8="" data-param9="" data-param10="" data-description="">
                             <!-- slide's main background image -->
-                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/hasta%20lo%20ultimo.jpg" alt="Image"
-                                data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat"
-                                class="rev-slidebg" data-no-retina>
+                            <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/sliders/pagina/hasta%20lo%20ultimo.jpg"
+                                alt="Image" data-bgposition="center center" data-bgfit="cover"
+                                data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
                             <!-- start overlay layer -->
                             <div class="tp-caption tp-shape tp-shapewrapper " id="slide-3-layer-01"
                                 data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
@@ -485,7 +493,8 @@
                             <div class="atropos-scale">
                                 <div class="atropos-rotate">
                                     <div class="atropos-inner text-center w-100 overflow-visible">
-                                        <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/Otros/img-muestra-descargar.webp" alt="">
+                                        <img src="https://ipucd13.nyc3.cdn.digitaloceanspaces.com/public/Otros/img-muestra-descargar.webp"
+                                            alt="">
                                     </div>
                                 </div>
                             </div>
@@ -494,7 +503,8 @@
                     <div class="col-xl-5 col-lg-6 col-md-11 position-relative"
                         data-anime='{ "el": "childs", "translateX": [30, 0], "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 100, "staggervalue": 300, "easing": "easeOutQuad" }'>
 
-                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-40px sm-mb-25px mx-auto">Próximamente</h2>
+                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-40px sm-mb-25px mx-auto">Próximamente
+                        </h2>
                         <div class="accordion accordion-style-06 text-start" id="accordion-style-07">
                             <!-- start accordion item -->
                             <div class="accordion-item active-accordion">
@@ -585,66 +595,70 @@
 
         <!-- start section  ultimas publicaciones -->
         <section class="pt-0 ps-15 pe-15 xl-ps-2 xl-pe-2 lg-ps-2 lg-pe-2 sm-mx-0">
-            <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
-                <div class="col-xxl-8 col-md-7 sm-mb-10px">
-                    <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimas publicaciones</h2>
-                </div>
-                <div class="col-xxl-4 col-md-5 text-center text-md-end"
-                    data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <a href="{{ route('public.publicaciones.index') }}"
-                        class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
-                        <span>
-                            <span class="btn-text">Explora todas las publicaciones</span>
-                            <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-                            <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <div class="container-fluid">
 
-                <!-- start row -->
-                <div class="row">
-                    <div class="col-12">
-                        <ul
-                            class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
-                            <li class="grid-sizer"></li>
-
-                            @foreach ($publicaciones as $publicacion)
-                                <!-- start blog item -->
-                                <li class="grid-item">
-                                    <div class="card bg-transparent border-0 h-100">
-                                        <div class="blog-image position-relative overflow-hidden border-radius-4px">
-                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}">
-                                                <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
-                                                    alt="" />
-                                            </a>
-                                        </div>
-                                        <div class="card-body px-0 pt-30px pb-30px">
-                                            <span class="fs-13 text-uppercase mb-5px d-block"><a href="blog-grid.html"
-                                                    class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $publicacion->comite->nombre }}</a><a
-                                                    href="blog-grid.html" class="blog-date text-dark-gray-hover">26
-                                                    August 2023</a></span>
-                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
-                                                class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $publicacion->titulo }}</a>
-                                            <p class="mb-10px w-95">{{ $publicacion->descripcion }}</p>
-                                            <a href="{{ route('public.publicaciones.show', $publicacion) }}"
-                                                class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver
-                                                más<i class="feather icon-feather-arrow-right icon-very-small"></i></a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- end blog item -->
-                            @endforeach
-
-
-                        </ul>
+            @if ($publicaciones->isNotEmpty())
+                <div class="row justify-content-center align-items-center mb-4 text-center text-md-start">
+                    <div class="col-xxl-8 col-md-7 sm-mb-10px">
+                        <h2 class="alt-font text-dark-gray fw-600 ls-minus-3px mb-0">Últimas publicaciones</h2>
                     </div>
+                    <div class="col-xxl-4 col-md-5 text-center text-md-end"
+                        data-anime='{ "translateX": [-50, 0], "opacity": [0,1], "duration": 600, "delay": 0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                        <a href="{{ route('public.publicaciones.index') }}"
+                            class="btn btn-link btn-hover-animation-switch btn-extra-large text-dark-gray fw-600">
+                            <span>
+                                <span class="btn-text">Explora todas las publicaciones</span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="container-fluid">
+
+                    <!-- start row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <ul
+                                class="blog-classic blog-wrapper grid-loading grid grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
+                                <li class="grid-sizer"></li>
+
+                                @foreach ($publicaciones as $publicacion)
+                                    <!-- start blog item -->
+                                    <li class="grid-item">
+                                        <div class="card bg-transparent border-0 h-100">
+                                            <div
+                                                class="blog-image position-relative overflow-hidden border-radius-4px">
+                                                <a href="{{ route('public.publicaciones.show', $publicacion) }}">
+                                                    <img src="{{ !empty($publicacion->imagen->url) ? Storage::url($publicacion->imagen->url) : asset('img/imagen_not_found_480x640.png') }}"
+                                                        alt="" />
+                                                </a>
+                                            </div>
+                                            <div class="card-body px-0 pt-30px pb-30px">
+                                                <span class="fs-13 text-uppercase mb-5px d-block"><a
+                                                        href="blog-grid.html"
+                                                        class="text-dark-gray text-dark-gray-hover fw-600 categories-text">{{ $publicacion->comite->nombre }}</a><a
+                                                        href="blog-grid.html"
+                                                        class="blog-date text-dark-gray-hover">26
+                                                        August 2023</a></span>
+                                                <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                                    class="card-title mb-10px fw-600 fs-17 lh-26 text-dark-gray text-dark-gray-hover d-inline-block w-95">{{ $publicacion->titulo }}</a>
+                                                <p class="mb-10px w-95">{{ $publicacion->descripcion }}</p>
+                                                <a href="{{ route('public.publicaciones.show', $publicacion) }}"
+                                                    class="card-link alt-font fs-12 text-uppercase text-dark-gray text-dark-gray-hover fw-700">Ver
+                                                    más<i
+                                                        class="feather icon-feather-arrow-right icon-very-small"></i></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!-- end blog item -->
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end row -->
 
                 </div>
-                <!-- end row -->
-
-            </div>
+            @endif
 
 
             <!-- seecin redes -->
