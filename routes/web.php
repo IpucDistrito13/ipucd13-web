@@ -31,7 +31,7 @@ Route::get('public/apiGetEventos', [EventoController::class, 'apiGetEventos'])->
 
 Route::get('comites/{comite}', [ComiteController::class, 'show'])->name('comite.show');
 Route::get('descargables', [DescargableController::class, 'index'])->name('public.descargables.index');
-Route::get('descargables/{comiteId}', [DescargableController::class, 'comite'])->name('public.descargables.comite');
+Route::get('descargables/{comite}', [DescargableController::class, 'comite'])->name('public.descargables.comite');
 
 Route::get('post', [PublicacionController::class, 'index'])->name('public.publicaciones.index');
 Route::get('contacto', [ContactoController::class, 'index'])->name('public.contacto.index');

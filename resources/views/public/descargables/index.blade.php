@@ -97,7 +97,7 @@
                             <div class="pricing-header ps-2 pe-2">
                                 <h2 class="text-dark-gray fw-400 mb-3">{{ $comite->nombre }}</h2>
                                 <p class="mb-3 lh-1.8">{{ $comite->descripcion }}</p>
-                                <a href="{{ route('public.descargables.comite', $comite->id) }}"
+                                <a href="{{ route('public.descargables.comite', $comite) }}"
                                     class="btn btn-medium btn-dark-gray btn-round-edge btn-switch-text btn-box-shadow">
                                     <span>
                                         <span class="btn-double-text" data-text="Acceder">Acceder</span>

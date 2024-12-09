@@ -13,8 +13,9 @@ class Redes extends Model
 
     public function scopeActivo($query)
     {
-        return $query->where('estado', 'Activo');
+        return $query->whereNotNull('url')->where('url', '!=', '');
     }
+    
 
     public function scopeGetTransmision($query)
     {

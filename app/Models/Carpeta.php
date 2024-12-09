@@ -33,4 +33,6 @@ class Carpeta extends Model
     {
         return $this->hasMany(Archivo::class, 'carpeta_id');
     }
+
+    
 }

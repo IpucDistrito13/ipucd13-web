@@ -26,14 +26,12 @@ class Comite extends Model
     public function scopeGetComite($query, $comiteId)
     {
         return $query->select('id', 'nombre' , 'slug')->where('id', $comiteId);
-
     }
     //END WEB
 
     public function scopeGetComiteUUID($query, $uuid)
     {
         return $query->select('id', 'nombre' , 'slug')->where('uuid', $uuid);
-
     }
 
     public function scopeApiV1($query)

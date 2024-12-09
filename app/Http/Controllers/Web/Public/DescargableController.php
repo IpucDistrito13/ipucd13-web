@@ -22,9 +22,13 @@ class DescargableController extends Controller
             'description' => 'Descargable | IPUC Distrito 13',
         ];
 
+        $comites = Comite::select('id', 'nombre', 'slug')->get();
+
+        /*
         $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
             return Comite::ComiteMenu()->get();
         });
+        */
 
         $socialData = Cache::remember(CacheKeys::PUBLIC_SOCIAL_DATA, null, function () {
             $redes_sociales = Redes::Activo()->get();
@@ -51,7 +55,7 @@ class DescargableController extends Controller
         });
 
         return view('public.descargables.index', [
-            'comites' => $comitesMenu,
+            'comites' => $comites,
             'metaData' => $metaData,
             'transmision' => $socialData['transmision'],
             'facebook' => $socialData['links']['facebook'],
@@ -60,7 +64,7 @@ class DescargableController extends Controller
         ]);
     }
 
-    public function comite($comiteId)
+    public function comite(Comite $comite)
     {
         $metaData = [
             'titulo' => 'Descargable | IPUC Distrito 13',
@@ -68,12 +72,8 @@ class DescargableController extends Controller
             'description' => 'Descargable | IPUC Distrito 13',
         ];
 
-        $comite = Cache::remember(CacheKeys::PUBLIC_COMITE . $comiteId, null, function () use ($comiteId) {
-            return Comite::GetComite($comiteId)->first();
-        });
-
-        $carpetas = Cache::remember(CacheKeys::PUBLIC_CARPETAS . $comiteId, null, function () use ($comiteId) {
-            return Carpeta::PorComitePublico($comiteId)->with('archivos')->get();
+        $carpetas = Cache::remember(CacheKeys::PUBLIC_CARPETAS . $comite, null, function () use ($comite) {
+            return Carpeta::PorComitePublico($comite->id)->with('archivos')->get();
         });
 
         $comitesMenu = Cache::remember(CacheKeys::PUBLIC_COMITES_MENU, null, function () {
