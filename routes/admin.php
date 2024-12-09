@@ -64,11 +64,9 @@ Route::resource('solicitudes', SolicitudController::class)->names('admin.solicit
 
 Route::get('congregaciones/list', [CongregacionController::class, 'list'])->name('admin.congregaciones.list');
 
-
 Route::resource('congregaciones', CongregacionController::class)->names('admin.congregaciones')->parameters([
     'congregaciones' => 'congregacion', // Cambia el nombre del parámetro de la ruta
 ]);
-
 
 
 Route::resource('comites', ComiteController::class)->names('admin.comites');

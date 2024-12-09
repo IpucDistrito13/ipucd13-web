@@ -174,9 +174,6 @@ class CongregacionController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
 
-            
-
-
             // Elimina las variables almacenadas en cache
             Cache::flush();
             DB::commit();

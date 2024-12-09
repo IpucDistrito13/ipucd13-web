@@ -31,6 +31,8 @@
 
         .navbar .navbar-nav .dropdown .dropdown-menu {
             background-color: #00338D;
+            //background-color: #FFFFFF;
+
         }
 
         @font-face {
@@ -480,8 +482,7 @@
             </div>
         </section>
         <!-- end slider -->
-
-
+      
         <!-- start section  applicacion -->
         <section class="overflow-hidden">
             <div class="container">
@@ -526,7 +527,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end accordion item -->
+
                             <!-- start accordion item -->
                             <div class="accordion-item">
                                 <div class="accordion-header">

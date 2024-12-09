@@ -61,28 +61,25 @@
                 <div class="col-xl-9 col-lg-8 col-md-12">
                     <div class="tab-content">
                         @foreach ($carpetas as $index => $carpeta)
-                            <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
-                                id="tab_{{ $carpeta['slug'] }}">
+                            <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="tab_{{ $carpeta['slug'] }}">
                                 <div class="row align-items-center">
                                     @foreach ($carpeta['archivos'] as $archivo)
-                                        <div class="col-12"
-                                            data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                                            <div
-                                                class="row border-top border-color-dark-gray position-relative g-0 sm-border-top-0 sm-pb-30px">
-                                                <div
-                                                    class="col-lg-8 col-md-7 last-paragraph-no-margin ps-30px pe-30px pe-30px pt-25px pb-25px sm-pt-15px sm-pb-15px border-start border-color-dark-gray sm-border-start-0 sm-px-0">
-                                                    <p class="sm-w-85"><span
-                                                            class="fw-600 text-dark-gray">{{ $archivo['nombre_original'] }}</span>
+                                        <div class="col-12" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                                            <div class="row border-top border-color-dark-gray position-relative g-0 sm-border-top-0 sm-pb-30px">
+                                                <div class="col-lg-8 col-md-7 last-paragraph-no-margin ps-30px pe-30px pt-25px pb-25px sm-pt-15px sm-pb-15px border-start border-color-dark-gray sm-border-start-0 sm-px-0">
+                                                    <p class="sm-w-85">
+                                                        <span class="fw-600 text-dark-gray">{{ $archivo['nombre_original'] }}</span>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-3 align-self-center text-md-end">
-                                                    <a href="{{ route('public.archivos.download', $archivo['id']) }}"
-                                                        target="_blank">Descarga ahora</a>
+                                                    @if ($archivo['tipo'] === 'enlace')
+                                                        <a href="{{ $archivo['url'] }}" target="_blank" rel="noopener noreferrer">Abrir enlace</a>
+                                                    @else
+                                                        <a href="{{ route('public.archivos.download', $archivo['id']) }}" target="_blank">Descarga ahora</a>
+                                                    @endif
                                                 </div>
-                                                <div
-                                                    class="col-auto col-md-1 align-self-center text-end text-md-center sm-position-absolute right-5px">
-                                                    <a href="#"><i
-                                                            class="bi bi-arrow-right-short text-dark-gray icon-medium"></i></a>
+                                                <div class="col-auto col-md-1 align-self-center text-end text-md-center sm-position-absolute right-5px">
+                                                    <a href="#"><i class="bi bi-arrow-right-short text-dark-gray icon-medium"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -92,6 +89,7 @@
                         @endforeach
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>

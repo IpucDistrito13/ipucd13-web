@@ -89,9 +89,12 @@
                 <div class="header-icon">
                     <div class="header-social-icon icon">
                         @if (!empty(trim($transmision->url)))
-                        <a href="https://www.youtube.com/watch?v={{ $transmision->url }}" target="_blank" style="color: red;">
+                        <div class="overflow-visible ">
+
+                        <a class="btn-live popup-youtube" href="https://www.youtube.com/watch?v={{ $transmision->url }}" target="_blank" style="color: red;">
                             <i class="fas fa-video"></i> En vivo
                         </a>
+                    </div>
                         
                         @endif
                     
