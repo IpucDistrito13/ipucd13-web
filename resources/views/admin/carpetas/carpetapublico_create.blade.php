@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear carpeta publico')
+@section('title', 'Crear carpeta publica')
 
 @section('content_header')
     <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0;">Crear carpeta publico </h1>
+        <h1 style="margin: 0;">Crear carpeta pública </h1>
         
         <div>
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.carpetas.listCarpetasPublicoComite', $comite ) }}">
@@ -53,7 +53,7 @@
                 @include('admin.carpetas.form')
 
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" href="{{ route('admin.carpetas.listCarpetasPrivadoComite', $comite ) }}">Volver</a>
+                    <a class="btn btn-secondary" href="{{ route('admin.carpetas.listCarpetasPublicoComite', $comite ) }}">Volver</a>
                     <button type="submit" class="btn btn-primary float-right">Guardar</button>
                 </div>
             </form>

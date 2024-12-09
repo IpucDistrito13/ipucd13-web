@@ -499,12 +499,12 @@ return [
                     //'route' => 'admin.descargables.index'
                 ],
                 [
-                    'text' => 'Descargable privado',
+                    'text' => 'Descargable privada',
                     'route' => 'admin.carpetas.listComitePrivado',
                     'can' => 'admin.carpetas.listComitePrivado',
                 ],
                 [
-                    'text' => 'Descargable publico',
+                    'text' => 'Descargable pública',
                     'route' => 'admin.carpetas.listComitePublico',
                     'can' => 'admin.carpetas.listComitePublico'
                 ],

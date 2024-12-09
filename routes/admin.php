@@ -133,7 +133,7 @@ Route::get('galerias', [GaleriaController::class, 'index'])->name('admin.galeria
 //Route::get('galerias/show/lider', [GaleriaController::class, 'lider'])->name('admin.galerias.lider');
 
 //GALERIA PRIVADA ADMIN
-Route::get('galeria/privado/{usuario}', [GaleriaController::class, 'privadoAdmin'])->name('admin.galerias.privadoadmin');
+Route::get('galeria/privada/{usuario}', [GaleriaController::class, 'privadoAdmin'])->name('admin.galerias.privadoadmin');
 Route::get('galeria/general/{usuario}', [GaleriaController::class, 'generalAdmin'])->name('admin.galerias.generalAdmin');
 Route::get('galeria/verGaleriaPublicaPastor/{usuario}', [GaleriaController::class, 'verGaleriaPublicaPastor'])->name('admin.galerias.verGaleriaPublicaPastor');
 
@@ -151,25 +151,25 @@ Route::post('file/delete', [GaleriaController::class, 'delete'])->name('file.del
 
 Route::post('users/listJson', [DatatableController::class, 'listJson'])->name('users.listJson');
 
-Route::delete('carpetas/publico/{carpetaId}', [CarpetaController::class, 'destroyCarpeta'])->name('admin.carpetas.destroyCarpeta');
+Route::delete('carpetas/publica/{carpetaId}', [CarpetaController::class, 'destroyCarpeta'])->name('admin.carpetas.destroyCarpeta');
 
-Route::get('carpetas/privado', [CarpetaController::class, 'listComitePrivado'])->name('admin.carpetas.listComitePrivado');
-Route::get('carpetas/publico', [CarpetaController::class, 'listComitePublico'])->name('admin.carpetas.listComitePublico');
+Route::get('carpetas/privada', [CarpetaController::class, 'listComitePrivado'])->name('admin.carpetas.listComitePrivado');
+Route::get('carpetas/publica', [CarpetaController::class, 'listComitePublico'])->name('admin.carpetas.listComitePublico');
 
 Route::get('carpetas/privada/{comite}', [CarpetaController::class, 'listCarpetasPrivadoComite'])->name('admin.carpetas.listCarpetasPrivadoComite');
-Route::get('carpetas/publico/{comite}', [CarpetaController::class, 'listCarpetasPublicoComite'])->name('admin.carpetas.listCarpetasPublicoComite');
+Route::get('carpetas/publica/{comite}', [CarpetaController::class, 'listCarpetasPublicoComite'])->name('admin.carpetas.listCarpetasPublicoComite');
 
 // CREAR CARPETA PRIVADA FORMULARIO
 Route::get('carpetas/privada/create/{comite}', [CarpetaController::class, 'crearCarpetaPrivada'])->name('admin.carpetas.privado.crearCarpetaPrivada');
 // CREAR CARPETA PUBLICO FORMULARIO
-Route::get('carpetas/publico/create/{comite}', [CarpetaController::class, 'crearCarpetaPublico'])->name('admin.carpetas.publico.crearCarpetaPublico');
+Route::get('carpetas/publica/create/{comite}', [CarpetaController::class, 'crearCarpetaPublico'])->name('admin.carpetas.publico.crearCarpetaPublico');
 
 // GUARDAR DATOS DE CARPETAS PRIVADA
 Route::post('carpetas/storeCarpetaPrivada', [CarpetaController::class, 'storeCarpetaPrivada'])
     ->name('admin.carpetas.storeCarpetaPrivada');
 
 // GUARDAR DATOS DE CARPETAS PUBLICO
-Route::post('carpetas/storeCarpetaPublico', [CarpetaController::class, 'storeCarpetaPublico'])
+Route::post('carpetas/storeCarpetaPublica', [CarpetaController::class, 'storeCarpetaPublico'])
     ->name('admin.carpetas.storeCarpetaPublico');
 
 // LISTA LOS ARCHIVOS SEGUN LA CARPETA

@@ -1,13 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Lista carpeta publico')
+@section('title', 'Lista carpeta pública')
 
 @section('content_header')
 
-
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h1 style="margin: 0;">
-            Carpeta Publico - {{ $comite->nombre }}
+            Carpeta Pública - {{ $comite->nombre }}
         </h1>
 
 
@@ -15,7 +14,6 @@
             <a class="btn btn-secondary btn-sm" href="{{ route('admin.carpetas.listComitePublico') }}">
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
-
 
             @can('admin.carpetas.publico.crearCarpetaPublico')
                 <a class="btn btn-primary btn-sm" href="{{ route('admin.carpetas.publico.crearCarpetaPublico', $comite) }}">

@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Descargable publico')
+@section('title', 'Descargable pública')
 
 @section('content_header')
-    <h1>Descargable publico</h1>
+    <h1>Descargable pública</h1>
 @stop
 
 @section('content')

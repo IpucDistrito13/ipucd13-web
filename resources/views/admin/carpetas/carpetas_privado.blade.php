@@ -16,7 +16,6 @@
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
 
-
             @can('admin.carpetas.privado.crearCarpetaPrivada')
                 <a class="btn btn-primary btn-sm" href="{{ route('admin.carpetas.privado.crearCarpetaPrivada', $comite) }}">
                     <i class="fas fa-folder-open"></i> Crear carpeta
@@ -30,6 +29,25 @@
 @stop
 
 @section('content')
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="text-white">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
@@ -40,7 +58,7 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            <table id="datatable" class="table table-striped table-bordered data-table">
+            <table id="datatable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th class="counter-column">#</th>
@@ -48,24 +66,64 @@
                         <th class="acciones-column">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
 
-                    @foreach ($carpetas as $item)
-                        <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->nombre }}</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Group of buttons">
-                                    <!-- Update Button -->
-                                    <a class="btn btn-primary btn-sm"
-                                        href="{{ route('admin.archivos.index', $item->id) }}">Ver más</a>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
+                @foreach ($carpetas as $item)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->nombre }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Group of buttons">
+                                @can('admin.archivos.index')
+                                    <a class="btn btn-primary btn-sm" href="{{ route('admin.archivos.index', $item->id) }}">Ver
+                                        más</a>
+                                @endcan
+
+                                @can('admin.carpetas.destroyCarpeta')
+                                    <!-- Delete Button -->
+                                    <form id="deleteForm{{ $item->id }}"
+                                        action="{{ route('admin.carpetas.destroyCarpeta', $item->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            onclick="confirmDelete({{ $item->id }})">Eliminar</button>
+                                    </form>
+
+                                    <script>
+                                        function confirmDelete(itemId) {
+                                            const swalWithBootstrapButtons = Swal.mixin({
+                                                customClass: {
+                                                    confirmButton: 'btn btn-success',
+                                                    cancelButton: 'btn btn-danger'
+                                                },
+                                                buttonsStyling: false
+                                            });
+
+                                            swalWithBootstrapButtons.fire({
+                                                title: '¿Estás seguro?',
+                                                text: '¡No podrás revertir esto!',
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonText: 'Eliminar',
+                                                confirmButtonColor: '#a5161d',
+                                                denyButtonColor: '#270a0a',
+                                                cancelButtonText: 'Cancelar',
+                                                reverseButtons: true
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    document.getElementById('deleteForm' + itemId).submit();
+                                                }
+                                            });
+                                        }
+                                    </script>
+                                @endcan
+
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
 
 
-                    <!-- Fin del ejemplo -->
+                <!-- Fin del ejemplo -->
                 </tbody>
             </table>
 
@@ -118,9 +176,12 @@
 @stop
 
 @section('css')
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
     <style>
         .acciones-column {
-            width: 100px;
+            width: 160px;
         }
 
         .counter-column {
@@ -130,5 +191,7 @@
 @stop
 
 @section('js')
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @stop

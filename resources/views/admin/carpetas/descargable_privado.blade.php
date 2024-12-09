@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Descargable privada')
 
 @section('content_header')
-    <h1>Descargable privado</h1>
+    <h1>Descargable privada</h1>
 @stop
 
 @section('content')

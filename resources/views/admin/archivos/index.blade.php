@@ -19,7 +19,6 @@
             </div>
         @endcan
 
-
     </div>
 @stop
 
@@ -152,7 +151,7 @@
                     @csrf
                     <div class="modal-body">
 
-                        <input type="text" value="{{ $carpeta->id }}" id="carpeta" name="carpeta">
+                        <input type="hidden" value="{{ $carpeta->id }}" id="carpeta" name="carpeta">
                         <div class="fallback">
                             <input type="file" name="file" multiple>
                         </div>
